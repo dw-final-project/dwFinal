@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Bootstrap Flat Modal Login Modal Form</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
@@ -156,7 +156,7 @@ body {
 	<div class="modal-dialog modal-login ">
 		<div class="modal-content " >
 			<div class="modal-header">				
-				<h4 class="modal-title">PW ì¬ì¤ì </h4>
+				<h4 class="modal-title">PW 재설정</h4>
 			</div>
 			<div class="modal-body">
 				<form action="/examples/actions/confirmation.php" method="post">
@@ -169,11 +169,11 @@ body {
 					<div class="form-group">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-							<input type="text" class="form-control" name="password" placeholder="PW íì¸" required="required">
+							<input type="text" class="form-control" name="password" placeholder="PW 확인" required="required">
 						</div>
 					</div>
 					<div class="form-group findbtn">
-						<button type="submit" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;">PW ì¬ì¤ì </button>
+						<button type="submit" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;">PW 재설정</button>
 					</div>
 				</form>
 			</div>
