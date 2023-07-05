@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
+<<<<<<< Updated upstream
 Built-By: note_ma01
+=======
+Built-By: user
+>>>>>>> Stashed changes
 Build-Jdk: 1.8.0_351
 Created-By: Maven Integration for Eclipse
 
