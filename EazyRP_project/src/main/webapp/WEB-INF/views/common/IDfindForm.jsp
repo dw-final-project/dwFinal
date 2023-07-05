@@ -24,7 +24,7 @@ body {
    height: 100%;
 }
 .modal-login {
-	width: 350px;
+	width: 500px;
    
 }
 .modal-login .modal-content {
@@ -65,7 +65,7 @@ body {
 	font-size: 13px;
 }
 .modal-login .form-control {
-	min-height: 38px;
+	min-height: 44px;
 	padding-left: 5px;
 	box-shadow: none !important;
 	border-width: 0 0 1px 0;
@@ -129,37 +129,65 @@ body {
 	display: inline-block;
 	margin: 100px auto;
 }
+.findbtn{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.inputText{
+	width: 70%;
+	display: inline-flex;
+}
+.chkbtn{
+	color: #fff;
+	background: #4685e4 !important;
+	border: none;
+    font-size: 0.85rem;
+    padding: 12px 7px;
+	border-radius: 7px;
+}
 </style>
 </head>
 <body>
 <!-- Modal HTML -->
 	<div class="modal-dialog modal-login ">
 	<div class="modal-dialog modal-login ">
-		<div class="modal-content ">
+		<div class="modal-content " style="padding-left: 45px; padding-right: 5px;">
 			<div class="modal-header">				
-				<h4 class="modal-title">로그인</h4>
+				<h4 class="modal-title">ID ì°¾ê¸°</h4>
 			</div>
 			<div class="modal-body">
 				<form action="/examples/actions/confirmation.php" method="post">
 					<div class="form-group">
-						<div class="input-group">
+						<div class="input-group inputText">
 							<span class="input-group-addon"><i class="fa fa-user"></i></span>
-							<input type="text" class="form-control" name="id" placeholder="아이디" required="required">
+							<input type="text" class="form-control" name="name" placeholder="ì´ë¦" required="required">
 						</div>
 					</div>
-					<div class="form-group">
-						<div class="input-group">
+					<div class="form-group d-flex">
+						<div class="input-group inputText">
 							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-							<input type="text" class="form-control" name="password" placeholder="패스워드" required="required">
+							<input type="text" class="form-control" name="email" placeholder="ì´ë©ì¼" required="required">
+						</div>
+						<div>
+							<input type="button" class="chkbtn" name="emailchk" required="required" value="ì¸ì¦ë²í¸ ì ì¡">							
 						</div>
 					</div>
-					<div class="form-group">
-						<button type="submit" class="btn btn-info btn-block btn-lg">로그인</button>
-						<button type="submit" class="btn btn-info btn-block btn-lg">회원가입</button>
+					<div class="form-group d-flex">
+						<div class="input-group inputText">
+							<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+							<input type="text" class="form-control" name="password" placeholder="ì¸ì¦ë²í¸" required="required">
+						</div>
+						<div>
+							<input type="button" class="chkbtn" name="emailchk" required="required" value="ì¸ì¦ë²í¸ íì¸">			
+						</div>
 					</div>
-					<p class="hint-text text-info"><a href="#">아이디/비번찾기</a></p>
+					<div class="form-group findbtn">
+						<button type="submit" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;">ID ì°¾ê¸°</button>
+					</div>
 				</form>
 			</div>
+			
 		</div>
 	</div>    
 </body>

@@ -24,7 +24,7 @@ body {
    height: 100%;
 }
 .modal-login {
-	width: 350px;
+	width: 500px;
    
 }
 .modal-login .modal-content {
@@ -59,13 +59,15 @@ body {
 }
 .modal-login .form-group {
 	margin-bottom: 20px;
+	display: flex;
+	justify-content: center;
 }
 .modal-login label {
 	font-weight: normal;
 	font-size: 13px;
 }
 .modal-login .form-control {
-	min-height: 38px;
+	min-height: 44px;
 	padding-left: 5px;
 	box-shadow: none !important;
 	border-width: 0 0 1px 0;
@@ -129,37 +131,53 @@ body {
 	display: inline-block;
 	margin: 100px auto;
 }
+.findbtn{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.inputText{
+	width: 80%;
+	display: inline-flex;
+}
+.chkbtn{
+	color: #fff;
+	background: #4685e4 !important;
+	border: none;
+    font-size: 0.85rem;
+    padding: 12px 7px;
+	border-radius: 7px;
+}
 </style>
 </head>
 <body>
 <!-- Modal HTML -->
 	<div class="modal-dialog modal-login ">
 	<div class="modal-dialog modal-login ">
-		<div class="modal-content ">
+		<div class="modal-content " >
 			<div class="modal-header">				
-				<h4 class="modal-title">로그인</h4>
+				<h4 class="modal-title">PW ì¬ì¤ì </h4>
 			</div>
 			<div class="modal-body">
 				<form action="/examples/actions/confirmation.php" method="post">
 					<div class="form-group">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-user"></i></span>
-							<input type="text" class="form-control" name="id" placeholder="아이디" required="required">
+							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+							<input type="text" class="form-control" name="password" placeholder="PW" required="required">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-							<input type="text" class="form-control" name="password" placeholder="패스워드" required="required">
+							<input type="text" class="form-control" name="password" placeholder="PW íì¸" required="required">
 						</div>
 					</div>
-					<div class="form-group">
-						<button type="submit" class="btn btn-info btn-block btn-lg">로그인</button>
-						<button type="submit" class="btn btn-info btn-block btn-lg">회원가입</button>
+					<div class="form-group findbtn">
+						<button type="submit" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;">PW ì¬ì¤ì </button>
 					</div>
-					<p class="hint-text text-info"><a href="#">아이디/비번찾기</a></p>
 				</form>
 			</div>
+			
 		</div>
 	</div>    
 </body>
