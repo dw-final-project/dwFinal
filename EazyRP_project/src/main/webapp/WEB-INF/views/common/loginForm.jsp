@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>123</title>
 </head>
 <body>
 <h1>기본화면</h1>
