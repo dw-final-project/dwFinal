@@ -16,4 +16,8 @@ public class CommonController {
 		return "/common/loginForm";
 	}
 	
+	@GetMapping("/common/main")
+	public String main() {
+		return "/common/main";
+	}
 }
