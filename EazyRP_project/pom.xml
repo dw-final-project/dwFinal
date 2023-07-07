@@ -8,6 +8,11 @@
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<repositories>
+	<repository>
+    <id>AsposeJavaAPI</id>
+    <name>Aspose Java API</name>
+    <url>https://repository.aspose.com/repo/</url>
+</repository>
 		<repository>
 			<id>oracle driver</id>
 			<url>http://www.datanucleus.org/downloads/maven2/</url>
@@ -31,6 +36,12 @@
 	</properties>
 	<dependencies>
 		<!-- Spring -->
+		
+<dependency>
+    <groupId>com.aspose</groupId>
+    <artifactId>aspose-cells</artifactId>
+    <version>20.7</version>
+</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -271,6 +282,11 @@
                     <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
+            <plugin>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>maven-bundle-plugin</artifactId>
+			<extensions>true</extensions>
+			</plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
