@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -123,13 +124,12 @@
     </nav>
 
     <nav class="nav d-flex" style="padding: 0 16.66666667%; padding-top: 6px; background-color: #7bc4b2; justify-content:space-evenly;">
-      <li class="nav-scroller py-1 mb-2 dropdown">
-          <a class="p-2 a nav-link dropdown-toggle bold fw-bold" href="#" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; text-decoration-line: none;">개인정보/문의</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">마이페이지1</a></li>
-            <li><a class="dropdown-item" href="#">마이페이지2</a></li>
-            <li><a class="dropdown-item" href="#">마이페이지3</a></li>
+		<c:forEach items="${menuList}" var="menu">
+      	<li class="nav-scroller py-1 mb-2 dropdown">
+          <a class="p-2 a nav-link dropdown-toggle bold fw-bold dropdownI" href="javascript:subMenu('${menu.mcode }');" data-url="${menu.mcode }" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; text-decoration-line: none;">${menu.mname }</a>
+          <ul class="dropdown-menu subMenuList">
           </ul>
+<<<<<<< Updated upstream
       </li>
       <li class="nav-scroller py-1 mb-2 dropdown">
         <a class="p-2 a nav-link dropdown-toggle bold fw-bold" href="#" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; text-decoration-line: none;">나만의 메뉴(제조업)</a>
@@ -181,4 +181,8 @@
         </ul>
       </li>
         
+=======
+      	</li>
+      	</c:forEach>
+>>>>>>> Stashed changes
   </nav>
