@@ -1,27 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../include/header.jsp" %>
 
 <body>
-	<br><br><br><br><br><br><br><br><br><br>
 	<h1>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		희성 메인 Test.
 	</h1>
 	
-	<div class="content-wrapper">
+<div class="content-wrapper">
 	<%-- <jsp:include page="../content_header.jsp">
 		<jsp:param value="게시판리스트" name="subject"/>
 		<jsp:param value="목록" name="item"/>
 	</jsp:include> --%>
 	
-	<section>
-		<div class="card">
+	<section class="row">
+		<div class="col-2"></div>
+		<div class="card col-6">
 			<div class="card-header with-border">
 				<button type="button" class="btn btn-danger" id="" onclick="OpenWindow('registForm.do', '글등록', '800', 700)">글등록</button>
 				<div class="card-tools" style="width: 350px;">
@@ -46,20 +43,20 @@
 			<div class="card-body">
 				<table class="table table-borderd text-center">
 					<tr style="font-size:0.95em;">
-						<th>번 호</th>
-						<th style="width: 50%;">제 목</th>
-						<th>작성자</th>
-						<th>등록일</th>
-						<th>조회수</th>
+						<th>생산공정코드</th>
+						<th>생산공정명</th>
+						<th>순번</th>
+						<th>작업코드등록</th>
+						<th>?</th>
 					</tr>
-					<%-- <c:if test="${empty boardList }">
+					<c:if test="${empty boardList }">
 						<tr>
 							<td colspan="5">
 								<strong>해당 게시글이 없습니다.</strong>
 							</td>
 						</tr>
-					</c:if> --%>
-					<%-- <c:forEach items="${boardList }" var="board">		
+					</c:if>
+					<c:forEach items="${boardList }" var="board">		
 						<tr style="font-size: 0.85em;">
 							<td>${board.bno }</td>
 							<td style="text-align:left;">
@@ -82,17 +79,19 @@
 							</td>
 							<td><span class="badge bg-red">${board.viewcnt }</span></td>
 						</tr>
-					</c:forEach> --%>
+					</c:forEach>
 				</table>
 			</div>
+			
 			<div class="card-footer">
-<%-- 				<%@ include file="/WEB-INF/views/common/pagination.jsp" %> --%>
+				페이지처리 위치
+<%-- 			<%@ include file="/WEB-INF/views/common/pagination.jsp" %> --%>
 			</div>
+			
 		</div>
+		<div class="col-2"></div>
 	</section>
 </div>
-	
-	
 	
 </body>
 </html>
