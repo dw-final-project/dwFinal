@@ -1,9 +1,13 @@
 Manifest-Version: 1.0
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Built-By: admin
 =======
 Built-By: note_ma01
+>>>>>>> Stashed changes
+=======
+Built-By: admin
 >>>>>>> Stashed changes
 =======
 Built-By: admin
