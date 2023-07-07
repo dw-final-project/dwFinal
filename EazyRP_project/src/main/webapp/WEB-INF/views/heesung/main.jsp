@@ -5,10 +5,92 @@
 
 <%@ include file="../include/header.jsp" %>
 
+<style> /* 소라 사이드바 스타일 */
+    html, body{
+      width: 100%;
+      height: 100%;
+    }
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+
+    .b-example-divider {
+      height: 3rem;
+      background-color: rgba(0, 0, 0, .1);
+      border: solid rgba(0, 0, 0, .15);
+      border-width: 1px 0;
+      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .05);
+    }
+
+    .b-example-vr {
+      flex-shrink: 0;
+      width: 1.5rem;
+      height: 100vh;
+    }
+
+    .bi {
+      vertical-align: -.125em;
+      fill: currentColor;
+    }
+
+    .p-2 {
+      color: whitesmoke;
+    }
+
+    .nav d-flex {
+      justify-content: space-evenly;
+    }
+    
+    .container {
+    	
+    }
+</style>
+
 <body>
-	<h1>
-		희성 메인 Test.
-	</h1>
+<div class="container col-10">
+	<!-- sidebar -->   
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style=" float:left ; width: 20%; height: 100%; display: inline;">
+      <div class="d-flex align-items-center pb-3 mb-3 text-decoration-none border-bottom">
+        <span class="fs-5 fw-semibold"> 개인정보 </span>
+      </div>
+      <ul class="list-unstyled ps-0">
+        <li class="mb-1">
+          <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+            개인정보 조회 및 수정
+          </a>
+        </li>
+        <li class="mb-1">
+          <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+            회원탈퇴
+          </a>
+        </li>
+      </ul>
+        <div class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+           <span class="fs-5 fw-semibold"> 관리자 문의 </span>
+        </div>
+        <ul class="list-unstyledv ps-0">
+          <li class="mb-1" style="list-style: none;">
+            <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+              관리자 문의하기
+            </a>
+          </li>
+          <li class="mb-1" style="list-style: none;">
+            <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+              문의 답변 확인
+            </a>
+          </li>
+        </ul>     
+        </div>
 	
 <div class="content-wrapper">
 	<%-- <jsp:include page="../content_header.jsp">
@@ -17,10 +99,10 @@
 	</jsp:include> --%>
 	
 	<section class="row">
-		<div class="col-2"></div>
-		<div class="card col-6">
+		<div class="col-1"></div>
+		<div class="card col-10" style="margin-top:3em;">
 			<div class="card-header with-border">
-				<button type="button" class="btn btn-danger" id="" onclick="OpenWindow('registForm.do', '글등록', '800', 700)">글등록</button>
+				<button type="button" class="btn btn-danger" id="" onclick="OpenWindow('registForm.do', '글등록', 800, 700);">등록</button>
 				<div class="card-tools" style="width: 350px;">
 					<div class="input-group row">
 						<select class="form-control col-md-4" name="searchType" id="searchType">
@@ -47,7 +129,6 @@
 						<th>생산공정명</th>
 						<th>순번</th>
 						<th>작업코드등록</th>
-						<th>?</th>
 					</tr>
 					<c:if test="${empty boardList }">
 						<tr>
@@ -89,12 +170,21 @@
 			</div>
 			
 		</div>
-		<div class="col-2"></div>
 	</section>
 </div>
-	
+</div>
 </body>
 </html>
+
+<script>
+	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
+		winleft = (screen.width - WinWidth) / 2;
+		wintop = (screen.height - WinHeight) / 2;
+		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
+								+ "height=" + WinHeight + ",top="+ wintop + ",left="
+								+ winleft + ",resizable=yes,status=yes");
+	}
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
