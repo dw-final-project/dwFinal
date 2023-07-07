@@ -7,12 +7,8 @@
 	<typeAliases>
 		<typeAlias type="java.lang.String" alias="str"/>
 		<typeAlias type="java.lang.Integer" alias="int"/>
-<<<<<<< Updated upstream
 		<typeAlias type="kr.or.dw.vo.MenuVO" alias="menu"/>
-=======
-		
 		<typeAlias type="kr.or.dw.vo.ProcessVO" alias="process"/>
->>>>>>> Stashed changes
 
 	</typeAliases>
 

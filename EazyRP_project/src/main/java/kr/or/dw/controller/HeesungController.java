@@ -19,7 +19,7 @@ import kr.or.dw.service.ProcessService;
 import kr.or.dw.vo.ProcessVO;
 
 @Controller
-@RequestMapping("/heesung")
+@RequestMapping("/erp3")
 public class HeesungController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HeesungController.class);
@@ -27,7 +27,7 @@ public class HeesungController {
 	@Autowired
 	private ProcessService processService;
 	
-	@RequestMapping("/main")
+	@RequestMapping("/productionoutsourcing.do")
 	public String main() {
 		return "heesung/main";
 	}

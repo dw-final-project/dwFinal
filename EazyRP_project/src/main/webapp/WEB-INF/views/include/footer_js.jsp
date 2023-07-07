@@ -5,14 +5,14 @@
 <script type="text/x-handlebars-template" id="subMenu-list-template">
 {{#each .}}
 	<li>
-		<a href="javascript:goPage('{{murl}}', '{{mcode}}');" class="dropdown-item">
+		<a href="{{murl}}" class="dropdown-item">
 			<p>{{mname}}</p>
 		</a>
 	</li>
 {{/each}}
 </script>
 <script>
-
+// javascript:goPage('{{murl}}', '{{mcode}}');
 	function printData(subMenuList, target, templateObj){
 		let template = Handlebars.compile(templateObj.html());
 		
