@@ -157,7 +157,7 @@
           <li><a class="dropdown-item" href="#">기초등록</a></li>
           <li><a class="dropdown-item" href="#">영업관리</a></li>
           <li><a class="dropdown-item" href="#">구매관리</a></li>
-          <li><a class="dropdown-item" href="#">생산/외주</a></li>
+          <li><a class="dropdown-item" href="<%=request.getContextPath() %>/heesung/main.do">생산/외주</a></li>
           <li><a class="dropdown-item" href="#">기타이동</a></li>
         </ul>
       </li>
