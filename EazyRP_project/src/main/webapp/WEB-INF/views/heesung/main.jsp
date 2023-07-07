@@ -74,7 +74,7 @@
 											</span>
 										</c:if> 			
 									</span>
-								</a>
+								</a> 
 							</td>
 							<td>${board.writer }</td>
 							<td>
