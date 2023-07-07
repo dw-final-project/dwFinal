@@ -137,7 +137,7 @@
           <li><a class="dropdown-item" href="#">기초정보</a></li>
           <li><a class="dropdown-item" href="#">발주관리 및 입/출고 관리</a></li>
           <li><a class="dropdown-item" href="#">생산관리</a></li>
-          <li><a class="dropdown-item" href="#">커뮤니케이션</a></li>
+          <li><a class="dropdown-item" href="/mymenu/communication.do">커뮤니케이션</a></li>
         </ul>
       </li>
       <li class="nav-scroller py-1 mb-2 dropdown">
