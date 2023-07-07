@@ -78,4 +78,6 @@ public class HeesungController {
 		out.println("</script>");
 	}
 	
+	
+	
 }
