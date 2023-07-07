@@ -16,7 +16,7 @@
 
   <meta name="theme-color" content="#712cf9">
 </head>
-
+<script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <style>
   html {
     height: 100%;
