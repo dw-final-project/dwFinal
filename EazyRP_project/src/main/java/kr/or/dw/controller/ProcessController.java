@@ -60,16 +60,14 @@ public class ProcessController {
 	
 	@RequestMapping("/registForm")
 	public String registForm() {
-		String url = "heesung/open_regist";
+		String url = "process/open_regist";
 		return url;
 	}
 	
 	@RequestMapping("/regist")
 	public void regist(ProcessVO processVo, HttpServletRequest req, HttpServletResponse res) throws SQLException, IOException {
 //		board.setTitle((String)req.getAttribute("XSStitle"));
-		System.out.println("1");
 		processService.registProcess(processVo);
-		System.out.println("2");
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
 		out.println("<script>");
