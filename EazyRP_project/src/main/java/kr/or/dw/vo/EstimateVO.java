@@ -3,39 +3,46 @@ package kr.or.dw.vo;
 import java.util.Date;
 
 import lombok.Data;
+
 @Data
-public class siVO {
+public class EstimateVO {
 	
-	private String si_no;
+	private String est_no;
 	private Date sys_regdate;
 	private int emp_no;
-	private Date shipdate;
+	private String fc_no;
+	private int amount;
 	private String progress;
 	private String enabled;
 	private String wh_no;
 	private int quantity;
-	private String files;
-	private String fc_no;
 	private String sys_up;
 	private Date sys_updatedate;
+	private String sys_reg;
+	private String files;
 	
 	
-	public siVO(String si_no, Date sys_regdate, int emp_no, Date shipdate, String progress, String enabled,
-			String wh_no, int quantity, String files, String fc_no, String sys_up, Date sys_updatedate) {
+	public EstimateVO(String est_no, Date sys_regdate, int emp_no, String fc_no, int amount, String progress,
+			String enabled, String wh_no, int quantity, String sys_up, Date sys_updatedate, String sys_reg,
+			String files) {
+		
 		super();
-		this.si_no = si_no;
+		this.est_no = est_no;
 		this.sys_regdate = sys_regdate;
 		this.emp_no = emp_no;
-		this.shipdate = shipdate;
+		this.fc_no = fc_no;
+		this.amount = amount;
 		this.progress = progress;
 		this.enabled = enabled;
 		this.wh_no = wh_no;
 		this.quantity = quantity;
-		this.files = files;
-		this.fc_no = fc_no;
 		this.sys_up = sys_up;
 		this.sys_updatedate = sys_updatedate;
+		this.sys_reg = sys_reg;
+		this.files = files;
+		
 	}
 	
 	
-}
+}   
+
