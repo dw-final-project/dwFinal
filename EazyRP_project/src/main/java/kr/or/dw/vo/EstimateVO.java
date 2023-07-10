@@ -25,6 +25,7 @@ public class EstimateVO {
 	public EstimateVO(String est_no, Date sys_regdate, int emp_no, String fc_no, int amount, String progress,
 			String enabled, String wh_no, int quantity, String sys_up, Date sys_updatedate, String sys_reg,
 			String files) {
+		
 		super();
 		this.est_no = est_no;
 		this.sys_regdate = sys_regdate;
