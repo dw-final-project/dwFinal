@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.service.MenuService;
 import kr.or.dw.service.ProcessService;
 import kr.or.dw.vo.MenuVO;
@@ -35,14 +36,22 @@ public class ProcessController {
 	private ProcessService processService;
 	
 	@RequestMapping("/productionoutsourcing.do")
-	public ModelAndView main(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException {
+	public ModelAndView main(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
 		String url = "process/main";
-		List<MenuVO> menuList = menuService.selectMainMenuList();
+		
+		// 메뉴 리스트
+		List<MenuVO> menuList = menuService.selectMainMenuList(); 
 		MenuVO menu = menuService.selectMenuByMcode(mcode);
+		
+		// 공정관리 목록 조회
+		
+		Map<String, Object> dataMap = processService.selectProcessList(cri);
 		
 		mnv.addObject("menu", menu);
 		mnv.addObject("menuList", menuList);
+		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
+		
 		return mnv;
 	}
 	
