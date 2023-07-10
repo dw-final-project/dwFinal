@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dw.dao.MyMenuDAO">
+	
+	<select id="getEmpList" resultType="emp">
+		SELECT e.*, c.c_name FROM emp e, company c WHERE e.c_no = c.c_no
+	</select>
+	
+	<select id="getSelectEmpList" resultType="emp">
+		SELECT e.*, c.c_name FROM emp e, company c WHERE e_name LIKE '%' || #{name} || '%' AND e.c_no = c.c_no
+	</select>
+	
+	<select id="getSelectEmpListCno" resultType="emp">
+		SELECT e.*, c.c_name FROM emp e, company c WHERE c_name LIKE '%' || #{c_name} || '%' AND e.c_no = c.c_no
+	</select>
+	
+	<select id="getEmp" resultType="emp">
+		SELECT e.*, c.c_name FROM emp e, company c WHERE c_name LIKE '%' || #{c_name} || '%' AND e_name LIKE '%' || #{name} || '%' AND e.c_no = c.c_no
+	</select>
+	
+	<select id="selectEmp" resultType="emp">
+		SELECT e.*, c.c_name FROM emp e, company c WHERE e.c_no = c.c_no AND e.emp_no = #{emp_no}
+	</select>
+	
+	<insert id="sendNote">
+		INSERT INTO note VALUES (n_no_seq.nextval, #{c_dept}, #{caller}, '', #{con}, sysdate, #{title}, #{files}, #{r_dept}, #{receiver}, '', #{c_company}, #{r_company}, 'N')
+	</insert>
+	
+	<select id="getNoteList" resultType="note">
+		SELECT n.*, (SELECT e.e_name FROM note n, emp e WHERE n.caller = e.emp_no) callerName, 
+		(SELECT e.e_name FROM note n, emp e WHERE n.RECEIVER = e.EMP_NO) RECEIVERname,
+		(SELECT c.C_NAME FROM note n, COMPANY c WHERE n.C_COMPANY = c.C_NO) c_cname,
+		(SELECT c.C_NAME FROM note n, COMPANY c WHERE n.r_COMPANY = c.C_NO) r_cname
+	FROM note n, emp e
+	WHERE n.RECEIVER = e.EMP_NO
+	</select>
+	
+	<select id="selectNote" resultType="note">
+		SELECT n.*, (SELECT e.e_name FROM note n, emp e WHERE n.caller = e.emp_no) callerName, 
+		(SELECT e.e_name FROM note n, emp e WHERE n.RECEIVER = e.EMP_NO) RECEIVERname,
+		(SELECT c.C_NAME FROM note n, COMPANY c WHERE n.C_COMPANY = c.C_NO) c_cname,
+		(SELECT c.C_NAME FROM note n, COMPANY c WHERE n.r_COMPANY = c.C_NO) r_cname
+		FROM note n, emp e
+		WHERE n.RECEIVER = e.EMP_NO
+		AND n_no = #{n_no}
+	</select>
+	
+</mapper>

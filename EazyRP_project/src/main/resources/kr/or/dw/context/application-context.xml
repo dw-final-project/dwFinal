@@ -10,5 +10,6 @@
 	<!-- <bean id="memberService" class="kr.or.dw.service.MemberServiceImpl"/> -->
 	<bean id="menuService" class="kr.or.dw.service.MenuServiceImpl"/>
 	<bean id="processService" class="kr.or.dw.service.ProcessServiceImpl"/>
+	<bean id="mymenuService" class="kr.or.dw.service.MyMenuServiceImpl"/>
 
 </beans>

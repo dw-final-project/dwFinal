@@ -9,6 +9,8 @@
 		<typeAlias type="java.lang.Integer" alias="int"/>
 		<typeAlias type="kr.or.dw.vo.MenuVO" alias="menu"/>
 		<typeAlias type="kr.or.dw.vo.ProcessVO" alias="process"/>
+		<typeAlias type="kr.or.dw.vo.EmpVO" alias="emp"/>
+		<typeAlias type="kr.or.dw.vo.NoteVO" alias="note"/>
 
 	</typeAliases>
 
