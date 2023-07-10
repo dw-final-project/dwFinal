@@ -24,9 +24,9 @@ import kr.or.dw.vo.ProcessVO;
 
 @Controller
 @RequestMapping("/erp3")
-public class HeesungController {
+public class ProcessController {
 
-	private static final Logger logger = LoggerFactory.getLogger(HeesungController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ProcessController.class);
 	
 	@Autowired
 	private MenuService menuService;
@@ -36,7 +36,7 @@ public class HeesungController {
 	
 	@RequestMapping("/productionoutsourcing.do")
 	public ModelAndView main(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException {
-		String url = "heesung/main";
+		String url = "process/main";
 		List<MenuVO> menuList = menuService.selectMainMenuList();
 		MenuVO menu = menuService.selectMenuByMcode(mcode);
 		

@@ -57,8 +57,9 @@
 </style>
 
 <body>
-<div class="container col-10">
-	<!-- sidebar -->   
+
+<!-- <div class="container col-10">
+	sidebar   
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style=" float:left ; width: 20%; height: 100%; display: inline;">
       <div class="d-flex align-items-center pb-3 mb-3 text-decoration-none border-bottom">
         <span class="fs-5 fw-semibold"> 개인정보 </span>
@@ -90,7 +91,7 @@
             </a>
           </li>
         </ul>     
-        </div>
+        </div> -->
 	
 <div class="content-wrapper">
 	<%-- <jsp:include page="../content_header.jsp">
