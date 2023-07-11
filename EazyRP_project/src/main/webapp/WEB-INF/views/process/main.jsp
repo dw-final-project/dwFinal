@@ -146,7 +146,7 @@
 							<tr style="font-size: 0.85em;">
 								<td>${process.pc_no }</td>
 								<td>
-									<a href="javascript:OpenWindow('detail.do?bno=${process.pc_code}', '공정상세보기', 800, 700);">${process.pc_code}</a>
+									<a href="javascript:OpenWindow('detail.do?pc_code=${process.pc_code}', '공정상세보기', 800, 700);">${process.pc_code}</a>
 								</td>								
 								<td>${process.pc_name}</td>
 								<td>${process.pc_order}</td>

@@ -52,10 +52,20 @@ public class ProcessServiceImpl implements ProcessService{
 	}
 
 	@Override
-	public ProcessVO selectProcess(int pc_no) throws SQLException {
-		ProcessVO process = processDAO.selectProcess(pc_no);
+	public ProcessVO selectProcess(String pc_code) throws SQLException {
+		ProcessVO process = processDAO.selectProcess(pc_code);
 
 		return process;
+	}
+
+	@Override
+	public void remove(String pc_code) throws SQLException {
+		processDAO.deleteProcess(pc_code);
+	}
+
+	@Override
+	public void modify(ProcessVO process) throws SQLException {
+		processDAO.updateProcess(process);
 	}
 
 }

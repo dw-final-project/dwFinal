@@ -55,16 +55,12 @@ public class CommonController {
 		return mnv;
 	}
 		
-	@GetMapping("/common/main")
-	public String main() {
-		return "/common/registerForm";
-	}
 	
-	@RequestMapping("/common/main")
-	public String registerForm(HttpServletResponse res) throws Exception {
-		return "/common/registerForm";
-
-	}
+//	@RequestMapping("/common/main")
+//	public String registerForm(HttpServletResponse res) throws Exception {
+//		return "/common/registerForm";
+//
+//	}
 
 	@RequestMapping("/common/subMenu")
 	public ResponseEntity<List<MenuVO>> subMenu(String mcode){
