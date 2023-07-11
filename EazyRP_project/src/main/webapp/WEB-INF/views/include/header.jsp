@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -16,7 +17,7 @@
 
   <meta name="theme-color" content="#712cf9">
 </head>
-
+<script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <style>
   html {
     height: 100%;
@@ -123,62 +124,11 @@
     </nav>
 
     <nav class="nav d-flex" style="padding: 0 16.66666667%; padding-top: 6px; background-color: #7bc4b2; justify-content:space-evenly;">
-      <li class="nav-scroller py-1 mb-2 dropdown">
-          <a class="p-2 a nav-link dropdown-toggle bold fw-bold" href="#" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; text-decoration-line: none;">개인정보/문의</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">마이페이지1</a></li>
-            <li><a class="dropdown-item" href="#">마이페이지2</a></li>
-            <li><a class="dropdown-item" href="#">마이페이지3</a></li>
+		<c:forEach items="${menuList}" var="menu">
+      	<li class="nav-scroller py-1 mb-2 dropdown">
+          <a class="p-2 a nav-link dropdown-toggle bold fw-bold dropdownI" href="javascript:subMenu('${menu.mcode }');" data-url="${menu.mcode }" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; text-decoration-line: none;">${menu.mname }</a>
+          <ul class="dropdown-menu subMenuList">
           </ul>
-      </li>
-      <li class="nav-scroller py-1 mb-2 dropdown">
-        <a class="p-2 a nav-link dropdown-toggle bold fw-bold" href="#" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; text-decoration-line: none;">나만의 메뉴(제조업)</a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">기초정보</a></li>
-          <li><a class="dropdown-item" href="#">발주관리 및 입/출고 관리</a></li>
-          <li><a class="dropdown-item" href="#">생산관리</a></li>
-          <li><a class="dropdown-item" href="#">커뮤니케이션</a></li>
-        </ul>
-      </li>
-      <li class="nav-scroller py-1 mb-2 dropdown">
-        <a class="p-2 a nav-link dropdown-toggle bold fw-bold" href="#" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; text-decoration-line: none;">나만의 메뉴(유통업)</a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">기초정보</a></li>
-          <li><a class="dropdown-item" href="#">입/출고 관리</a></li>
-          <li><a class="dropdown-item" href="#">재고관리</a></li>
-          <li><a class="dropdown-item" href="#">매입/매출 관리</a></li>
-          <li><a class="dropdown-item" href="#">수금/지급 처리</a></li>
-          <li><a class="dropdown-item" href="#">커뮤니케이션</a></li>
-        </ul>
-      </li>
-      <li class="nav-scroller py-1 mb-2 dropdown">
-        <a class="p-2 a nav-link dropdown-toggle bold fw-bold" href="#" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; text-decoration-line: none;">재고1</a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">기초등록</a></li>
-          <li><a class="dropdown-item" href="#">영업관리</a></li>
-          <li><a class="dropdown-item" href="#">구매관리</a></li>
-          <li><a class="dropdown-item" href="#">생산/외주</a></li>
-          <li><a class="dropdown-item" href="#">기타이동</a></li>
-        </ul>
-      </li>
-      <li class="nav-scroller py-1 mb-2 dropdown">
-        <a class="p-2 a nav-link dropdown-toggle bold fw-bold" href="#" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; text-decoration-line: none;">재고2</a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">쇼핑몰관리</a></li>
-          <li><a class="dropdown-item" href="#">상품 관리</a></li>
-          <li><a class="dropdown-item" href="#">A/S 관리</a></li>
-          <li><a class="dropdown-item" href="#">품질관리</a></li>
-          <li><a class="dropdown-item" href="#">이익관리</a></li>
-          <li><a class="dropdown-item" href="#">오더관리</a></li>
-        </ul>
-      </li>
-      <li class="nav-scroller py-1 mb-2 dropdown">
-        <a class="p-2 a nav-link dropdown-toggle bold fw-bold" href="#" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; text-decoration-line: none;">erp 관리</a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">급여관리</a></li>
-          <li><a class="dropdown-item" href="#">인사관리</a></li>
-          <li><a class="dropdown-item" href="#">전자결재관리</a></li>
-        </ul>
-      </li>
-        
+      	</li>
+      	</c:forEach>
   </nav>
