@@ -1,11 +1,8 @@
 package kr.or.dw.controller;
 
-<<<<<<< Updated upstream
 import java.sql.SQLException;
 import java.util.List;
-=======
 import javax.servlet.http.HttpServletResponse;
->>>>>>> Stashed changes
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,12 +23,9 @@ public class CommonController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CommonController.class);
 	
-<<<<<<< Updated upstream
 	@Autowired
 	private MenuService menuService;
 
-=======
->>>>>>> Stashed changes
 	@GetMapping("/common/loginForm")
 	public String loginForm(HttpServletResponse res) throws Exception {
 		String url = "/common/loginForm";
@@ -39,7 +33,6 @@ public class CommonController {
 		return url;
 	}
 	
-<<<<<<< Updated upstream
 //	@GetMapping("/common/main")
 //	public String main() {
 //		return "/common/main";
@@ -59,11 +52,11 @@ public class CommonController {
 		
 		
 		return mnv;
-=======
+	}
+
 	@GetMapping("/common/main")
 	public String main() {
 		return "/common/registerForm";
->>>>>>> Stashed changes
 	}
 	
 	@RequestMapping("/common/subMenu")
