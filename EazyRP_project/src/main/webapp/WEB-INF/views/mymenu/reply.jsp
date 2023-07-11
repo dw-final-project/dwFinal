@@ -10,7 +10,7 @@
 			<div class="col-md-9" style="max-width: 600px;">
 				<div class="card card-outline card-info">
 					<div class="card-header">
-						<h3 class="card-title p-1">쪽지쓰기</h3>
+						<h3 class="card-title p-1">답장하기</h3>
 						<div class="card-tools">
 							<button type="button" class="btn btn-primary" id="registBtn">보내기</button>
 							&nbsp;&nbsp;&nbsp;&nbsp;
@@ -24,11 +24,11 @@
 								<input type="text" id="title" name="title" class="form-control" placeholder="제목을 입력하세요.">
 							</div>
 							<div class="form-group">
-								<input type="hidden" name="reply" value="0">
+								<input type="hidden" name="reply" value="1">
 								<input type="hidden" name="writer" id="writer" value="1">
-								<input type="hidden" name="receiver" id="receiver">
+								<input type="hidden" name="receiver" id="receiver" value="${caller }">
 								<label for="writer">받는사람</label>
-								<input type="text" id="name" name="name" class="form-control" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 800, 600)">
+								<input type="text" value="${callerName }" id="name" name="name" class="form-control" readonly>
 							</div>
 							<div class="form-group">
 								<label for="content">내 용</label>

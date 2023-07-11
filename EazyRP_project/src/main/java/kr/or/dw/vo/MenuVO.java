@@ -12,5 +12,6 @@ public class MenuVO {
 	private String upcode;
 	private int mlevel;
 	private int isnav;
+
 	
 }
