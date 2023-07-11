@@ -49,6 +49,7 @@ public class ProcessController {
 		
 		mnv.addObject("menu", menu);
 		mnv.addObject("menuList", menuList);
+		
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
 		

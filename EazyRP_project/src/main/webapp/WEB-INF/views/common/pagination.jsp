@@ -68,6 +68,7 @@
 		}else{
 			searchForm.attr("action", "productionoutsourcing.do");
 		}
+		console.log(searchForm)
 		searchForm.submit();
 	}
 </script>
