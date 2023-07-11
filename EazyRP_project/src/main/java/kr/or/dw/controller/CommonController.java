@@ -2,6 +2,7 @@ package kr.or.dw.controller;
 
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -53,7 +54,7 @@ public class CommonController {
 		
 		return mnv;
 	}
-
+		
 	@GetMapping("/common/main")
 	public String main() {
 		return "/common/registerForm";
