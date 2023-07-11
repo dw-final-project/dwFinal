@@ -11,47 +11,33 @@
 		SELECT * FROM process
 	</select>
 	
-	<!-- <sql id="search">
-		<if test="searchType == 't'.toString()">
-			AND title LIKE '%' || #{keyword} || '%'
+	<sql id="search">
+		<if test="searchType == 'number'.toString()">
+			AND pc_no LIKE '%' || #{keyword} || '%'
 		</if>
-		<if test="searchType == 'w'.toString()">
-			AND writer LIKE '%' || #{keyword} || '%'
+		<if test="searchType == 'code'.toString()">
+			AND pc_code LIKE '%' || #{keyword} || '%'
 		</if>
-		<if test="searchType == 'c'.toString()">
-			AND content LIKE '%' || #{keyword} || '%'
+		<if test="searchType == 'title'.toString()">
+			AND pc_name LIKE '%' || #{keyword} || '%'
 		</if>
-		<if test="searchType == 'tc'.toString()">
-			AND ( 
-			title LIKE '%' || #{keyword} || '%'
-			OR
-			content LIKE '%' || #{keyword} || '%'
-			)
-		</if>
-		<if test="searchType == 'cw'.toString()">
-			AND ( 
-			writer LIKE '%' || #{keyword} || '%'
-			OR
-			content LIKE '%' || #{keyword} || '%'
-			)
-		</if>
-		<if test="searchType == 'tcw'.toString()">
+		<if test="searchType == 'nnc'.toString()">
 			AND (
-			title LIKE '%' || #{keyword} || '%'
+			pc_no LIKE '%' || #{keyword} || '%'
 			OR
-			writer LIKE '%' || #{keyword} || '%'
+			pc_code LIKE '%' || #{keyword} || '%'
 			OR
-			content LIKE '%' || #{keyword} || '%'
+			pc_name LIKE '%' || #{keyword} || '%'
 			)
 		</if>
-	</sql> -->
+	</sql>
 	
 	<!-- 셀렉트할때는 리절트타입 필요하고 insert delete 등할때는 파라미터 타입이 들어감 -->
 	<select id="selectSearchProcessList" resultType="process">
 		SELECT *
 		  FROM process
 		 WHERE 1=1
-<!-- 		 <include refid="search"/> -->
+		 <include refid="search"/>
 		 ORDER BY pc_no desc
 	</select>
 	
@@ -59,7 +45,7 @@
 		SELECT COUNT(*)
 		  FROM process
 		 WHERE 1=1
-<!-- 		 <include refid="search"/> -->
+		 <include refid="search"/>
 	</select>
 
 </mapper>
