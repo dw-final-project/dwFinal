@@ -7,14 +7,11 @@
 		<constructor-arg value="${member.picture.upload}"></constructor-arg>
 	</bean> -->
 
-<<<<<<< Updated upstream
+
 	<!-- <bean id="memberService" class="kr.or.dw.service.MemberServiceImpl"/> -->
 	<bean id="menuService" class="kr.or.dw.service.MenuServiceImpl"/>
 	<bean id="processService" class="kr.or.dw.service.ProcessServiceImpl"/>
 	<bean id="estimateService" class="kr.or.dw.service.EstimateServiceImpl"/>
-=======
-
 	<bean id="memberService" class="kr.or.dw.service.MemberServiceImpl"/>
-
->>>>>>> Stashed changes
+	<bean id="mailSendService" class="kr.or.dw.service.MailSendServiceImpl"/>
 </beans>
