@@ -26,5 +26,7 @@ public interface MyMenuService {
 
 	NoteVO selectNote(int n_no) throws SQLException;
 
+	void deleteNote(int n_no) throws SQLException;
+
 
 }

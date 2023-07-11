@@ -12,8 +12,30 @@
 	<div>제목 : ${note.title }</div>
 	<div>보낸사람 : ${note.callerName }</div>
 	<div>내용 : ${note.con }</div>
-	<button>답장하기</button>
-	<button>삭제</button>
-	<button>닫기</button>
+	<button id="replyBtn">답장하기</button>
+	<button id="deleteBtn">삭제</button>
+	<button id="cancelBtn">닫기</button>
+<form action ="" method="post" id="submitForm">
+	<input type="hidden" name="n_no" value="${note.n_no}">
+	<input type="hidden" name="caller" value="${note.caller }">
+	<input type="hidden" name="callerName" value="${note.callerName }">
+</form>
 </body>
 </html>
+<script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
+<script>
+	$('#cancelBtn').on('click', function(){
+		window.opener.location.reload(true);
+		window.close();
+	})
+	$('#deleteBtn').on('click', function(){
+		if(confirm("정말로 삭제하시겠습니까?")){
+			$('#submitForm').attr('action', '/mymenu/deleteNote.do');
+			$('#submitForm').submit();
+		}
+	});
+	$('#replyBtn').on('click', function(){
+		$('#submitForm').attr('action', '/mymenu/replyNote.do');
+		$('#submitForm').submit();
+	});
+</script>

@@ -40,15 +40,19 @@ public class MyMenuController {
 	}
 	
 	@RequestMapping("/noteRegist")
-	public String noteRegist(NoteVO note, int writer) throws SQLException{
+	public String noteRegist(NoteVO note, int reply, HttpServletResponse res) throws SQLException, IOException{
 		int emp_no = note.getReceiver(); // 받는사람 emp_no
-		writer = 1;
+		System.out.println("1");
+		int writer = 1;
 		EmpVO emp = mymenuService.selectEmp(emp_no); // 받는사람 정보
 		EmpVO emp2 = mymenuService.selectEmp(writer); // 보낸사람 정보
 		NoteVO noteVo = new NoteVO();
-		
-		noteVo.setR_dept(emp.getDept_no());
-
+		System.out.println("2");
+		if(emp.getDept_no() != null) {
+			noteVo.setR_dept(emp.getDept_no());
+		} else {
+			noteVo.setR_dept("");
+		}
 		noteVo.setCon(note.getCon());
 		noteVo.setTitle(note.getTitle());
 		if(note.getFiles() == null || note.getFiles() == "") {
@@ -70,11 +74,20 @@ public class MyMenuController {
 		
 		noteVo.setReceiver(emp_no);
 		noteVo.setR_company(emp.getC_no());
-
+		System.out.println("3");
 		
 		mymenuService.sendNote(noteVo);
-		
-		return "/mymenu/communication";
+		if(reply == 1) {
+			res.setContentType("text/html; charset=utf-8");
+			PrintWriter out = res.getWriter();
+			out.println("<script>");
+			out.println("alert('답장이 완료되었습니다.')");
+			out.println("window.opener.location.reload(true); window.close();");
+			out.println("</script>");
+			return null;
+		} else {
+			return "/mymenu/noteList";
+		}
 	}
 	
 	@RequestMapping("/noteList")
@@ -85,6 +98,35 @@ public class MyMenuController {
 		
 		mnv.setViewName(url);
 		mnv.addObject("note", note);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/deleteNote")
+	public void deleteNote(int n_no, HttpServletResponse res) throws SQLException, IOException {
+		mymenuService.deleteNote(n_no);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('삭제되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
+	
+	@RequestMapping("/replyNote")
+	public ModelAndView replyNote(ModelAndView mnv, int caller, String callerName, HttpServletResponse res) throws SQLException, IOException {
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("window.resizeTo(700,1000)");
+		out.println("</script>");
+		
+		String url =  "/mymenu/reply";
+		
+		mnv.addObject("caller", caller);
+		mnv.addObject("callerName", callerName);
+		mnv.setViewName(url);
 		
 		return mnv;
 	}

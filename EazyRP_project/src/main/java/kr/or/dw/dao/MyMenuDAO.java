@@ -29,6 +29,9 @@ public interface MyMenuDAO {
 	public NoteVO selectNote(int n_no) throws SQLException;
 
 	public void readableUpdate(int n_no) throws SQLException;
+
+	public void deleteNote(int n_no) throws SQLException;
+	
 	
 
 }

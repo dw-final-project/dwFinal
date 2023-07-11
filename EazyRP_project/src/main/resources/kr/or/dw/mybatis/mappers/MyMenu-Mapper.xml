@@ -59,4 +59,8 @@ FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 		UPDATE note SET "readable" = 'Y' WHERE n_no = #{n_no}
 	</update>
 	
+	<delete id="deleteNote">
+		DELETE note WHERE n_no = #{n_no}
+	</delete>
+	
 </mapper>

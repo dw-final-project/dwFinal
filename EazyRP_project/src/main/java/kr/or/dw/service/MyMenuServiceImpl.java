@@ -75,5 +75,10 @@ public class MyMenuServiceImpl implements MyMenuService{
 		mymenuDAO.readableUpdate(n_no);
 		return note;
 	}
+
+	@Override
+	public void deleteNote(int n_no) throws SQLException {
+		mymenuDAO.deleteNote(n_no);
+	}
 	
 }
