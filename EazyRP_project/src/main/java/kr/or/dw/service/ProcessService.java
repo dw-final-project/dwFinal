@@ -15,6 +15,10 @@ public interface ProcessService {
 	Map<String, Object> selectProcessList(SearchCriteria cri) throws SQLException;
 	
 	// 공정  상세페이지
-	ProcessVO selectProcess(int pc_no) throws SQLException;
+	ProcessVO selectProcess(String pc_code) throws SQLException;
+
+	void remove(String pc_code) throws SQLException;
+
+	void modify(ProcessVO process) throws SQLException;
 
 }

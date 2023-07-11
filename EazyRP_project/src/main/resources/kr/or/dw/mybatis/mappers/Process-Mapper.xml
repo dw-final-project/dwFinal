@@ -47,7 +47,21 @@
 	<select id="selectProcess" resultType="process">
 		SELECT 	*
 		FROM	process
-		WHERE	pc_no = #{pc_no}
+		WHERE	pc_code = #{pc_code}
 	</select>
-
+	
+	<delete id="deleteProcess" parameterType="str">
+		DELETE
+		FROM	process
+		WHERE	pc_code = #{pc_code}
+	</delete>
+	
+	<update id="updateProcess" parameterType="process">
+		UPDATE process
+		SET 
+			pc_code = #{pc_code}
+			,pc_name = #{pc_name}
+			,pc_order = #{pc_order}
+		WHERE pc_code = #{pc_code}
+	</update>
 </mapper>
