@@ -10,6 +10,7 @@
 		<typeAlias type="kr.or.dw.vo.MenuVO" alias="menu"/>
 		<typeAlias type="kr.or.dw.vo.ProcessVO" alias="process"/>
 		<typeAlias type="kr.or.dw.vo.EstimateVO" alias="estimate"/>
+		<typeAlias type="kr.or.dw.vo.SiVO" alias="si"/>
 	</typeAliases>
 
 </configuration>

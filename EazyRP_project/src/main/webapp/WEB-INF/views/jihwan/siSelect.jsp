@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,20 +76,28 @@
             <th>수정자</th>
             <th>수정일</th>
         </tr>
+        <c:forEach items="${siList }" var="si">
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>${si.si_no }</td>
+            <td>
+            <fmt:formatDate value="${si.sys_regdate }" pattern="yyyy-MM-dd"></fmt:formatDate>
+            </td>
+            <td>${si.emp_no}</td>
+            <td>
+            <fmt:formatDate value="${si.shipdate }" pattern="yyyy-MM-dd"></fmt:formatDate>
+            </td>
+            <td>${si.progress }</td>
+            <td>${si.enabled }</td>
+            <td>${si.wh_no }</td>
+            <td>${si.quantity }</td>
+            <td>${si.files }</td>
+            <td>${si.fc_no }</td>
+            <td>${si.sys_up }</td>
+            <td>
+            <fmt:formatDate value="${si.sys_updatedate }" pattern="yyyy-MM-dd"></fmt:formatDate>
+            </td>
         </tr>     
+        </c:forEach>
         <!-- 다른 주문 정보도 추가할 수 있습니다. -->
     </table>
     <div class="close-button">

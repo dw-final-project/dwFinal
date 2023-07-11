@@ -11,5 +11,7 @@ import kr.or.dw.vo.EstimateVO;
 public interface EstimateDAO {
 
 	List<EstimateVO> selectEstimList() throws SQLException;
+
+	EstimateVO selectdetail(String est_no) throws SQLException;
 	
 }
