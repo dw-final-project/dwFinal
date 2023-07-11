@@ -24,10 +24,8 @@ public class CommonController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CommonController.class);
 	
-
 	@Autowired
 	private MenuService menuService;
-
 
 	@GetMapping("/common/loginForm")
 	public String loginForm(HttpServletResponse res) throws Exception {
@@ -36,7 +34,12 @@ public class CommonController {
 		return url;
 	}
 	
-	/*@RequestMapping("/common/main")
+//	@GetMapping("/common/main")
+//	public String main() {
+//		return "/common/main";
+//	}
+	
+	@RequestMapping("/common/main")
 	public ModelAndView index(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException{
 		String url = "/common/main";
 		
@@ -50,7 +53,12 @@ public class CommonController {
 		
 		
 		return mnv;
-	}*/
+	}
+		
+	@GetMapping("/common/main")
+	public String main() {
+		return "/common/registerForm";
+	}
 	
 	@RequestMapping("/common/main")
 	public String registerForm(HttpServletResponse res) throws Exception {

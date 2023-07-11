@@ -15,10 +15,10 @@ import kr.or.dw.vo.ProcessVO;
 public interface ProcessDAO {
 	void insertProcess(ProcessVO processVo) throws SQLException;
 
-	List<ProcessVO> selectProcess() throws SQLException;
-
 	List<ProcessVO> selectSearchProcessList(SearchCriteria cri, RowBounds rowBounds) throws SQLException;
 
 	int selectSearchProcessListCount(SearchCriteria cri) throws SQLException;
+
+	ProcessVO selectProcess(int pc_no) throws SQLException;
 
 }

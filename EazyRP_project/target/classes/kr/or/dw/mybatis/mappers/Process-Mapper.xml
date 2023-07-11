@@ -7,10 +7,6 @@
 				VALUES (pc_no_seq.nextVal,#{pc_code},#{pc_name},#{pc_order})
 	</insert>
 	
-	<select id="selectProcess" resultType="process">
-		SELECT * FROM process
-	</select>
-	
 	<sql id="search">
 		<if test="searchType == 'number'.toString()">
 			AND pc_no LIKE '%' || #{keyword} || '%'
@@ -46,6 +42,12 @@
 		  FROM process
 		 WHERE 1=1
 		 <include refid="search"/>
+	</select>
+	
+	<select id="selectProcess" resultType="process">
+		SELECT 	*
+		FROM	process
+		WHERE	pc_no = #{pc_no}
 	</select>
 
 </mapper>
