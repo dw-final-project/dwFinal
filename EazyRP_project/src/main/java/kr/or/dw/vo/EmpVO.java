@@ -13,6 +13,7 @@ public class EmpVO {
 	private String e_dd;
 	private String c_no;
 	private int e_sal;
+	private String e_email;
 	private String e_bank;
 	private String e_account;
 	private String e_tenure;
@@ -26,5 +27,9 @@ public class EmpVO {
 	private String sys_regdate;
 	private String sys_updatedate;
 	private String sys_reg;
+	private String c_name;
+	
+	
+	
 	
 }

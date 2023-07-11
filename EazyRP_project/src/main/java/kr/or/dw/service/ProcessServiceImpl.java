@@ -51,4 +51,11 @@ public class ProcessServiceImpl implements ProcessService{
 		return dataMap;
 	}
 
+	@Override
+	public ProcessVO selectProcess(int pc_no) throws SQLException {
+		ProcessVO process = processDAO.selectProcess(pc_no);
+
+		return process;
+	}
+
 }

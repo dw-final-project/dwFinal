@@ -3,6 +3,8 @@ package kr.or.dw.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +28,16 @@ public class CommonController {
 	private MenuService menuService;
 
 	@GetMapping("/common/loginForm")
-	public String loginForm() {
-		return "/common/loginForm";
+	public String loginForm(HttpServletResponse res) throws Exception {
+		String url = "/common/loginForm";
+		
+		return url;
 	}
 	
-//	@GetMapping("/common/main")
-//	public String main() {
-//		return "/common/main";
-//	}
+	@GetMapping("/common/main")
+	public String main() {
+		return "/common/main";
+	}
 	
 	@RequestMapping("/common/main")
 	public ModelAndView index(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException{
@@ -50,7 +54,13 @@ public class CommonController {
 		
 		return mnv;
 	}
-	
+		
+//	@RequestMapping("/common/main")
+//	public String registerForm(HttpServletResponse res) throws Exception {
+//		return "/common/registerForm";
+//
+//	}
+
 	@RequestMapping("/common/subMenu")
 	public ResponseEntity<List<MenuVO>> subMenu(String mcode){
 		System.out.println(mcode);
