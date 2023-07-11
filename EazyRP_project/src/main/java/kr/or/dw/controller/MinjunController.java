@@ -22,7 +22,7 @@ import kr.or.dw.vo.ProcessVO;
 @RequestMapping("/erp4")
 public class MinjunController {
 
-	private static final Logger logger = LoggerFactory.getLogger(HeesungController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MinjunController.class);
 	
 	@RequestMapping("/shop.do")
 	public String main() {
