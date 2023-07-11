@@ -1,9 +1,14 @@
 package kr.or.dw.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +90,9 @@ public class MyMenuController {
 	}
 	
 	@RequestMapping("/detail")
-	public ModelAndView detail(ModelAndView mnv, int n_no) throws SQLException {
+	public ModelAndView detail(ModelAndView mnv, int n_no) throws SQLException, IOException {
+		
+		
 		String url = "/mymenu/detail";
 		NoteVO note = mymenuService.selectNote(n_no);
 		

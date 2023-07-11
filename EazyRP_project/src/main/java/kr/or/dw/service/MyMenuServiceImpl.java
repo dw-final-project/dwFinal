@@ -72,7 +72,7 @@ public class MyMenuServiceImpl implements MyMenuService{
 	@Override
 	public NoteVO selectNote(int n_no) throws SQLException {
 		NoteVO note = mymenuDAO.selectNote(n_no);
-		
+		mymenuDAO.readableUpdate(n_no);
 		return note;
 	}
 	

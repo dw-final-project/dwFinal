@@ -29,22 +29,34 @@
 	</insert>
 	
 	<select id="getNoteList" resultType="note">
-		SELECT n.*, (SELECT e.e_name FROM note n, emp e WHERE n.caller = e.emp_no) callerName, 
-		(SELECT e.e_name FROM note n, emp e WHERE n.RECEIVER = e.EMP_NO) RECEIVERname,
-		(SELECT c.C_NAME FROM note n, COMPANY c WHERE n.C_COMPANY = c.C_NO) c_cname,
-		(SELECT c.C_NAME FROM note n, COMPANY c WHERE n.r_COMPANY = c.C_NO) r_cname
-	FROM note n, emp e
-	WHERE n.RECEIVER = e.EMP_NO
+		SELECT n.* , a.e_name callerName, b.e_name RECEIVERname, c.c_name c_cname, d.c_name r_cname
+FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
+	(SELECT * FROM note n, emp e WHERE n.RECEIVER = e.EMP_NO) b,
+	(SELECT * FROM note n, COMPANY c WHERE n.C_COMPANY = c.C_NO) c,
+	(SELECT * FROM note n, COMPANY c WHERE n.r_COMPANY = c.C_NO) d,
+	note n
+	WHERE n.n_no = a.n_no
+	AND n.n_no = b.n_no
+	AND n.n_no = c.n_no
+	AND n.n_no = d.n_no
 	</select>
 	
 	<select id="selectNote" resultType="note">
-		SELECT n.*, (SELECT e.e_name FROM note n, emp e WHERE n.caller = e.emp_no) callerName, 
-		(SELECT e.e_name FROM note n, emp e WHERE n.RECEIVER = e.EMP_NO) RECEIVERname,
-		(SELECT c.C_NAME FROM note n, COMPANY c WHERE n.C_COMPANY = c.C_NO) c_cname,
-		(SELECT c.C_NAME FROM note n, COMPANY c WHERE n.r_COMPANY = c.C_NO) r_cname
-		FROM note n, emp e
-		WHERE n.RECEIVER = e.EMP_NO
-		AND n_no = #{n_no}
+		SELECT n.* , a.e_name callerName, b.e_name RECEIVERname, c.c_name c_cname, d.c_name r_cname
+FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
+	(SELECT * FROM note n, emp e WHERE n.RECEIVER = e.EMP_NO) b,
+	(SELECT * FROM note n, COMPANY c WHERE n.C_COMPANY = c.C_NO) c,
+	(SELECT * FROM note n, COMPANY c WHERE n.r_COMPANY = c.C_NO) d,
+	note n
+	WHERE n.n_no = a.n_no
+	AND n.n_no = b.n_no
+	AND n.n_no = c.n_no
+	AND n.n_no = d.n_no
+		AND n.n_no = #{n_no}
 	</select>
+	
+	<update id="readableUpdate">
+		UPDATE note SET "readable" = 'Y' WHERE n_no = #{n_no}
+	</update>
 	
 </mapper>

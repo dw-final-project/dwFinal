@@ -12,5 +12,8 @@
 	<div>제목 : ${note.title }</div>
 	<div>보낸사람 : ${note.callerName }</div>
 	<div>내용 : ${note.con }</div>
+	<button>답장하기</button>
+	<button>삭제</button>
+	<button>닫기</button>
 </body>
 </html>

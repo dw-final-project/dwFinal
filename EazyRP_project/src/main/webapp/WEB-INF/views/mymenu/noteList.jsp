@@ -15,21 +15,21 @@
 					</div>
 					<div class="card-body pad">
 						<div>
-							<table>
+							<table style="font-size: 0.8em;">
 								<tr>
-									<th width="10px" style="text-align: center;"></th>
+									<th width="30px" style="text-align: center;"></th>
 									<th width="200px" style="text-align: center;">제목</th>
 									<th width="200px" style="text-align: center;">보낸 사람</th>
 									<th width="200px" style="text-align: center;">업체명</th>
 									<th width="200px" style="text-align: center;">첨부파일 여부</th>
 									<th width="200px" style="text-align: center;">보낸 시간</th>
 								</tr>
-								<c:forEach items="${note}" var="note">
+								<c:forEach items="${note}" var="note" varStatus="loop">
+									<tr style="height: 10px;"></tr>
 									<tr>
-										<td style="text-align: center; height:80%; background-color: ${note.readable == "N" ? "red" : "blue" };">
-										
+										<td id="read_${loop.index}" style="text-align: center; height:80%; background-color: ${note.readable == "N" ? "red" : "blue" };">
 										</td>
-										<td style="text-align: center;"><a onclick="OpenWindow('/mymenu/detail.do?n_no=${note.n_no }', '쪽지보기', 800, 600)">${note.title }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/mymenu/detail.do?n_no=${note.n_no }', '쪽지보기', 800, 600, '${loop.index}')">${note.title }</a></td>
 										<td style="text-align: center;">${note.callerName }</td>
 										<td style="text-align: center;">${note.c_cname }</td>
 										<td style="text-align: center;">${note.files == "" || note.files == null ? "N" : "Y" }</td>
@@ -43,9 +43,15 @@
 			</div>
 		</div>
 	</section>
+<script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
+	
 <script>
-
-	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
+		
+	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight, index){
+		var selectedElement = document.getElementById("read_"+index);
+		  if (selectedElement) {
+		    selectedElement.style.backgroundColor = "blue";
+		  }
 		winleft = (screen.width - WinWidth) / 2;
 		wintop = (screen.height - WinHeight) / 2;
 		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
