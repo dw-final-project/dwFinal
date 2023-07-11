@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.service.MenuService;
 import kr.or.dw.service.ProcessService;
+import kr.or.dw.vo.ProcessVO;
 import kr.or.dw.vo.MenuVO;
 import kr.or.dw.vo.ProcessVO;
 
@@ -56,18 +57,6 @@ public class ProcessController {
 		return mnv;
 	}
 	
-//	@RequestMapping("/list")
-//	public ModelAndView list(ModelAndView mnv, SearchCriteria cri) throws SQLException {
-//		String url = "board/list.open";
-//		
-//		Map<String, Object> dataMap = boardService.selectBoardList(cri);
-//		
-//		mnv.addAllObjects(dataMap);
-//		mnv.setViewName(url);
-//		
-//		return mnv;
-//	}
-	
 	@RequestMapping("/registForm")
 	public String registForm() {
 		String url = "process/open_regist";
@@ -86,7 +75,61 @@ public class ProcessController {
 		out.println("</script>");
 	}
 	
+	@RequestMapping("/detail")
+	public ModelAndView detail(int pc_no, ModelAndView mnv) throws SQLException {
+		String url = "process/detail";
+		
+		ProcessVO process = null;
+		
+		process = processService.selectProcess(pc_no);
+		
+		mnv.addObject("process", process);
+		mnv.setViewName(url);
 	
+		return mnv;
+	}
+
+//	@RequestMapping("/modifyForm")
+//	public ModelAndView modifyForm(int bno, ModelAndView mnv) throws SQLException {
+//		String url = "board/modify.open";
+//		
+//		ProcessVO board = null;
+//		
+//		board = boardService.selectBoard(bno);
+//		
+//		mnv.addObject("board", board);
+//		mnv.setViewName(url);
+//		
+//		return mnv;
+//	}
+//	
+//	@RequestMapping("/modify")
+//	public void modify(ProcessVO board, HttpServletRequest req, HttpServletResponse res) throws IOException, SQLException {
+//		board.setTitle((String)req.getAttribute("XSStitle"));
+//		
+//		boardService.modify(board);
+//		
+//		res.setContentType("text/html; charset=utf-8");
+//		PrintWriter out = res.getWriter();
+//		out.println("<script>");
+//		out.println("window.opener.location.reload();");
+//		out.println("location.href='detail.do?bno=" + board.getBno() + "';");
+//		out.println("</script>");
+//	}
+//	
+//	@RequestMapping("/remove")
+//	public void remove(int bno, HttpServletRequest req, HttpServletResponse res) throws IOException, SQLException {
+//		
+//		boardService.remove(bno);
+//		
+//		res.setContentType("text/html; charset=utf-8");
+//		PrintWriter out = res.getWriter();
+//		out.println("<script>");
+//		out.println("alert('삭제 되었습니다.')");
+//		out.println("window.opener.location.reload();");
+//		out.println("window.close();");
+//		out.println("</script>");
+//	}
 	
 	
 	
