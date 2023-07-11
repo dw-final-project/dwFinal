@@ -7,10 +7,6 @@
 				VALUES (pc_no_seq.nextVal,#{pc_code},#{pc_name},#{pc_order})
 	</insert>
 	
-	<select id="selectProcess" resultType="process">
-		SELECT * FROM process
-	</select>
-	
 	<sql id="search">
 		<if test="searchType == 'number'.toString()">
 			AND pc_no LIKE '%' || #{keyword} || '%'
