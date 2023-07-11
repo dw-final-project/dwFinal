@@ -23,10 +23,10 @@
 		};
 		
 		// 중복확인
-		let data = {id : input_ID.val().trim()};
+		let data = {id : input_ID.val().trim()}; 
 		
 		$.ajax({
-			url : "<%=request.getContextPath()%>/common/idCheck.do",
+			url : "<%=request.getContextPath()%>/member/idCheck.do",
 			data : data,
 			type : 'post',
 			success : function(result){
@@ -79,7 +79,6 @@
 		
 		$.ajax({
 			type : 'get',
-// 			data : email,
 			url :  '<%=request.getContextPath()%>/member/mailCheck.do?email=' + email,
 			success : function (data) {
 				console.log("data : " +  data);
@@ -100,15 +99,15 @@
 		const $resultMsg = $('#emailauthchk');
 		
 		if(inputCode === code){
-			$resultMsg.html('인증번호가 일치합니다.');
+			alert('인증번호가 일치합니다.');
 			$resultMsg.css('color','green');
 			$('#mail-Check-Btn').attr('disabled',true);
 			$('#email').attr('readonly',true);
 			$('#domainselect').attr('readonly',true);
-			$('#domainselect').attr('onFocus', 'this.initialSelect = this.selectedIndex');
-	         $('#domainselect').attr('onChange', 'this.selectedIndex = this.initialSelect');
+	 		$('#domainselect').attr('onFocus', 'this.initialSelect = this.selectedIndex');
+	        $('#domainselect').attr('onChange', 'this.selectedIndex = this.initialSelect'); 
 		}else{
-			$resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요!.');
+			alert('인증번호가 불일치 합니다. 다시 확인해주세요!.');
 			$resultMsg.css('color','red');
 		}
 	});

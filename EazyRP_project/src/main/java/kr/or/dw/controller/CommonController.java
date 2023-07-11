@@ -34,10 +34,10 @@ public class CommonController {
 		return url;
 	}
 	
-//	@GetMapping("/common/main")
-//	public String main() {
-//		return "/common/main";
-//	}
+	@GetMapping("/common/main")
+	public String main() {
+		return "/common/main";
+	}
 	
 	@RequestMapping("/common/main")
 	public ModelAndView index(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException{
@@ -55,7 +55,6 @@ public class CommonController {
 		return mnv;
 	}
 		
-	
 //	@RequestMapping("/common/main")
 //	public String registerForm(HttpServletResponse res) throws Exception {
 //		return "/common/registerForm";

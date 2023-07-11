@@ -32,10 +32,11 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
-	
+	@Autowired
+	private MailSendService mailService;
 	
 	// 아이디 중복확인
-	@RequestMapping("/idCheck")
+	@RequestMapping("/idCheck") 
 	public ResponseEntity<String> idCheck(String id, HttpServletRequest req){
 		
 		ResponseEntity<String> entity = null;
@@ -52,8 +53,8 @@ public class MemberController {
 	}
 
 	//회원가입 페이지 이동
-	@GetMapping("/loginForm")
-	public void loginForm() {}
+	@GetMapping("/registerForm")
+	public void registerForm() {}
 	
 	//이메일 인증
 	@GetMapping("/mailCheck")
