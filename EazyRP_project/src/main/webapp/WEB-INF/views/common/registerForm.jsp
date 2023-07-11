@@ -1,21 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="ko">
 <head>
-
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Bootstrap Flat Modal Login Modal Form</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<link rel="stylesheet" href="C:\Users\note_ma01\Desktop\bootstrap-datepicker-master\dist\css\bootstrap-datepicker.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+</head>
+
+
 <style>
 html {
     height: 100%;
@@ -153,10 +150,10 @@ body {
 	border-radius: 7px;
 }
 </style>
-</head>
+
+
 <body>
 <!-- Modal HTML -->
-	<div class="modal-dialog modal-login ">
 	<div class="modal-dialog modal-login ">
 		<div class="modal-content " style="padding-left: 45px; padding-right: 5px;">
 			<div class="modal-header">				
@@ -167,39 +164,38 @@ body {
 					<div class="form-group d-flex">
 						<div class="input-group inputText">
 							<span class="fa"><i class="fa fa-user"></i></span><span style="width: 15px;"></span>
-							<input type="text" class="form-control" name="id" placeholder="ID" required="required">
+							<input type="text" class="form-control" id="id" name="id" placeholder="ID"  required="required">
 						</div>
 						<div>
-							<input type="button" class="chkbtn" name="idchk" required="required" value="중복확인">							
+							<input type="button" class="chkbtn" name="idchk" required="required" onclick="idCheck_go();" value="중복확인">							
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="input-group inputText">
 							<span class="fa"><i class="fa fa-lock"></i></span><span style="width: 15px;"></span>
-							<input type="password" class="form-control" name="pw" placeholder="PW" required="required">
+							<input type="password" class="form-control" id="pwd" name="pw" placeholder="PW" required="required">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="input-group inputText">
 							<span class="fa"><i class="fa fa-lock"></i></span><span style="width: 15px;"></span>
-							<input type="password" class="form-control" name="pwchk" placeholder="PW check" required="required">
+							<input type="password" class="form-control" id="pwdchk" name="pwchk" placeholder="PW check" onclick="idCheck_go();" required="required">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="input-group inputText">
 							<span class="fa"><i class="fa fa-user"></i></span><span style="width: 15px;"></span>
-							<input type="text" class="form-control" name="name" placeholder="이름" required="required">
+							<input type="text" class="form-control" id="name" name="name" placeholder="이름" required="required">
 						</div>
 					</div>
 					<div class="form-group d-flex">
 						<div class="input-group">
 							<span class="fa"><i class="fa fa-calendar"></i></span><span style="width: 15px;"></span>
-							<input class="form-control" id="datePicker" type="text" placeholder="생년월일" name="birthday">
+							<input class="form-control" id="birth" name="birth" type="text" placeholder="생년월일" name="birthday">
 						</div>
 						<div class="input-group"></div>
 						<div class="input-group">
-							<select class="form-select form-select-sm" aria-label="Default select example" name="gender" style="border-radius: 7px; margin-left: 10px;
-							">
+							<select class="form-select form-select-sm" aria-label="Default select example" name="gender" style="border-radius: 7px; margin-left: 10px;">
 								<option disabled="disabled" selected="selected">성별</option>
 								<option>남성</option>
 								<option>여성</option>
@@ -207,6 +203,7 @@ body {
 							</select>
 						</div>
 					</div>
+					<!-- 이메일 -->
 					<div class="form-group d-flex">
 							<div class="input-group inputText">
 									<span class="fa"><i class="fa fa-envelope"></i></span><span style="width: 15px;"></span>
@@ -216,27 +213,28 @@ body {
 										@
 										<select name="domainselect" id="domainselect" class="form-select form-select-sm" style="align-items: baseline">
 											<option disabled="disabled" selected="selected">선택</option>
-											<option value="naver.com">naver.com</option>
-											<option value="gmail.com">gmail.com</option>
-											<option value="hanmail.net">hanmail.net</option>
-											<option value="daum.net">daum.net</option>
+											<option value="@naver.com">naver.com</option>
+											<option value="@gmail.com">gmail.com</option>
+											<option value="@hanmail.net">hanmail.net</option>
+											<option value="@daum.net">daum.net</option>
 											<option value="직접입력">직접입력</option>
 										</select>
 										<div class="select-dropdown"></div>
 									</div>
 						<div>
-							<input type="button" class="chkbtn" name="emailauth" required="required" value="인증번호 전송">							
+							<input type="button" class="chkbtn" name="emailauth" id="emailauth" required="required" value="인증번호 전송">							
 						</div>
 					</div>
 					<div class="form-group d-flex">
 						<div class="input-group">
 							<span class="fa"><i class="fa fa-envelope"></i></span><span style="width: 15px;"></span>
-							<input type="text" class="form-control" name="password" placeholder="인증번호" required="required">
+							<input type="text" class="form-control mail-check-input" name="password" placeholder="인증번호" required="required">
 						</div>
 						<div>
-							<input type="button" class="chkbtn" name="emailauthchk" required="required" value="인증번호 확인">			
+							<input type="button" class="chkbtn" id="emailauthchk" name="emailauthchk" required="required" value="인증번호 확인">			
 						</div>
 					</div>
+					<!-- 이메일 끝 -->
 					<div class="form-group">
 						<div class="input-group inputText">
 							<span class="fa"><i class="fa fa-phone"></i></span><span style="width: 15px;"></span>
@@ -250,7 +248,7 @@ body {
 						</div>
 					</div>
 					<div class="form-group findbtn">
-						<button class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px; color:#fff;" type="submit">회원가입</button>
+						<button class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px; color:#fff;" type="submit" onclick="submit_go()">회원가입</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;
 						<button class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px; color:#fff;" type="submit">취 소</button>
 					</div>
@@ -260,16 +258,18 @@ body {
 		</div>
 	</div>    
 	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-	<script src="C:\Users\note_ma01\Desktop\bootstrap-datepicker-master\js\bootstrap-datepicker.js"></script>
-	<!--한국어  달력 쓰려면 추가 로드-->
-	<script src="C:\Users\note_ma01\Desktop\bootstrap-datepicker-master\dist\locales\bootstrap-datepicker.ko.min.js"></script>
-<script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
-$('#datePicker').datepicker({
-		format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
-		startDate: '',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
-		language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
-		});//여기까지가 기본 사용 방법
+<script>	
+$(function(){
+	$('#birth').datepicker();
+	
+})
+// 		{
+// 		format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
+// 		startDate: '',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
+// 		language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
+// 		});//여기까지가 기본 사용 방법
 </script> 	 
-</body>
-</html>
+
+<%@ include file="register_js.jsp" %> 

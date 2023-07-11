@@ -9,6 +9,24 @@
       http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
    <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+    
+
+   <!-- 회원가입 메일 인증 -->
+	<beans:bean id="mailSender"	class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<beans:property name="host" value="smtp.gmail.com" />
+		<beans:property name="port" value="587" /><!-- 465 or 25 -->
+		<beans:property name="username" value="olo56576044@gmail.com" />
+		<beans:property name="password" value="qbksnrctiwklfjmi" />
+		<beans:property name="defaultEncoding" value="utf-8" />
+		<beans:property name="javaMailProperties">
+			<beans:props>
+				<beans:prop key="mail.transport.protocol">smtp</beans:prop>
+				<beans:prop key="mail.smtp.auth">true</beans:prop>
+				<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+				<beans:prop key="mail.debug">true</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
    
    <!-- Enables the Spring MVC @Controller programming model -->
    <annotation-driven />
@@ -37,7 +55,9 @@
       <beans:property name="suffix" value=".jsp" />
    </beans:bean>
    
-   <context:component-scan base-package="kr.or.dw.controller" />
+
    
+   <context:component-scan base-package="kr.or.dw.controller" />
+   	
 
 </beans:beans>
