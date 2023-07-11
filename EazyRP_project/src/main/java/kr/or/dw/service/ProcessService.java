@@ -11,6 +11,10 @@ public interface ProcessService {
 	
 	void registProcess(ProcessVO processVo) throws SQLException;
 
+	// 공정 리스트 조회 및 페이징
 	Map<String, Object> selectProcessList(SearchCriteria cri) throws SQLException;
+	
+	// 공정  상세페이지
+	ProcessVO selectProcess(int pc_no) throws SQLException;
 
 }
