@@ -162,7 +162,7 @@
 		<div class="col-1"></div>
 		<div class="card col-13" style="margin-top:3em;">
 			<div class="card-header with-border">
-				<button type="button" class="btn btn-danger" id="" onclick="OpenWindow('registForm.do', '글등록', 800, 700);">등록</button>
+				<button type="button" class="btn btn-danger" id="" onclick="javascript:OpenWindow('estimate.do','견적서 등록', 600 ,800);">등록</button>
 				<div class="card-tools" style="width: 350px;">
 					<div class="input-group row">
 						<select class="form-control col-md-4" name="searchType" id="searchType">

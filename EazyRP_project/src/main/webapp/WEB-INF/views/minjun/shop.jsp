@@ -4,6 +4,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../include/header.jsp" %>
+<%@ include file="../include/sidebar.jsp" %>
+
+<!-- 페이징 -->
+<c:set var="cri" value="${pageMaker.cri }"/>
 
 <style> /* 소라 사이드바 스타일 */
     html, body{
@@ -58,51 +62,18 @@
 
 <body>
 <div class="container col-10">
-	<!-- sidebar -->   
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style=" float:left ; width: 20%; height: 100%; display: inline;">
-      <div class="d-flex align-items-center pb-3 mb-3 text-decoration-none border-bottom">
-        <span class="fs-5 fw-semibold"> 개인정보 </span>
-      </div>
-      <ul class="list-unstyled ps-0">
-        <li class="mb-1">
-          <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-            개인정보 조회 및 수정
-          </a>
-        </li>
-        <li class="mb-1">
-          <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-            회원탈퇴
-          </a>
-        </li>
-      </ul>
-        <div class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-           <span class="fs-5 fw-semibold"> 관리자 문의 </span>
-        </div>
-        <ul class="list-unstyledv ps-0">
-          <li class="mb-1" style="list-style: none;">
-            <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-              관리자 문의하기
-            </a>
-          </li>
-          <li class="mb-1" style="list-style: none;">
-            <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-              문의 답변 확인
-            </a>
-          </li>
-        </ul>     
-        </div>
 	
 <div class="content-wrapper">
 	<%-- <jsp:include page="../content_header.jsp">
 		<jsp:param value="게시판리스트" name="subject"/>
 		<jsp:param value="목록" name="item"/>
 	</jsp:include> --%>
-	
+	<h3>쇼핑몰관리</h3>
 	<section class="row">
 		<div class="col-1"></div>
 		<div class="card col-10" style="margin-top:3em;">
 			<div class="card-header with-border">
-				<button type="button" class="btn btn-danger" id="" onclick="OpenWindow('registForm.do', '글등록', 800, 700);">등록</button>
+				<button type="button" class="btn btn-danger" id="" onclick="OpenWindow('shopRegistForm.do', '글등록', 800, 700);">등록</button>
 				<div class="card-tools" style="width: 350px;">
 					<div class="input-group row">
 						<select class="form-control col-md-4" name="searchType" id="searchType">
@@ -125,15 +96,13 @@
 			<div class="card-body">
 				<table class="table table-borderd text-center">
 					<tr style="font-size:0.95em;">
-						<th>생산공정코드</th>
-						<th>생산공정명</th>
-						<th>순번</th>
-						<th>작업코드등록</th>
+						<th>쇼핑몰코드</th>
+						<th>쇼핑몰명</th>
 					</tr>
 					<c:if test="${empty boardList }">
 						<tr>
 							<td colspan="5">
-								<strong>해당 게시글이 없습니다.</strong>
+								<strong>쇼핑몰이 없습니다.</strong>
 							</td>
 						</tr>
 					</c:if>

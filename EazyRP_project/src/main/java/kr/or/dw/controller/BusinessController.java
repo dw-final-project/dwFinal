@@ -1,14 +1,20 @@
 package kr.or.dw.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.common.collect.Sets.SetView;
@@ -20,7 +26,7 @@ import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.SiVO;
 
 @Controller
-@RequestMapping("/erp3")
+@RequestMapping("/erp4")
 public class BusinessController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BusinessController.class);
@@ -77,4 +83,26 @@ public class BusinessController {
 		return url;
 	}
 	
+	@RequestMapping("/estimateInsert")
+	public void estimateInsert(@RequestParam("files")MultipartFile multi, EstimateVO vo,HttpServletResponse res) throws SQLException, IOException{
+		// 파일저장 및 파일명 가져오기
+		String fileName = saveFile();
+		// 가져온 파일명 estimateVO에 set
+		vo.setFileName(fileName);
+		// DB에 Insert
+		estimateService.estimateInsert(vo);
+		System.out.println(vo.getEst_no());
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 등록되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
+	
+	
+//	@RequestMapping("/modifyForm")
+//	public void modifyform() {
+//		
+//	}
 }

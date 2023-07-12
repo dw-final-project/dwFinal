@@ -15,28 +15,24 @@
 			<div class="col-md-9" style="max-width: 950px;">
 				<div class="card card-outline card-info">
 					<div class="card-header">
-						<h3 class="card-title p-1">글등록</h3>
-						<div class="card-tools">
-							<button type="button" class="btn btn-primary" id="registBtn" >등 록</button>
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<button type="button" class="btn btn-warning" id="cancelBtn">취 소</button>
-						</div>
+						<h3 class="card-title p-1">쇼핑몰 등록</h3>
 					</div>
 					<div class="card-body pad">
 						<form role="form" method="post" action="regist.do" name="registForm">
-							<div class="form-group">
-								<label for="pc_no">공정 번호</label>
-								<input type="text" id="pc_no" name="pc_no" class="form-control" placeholder="제목을 입력하세요.">
+							<div class="form-group col-sm-12 row">
+								<label for="pc_no" class="col-sm-3">쇼핑몰 코드</label>
+								<input type="text" id="pc_no" name="pc_no" class="form-control col-sm-9" placeholder="쇼핑몰코드를 입력하세요.">
 							</div>
-							<div class="form-group">
-								<label for="pc_name">공정 이름</label>
-								<input type="text" id="pc_name" name="pc_name" class="form-control" value="">
-							</div>
-							<div class="form-group">
-								<label for="pc_order">공정순번</label>
-								<textarea class="textarea" name="pc_order" id="pc_order" rows="10" placeholder="1000자 내외로 작성하세요." style="display: block; width: 100%"></textarea>
+							<div class="form-group col-sm-12 row">
+								<label for="pc_name" class="col-sm-3">쇼핑몰 이름</label>
+								<input type="text" id="pc_name" name="pc_name" class="form-control col-sm-9" value="" placeholder="쇼핑몰명을 입력하세요.">
 							</div>
 						</form>
+					</div>
+					<div class="card-footer card-tools">
+						<button type="button" class="btn btn-primary" id="registBtn" >등 록</button>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="button" class="btn btn-warning" id="cancelBtn">취 소</button>
 					</div>
 				</div>
 			</div>

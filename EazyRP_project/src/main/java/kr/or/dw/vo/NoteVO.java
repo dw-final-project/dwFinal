@@ -23,6 +23,7 @@ public class NoteVO {
 	private String readable;
 	private String c_cname;
 	private String r_cname;
+	private String realFileName;
 	
 	
 }

@@ -6,26 +6,31 @@
 	
 	<select id="getEmpList" resultType="emp">
 		SELECT e.*, c.c_name FROM emp e, company c WHERE e.c_no = c.c_no
+		ORDER BY e.e_name
 	</select>
 	
 	<select id="getSelectEmpList" resultType="emp">
 		SELECT e.*, c.c_name FROM emp e, company c WHERE e_name LIKE '%' || #{name} || '%' AND e.c_no = c.c_no
+		ORDER BY e.e_name
 	</select>
 	
 	<select id="getSelectEmpListCno" resultType="emp">
 		SELECT e.*, c.c_name FROM emp e, company c WHERE c_name LIKE '%' || #{c_name} || '%' AND e.c_no = c.c_no
+		ORDER BY e.e_name
 	</select>
 	
 	<select id="getEmp" resultType="emp">
 		SELECT e.*, c.c_name FROM emp e, company c WHERE c_name LIKE '%' || #{c_name} || '%' AND e_name LIKE '%' || #{name} || '%' AND e.c_no = c.c_no
+		ORDER BY e.e_name
 	</select>
 	
 	<select id="selectEmp" resultType="emp">
 		SELECT e.*, c.c_name FROM emp e, company c WHERE e.c_no = c.c_no AND e.emp_no = #{emp_no}
+		ORDER BY e.e_name
 	</select>
 	
 	<insert id="sendNote">
-		INSERT INTO note VALUES (n_no_seq.nextval, #{c_dept}, #{caller}, '', #{con}, sysdate, #{title}, #{files}, #{r_dept}, #{receiver}, '', #{c_company}, #{r_company}, 'N')
+		INSERT INTO note VALUES (n_no_seq.nextval, #{c_dept}, #{caller}, '', #{con}, sysdate, #{title}, #{files}, #{r_dept}, #{receiver}, '', #{c_company}, #{r_company}, 'N', #{realFileName})
 	</insert>
 	
 	<select id="getNoteList" resultType="note">
@@ -39,6 +44,7 @@ FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 	AND n.n_no = b.n_no
 	AND n.n_no = c.n_no
 	AND n.n_no = d.n_no
+	ORDER BY n.n_no DESC
 	</select>
 	
 	<select id="selectNote" resultType="note">
@@ -53,6 +59,7 @@ FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 	AND n.n_no = c.n_no
 	AND n.n_no = d.n_no
 		AND n.n_no = #{n_no}
+		ORDER BY n.n_no DESC
 	</select>
 	
 	<update id="readableUpdate">
@@ -62,5 +69,37 @@ FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 	<delete id="deleteNote">
 		DELETE note WHERE n_no = #{n_no}
 	</delete>
+	
+	<select id="searchNote" resultType="note">
+				SELECT n.* , a.e_name callerName, b.e_name RECEIVERname, c.c_name c_cname, d.c_name r_cname
+FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
+	(SELECT * FROM note n, emp e WHERE n.RECEIVER = e.EMP_NO) b,
+	(SELECT * FROM note n, COMPANY c WHERE n.C_COMPANY = c.C_NO) c,
+	(SELECT * FROM note n, COMPANY c WHERE n.r_COMPANY = c.C_NO) d,
+	note n
+	WHERE n.n_no = a.n_no
+	AND n.n_no = b.n_no
+	AND n.n_no = c.n_no
+	AND n.n_no = d.n_no
+			<if test="searchType == 't'.toString()">
+				AND n.title LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'w'.toString()">
+				AND a.e_name LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'c'.toString()">
+				AND c.c_name LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'tcw'.toString()">
+				AND ( 
+				n.title LIKE '%' || #{keyword} || '%'
+				OR
+				a.e_name LIKE '%' || #{keyword} || '%'
+				OR
+				c.c_name LIKE '%' || #{keyword} || '%'
+				)
+			</if>
+			ORDER BY n.n_no DESC
+	</select>
 	
 </mapper>

@@ -19,6 +19,7 @@
 	<input type="hidden" name="n_no" value="${note.n_no}">
 	<input type="hidden" name="caller" value="${note.caller }">
 	<input type="hidden" name="callerName" value="${note.callerName }">
+	<input type="hidden" name="files" value="${note.files }">
 </form>
 </body>
 </html>

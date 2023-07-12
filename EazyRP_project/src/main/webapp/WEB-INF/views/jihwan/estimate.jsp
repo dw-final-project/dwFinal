@@ -79,7 +79,7 @@
 <body>
     <h1>견적서</h1>
 
-    <form method="post" action="#">
+    <form method="post" action="/erp4/estimateInsert.do" enctype="multipart/form-data">
         <div class="form-group">
             <label for="est_no">견적서 코드:</label>
             <input type="text" id="est_no" name="est_no" required>
@@ -87,7 +87,7 @@
 
         <div class="form-group">
             <label for="sys_regdate">등록일자:</label>
-            <input type="date" id="sys_regdate" name="sys_regdate" required>
+            <input type="date" id="sys_regdate" name="sys_regdate" >
         </div>
 
         <div class="form-group">
@@ -97,32 +97,32 @@
 
         <div class="form-group">
             <label for="fc_no">외화코드:</label>
-            <input type="text" id="fc_no" name="fc_no" required>
+            <input type="text" id="fc_no" name="fc_no" >
         </div>
 
         <div class="form-group">
             <label for="amount">견적금액:</label>
-            <input type="number" id="amount" name="amount" required>
+            <input type="number" id="amount" name="amount" >
         </div>
 
         <div class="form-group">
             <label for="progress">진행상태:</label>
-            <input type="number" id="progress" name="progress" required>
+            <input type="text" id="progress" name="progress" >
         </div>
 
         <div class="form-group">
             <label for="enabled">사용구분:</label>
-            <input type="text" id="enabled" name="enabled" required>
+            <input type="text" id="enabled" name="enabled" >
         </div>
 
         <div class="form-group">
             <label for="wh_no">창고코드(제품+업체):</label>
-            <input type="text" id="wh_no" name="wh_no" required>
+            <input type="text" id="wh_no" name="wh_no" >
         </div>
 
         <div class="form-group">
             <label for="quantity">수량:</label>
-            <input type="number" id="quantity" name="quantity" required>
+            <input type="number" id="quantity" name="quantity" >
         </div>
 
         <div class="form-group">
@@ -142,7 +142,7 @@
 
         <div class="form-group">
             <label for="files">첨부 파일:</label>
-            <input type="file" id="files" name="files" required>
+            <input type="file" id="files" name="files" >
         </div>
 
         <input type="submit" value="견적서 생성">
