@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +32,11 @@ public class CommonController {
 	private MenuService menuService;
 
 	@GetMapping("/common/loginForm")
-	public String loginForm() {
-		return "/common/loginForm";
+	public String loginForm(HttpServletResponse res) throws Exception {
+		String url = "/common/loginForm";
+		
+		return url;
 	}
-	
-	
 	@RequestMapping("/common/main")
 	public ModelAndView index(ModelAndView mnv, HttpSession session) throws SQLException{
 		String url = "/common/main.main";
@@ -52,6 +54,7 @@ public class CommonController {
 		
 		return mnv;
 	}
+		
 	
 	
 }

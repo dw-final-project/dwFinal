@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" rel="stylesheet">
 
-<%@ include file="../include/header.jsp" %>
-
-<%@ include file="../include/sidebar.jsp" %>
-<div style="height: 100px"></div>
+<script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
+<div style="height: 50px"></div>
 <section class="content container-fluid">
 		<div class="row justify-content-center">
 			<div class="col-md-9" style="max-width: 600px;">
@@ -18,19 +18,17 @@
 						</div>
 					</div>
 					<div class="card-body pad">
-						<form role="form" method="post" action="regist.do" name="registForm">
+						<form role="form" method="post" action="/mymenu/noteRegist.do" name="registForm">
 							<div class="form-group">
 								<label for="title">제 목</label>
 								<input type="text" id="title" name="title" class="form-control" placeholder="제목을 입력하세요.">
 							</div>
 							<div class="form-group">
+								<input type="hidden" name="reply" value="0">
+								<input type="hidden" name="writer" id="writer" value="1">
+								<input type="hidden" name="receiver" id="receiver">
 								<label for="writer">받는사람</label>
-								<input type="text" id="receiver" name="receiver" class="form-control" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 800, 600)">
-								<input type="hidden" id="r_dept" name="r_dept">
-								<input type="hidden" id="r_company" name="r_company">
-								<input type="hidden" id="caller" name="caller">
-								<input type="hidden" id="c_dept" name="c_dept">
-								<input type="hidden" id="c_company" name="c_company">
+								<input type="text" id="name" name="name" class="form-control" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 800, 600)">
 							</div>
 							<div class="form-group">
 								<label for="content">내 용</label>
@@ -58,5 +56,13 @@
 								+ winleft + ",resizable=yes,status=yes");
 		win.focus();
 	};
-
+	
+	$('#registBtn').on('click', function(){
+		$('form[name="registForm"]').submit();
+	})
+	
+	$('#cancelBtn').on('click', function(){
+		window.opener.location.reload(true);
+		window.close();
+	})
 </script>

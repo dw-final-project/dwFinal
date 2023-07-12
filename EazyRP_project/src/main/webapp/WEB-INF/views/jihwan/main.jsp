@@ -6,6 +6,8 @@
 <%@ include file="../include/header.jsp" %>
 
 <style> /* 소라 사이드바 스타일 */
+
+
     html, body{
       width: 100%;
       height: 100%;
@@ -56,40 +58,98 @@
     }
 </style>
 
+
 <body>
-<div class="container col-10">
+<form>
+<div class="container col-10" style="margin-left: 30px;">
 	<!-- sidebar -->   
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style=" float:left ; width: 20%; height: 100%; display: inline;">
       <div class="d-flex align-items-center pb-3 mb-3 text-decoration-none border-bottom">
-        <span class="fs-5 fw-semibold"> 개인정보 </span>
+        <span class="fs-5 fw-semibold"> 견적서 </span>
       </div>
       <ul class="list-unstyled ps-0">
         <li class="mb-1">
-          <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-            개인정보 조회 및 수정
+          <a href = "javascript:OpenWindow('estimate.do','견적서 등록', 600 ,800);" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="" data-bs-target="" aria-expanded="true">
+           견적서 등록
           </a>
         </li>
         <li class="mb-1">
-          <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-            회원탈퇴
+          <a href = "#" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+            견적서 변경/삭제
+          </a>
+        </li>
+        <li class="mb-1">
+          <a href="/erp3/estimateSelect.do" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="" data-bs-target="" aria-expanded="false">
+            견적서 조회
           </a>
         </li>
       </ul>
         <div class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-           <span class="fs-5 fw-semibold"> 관리자 문의 </span>
+           <span class="fs-5 fw-semibold"> 주문서 </span>
         </div>
         <ul class="list-unstyledv ps-0">
           <li class="mb-1" style="list-style: none;">
             <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-              관리자 문의하기
+             주문서 등록
             </a>
           </li>
           <li class="mb-1" style="list-style: none;">
             <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-              문의 답변 확인
+            주문서 변경/삭제
             </a>
           </li>
-        </ul>     
+            <li class="mb-1" style="list-style: none;">
+            <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+            주문서 조회
+            </a>
+          </li>
+        </ul> 
+        <div class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+           <span class="fs-5 fw-semibold"> 판매 </span>
+        </div>
+            <ul class="list-unstyledv ps-0">
+          <li class="mb-1" style="list-style: none;">
+            <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+              판매 등록
+            </a>
+          </li>
+          <li class="mb-1" style="list-style: none;">
+            <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+             판매 변경/삭제
+            </a>
+          </li>
+            <li class="mb-1" style="list-style: none;">
+            <a href="/erp3/s_Sheet.do" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="" data-bs-target="" aria-expanded="false">
+             판매 조회
+            </a>
+          </li>
+        </ul>
+        <div class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+           <span class="fs-5 fw-semibold"> 출하지시서 </span>
+        </div>
+            <ul class="list-unstyledv ps-0">
+          <li class="mb-1" style="list-style: none;">
+            <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+              출하 지시서 등록
+            </a>
+          </li>
+          <li class="mb-1" style="list-style: none;">
+            <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+              출하 지시서 변경/삭제
+            </a>
+          </li>
+            <li class="mb-1" style="list-style: none;">
+            <a href="/erp3/siSelect.do" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="" data-bs-target="" aria-expanded="false">
+              출하 지시서 조회
+            </a>
+          </li>
+          <li class="mb-1" style="list-style: none;">
+            <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+              출하 현황
+            </a>
+          </li>
+        </ul> 
+         
         </div>
 	
 <div class="content-wrapper">
@@ -100,9 +160,9 @@
 	
 	<section class="row">
 		<div class="col-1"></div>
-		<div class="card col-10" style="margin-top:3em;">
+		<div class="card col-13" style="margin-top:3em;">
 			<div class="card-header with-border">
-				<button type="button" class="btn btn-danger" id="" onclick="OpenWindow('registForm.do', '글등록', 800, 700);">등록</button>
+				<button type="button" class="btn btn-danger" id="" onclick="javascript:OpenWindow('estimate.do','견적서 등록', 600 ,800);">등록</button>
 				<div class="card-tools" style="width: 350px;">
 					<div class="input-group row">
 						<select class="form-control col-md-4" name="searchType" id="searchType">
@@ -124,41 +184,47 @@
 			</div>
 			<div class="card-body">
 				<table class="table table-borderd text-center">
-					<tr style="font-size:0.95em;">
-						<th>생산공정코드</th>
-						<th>생산공정명</th>
-						<th>순번</th>
-						<th>작업코드등록</th>
+					<tr style="font-size:0.75em;">
+						<th>견적서코드</th>
+						<th>등록일자</th>
+						<th>사원번호</th>
+						<th>외화코드</th>
+						<th>견적금액</th>
+						<th>진행상태</th>
+						<th>사용구분</th>
+						<th>창고 제품</th>
+						<th>수량</th>
+						<th>수정자</th>
+						<th>수정일</th>
+						<th>최초등록자</th>
+						<th>첨부파일</th>
 					</tr>
-					<c:if test="${empty boardList }">
+					<c:if test="${empty estimList }">
 						<tr>
 							<td colspan="5">
 								<strong>해당 게시글이 없습니다.</strong>
 							</td>
 						</tr>
 					</c:if>
-					<c:forEach items="${boardList }" var="board">		
+					<c:forEach items="${estimList }" var="estimate">		
 						<tr style="font-size: 0.85em;">
-							<td>${board.bno }</td>
-							<td style="text-align:left;">
-								<a href="javascript:OpenWindow('detail.do?bno=${board.bno }', '게시글상세보기', 800, 700);">
-									<span class="col-sm-12">
-										${board.title }
-										<c:if test="${board.replycnt ne 0 }">				<!-- eq : = , ne : != -->
-											<span class="nav-item">
-												&nbsp;&nbsp;
-												<i class="fa fa-comment"></i>
-												<span class="badge badge-warning navbar-badge">${board.replycnt }</span>
-											</span>
-										</c:if> 			
-									</span>
-								</a> 
-							</td>
-							<td>${board.writer }</td>
+							<td><a href="javascript:OpenWindow('estimateSelect.do?est_no=${estimate.est_no }','견적서 조회', 800 ,800);">${estimate.est_no }</a></td>
 							<td>
-								<fmt:formatDate value="${board.regdate }" pattern="yyyy-MM-dd"></fmt:formatDate>
+							<fmt:formatDate value="${estimate.sys_regdate }" pattern="yyyy-MM-dd"></fmt:formatDate>
 							</td>
-							<td><span class="badge bg-red">${board.viewcnt }</span></td>
+							<td>${estimate.emp_no }</td>
+							<td>${estimate.fc_no }</td>
+							<td>${estimate.amount }</td>
+							<td>${estimate.progress }</td>
+							<td>${estimate.enabled }</td>
+							<td>${estimate.wh_no }</td>
+							<td>${estimate.quantity }</td>
+							<td>${estimate.sys_up }</td>
+							<td>
+							<fmt:formatDate value="${estimate.sys_updatedate }" pattern="yyyy-MM-dd"></fmt:formatDate>
+							</td>
+							<td>${estimate.sys_reg }</td>
+							<td>${estimate.files }</td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -173,6 +239,7 @@
 	</section>
 </div>
 </div>
+</form>
 </body>
 </html>
 

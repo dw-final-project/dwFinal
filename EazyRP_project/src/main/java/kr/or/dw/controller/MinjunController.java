@@ -41,5 +41,64 @@ public class MinjunController {
 	}
 
 	
+	@RequestMapping("/shopRegistForm")
+	public String shopRegistForm() {
+		String url = "minjun/shop_open_regist";
+		return url;
+	}
 	
+	@RequestMapping("/product.do")
+	public ModelAndView productMain(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException {
+		String url = "minjun/product";
+		
+		// 메뉴 리스트
+		List<MenuVO> menuList = menuService.selectMainMenuList(); 
+		MenuVO menu = menuService.selectMenuByMcode(mcode);
+		
+		mnv.addObject("menu", menu);
+		mnv.addObject("menuList", menuList);
+		
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/productRegistForm")
+	public String productRegistForm() {
+		String url = "minjun/product_open_regist";
+		return url;
+	}
+	
+	@RequestMapping("/order.do")
+	public ModelAndView orderMain(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException {
+		String url = "minjun/order";
+		
+		// 메뉴 리스트
+		List<MenuVO> menuList = menuService.selectMainMenuList(); 
+		MenuVO menu = menuService.selectMenuByMcode(mcode);
+		
+		mnv.addObject("menu", menu);
+		mnv.addObject("menuList", menuList);
+		
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/orderRegistForm")
+	public String orderRegistForm() {
+		String url = "minjun/order_open_regist";
+		return url;
+	}
+	
+	@RequestMapping("/regist")
+	public void regist(ProcessVO processVo, HttpServletRequest req, HttpServletResponse res) throws SQLException, IOException {
+//		processService.registProcess(processVo);
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 등록되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
 }
