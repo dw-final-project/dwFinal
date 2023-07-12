@@ -22,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.common.collect.Sets.SetView;
 
 import kr.or.dw.service.EstimateService;
-import kr.or.dw.service.MenuService;
+import kr.or.dw.service.MenuService;	
 import kr.or.dw.service.SiService;
 import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.SiVO;
@@ -43,14 +43,17 @@ public class BusinessController {
 	private SiService siService;
 	
 	@RequestMapping("/business")
-	public ModelAndView main(ModelAndView mnv) throws SQLException {
-		String url = "jihwan/main";
+	public ModelAndView main(ModelAndView mnv, String mcode) throws SQLException {
+		String url = "jihwan/main.page";
 		
 		List<EstimateVO> estimList = estimateService.selectEstimList();
+		mnv.addObject("mcode", mcode);
 		mnv.setViewName(url);
+
 		mnv.addObject("estimList" ,estimList);
 		System.out.println(estimList.get(0).getFiles());
 		System.out.println(estimList.get(1).getFiles());
+
 		return mnv;
 	}
 	
@@ -65,7 +68,7 @@ public class BusinessController {
 		
 		
 		EstimateVO estVo = estimateService.selectdetail(est_no);
-		String url = "jihwan/estimateSelect";
+		String url = "jihwan/estimateSelect.page";
 		mnv.addObject("estVo", estVo);
 		mnv.setViewName(url);
 		return mnv;
@@ -76,7 +79,7 @@ public class BusinessController {
 		String url = "jihwan/siSelect";
 		List<SiVO> siList = siService.selectSiList();
 		mnv.setViewName(url);
-		mnv.addObject("siList",siList);
+		mnv.addObject("siList", siList);
 		return mnv;
 	}
 	

@@ -37,21 +37,14 @@ public class ProcessController {
 	@Autowired
 	private ProcessService processService;
 	
-	@RequestMapping("/process.do")
-	public ModelAndView main(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
-		String url = "process/main";
-		
-		// 메뉴 리스트
-		List<MenuVO> menuList = menuService.selectMainMenuList(); 
-		MenuVO menu = menuService.selectMenuByMcode(mcode);
-		
+	@RequestMapping("/process")
+	public ModelAndView main(String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
+		String url = "process/main.page";
+			
 		// 공정관리 목록 조회
-		
 		Map<String, Object> dataMap = processService.selectProcessList(cri);
 		
-		mnv.addObject("menu", menu);
-		mnv.addObject("menuList", menuList);
-		
+		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
 		

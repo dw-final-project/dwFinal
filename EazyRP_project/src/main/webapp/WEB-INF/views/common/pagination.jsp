@@ -47,6 +47,11 @@
 </form>
 <script>
 	function searchList_go(page, url){
+		
+		let mcode = sessionStorage.getItem("mcode");
+		
+		let modMcode = mcode.substring(0,3) + "0000";
+		
 		if(page < 1){
 			return;
 		}
@@ -66,7 +71,7 @@
 		if(url){
 			searchForm.attr("action", url);
 		}else{
-			searchForm.attr("action", "productionoutsourcing.do");
+			searchForm.attr("action", "process.do?mcode=" + modMcode);
 		}
 		console.log(searchForm)
 		searchForm.submit();

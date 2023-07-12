@@ -33,6 +33,10 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
+
+	@Autowired
+//	private MailSendService mailService;
+
 	
 	// 아이디 중복확인
 	@RequestMapping("/idCheck") 
@@ -57,14 +61,14 @@ public class MemberController {
 	
 	//이메일 인증
 
-	@GetMapping("/mailCheck")
-	@ResponseBody
-	public String mailCheck(String email) throws Exception{
-		System.out.println("이메일 인증 요청이 들어옴!");
-		System.out.println("이메일 인증 이메일 : " + email);
-		return mailService.joinEmail(email);
-				
-	};
+//	@GetMapping("/mailCheck")
+//	@ResponseBody
+//	public String mailCheck(String email) throws Exception{
+//		System.out.println("이메일 인증 요청이 들어옴!");
+//		System.out.println("이메일 인증 이메일 : " + email);
+//		return mailService.joinEmail(email);
+//				
+//	};
 	
 	// 회원가입 
 	@RequestMapping("/register")
