@@ -49,14 +49,11 @@ public class BusinessController {
 		List<EstimateVO> estimList = estimateService.selectEstimList();
 		mnv.addObject("mcode", mcode);
 		mnv.setViewName(url);
-<<<<<<< Updated upstream
+
 		mnv.addObject("estimList" ,estimList);
 		System.out.println(estimList.get(0).getFiles());
 		System.out.println(estimList.get(1).getFiles());
-=======
-		mnv.addObject("estimList", estimList);
-		
->>>>>>> Stashed changes
+
 		return mnv;
 	}
 	
