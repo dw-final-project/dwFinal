@@ -20,7 +20,7 @@ import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.SiVO;
 
 @Controller
-@RequestMapping("/erp3")
+@RequestMapping("/erp4")
 public class BusinessController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BusinessController.class);
@@ -77,4 +77,9 @@ public class BusinessController {
 		return url;
 	}
 	
+	
+//	@RequestMapping("/modifyForm")
+//	public void modifyform() {
+//		
+//	}
 }

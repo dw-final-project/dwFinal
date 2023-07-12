@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" rel="stylesheet">
+<script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>견적서</title>
+    
     <style>
     	input {
     		border: none;
@@ -63,9 +67,16 @@
 </head>
 
 <body>
-    <h2>DW 견적서</h2>
-
-    <table>
+    <h2>DW 견적서 상세</h2>
+	<div class="card-footer">
+		<button type="button" id="modifyBtn" class="btn btn-warning">수정</button>
+		<button type="button" id="removeBtn" class="btn btn-danger">삭제</button>
+		<button type="button" id="listBtn" class="btn btn-primary">닫기</button>
+	</div>
+	<!-- card footer End -->
+<form role="form">
+<input type="hidden" name="est_no" value="${estVo.est_no }">
+	<table>
         <tr>
             <td width="40%" align="center"><b>견적서 코드</b></td>
             <td width="100%"><input type="text" style="width: 100%;" value="${estVo.est_no }" readonly></td>
@@ -174,7 +185,41 @@
             <td colspan="2" align="center"><input type="text" style="width: 100%;" value="${estVo.amount }"></td>
         </tr>
     </table>
-
+</form>
 </body>
+
+
+	
+
+<script>
+window.onload = function(){
+
+	let formObj = $('form[role="form"]');
+
+	$('button#modifyBtn').on('click', function(){
+		formObj.attr({
+			'action' : 'modifyForm.do',
+			'method' : 'post' 
+		});
+		formObj.submit();
+	});
+	
+	$('button#removeBtn').on('click', function(){
+		if(confirm("정말 삭제하시겠습니까?")){
+			formObj.attr({
+				'action' : 'remove',
+				'method' : 'post' 
+			});
+			formObj.submit();
+		};
+	});
+	
+	$('button#listBtn').on('click', function(){
+		window.opener.location.reload(true);
+		window.close();
+	});
+}
+
+</script>
 
 </html>
