@@ -28,5 +28,7 @@ public interface MyMenuService {
 
 	void deleteNote(int n_no) throws SQLException;
 
+	List<NoteVO> searchNote(Map<String, String> valMap) throws SQLException;
+
 
 }

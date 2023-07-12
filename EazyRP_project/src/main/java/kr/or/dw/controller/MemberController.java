@@ -31,8 +31,6 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
-	@Autowired
-	private MailSendService mailService;
 	
 	// 아이디 중복확인
 	@RequestMapping("/idCheck") 
