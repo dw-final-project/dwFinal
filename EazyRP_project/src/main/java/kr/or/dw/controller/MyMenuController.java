@@ -1,7 +1,9 @@
 package kr.or.dw.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.sql.SQLException;
@@ -130,7 +132,7 @@ public class MyMenuController {
 	
 	@RequestMapping("/noteList")
 	public ModelAndView noteList(ModelAndView mnv) throws SQLException{
-		String url="/mymenu/noteList";
+		String url="/mymenu/noteList.page";
 		
 		List<NoteVO> note = mymenuService.getNoteList();
 		
@@ -216,7 +218,7 @@ public class MyMenuController {
 	
 	@RequestMapping("/search")
 	public ModelAndView search(ModelAndView mnv, String keyword, String searchType) throws SQLException {
-		String url = "/mymenu/noteList";
+		String url = "/mymenu/noteList.page";
 		Map<String, String> valMap = new HashMap<>();
 		valMap.put("keyword", keyword);
 		valMap.put("searchType", searchType);
@@ -228,6 +230,26 @@ public class MyMenuController {
 		mnv.setViewName(url);
 		
 		return mnv;
+	}
+	
+	@RequestMapping("/download")
+	public void download(String files, HttpServletResponse res) {
+		String uploadFolder = "C:\\upload\\";
+		File file = new File(uploadFolder + files);
+		
+	        try(
+	                FileInputStream fis = new FileInputStream(file);
+	                OutputStream out = res.getOutputStream();
+	        ){
+	        	    int readCount = 0;
+	        	    byte[] buffer = new byte[1024];
+	            while((readCount = fis.read(buffer)) != -1){
+	            		out.write(buffer,0,readCount);
+	            }
+	        }catch(Exception ex){
+	            throw new RuntimeException("file Save Error");
+	        }
+		
 	}
 	
 }
