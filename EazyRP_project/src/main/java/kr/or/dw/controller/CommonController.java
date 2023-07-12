@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.dw.service.MemberService;
 import kr.or.dw.service.MenuService;
 import kr.or.dw.vo.MenuVO;
 
@@ -30,9 +31,9 @@ public class CommonController {
 	@GetMapping("/common/loginForm")
 	public String loginForm(HttpServletResponse res) throws Exception {
 		String url = "/common/loginForm";
-		
 		return url;
 	}
+
 	
 	@GetMapping("/common/main")
 	public String main() {
@@ -55,11 +56,11 @@ public class CommonController {
 		return mnv;
 	}
 		
-//	@RequestMapping("/common/main")
-//	public String registerForm(HttpServletResponse res) throws Exception {
-//		return "/common/registerForm";
-//
-//	}
+	@RequestMapping("/common/registerForm")
+	public String registerForm(HttpServletResponse res) throws Exception {
+		return "/common/registerForm";
+
+	}
 
 	@RequestMapping("/common/subMenu")
 	public ResponseEntity<List<MenuVO>> subMenu(String mcode){

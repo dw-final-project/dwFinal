@@ -11,4 +11,6 @@ public interface MemberDAO {
 
 	MemberVO selectMemberById(String id) throws SQLException;
 
+	void insertMember(MemberVO member) throws SQLException;
+
 }
