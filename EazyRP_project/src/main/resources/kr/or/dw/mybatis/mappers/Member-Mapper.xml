@@ -11,16 +11,17 @@
 		 WHERE id = #{id}
 	</select>
 	
+	<insert id="insertMember" parameterType="member">
+		INSERT INTO member(u_no, id, pwd, email, tel, birth, name, addr, enabled, regdate)
+		VALUES(member_seq.nextVal, #{id}, #{pwd}, #{email}, #{tel}, #{birth}, #{name}, #{addr}, 1, SYSDATE)
+	</insert> 
+	
 	<!-- <select id="selectAllMemberList" resultType="member">
 		SELECT *
 		  FROM member
 		 ORDER BY regdate desc
 	</select>
 	
-	<insert id="insertMember" parameterType="member">
-		INSERT INTO member(id, pwd, email, phone, picture, name, authority, enabled, regdate)
-		VALUES(#{id}, #{pwd}, #{email}, #{phone}, #{picture}, #{name}, #{authority}, 1, SYSDATE)
-	</insert>
 	
 	<update id="updateMember" parameterType="member">
 		UPDATE member

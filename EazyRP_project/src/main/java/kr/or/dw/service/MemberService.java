@@ -8,6 +8,8 @@ public interface MemberService {
 
 	MemberVO selectMemberById(String id)throws SQLException;
 
+	void register(MemberVO member) throws SQLException;
+
 
 
 }
