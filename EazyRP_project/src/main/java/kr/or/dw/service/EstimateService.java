@@ -9,4 +9,6 @@ public interface EstimateService {
 
 	List<EstimateVO> selectEstimList() throws SQLException;
 
+	EstimateVO selectdetail(String est_no) throws SQLException;
+
 }

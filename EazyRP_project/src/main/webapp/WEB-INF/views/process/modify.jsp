@@ -1,57 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<div style="min-height: 800px;">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" rel="stylesheet">
+<script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
+<div style="min-width: 420px; min-height: 800px; margin: 0 auto;">
 	
 	<section class="content container-fluid">
-		<div class="row justify-content-center">
-			<div class="col-md-12" style="max-width: 950px;">
+		<div class="row">	<!-- row Start -->
+			<div class="col-md-12">
 				<div class="card card-outline card-info">
-					<div class="card-header row">
-						<h4 class="col-md-8">글수정</h4>
-						<div class="col-md-4">
-							<div class="float-right">
-								<button type="button" class="btn btn-warning" id="modifyBtn">수 정</button>
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								<button type="button" class="btn btn-default" id="cancelBtn">취 소</button>
-							</div>
-						</div>
+					<div class="card-header">
+						<h3 class="card-title">공정 수정하기</h3>
 					</div>
-					<div class="card-body pad">
-						<form role="form" method="post" action="modify.do" name="modifyForm">
-							<input type="hidden" name="bno" value="${board.bno}">
-							<div class="form-group">
-								<label for="title">제 목</label>
-								<input type="text" id="title" name="title" class="form-control" placeholder="제목을 입력하세요." value="${board.title }">
+					<form role="form" method="post" action="modify.do" name="modifyForm">
+						<div class="card-body" style="padding-bottom:0">	<!-- card body Start -->
+							<div class="form-group col-sm-12 row">
+								<label for="title" class="col-sm-2">코드</label>
+								<input type="text" class="form-control col-sm-10" id="pc_code" name="pc_code" value="${process.pc_code }">
 							</div>
-							<div class="form-group">
-								<label for="writer">작성자</label>
-								<input type="text" id="writer" name="writer" class="form-control" value="${board.writer }" readonly>
+							<div class="form-group col-sm-12 row">
+								<label for="writer" class="col-sm-2">공정명</label>
+								<input type="text" class="form-control col-sm-10" id="pc_name" name="pc_name" value="${process.pc_name }">
 							</div>
-							<div class="form-group">
-								<label for="content">내 용</label>
-								<textarea class="textarea" name="content" id="content" rows="10" 
-										placeholder="1000자 내외로 작성하세요." style="display: block; width: 100%;">
-											${board.content }
-								</textarea>
+							<div class="form-group col-sm-12 row">
+								<label for="regdate" class="col-sm-2">순번</label>
+								<input type="text" class="form-control col-sm-10" id="pc_order" name="pc_order" value="${process.pc_order }">
 							</div>
-						</form>
-					</div>
+						</div>	<!-- card body End -->
+					</form>
+					<div class="card-footer">
+						<button type="button" id="modifyBtn" class="btn btn-warning">수정 완료</button>
+						<button type="button" id="cancelBtn" class="btn btn-primary">취소</button>
+					</div>	<!-- card footer End -->
 				</div>
 			</div>
-		</div>
+		</div>	<!-- row End -->
 	</section>
 </div>
 
+<form role="form">
+	<input type="hidden" name="pc_code" value="${process.pc_code }">
+</form>
+
 <script>
 	window.onload = function(){
-		SmartEditor_summernote($('#content'));
 		
 		$('#modifyBtn').on('click', function() {
-			let title = $('input[name="title"]');
-			if (title.val() == '') {
-				alert("제목은 필수입니다.");
-				title.focus();
+			let code = $('input[name="pc_code"]');
+			if (code.val() == '') {
+				alert("공정 코드는 필수입니다.");
+				code.focus();
 				return;
 			};
 			$('form[name="modifyForm"]').submit();

@@ -7,5 +7,10 @@
 	FROM estimate
 </select>
 
+<select id="selectdetail" resultType="estimate">
+	SELECT *
+	FROM estimate
+	WHERE est_no = #{est_no}
+</select>
 
 </mapper>
