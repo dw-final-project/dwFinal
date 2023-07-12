@@ -26,7 +26,7 @@ import kr.or.dw.vo.ProcessVO;
 @RequestMapping("/erp5")
 public class MinjunController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HeesungController.class);
+//	private static final Logger logger = LoggerFactory.getLogger(HeesungController.class);
 	
 	@Autowired
 	private MenuService menuService;
@@ -47,7 +47,7 @@ public class MinjunController {
 		return url;
 	}
 	
-	@RequestMapping("/product.do")
+	/*@RequestMapping("/product.do")
 	public ModelAndView productMain(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException {
 		String url = "minjun/product";
 		
@@ -61,7 +61,7 @@ public class MinjunController {
 		mnv.setViewName(url);
 		
 		return mnv;
-	}
+	}*/
 	
 	@RequestMapping("/productRegistForm")
 	public String productRegistForm() {
@@ -69,7 +69,7 @@ public class MinjunController {
 		return url;
 	}
 	
-	@RequestMapping("/order.do")
+	/*@RequestMapping("/order.do")
 	public ModelAndView orderMain(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException {
 		String url = "minjun/order";
 		
@@ -83,7 +83,7 @@ public class MinjunController {
 		mnv.setViewName(url);
 		
 		return mnv;
-	}
+	}*/
 	
 	@RequestMapping("/orderRegistForm")
 	public String orderRegistForm() {

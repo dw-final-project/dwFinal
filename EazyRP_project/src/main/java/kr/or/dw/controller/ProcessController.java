@@ -36,7 +36,7 @@ public class ProcessController {
 	@Autowired
 	private ProcessService processService;
 	
-	@RequestMapping("/productionoutsourcing.do")
+	/*@RequestMapping("/productionoutsourcing.do")
 	public ModelAndView main(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
 		String url = "process/main";
 		
@@ -55,7 +55,7 @@ public class ProcessController {
 		mnv.setViewName(url);
 		
 		return mnv;
-	}
+	}*/
 	
 	@RequestMapping("/registForm")
 	public String registForm() {

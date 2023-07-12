@@ -1,10 +1,12 @@
 package kr.or.dw.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -47,7 +49,8 @@ public class BusinessController {
 		List<EstimateVO> estimList = estimateService.selectEstimList();
 		mnv.setViewName(url);
 		mnv.addObject("estimList" ,estimList);
-		
+		System.out.println(estimList.get(0).getFiles());
+		System.out.println(estimList.get(1).getFiles());
 		return mnv;
 	}
 	
@@ -86,9 +89,34 @@ public class BusinessController {
 	@RequestMapping("/estimateInsert")
 	public void estimateInsert(@RequestParam("files")MultipartFile multi, EstimateVO vo,HttpServletResponse res) throws SQLException, IOException{
 		// 파일저장 및 파일명 가져오기
-		String fileName = saveFile();
+		if(multi != null) {
+			UUID uuid = UUID.randomUUID();
+			String[] uuids = uuid.toString().split("-");
+			
+			String uniqueName = uuids[0];
+			
+			String fileRealName = multi.getOriginalFilename();
+			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
+			String uploadFolder = "C:\\upload\\";
+			vo.setFileName(uniqueName+fileExtension);
+			
+			
+			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
+			
+			if(!saveFile.exists()) {
+				saveFile.mkdirs();
+			}
+			
+			try {
+				multi.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		// 가져온 파일명 estimateVO에 set
-		vo.setFileName(fileName);
+
 		// DB에 Insert
 		estimateService.estimateInsert(vo);
 		System.out.println(vo.getEst_no());

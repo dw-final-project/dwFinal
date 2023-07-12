@@ -197,7 +197,7 @@
 						<th>수정자</th>
 						<th>수정일</th>
 						<th>최초등록자</th>
-						<th>첨부파일</th>
+						<th>첨부파일여부</th>
 					</tr>
 					<c:if test="${empty estimList }">
 						<tr>
@@ -224,7 +224,7 @@
 							<fmt:formatDate value="${estimate.sys_updatedate }" pattern="yyyy-MM-dd"></fmt:formatDate>
 							</td>
 							<td>${estimate.sys_reg }</td>
-							<td>${estimate.files }</td>
+							<td>${estimate.files != null ? "y" : "n"}</td>
 						</tr>
 					</c:forEach>
 				</table>
