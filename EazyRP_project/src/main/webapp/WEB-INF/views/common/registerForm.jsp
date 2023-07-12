@@ -160,7 +160,8 @@ body {
 				<h4 class="modal-title">회원가입</h4>
 			</div>
 			<div class="modal-body">
-				<form action="/examples/actions/confirmation.php" method="post">
+				
+				<form id="registForm" action="/member/register.do" method="post">
 					<div class="form-group d-flex">
 						<div class="input-group inputText">
 							<span class="fa"><i class="fa fa-user"></i></span><span style="width: 15px;"></span>
@@ -173,13 +174,13 @@ body {
 					<div class="form-group">
 						<div class="input-group inputText">
 							<span class="fa"><i class="fa fa-lock"></i></span><span style="width: 15px;"></span>
-							<input type="password" class="form-control" id="pwd" name="pw" placeholder="PW" required="required">
+							<input type="password" class="form-control" id="pwd" name="pwd" placeholder="PW" required="required">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="input-group inputText">
 							<span class="fa"><i class="fa fa-lock"></i></span><span style="width: 15px;"></span>
-							<input type="password" class="form-control" id="pwdchk" name="pwchk" placeholder="PW check" onclick="idCheck_go();" required="required">
+							<input type="password" class="form-control" id="pwdchk" name="pwchk" placeholder="PW check" required="required">
 						</div>
 					</div>
 					<div class="form-group">
@@ -195,7 +196,7 @@ body {
 						</div>
 						<div class="input-group"></div>
 						<div class="input-group">
-							<select class="form-select form-select-sm" aria-label="Default select example" name="gender" style="border-radius: 7px; margin-left: 10px;">
+							<select class="form-select form-select-sm" aria-label="Default select example" name="gen" style="border-radius: 7px; margin-left: 10px;">
 								<option disabled="disabled" selected="selected">성별</option>
 								<option>남성</option>
 								<option>여성</option>
@@ -238,7 +239,7 @@ body {
 					<div class="form-group">
 						<div class="input-group inputText">
 							<span class="fa"><i class="fa fa-phone"></i></span><span style="width: 15px;"></span>
-							<input type="text" class="form-control" name="tell" placeholder="전화번호" required="required">
+							<input type="text" class="form-control" name="tel" placeholder="전화번호" required="required">
 						</div>
 					</div>
 					<div class="form-group">
@@ -247,12 +248,13 @@ body {
 							<input type="text" class="form-control" name="addr" placeholder="주소" required="required">
 						</div>
 					</div>
-					<div class="form-group findbtn">
-						<button class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px; color:#fff;" type="submit" onclick="submit_go()">회원가입</button>
-						&nbsp;&nbsp;&nbsp;&nbsp;
-						<button class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px; color:#fff;" type="submit">취 소</button>
-					</div>
 				</form>
+					<div class="form-group findbtn">
+						<button class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px; color:#fff;" id="registBtn">회원가입</button>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<button class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px; color:#fff;" >취 소</button>
+					</div>
+
 			</div>
 			
 		</div>
@@ -261,15 +263,23 @@ body {
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 <script>	
+
+
+
+
 $(function(){
-	$('#birth').datepicker();
+	$('#birth').datepicker({
+		dateFormat: "yy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
+ 		startDate: '',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
+ 		language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
+ 		});	
+	
+	$('#registBtn').on('click', function(){
+		$('#registForm').submit();
+	})
 	
 })
-// 		{
-// 		format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
-// 		startDate: '',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
-// 		language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
-// 		});//여기까지가 기본 사용 방법
+
 </script> 	 
 
 <%@ include file="register_js.jsp" %> 
