@@ -24,7 +24,7 @@ public class EstimateVO {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date sys_updatedate;
 	private String sys_reg;
-	private MultipartFile files;
+	private String files;
 	private String fileName;
 	
 	

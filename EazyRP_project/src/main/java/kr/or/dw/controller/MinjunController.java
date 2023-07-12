@@ -26,14 +26,18 @@ import kr.or.dw.vo.ProcessVO;
 @RequestMapping("/erp5")
 public class MinjunController {
 	
+<<<<<<< Updated upstream
 //	private static final Logger logger = LoggerFactory.getLogger(HeesungController.class);
+=======
+	private static final Logger logger = LoggerFactory.getLogger(MinjunController.class);
+>>>>>>> Stashed changes
 	
 	@Autowired
 	private MenuService menuService;
 	
 	@RequestMapping("/shop")
 	public ModelAndView index(ModelAndView mnv, String mcode) throws SQLException{
-		String url = "/minjun/main.page";
+		String url = "/minjun/shop.page";
 		
 		mnv.addObject("mcode", mcode);
 		mnv.setViewName(url);
@@ -47,6 +51,7 @@ public class MinjunController {
 		return url;
 	}
 	
+<<<<<<< Updated upstream
 	/*
 	 * @RequestMapping("/product.do") public ModelAndView
 	 * productMain(@RequestParam(defaultValue="M000000")String mcode, ModelAndView
@@ -61,6 +66,16 @@ public class MinjunController {
 	 * 
 	 * return mnv; }
 	 */
+=======
+	@RequestMapping("/product.do")
+	public ModelAndView productMain(String mcode, ModelAndView mnv) throws SQLException {
+		String url = "minjun/product";
+		
+		mnv.addObject("mcode", mcode);
+		mnv.setViewName(url);
+		return mnv;
+	}
+>>>>>>> Stashed changes
 	
 	@RequestMapping("/productRegistForm")
 	public String productRegistForm() {
@@ -68,6 +83,7 @@ public class MinjunController {
 		return url;
 	}
 	
+<<<<<<< Updated upstream
 	/*
 	 * @RequestMapping("/order.do") public ModelAndView
 	 * orderMain(@RequestParam(defaultValue="M000000")String mcode, ModelAndView
@@ -82,6 +98,18 @@ public class MinjunController {
 	 * 
 	 * return mnv; }
 	 */
+=======
+	@RequestMapping("/order.do")
+	public ModelAndView orderMain(String mcode, ModelAndView mnv) throws SQLException {
+		String url = "minjun/order";
+		
+		
+		mnv.addObject("mcode", mcode);		
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+>>>>>>> Stashed changes
 	
 	@RequestMapping("/orderRegistForm")
 	public String orderRegistForm() {
