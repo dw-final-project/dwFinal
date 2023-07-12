@@ -21,11 +21,12 @@ import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.service.MenuService;
 import kr.or.dw.service.ProcessService;
 import kr.or.dw.vo.ProcessVO;
+import lombok.RequiredArgsConstructor;
 import kr.or.dw.vo.MenuVO;
 import kr.or.dw.vo.ProcessVO;
 
 @Controller
-@RequestMapping("/erp3")
+@RequestMapping("/erp4")
 public class ProcessController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProcessController.class);
@@ -36,7 +37,7 @@ public class ProcessController {
 	@Autowired
 	private ProcessService processService;
 	
-	@RequestMapping("/productionoutsourcing.do")
+	@RequestMapping("/process.do")
 	public ModelAndView main(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
 		String url = "process/main";
 		
@@ -130,8 +131,5 @@ public class ProcessController {
 		out.println("window.close();");
 		out.println("</script>");
 	}
-	
-	
-	
 	
 }
