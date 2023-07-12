@@ -33,12 +33,6 @@ public class CommonController {
 		
 		return url;
 	}
-	
-//	@GetMapping("/common/main")
-//	public String main() {
-//		return "/common/main";
-//	}
-	
 	@RequestMapping("/common/main")
 	public ModelAndView index(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException{
 		String url = "/common/main";
@@ -55,10 +49,6 @@ public class CommonController {
 		return mnv;
 	}
 		
-	@GetMapping("/common/main")
-	public String main() {
-		return "/common/registerForm";
-	}
 	
 	@RequestMapping("/common/subMenu")
 	public ResponseEntity<List<MenuVO>> subMenu(String mcode){

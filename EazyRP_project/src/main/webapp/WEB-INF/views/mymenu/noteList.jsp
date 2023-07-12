@@ -41,7 +41,7 @@
 								<c:forEach items="${note}" var="note" varStatus="loop">
 									<tr style="height: 10px;"></tr>
 									<tr>
-										<td id="read_${loop.index}" style="text-align: center; height:80%; background-color: ${note.readable == "N" ? "red" : "blue" };">
+										<td id="read_${loop.index}" style="text-align: center; height:80%; background-color: ${note.readable == 'N' ? 'red' : 'blue' };">
 										</td>
 										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/mymenu/detail.do?n_no=${note.n_no }', '쪽지보기', 800, 600, '${loop.index}')">${note.title }</a></td>
 										<td style="text-align: center;">${note.callerName }</td>
