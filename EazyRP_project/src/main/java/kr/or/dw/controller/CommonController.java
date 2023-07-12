@@ -38,7 +38,7 @@ public class CommonController {
 		return url;
 	}
 
-	
+	// 시발새끼야
 	@GetMapping("/common/main")
 	public String main() {
 		return "/common/main";
