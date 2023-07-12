@@ -1,7 +1,11 @@
 package kr.or.dw.controller;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -40,22 +44,25 @@ public class CommonController {
 		return "/common/main";
 	}
 	
+
 	@RequestMapping("/common/main")
-	public ModelAndView index(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException{
-		String url = "/common/main";
+	public ModelAndView index(ModelAndView mnv, HttpSession session) throws SQLException{
+		String url = "/common/main.main";
 		
 		List<MenuVO> menuList = menuService.selectMainMenuList();
-		MenuVO menu = menuService.selectMenuByMcode(mcode);
+		Map<String, Object> dataMap = menuService.selectSubMenuList(menuList);
+		Map<String, List<MenuVO>> subMenuList = (Map<String, List<MenuVO>>) dataMap.get("subMenuList");
+		Map<String, List<MenuVO>> smallMenuList = (Map<String, List<MenuVO>>) dataMap.get("smallMenuList");
 		
-		mnv.addObject("menu", menu);
-		mnv.addObject("menuList", menuList);
-		mnv.setViewName(url);
+		session.setAttribute("menuList", menuList);
+		session.setAttribute("subMenuList", subMenuList);
+		session.setAttribute("smallMenuList", smallMenuList);
 		
-		
+		mnv.setViewName(url);	
 		
 		return mnv;
 	}
-		
+
 	@RequestMapping("/common/registerForm")
 	public String registerForm(HttpServletResponse res) throws Exception {
 		return "/common/registerForm";
@@ -77,6 +84,7 @@ public class CommonController {
 		
 		return entity;
 	}
+
 	
 	
 }

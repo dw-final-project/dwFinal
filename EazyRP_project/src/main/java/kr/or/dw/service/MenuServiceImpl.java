@@ -1,7 +1,9 @@
 package kr.or.dw.service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,18 +26,30 @@ public class MenuServiceImpl implements MenuService{
 	}
 
 	@Override
-	public List<MenuVO> selectSubMenuList(String mcode) throws SQLException {
+	public Map<String, Object> selectSubMenuList(List<MenuVO> menuList) throws SQLException{
 		
-		List<MenuVO> menuList = menuDAO.selectSubMenuList(mcode);
+		Map<String, List<MenuVO>> subMenuList = new HashMap<String, List<MenuVO>>();
+		Map<String, List<MenuVO>> smallMenuList = new HashMap<String, List<MenuVO>>();
 		
-		return menuList;
+		for(MenuVO menu : menuList) {
+			String mcode = menu.getMcode();
+			List<MenuVO> subMenu = menuDAO.selectSubMenuList(mcode);
+			subMenuList.put(mcode, subMenu);
+			for(MenuVO smenu : subMenu) {
+				mcode = smenu.getMcode();
+				List<MenuVO> smallMenu = menuDAO.selectSubMenuList(mcode);
+				smallMenuList.put(mcode, smallMenu);
+			}
+		}	
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("subMenuList", subMenuList);
+		dataMap.put("smallMenuList", smallMenuList);
+		
+		return dataMap;
 	}
 
-	@Override
-	public MenuVO selectMenuByMcode(String mcode) throws SQLException {
-		// TODO Auto-generated method stub
-		return menuDAO.selectMenuByMcode(mcode);
-	}
+
 
 
 }

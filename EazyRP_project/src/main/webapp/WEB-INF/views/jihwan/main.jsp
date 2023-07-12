@@ -162,7 +162,7 @@
 		<div class="col-1"></div>
 		<div class="card col-13" style="margin-top:3em;">
 			<div class="card-header with-border">
-				<button type="button" class="btn btn-danger" id="" onclick="OpenWindow('registForm.do', '글등록', 800, 700);">등록</button>
+				<button type="button" class="btn btn-danger" id="" onclick="javascript:OpenWindow('estimate.do','견적서 등록', 600 ,800);">등록</button>
 				<div class="card-tools" style="width: 350px;">
 					<div class="input-group row">
 						<select class="form-control col-md-4" name="searchType" id="searchType">
@@ -208,7 +208,7 @@
 					</c:if>
 					<c:forEach items="${estimList }" var="estimate">		
 						<tr style="font-size: 0.85em;">
-							<td>${estimate.est_no }</td>
+							<td><a href="javascript:OpenWindow('estimateSelect.do?est_no=${estimate.est_no }','견적서 조회', 800 ,800);">${estimate.est_no }</a></td>
 							<td>
 							<fmt:formatDate value="${estimate.sys_regdate }" pattern="yyyy-MM-dd"></fmt:formatDate>
 							</td>

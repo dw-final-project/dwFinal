@@ -65,7 +65,7 @@ public class ProcessController {
 	
 	@RequestMapping("/regist")
 	public void regist(ProcessVO processVo, HttpServletRequest req, HttpServletResponse res) throws SQLException, IOException {
-//		board.setTitle((String)req.getAttribute("XSStitle"));
+//		process.setTitle((String)req.getAttribute("XSStitle"));
 		processService.registProcess(processVo);
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
@@ -76,12 +76,12 @@ public class ProcessController {
 	}
 	
 	@RequestMapping("/detail")
-	public ModelAndView detail(int pc_no, ModelAndView mnv) throws SQLException {
+	public ModelAndView detail(String pc_code, ModelAndView mnv) throws SQLException {
 		String url = "process/detail";
 		
 		ProcessVO process = null;
 		
-		process = processService.selectProcess(pc_no);
+		process = processService.selectProcess(pc_code);
 		
 		mnv.addObject("process", process);
 		mnv.setViewName(url);
@@ -89,47 +89,47 @@ public class ProcessController {
 		return mnv;
 	}
 
-//	@RequestMapping("/modifyForm")
-//	public ModelAndView modifyForm(int bno, ModelAndView mnv) throws SQLException {
-//		String url = "board/modify.open";
-//		
-//		ProcessVO board = null;
-//		
-//		board = boardService.selectBoard(bno);
-//		
-//		mnv.addObject("board", board);
-//		mnv.setViewName(url);
-//		
-//		return mnv;
-//	}
-//	
-//	@RequestMapping("/modify")
-//	public void modify(ProcessVO board, HttpServletRequest req, HttpServletResponse res) throws IOException, SQLException {
-//		board.setTitle((String)req.getAttribute("XSStitle"));
-//		
-//		boardService.modify(board);
-//		
-//		res.setContentType("text/html; charset=utf-8");
-//		PrintWriter out = res.getWriter();
-//		out.println("<script>");
-//		out.println("window.opener.location.reload();");
-//		out.println("location.href='detail.do?bno=" + board.getBno() + "';");
-//		out.println("</script>");
-//	}
-//	
-//	@RequestMapping("/remove")
-//	public void remove(int bno, HttpServletRequest req, HttpServletResponse res) throws IOException, SQLException {
-//		
-//		boardService.remove(bno);
-//		
-//		res.setContentType("text/html; charset=utf-8");
-//		PrintWriter out = res.getWriter();
-//		out.println("<script>");
-//		out.println("alert('삭제 되었습니다.')");
-//		out.println("window.opener.location.reload();");
-//		out.println("window.close();");
-//		out.println("</script>");
-//	}
+	@RequestMapping("/modifyForm")
+	public ModelAndView modifyForm(String pc_code, ModelAndView mnv) throws SQLException {
+		String url = "process/modify";
+		
+		ProcessVO process = null;
+		
+		process = processService.selectProcess(pc_code);
+		
+		mnv.addObject("process", process);
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+
+	@RequestMapping("/modify")
+	public void modify(ProcessVO process, HttpServletRequest req, HttpServletResponse res) throws IOException, SQLException {
+
+		processService.modify(process);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("window.opener.location.reload();");
+		out.println("location.href='detail.do?pc_code=" + process.getPc_code() + "';");
+		out.println("alert('수정 되었습니다.')");
+		out.println("</script>");
+	}
+	
+	@RequestMapping("/remove")
+	public void remove(String pc_code, HttpServletRequest req, HttpServletResponse res) throws IOException, SQLException {
+		System.out.println("컨트롤러 진입");
+		processService.remove(pc_code);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('삭제 되었습니다.')");
+		out.println("window.opener.location.reload();");
+		out.println("window.close();");
+		out.println("</script>");
+	}
 	
 	
 	

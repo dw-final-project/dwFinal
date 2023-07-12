@@ -31,6 +31,8 @@ public interface MyMenuDAO {
 	public void readableUpdate(int n_no) throws SQLException;
 
 	public void deleteNote(int n_no) throws SQLException;
+
+	public List<NoteVO> searchNote(Map<String, String> valMap) throws SQLException;
 	
 	
 

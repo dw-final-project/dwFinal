@@ -22,6 +22,18 @@ public class EstimateServiceImpl implements EstimateService {
 		
 		return estimList;
 	}
+
+	@Override
+	public EstimateVO selectdetail(String est_no) throws SQLException {
+		EstimateVO estVo = estimateDAO.selectdetail(est_no);
+		return estVo;
+	}
+
+	@Override
+	public void estimateInsert(EstimateVO vo) throws SQLException {
+		 estimateDAO.insertEstimate(vo);
+		
+	}
 	
 	
 	

@@ -124,11 +124,14 @@
     </nav>
 
     <nav class="nav d-flex" style="padding: 0 16.66666667%; padding-top: 6px; background-color: #7bc4b2; justify-content:space-evenly;">
-		<c:forEach items="${menuList}" var="menu">
-      	<li class="nav-scroller py-1 mb-2 dropdown">
-          <a class="p-2 a nav-link dropdown-toggle bold fw-bold dropdownI" href="javascript:subMenu('${menu.mcode }');" data-url="${menu.mcode }" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; text-decoration-line: none;">${menu.mname }</a>
-          <ul class="dropdown-menu subMenuList">
-          </ul>
-      	</li>
-      	</c:forEach>
+      <c:forEach items="${menuList}" var="menu">
+         <li class="nav-scroller py-1 mb-2 dropdown">
+          <a class="p-2 a nav-link  bold fw-bold" href="javascript:goPage('${menu.murl}', '${menu.mcode}');" data-url="${menu.mcode }" aria-expanded="true" style="color: white; text-decoration-line: none;">${menu.mname }</a>
+          
+         </li>
+         </c:forEach>
   </nav>
+  
+<!--   <nav class="flex-column p-3 sideMenuList" style=" float:left ; width: 15%; height: 100%; display: none; background-color: #7bc4b2;"> -->
+
+<!--   </nav> -->

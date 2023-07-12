@@ -19,6 +19,10 @@ public interface ProcessDAO {
 
 	int selectSearchProcessListCount(SearchCriteria cri) throws SQLException;
 
-	ProcessVO selectProcess(int pc_no) throws SQLException;
+	ProcessVO selectProcess(String pc_code) throws SQLException;
+
+	void deleteProcess(String pc_code) throws SQLException;
+
+	void updateProcess(ProcessVO process) throws SQLException;
 
 }

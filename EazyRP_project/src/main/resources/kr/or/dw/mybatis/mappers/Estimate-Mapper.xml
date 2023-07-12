@@ -7,5 +7,43 @@
 	FROM estimate
 </select>
 
+<select id="selectdetail" resultType="estimate">
+	SELECT *
+	FROM estimate
+	WHERE est_no = #{est_no}
+</select>
+
+<insert id="insertEstimate">
+	INSERT INTO estimate (
+		est_no,
+		sys_regdate,
+		emp_no,
+		fc_no,
+		amount,
+		progress,
+		enabled,
+		wh_no,
+		quantity,
+		sys_up,
+		sys_updatedate,
+		sys_reg,
+		files
+		)
+	VALUES(
+		#{est_no},
+		#{sys_regdate},
+		#{emp_no},
+		#{fc_no},
+		#{amount},
+		#{progress},
+		#{enabled},
+		#{wh_no},
+		#{quantity},
+		#{sys_up},
+		#{sys_updatedate},
+		#{sys_reg},
+		#{fileName}
+	)
+</insert>
 
 </mapper>
