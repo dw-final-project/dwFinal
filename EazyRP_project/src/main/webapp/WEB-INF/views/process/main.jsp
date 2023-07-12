@@ -3,11 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%@ include file="../include/header.jsp" %>
-<%@ include file="../include/sidebar.jsp" %>
-
 <!-- 페이징 -->
 <c:set var="cri" value="${pageMaker.cri }"/>
+<<<<<<< Updated upstream
 
 <style> /* 소라 사이드바 스타일 */
     html, body{
@@ -61,6 +59,8 @@
   
 </style>
 
+=======
+>>>>>>> Stashed changes
 <body>
 	
 	<div class="content-wrapper">

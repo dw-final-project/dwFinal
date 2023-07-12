@@ -43,14 +43,20 @@ public class BusinessController {
 	private SiService siService;
 	
 	@RequestMapping("/business")
-	public ModelAndView main(ModelAndView mnv) throws SQLException {
-		String url = "jihwan/main";
+	public ModelAndView main(ModelAndView mnv, String mcode) throws SQLException {
+		String url = "jihwan/main.page";
 		
 		List<EstimateVO> estimList = estimateService.selectEstimList();
+		mnv.addObject("mcode", mcode);
 		mnv.setViewName(url);
+<<<<<<< Updated upstream
 		mnv.addObject("estimList" ,estimList);
 		System.out.println(estimList.get(0).getFiles());
 		System.out.println(estimList.get(1).getFiles());
+=======
+		mnv.addObject("estimList", estimList);
+		
+>>>>>>> Stashed changes
 		return mnv;
 	}
 	
@@ -65,7 +71,7 @@ public class BusinessController {
 		
 		
 		EstimateVO estVo = estimateService.selectdetail(est_no);
-		String url = "jihwan/estimateSelect";
+		String url = "jihwan/estimateSelect.page";
 		mnv.addObject("estVo", estVo);
 		mnv.setViewName(url);
 		return mnv;
@@ -76,7 +82,7 @@ public class BusinessController {
 		String url = "jihwan/siSelect";
 		List<SiVO> siList = siService.selectSiList();
 		mnv.setViewName(url);
-		mnv.addObject("siList",siList);
+		mnv.addObject("siList", siList);
 		return mnv;
 	}
 	

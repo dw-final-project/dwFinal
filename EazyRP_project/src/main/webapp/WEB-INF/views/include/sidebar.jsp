@@ -12,8 +12,12 @@
 	<c:forEach items="${subMenuList[mcode]}" var="subMenu">
 		<a class="p-2 a nav-link bold fw-bold " href="javascript:goPage('${subMenu.murl }', '${subMenu.mcode }');" data-url="${subMenu.mcode }" aria-expanded="true" style="color: white; text-decoration-line: none;">${subMenu.mname }</a>
 		<c:set var="mcode">${subMenu.mcode }</c:set>
-		<c:forEach items="${smallMenuList[mcode] }" var="smallMenu">
-			<a class="p-2 a nav-link " href="javascript:goPage('${smallMenu.murl }', '${smallMenu.mcode }');" data-url="${smallMenu.mcode }" aria-expanded="true" style="color: white; text-decoration-line: none;">&nbsp;&nbsp;&nbsp;&nbsp;${smallMenu.mname }</a>
-		</c:forEach>
+			<ul style="list-style-type: none;">
+			<c:forEach items="${smallMenuList[mcode] }" var="smallMenu">
+				<li>	
+					<a class="p-2 a nav-link " href="javascript:goPage('${smallMenu.murl }', '${smallMenu.mcode }');" data-url="${smallMenu.mcode }" aria-expanded="true" style="color: white; text-decoration-line: none;">&nbsp;&nbsp;&nbsp;&nbsp;${smallMenu.mname }</a>
+				</li>
+			</c:forEach>
+			</ul>
 	</c:forEach>
 </nav>

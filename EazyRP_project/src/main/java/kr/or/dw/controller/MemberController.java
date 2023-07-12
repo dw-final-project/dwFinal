@@ -33,6 +33,11 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
+<<<<<<< Updated upstream
+=======
+//	@Autowired
+//	private MailSendService mailService;
+>>>>>>> Stashed changes
 	
 	// 아이디 중복확인
 	@RequestMapping("/idCheck") 
