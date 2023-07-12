@@ -34,7 +34,7 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
-	@Autowired
+//	@Autowired
 //	private MailSendService mailService;
 
 	
