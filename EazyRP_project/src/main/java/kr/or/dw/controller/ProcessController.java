@@ -40,7 +40,7 @@ public class ProcessController {
 	@RequestMapping("/process")
 	public ModelAndView main(String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
 		String url = "process/main.page";
-		
+			
 		// 공정관리 목록 조회
 		Map<String, Object> dataMap = processService.selectProcessList(cri);
 		
