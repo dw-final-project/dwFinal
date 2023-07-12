@@ -38,12 +38,6 @@ public class CommonController {
 		return url;
 	}
 
-	// 시발새끼야
-	@GetMapping("/common/main")
-	public String main() {
-		return "/common/main";
-	}
-	
 
 	@RequestMapping("/common/main")
 	public ModelAndView index(ModelAndView mnv, HttpSession session) throws SQLException{
@@ -68,55 +62,6 @@ public class CommonController {
 		return "/common/registerForm";
 
 	}
-
-	@RequestMapping("/common/subMenu")
-	public ResponseEntity<List<MenuVO>> subMenu(String mcode){
-		System.out.println(mcode);
-		ResponseEntity<List<MenuVO>> entity = null;
-		
-		List<MenuVO> subMenu = null;
-		try {
-			subMenu = menuService.selectSubMenuList(mcode);
-			entity = new ResponseEntity<List<MenuVO>>(subMenu, HttpStatus.OK);
-		} catch (SQLException e) {
-			entity = new ResponseEntity<List<MenuVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		
-		return entity;
-	}
-
-	
-
-//	@RequestMapping("/common/main")
-//	public ModelAndView index(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException{
-//		String url = "/common/main";
-//		
-//		List<MenuVO> menuList = menuService.selectMainMenuList();
-//		MenuVO menu = menuService.selectMenuByMcode(mcode);
-//		
-//		mnv.addObject("menu", menu);
-//		mnv.addObject("menuList", menuList);
-//		mnv.setViewName(url);
-//		
-//		
-//		
-//		return mnv;
-//	}
-		
-
-	/*
-	 * @RequestMapping("/common/subMenu") public ResponseEntity<List<MenuVO>>
-	 * subMenu(String mcode){ System.out.println(mcode);
-	 * ResponseEntity<List<MenuVO>> entity = null;
-	 * 
-	 * List<MenuVO> subMenu = null; try { subMenu =
-	 * menuService.selectSubMenuList(mcode); entity = new
-	 * ResponseEntity<List<MenuVO>>(subMenu, HttpStatus.OK); } catch (SQLException
-	 * e) { entity = new
-	 * ResponseEntity<List<MenuVO>>(HttpStatus.INTERNAL_SERVER_ERROR); }
-	 * 
-	 * return entity; }
-	 */
 	
 	
 }

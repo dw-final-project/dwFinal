@@ -22,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.common.collect.Sets.SetView;
 
 import kr.or.dw.service.EstimateService;
-import kr.or.dw.service.MenuService;
+import kr.or.dw.service.MenuService;	
 import kr.or.dw.service.SiService;
 import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.SiVO;
@@ -49,14 +49,11 @@ public class BusinessController {
 		List<EstimateVO> estimList = estimateService.selectEstimList();
 		mnv.addObject("mcode", mcode);
 		mnv.setViewName(url);
-<<<<<<< Updated upstream
+
 		mnv.addObject("estimList" ,estimList);
 		System.out.println(estimList.get(0).getFiles());
 		System.out.println(estimList.get(1).getFiles());
-=======
-		mnv.addObject("estimList", estimList);
-		
->>>>>>> Stashed changes
+
 		return mnv;
 	}
 	

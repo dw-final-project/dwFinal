@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+ <!-- fullcalendar -->
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
+ <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
+
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
 
@@ -69,7 +73,7 @@
 		<jsp:param value="목록" name="item"/>
 	</jsp:include> --%>
 	<h3>상품관리</h3>
-	<section class="row">
+	<section class="row-1">
 		<div class="col-1"></div>
 		<div class="card col-10" style="margin-top:3em;">
 			<div class="card-header with-border">
@@ -138,11 +142,50 @@
 					</c:forEach>
 				</table>
 			</div>
-			
 			<div class="card-footer">
 				페이지처리 위치
 <%-- 			<%@ include file="/WEB-INF/views/common/pagination.jsp" %> --%>
 			</div>
+		</div>
+		<div class="row-2">
+			<div class="col-8">
+				<div class="card-body">
+					<div id='calendar'></div>
+				</div>
+			</div>
+			
+			 <!-- modal 추가 -->
+	    <div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	        aria-hidden="true">
+	        <div class="modal-dialog" role="document">
+	            <div class="modal-content">
+	                <div class="modal-header">
+	                    <h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
+	                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                        <span aria-hidden="true">&times;</span>
+	                    </button>
+	                </div>
+	                <div class="modal-body">
+	                    <div class="form-group">
+	                        <label for="taskId" class="col-form-label">일정 내용</label>
+	                        <input type="text" class="form-control" id="calendar_content" name="calendar_content">
+	                        <label for="taskId" class="col-form-label">시작 날짜</label>
+	                        <input type="date" class="form-control" id="calendar_start_date" name="calendar_start_date">
+	                        <label for="taskId" class="col-form-label">종료 날짜</label>
+	                        <input type="date" class="form-control" id="calendar_end_date" name="calendar_end_date">
+	                    </div>
+	                </div>
+	                <div class="modal-footer">
+	                    <button type="button" class="btn btn-warning" id="addCalendar">추가</button>
+	                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+	                        id="sprintSettingModalClose">취소</button>
+	                </div>
+	    
+	            </div>
+	        </div>
+	    </div>
+	[출처] [2021.05.26] FullCalendar - 일정 캘린더 구현|작성자 psy승짱
+
 			
 		</div>
 	</section>
@@ -159,10 +202,66 @@
 								+ "height=" + WinHeight + ",top="+ wintop + ",left="
 								+ winleft + ",resizable=yes,status=yes");
 	}
-</script>
+	
+	 document.addEventListener('DOMContentLoaded', function () {
+         var calendarEl = document.getElementById('calendar');
+         var calendar = new FullCalendar.Calendar(calendarEl, {
+             timeZone: 'UTC',
+             initialView: 'dayGridMonth', // 홈페이지에서 다른 형태의 view를 확인할  수 있다.
+             events:[ // 일정 데이터 추가 , DB의 event를 가져오려면 JSON 형식으로 변환해 events에 넣어주면된다.
+                 {
+                     title:'일정',
+                     start:'2021-05-26 00:00:00',
+                     end:'2021-05-27 24:00:00' 
+                     // color 값을 추가해 색상도 변경 가능 자세한 내용은 하단의 사이트 참조
+                 }
+             ], headerToolbar: {
+                 center: 'addEventButton' // headerToolbar에 버튼을 추가
+             }, customButtons: {
+                 addEventButton: { // 추가한 버튼 설정
+                     text : "일정 추가",  // 버튼 내용
+                     click : function(){ // 버튼 클릭 시 이벤트 추가
+                         $("#calendarModal").modal("show"); // modal 나타내기
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+                         $("#addCalendar").on("click",function(){  // modal의 추가 버튼 클릭 시
+                             var content = $("#calendar_content").val();
+                             var start_date = $("#calendar_start_date").val();
+                             var end_date = $("#calendar_end_date").val();
+                             
+                             //내용 입력 여부 확인
+                             if(content == null || content == ""){
+                                 alert("내용을 입력하세요.");
+                             }else if(start_date == "" || end_date ==""){
+                                 alert("날짜를 입력하세요.");
+                             }else if(new Date(end_date)- new Date(start_date) < 0){ // date 타입으로 변경 후 확인
+                                 alert("종료일이 시작일보다 먼저입니다.");
+                             }else{ // 정상적인 입력 시
+                                 var obj = {
+                                     "title" : content,
+                                     "start" : start_date,
+                                     "end" : end_date
+                                 }//전송할 객체 생성
+
+                                 console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
+                             }
+                         });
+                     }
+                 }
+             },
+             editable: true, // false로 변경 시 draggable 작동 x 
+             displayEventTime: false // 시간 표시 x
+         });
+         calendar.render();
+     });
+</script>
+ <style>
+        #calendarBox{
+            width: 70%;
+            padding-left: 15%;
+        }
+
+</style>
+
 <!-- jQuery -->
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <%@ include file="../include/footer_js.jsp" %>
