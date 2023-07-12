@@ -11,13 +11,9 @@
 		<typeAlias type="kr.or.dw.vo.ProcessVO" alias="process"/>
 		<typeAlias type="kr.or.dw.vo.EmpVO" alias="emp"/>
 		<typeAlias type="kr.or.dw.vo.NoteVO" alias="note"/>
-
 		<typeAlias type="kr.or.dw.vo.EstimateVO" alias="estimate"/>
-<<<<<<< HEAD
 		<typeAlias type="kr.or.dw.vo.SiVO" alias="si"/>
-=======
 		<typeAlias type="kr.or.dw.vo.MemberVO" alias="member"/>
->>>>>>> 8fe51e588779946bb7a850fefb494c63f861ace6
 	</typeAliases>
 
 </configuration>

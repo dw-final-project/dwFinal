@@ -38,28 +38,28 @@ public class CommonController {
 	public String main() {
 		return "/common/main";
 	}
-	
-	@RequestMapping("/common/main")
-	public ModelAndView index(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException{
-		String url = "/common/main";
-		
-		List<MenuVO> menuList = menuService.selectMainMenuList();
-		MenuVO menu = menuService.selectMenuByMcode(mcode);
-		
-		mnv.addObject("menu", menu);
-		mnv.addObject("menuList", menuList);
-		mnv.setViewName(url);
-		
-		
-		
-		return mnv;
-	}
-		
+//	
 //	@RequestMapping("/common/main")
-//	public String registerForm(HttpServletResponse res) throws Exception {
-//		return "/common/registerForm";
-//
+//	public ModelAndView index(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException{
+//		String url = "/common/main";
+//		
+//		List<MenuVO> menuList = menuService.selectMainMenuList();
+//		MenuVO menu = menuService.selectMenuByMcode(mcode);
+//		
+//		mnv.addObject("menu", menu);
+//		mnv.addObject("menuList", menuList);
+//		mnv.setViewName(url);
+//		
+//		
+//		
+//		return mnv;
 //	}
+		
+	@RequestMapping("/common/main")
+	public String registerForm(HttpServletResponse res) throws Exception {
+		return "/common/registerForm";
+
+	}
 
 	@RequestMapping("/common/subMenu")
 	public ResponseEntity<List<MenuVO>> subMenu(String mcode){
