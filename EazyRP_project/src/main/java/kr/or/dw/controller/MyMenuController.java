@@ -45,6 +45,7 @@ public class MyMenuController {
 	
 	@RequestMapping("/noteRegist")
 	public String noteRegist(NoteVO note, int reply, HttpServletResponse res, @RequestParam("file") MultipartFile file) throws SQLException, IOException{
+		NoteVO noteVo = new NoteVO();
 		if(file != null) {
 			UUID uuid = UUID.randomUUID();
 			String[] uuids = uuid.toString().split("-");
@@ -53,7 +54,7 @@ public class MyMenuController {
 			
 			String fileRealName = file.getOriginalFilename();
 			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
-			String fileName = note.getN_no()+"file"+fileExtension;
+			noteVo.setRealFileName(fileRealName);
 			String uploadFolder = "C:\\upload\\";
 			note.setFiles(uniqueName+fileExtension);
 			
@@ -76,12 +77,10 @@ public class MyMenuController {
 		
 		
 		int emp_no = note.getReceiver(); // 받는사람 emp_no
-		System.out.println("1");
 		int writer = 1;
 		EmpVO emp = mymenuService.selectEmp(emp_no); // 받는사람 정보
 		EmpVO emp2 = mymenuService.selectEmp(writer); // 보낸사람 정보
-		NoteVO noteVo = new NoteVO();
-		System.out.println("2");
+
 		if(emp.getDept_no() != null) {
 			noteVo.setR_dept(emp.getDept_no());
 		} else {
@@ -108,7 +107,6 @@ public class MyMenuController {
 		
 		noteVo.setReceiver(emp_no);
 		noteVo.setR_company(emp.getC_no());
-		System.out.println("3");
 		
 		mymenuService.sendNote(noteVo);
 		if(reply == 1) {
@@ -143,7 +141,10 @@ public class MyMenuController {
 	}
 	
 	@RequestMapping("/deleteNote")
-	public void deleteNote(int n_no, HttpServletResponse res) throws SQLException, IOException {
+	public void deleteNote(int n_no, HttpServletResponse res, String files) throws SQLException, IOException {
+		String uploadFolder = "C:\\upload\\";
+		File file = new File(uploadFolder + files);
+		file.delete();
 		mymenuService.deleteNote(n_no);
 		
 		res.setContentType("text/html; charset=utf-8");
