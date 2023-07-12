@@ -38,6 +38,7 @@ public class CommonController {
 		return url;
 	}
 
+
 	@RequestMapping("/common/main")
 	public ModelAndView index(ModelAndView mnv, HttpSession session) throws SQLException{
 		String url = "/common/main.main";
