@@ -80,5 +80,12 @@ public class MyMenuServiceImpl implements MyMenuService{
 	public void deleteNote(int n_no) throws SQLException {
 		mymenuDAO.deleteNote(n_no);
 	}
+
+	@Override
+	public List<NoteVO> searchNote(Map<String, String> valMap) throws SQLException {
+		List<NoteVO> note = mymenuDAO.searchNote(valMap);
+		
+		return note;
+	}
 	
 }

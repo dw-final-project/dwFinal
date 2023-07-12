@@ -1,5 +1,6 @@
 package kr.or.dw.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -7,6 +8,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.dw.service.MyMenuService;
@@ -40,7 +44,37 @@ public class MyMenuController {
 	}
 	
 	@RequestMapping("/noteRegist")
-	public String noteRegist(NoteVO note, int reply, HttpServletResponse res) throws SQLException, IOException{
+	public String noteRegist(NoteVO note, int reply, HttpServletResponse res, @RequestParam("file") MultipartFile file) throws SQLException, IOException{
+		if(file != null) {
+			UUID uuid = UUID.randomUUID();
+			String[] uuids = uuid.toString().split("-");
+			
+			String uniqueName = uuids[0];
+			
+			String fileRealName = file.getOriginalFilename();
+			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
+			String fileName = note.getN_no()+"file"+fileExtension;
+			String uploadFolder = "C:\\upload\\";
+			note.setFiles(uniqueName+fileExtension);
+			
+			
+			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
+			
+			if(!saveFile.exists()) {
+				saveFile.mkdirs();
+			}
+			
+			try {
+				file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
 		int emp_no = note.getReceiver(); // 받는사람 emp_no
 		System.out.println("1");
 		int writer = 1;
@@ -86,7 +120,13 @@ public class MyMenuController {
 			out.println("</script>");
 			return null;
 		} else {
-			return "/mymenu/noteList";
+			res.setContentType("text/html; charset=utf-8");
+			PrintWriter out = res.getWriter();
+			out.println("<script>");
+			out.println("alert('전송이 완료되었습니다.')");
+			out.println("window.opener.location.reload(true); window.close();");
+			out.println("</script>");
+			return null;
 		}
 	}
 	
@@ -172,4 +212,21 @@ public class MyMenuController {
 		return mnv;
 	}
 
+	
+	@RequestMapping("/search")
+	public ModelAndView search(ModelAndView mnv, String keyword, String searchType) throws SQLException {
+		String url = "/mymenu/noteList";
+		Map<String, String> valMap = new HashMap<>();
+		valMap.put("keyword", keyword);
+		valMap.put("searchType", searchType);
+		List<NoteVO> note = null;
+		note = mymenuService.searchNote(valMap);
+		mnv.addObject("note", note);
+		mnv.addObject("keyword", keyword);
+		mnv.addObject("searchType", searchType);
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+	
 }

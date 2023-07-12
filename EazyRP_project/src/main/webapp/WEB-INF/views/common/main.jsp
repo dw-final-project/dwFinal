@@ -1,7 +1,6 @@
-<%@ include file="../include/header.jsp" %>
+<%-- <%@ include file="../include/header.jsp" %> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <!-- main -->
-
     <body>
         <div class="container-fluid" style="height: 80%; margin-top: 10px;">
             <div class="row" style="height: 65%;">

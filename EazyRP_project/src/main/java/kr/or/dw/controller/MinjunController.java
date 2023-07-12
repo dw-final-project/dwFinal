@@ -25,27 +25,21 @@ import kr.or.dw.vo.ProcessVO;
 @Controller
 @RequestMapping("/erp5")
 public class MinjunController {
-
-	private static final Logger logger = LoggerFactory.getLogger(MinjunController.class);
+	
+	private static final Logger logger = LoggerFactory.getLogger(HeesungController.class);
 	
 	@Autowired
 	private MenuService menuService;
 	
-	@RequestMapping("/shop.do")
-	public ModelAndView shopMain(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException {
-		String url = "minjun/shop";
+	@RequestMapping("/shop")
+	public ModelAndView index(ModelAndView mnv, String mcode) throws SQLException{
+		String url = "/minjun/main.page";
 		
-		// 메뉴 리스트
-		List<MenuVO> menuList = menuService.selectMainMenuList(); 
-		MenuVO menu = menuService.selectMenuByMcode(mcode);
-		
-		mnv.addObject("menu", menu);
-		mnv.addObject("menuList", menuList);
-		
+		mnv.addObject("mcode", mcode);
 		mnv.setViewName(url);
-		
 		return mnv;
 	}
+
 	
 	@RequestMapping("/shopRegistForm")
 	public String shopRegistForm() {

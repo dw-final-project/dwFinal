@@ -1,7 +1,11 @@
 package kr.or.dw.controller;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,49 +37,24 @@ public class CommonController {
 		
 		return url;
 	}
-	
-	@GetMapping("/common/main")
-	public String main() {
-		return "/common/main";
-	}
-	
-//	@RequestMapping("/common/main")
-//	public ModelAndView index(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException{
-//		String url = "/common/main";
-//		
-//		List<MenuVO> menuList = menuService.selectMainMenuList();
-//		MenuVO menu = menuService.selectMenuByMcode(mcode);
-//		
-//		mnv.addObject("menu", menu);
-//		mnv.addObject("menuList", menuList);
-//		mnv.setViewName(url);
-//		
-//		
-//		
-//		return mnv;
-//	}
-		
 	@RequestMapping("/common/main")
-	public String registerForm(HttpServletResponse res) throws Exception {
-		return "/common/registerForm";
-
-	}
-
-	@RequestMapping("/common/subMenu")
-	public ResponseEntity<List<MenuVO>> subMenu(String mcode){
-		System.out.println(mcode);
-		ResponseEntity<List<MenuVO>> entity = null;
+	public ModelAndView index(ModelAndView mnv, HttpSession session) throws SQLException{
+		String url = "/common/main.main";
 		
-		List<MenuVO> subMenu = null;
-		try {
-			subMenu = menuService.selectSubMenuList(mcode);
-			entity = new ResponseEntity<List<MenuVO>>(subMenu, HttpStatus.OK);
-		} catch (SQLException e) {
-			entity = new ResponseEntity<List<MenuVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		List<MenuVO> menuList = menuService.selectMainMenuList();
+		Map<String, Object> dataMap = menuService.selectSubMenuList(menuList);
+		Map<String, List<MenuVO>> subMenuList = (Map<String, List<MenuVO>>) dataMap.get("subMenuList");
+		Map<String, List<MenuVO>> smallMenuList = (Map<String, List<MenuVO>>) dataMap.get("smallMenuList");
 		
-		return entity;
+		session.setAttribute("menuList", menuList);
+		session.setAttribute("subMenuList", subMenuList);
+		session.setAttribute("smallMenuList", smallMenuList);
+		
+		mnv.setViewName(url);	
+		
+		return mnv;
 	}
+		
 	
 	
 }
