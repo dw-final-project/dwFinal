@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.or.dw.service.MailSendService;
 import kr.or.dw.service.MemberService;
 import kr.or.dw.vo.MemberVO;
 
@@ -57,13 +56,14 @@ public class MemberController {
 	public void registerForm() {}
 	
 	//이메일 인증
-	@GetMapping("/mailCheck")
-	@ResponseBody
-	public String mailCheck(String email) throws Exception{
-		System.out.println("이메일 인증 요청이 들어옴!");
-		System.out.println("이메일 인증 이메일 : " + email);
-		return null;
-				
-	}
+	/*
+	 * @GetMapping("/mailCheck")
+	 * 
+	 * @ResponseBody public String mailCheck(String email) throws Exception{
+	 * System.out.println("이메일 인증 요청이 들어옴!"); System.out.println("이메일 인증 이메일 : " +
+	 * email); return mailService.joinEmail(email);
+	 * 
+	 * }
+	 */
 	
 }
