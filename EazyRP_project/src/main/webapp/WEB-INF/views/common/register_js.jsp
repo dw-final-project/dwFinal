@@ -3,6 +3,9 @@
 
 <script>
 	var idChek = 0;
+	$('#id').on('change', function(){
+		idChek = 0;
+	})
 	// 아이디 중복확인으로 확인된 아이디가 저장될 곳
 	let checkedID = "";	
 	function idCheck_go(){
@@ -46,7 +49,10 @@
 		});
 		
 	};
-	var passCheck = 0;
+	var passChk = 0;
+	$('#pwd').on('change', function(){
+		passChk = 0;
+	})
 	// password 정규식 체크 - 영문 소문자, 대문자, 특수문자, 숫자가 반드시 하나 이상씩 입력
 	let pass = $("input[name=pwd]");
 	pass.on("keyup",  function () {
@@ -68,17 +74,21 @@
 		
 		if (passVal != passCheckVal) {
 			passCheck.attr("class", "form-control is-invalid");
-			passCheck = 1;
 		} else {
+			passChk = 1;
 			passCheck.attr("class", "form-control is-valid");
 		}
 	});
 	
-	var inputCode = 0;
+	var emailChk = 0;
+	$('#email').on('change', function(){
+		passChk = 0;
+	})
 	$('#emailauth').click(function() {
 		const email = $('#email').val() + $('#domainselect').val(); // 이메일 주소값 얻어오기!
 		console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
 		const checkInput = $('.mail-check-input') // 인증번호 입력하는곳 
+		
 		alert('인증번호가 전송되었습니다.')
 		$.ajax({
 			type : 'get',
@@ -101,6 +111,7 @@
 		const $resultMsg = $('#emailauthchk');
 		
 		if(inputCode === code){
+			emailChk = 1;
 			alert('인증번호가 일치합니다.');
 			$resultMsg.css('color','green');
 			$('#mail-Check-Btn').attr('disabled',true);
@@ -108,12 +119,11 @@
 			$('#domainselect').attr('readonly',true);
 	 		$('#domainselect').attr('onFocus', 'this.initialSelect = this.selectedIndex');
 	        $('#domainselect').attr('onChange', 'this.selectedIndex = this.initialSelect'); 
-	        inputCode = 1;
 		}else{
 			alert('인증번호가 불일치 합니다. 다시 확인해주세요!.');
 			$resultMsg.css('color','red');
 		}
 	});
 	
-	
+		
 </script>
