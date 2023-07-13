@@ -97,7 +97,7 @@
 
     <nav class="navbar navbar-expand-lg bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/common/main.do"><img src="../../../img/EazyRP.png" style="width: 100px;"></a>
+        <a class="navbar-brand" href="/common/main.do"><img src="<%=request.getContextPath() %>/resources/img/EazyRP.png" style="width: 100px;"></a>
             <form class="d-flex" id="selectCompany" method="post" action="">
              <select class="form-control" name="selectedC_no" style="font-size: 0.8em; border: 2px red solid;">
 				<option value="">업체 선택</option>
