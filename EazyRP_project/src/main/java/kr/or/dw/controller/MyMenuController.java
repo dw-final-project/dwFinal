@@ -151,6 +151,7 @@ public class MyMenuController {
 	@RequestMapping("/noteList")
 	public ModelAndView noteList(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
 		String url="/mymenu/noteList.page";
+		System.out.println(cri.getPage());
 		Map<String, Object> note = new HashMap<String, Object>();
 				
 		note = mymenuService.getNoteList(cri);

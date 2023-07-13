@@ -26,8 +26,6 @@ public interface MyMenuDAO {
 
 	public void sendNote(NoteVO noteVo) throws SQLException;
 
-	public List<NoteVO> getNoteList() throws SQLException;
-
 	public NoteVO selectNote(int n_no) throws SQLException;
 
 	public void readableUpdate(int n_no) throws SQLException;

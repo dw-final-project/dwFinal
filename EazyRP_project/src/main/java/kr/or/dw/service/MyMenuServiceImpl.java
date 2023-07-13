@@ -74,9 +74,10 @@ public class MyMenuServiceImpl implements MyMenuService{
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		
-		List<NoteVO> note = mymenuDAO.getNoteList();
+		List<NoteVO> note = mymenuDAO.getNoteList(cri, rowBounds);
 		
 		int totalCount = mymenuDAO.selectSearchNoteListCount(cri);
+		System.out.println(totalCount);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);

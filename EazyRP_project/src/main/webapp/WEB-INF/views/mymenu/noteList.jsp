@@ -8,8 +8,8 @@
 		<div class="row justify-content-center">
 			<div class="col-md-10" style="max-width: 1100px;">
 				<div class="card card-outline card-info">
-					<div class="card-header">
-						<h3 class="card-title p-1">받은 쪽지함</h3>
+					<div class="card-header" style="border-bottom: none;">
+						<h2 class="card-title p-1">받은 쪽지함</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm" method="post" action="/mymenu/search.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">

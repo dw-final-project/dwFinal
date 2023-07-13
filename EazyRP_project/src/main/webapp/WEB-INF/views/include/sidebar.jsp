@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <style>
 	html{
-		height: 125%;
+		height: 115%;
 	}
 </style>
 <script>

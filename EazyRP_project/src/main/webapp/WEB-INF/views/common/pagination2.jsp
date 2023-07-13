@@ -39,7 +39,7 @@
 	</ul>
 </nav>
 
-<form id="searchForm">
+<form id="searchForm2">
 	<input type="hidden" name="page">
 	<input type="hidden" name="perPageNum">
 	<input type="hidden" name="searchType">
@@ -60,9 +60,9 @@
 		if($('select[name="perPageNum"]').val()){
 			perPageNum = $('select[name="perPageNum"]').val();
 		}
-		
-		let searchForm = $('#searchForm');
-		searchForm.find('[name="page"]').val(page);
+		let searchForm = $('#searchForm2');
+		searchForm.find('input[name="page"]').val(page);
+		console.log(searchForm.find('input[name="page"]'))
 		searchForm.find('[name="perPageNum"]').val(perPageNum);
 		searchForm.find('[name="searchType"]').val($('select[name="searchType"]').val());
 		searchForm.find('[name="keyword"]').val($('div.input-group > input[name="keyword"]').val());
