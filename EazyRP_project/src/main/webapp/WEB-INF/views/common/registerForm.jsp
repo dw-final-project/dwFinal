@@ -223,7 +223,7 @@ body {
 										<div class="select-dropdown"></div>
 									</div>
 						<div>
-							<input type="button" class="chkbtn" name="emailauth" id="emailauth" required="required" value="인증번호 전송">							
+							<input type="button" class="chkbtn" name="emailauth" id="emailauth" required="required"  value="인증번호 전송">							
 						</div>
 					</div>
 					<div class="form-group d-flex">
@@ -232,7 +232,7 @@ body {
 							<input type="text" class="form-control mail-check-input" name="password" placeholder="인증번호" required="required">
 						</div>
 						<div>
-							<input type="button" class="chkbtn" id="emailauthchk" name="emailauthchk" required="required" value="인증번호 확인">			
+							<input type="button" class="chkbtn" id="emailauthchk" name="emailauthchk"  value="인증번호 확인">			
 						</div>
 					</div>
 					<!-- 이메일 끝 -->
@@ -250,9 +250,9 @@ body {
 					</div>
 				</form>
 					<div class="form-group findbtn">
-						<button class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px; color:#fff;" id="registBtn">회원가입</button>
+						<button class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px; color:#fff;" id="registBtn" onclick="submit_go();">회원가입</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;
-						<button class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px; color:#fff;" >취 소</button>
+						<button class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px; color:#fff;" id="cencle">취 소</button>
 					</div>
 
 			</div>
@@ -274,10 +274,13 @@ $(function(){
  		language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
  		});	
 	
-	$('#registBtn').on('click', function(){
+/* 	$('#registBtn').on('click', function(){
 		$('#registForm').submit();
-	})
+	}); */
 	
+	$('#cencle').on('click', function(){
+		location.href = "/common/loginForm"; 
+	});
 })
 
 </script> 	 

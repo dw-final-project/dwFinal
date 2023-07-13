@@ -1,6 +1,5 @@
-
-<!DOCTYPE html>
-<html lang="en">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -151,13 +150,12 @@ body {
 <body>
 <!-- Modal HTML -->
 	<div class="modal-dialog modal-login ">
-	<div class="modal-dialog modal-login ">
 		<div class="modal-content " style="padding-left: 45px; padding-right: 5px;">
 			<div class="modal-header">				
 				<h4 class="modal-title">PW 찾기</h4>
 			</div>
 			<div class="modal-body">
-				<form action="/examples/actions/confirmation.php" method="post">
+				<form id="pwFindForm" action="/member/PWfindForm.do" method="post">
 					<div class="form-group">
 						<div class="input-group inputText">
 							<span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -167,28 +165,31 @@ body {
 					<div class="form-group d-flex">
 						<div class="input-group inputText">
 							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-							<input type="text" class="form-control" name="email" placeholder="이메일" required="required">
+							<input type="text" class="form-control" name="email" id="email" placeholder="이메일" required="required">
 						</div>
 						<div>
-							<input type="button" class="chkbtn" name="emailchk" required="required" value="인증번호 전송">							
+							<input type="button" class="chkbtn" name="emailauth" id="emailauth" required="required" value="인증번호 전송">							
 						</div>
 					</div>
 					<div class="form-group d-flex">
 						<div class="input-group inputText">
 							<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-							<input type="text" class="form-control" name="password" placeholder="인증번호" required="required">
+							<input type="text" class="form-control mail-check-input" name="password" placeholder="인증번호" required="required">
 						</div>
 						<div>
-							<input type="button" class="chkbtn" name="emailchk" required="required" value="인증번호 확인">			
+							<input type="button" class="chkbtn" id="emailchk" name="emailchk" required="required" value="인증번호 확인">			
 						</div>
 					</div>
-					<div class="form-group findbtn">
-						<button type="submit" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;">ID 찾기</button>
-					</div>
 				</form>
+					<div class="form-group findbtn">
+						<button type="submit" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;" >ID 찾기</button>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="submit" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;" id="pwrenew" onclick="submit_go();">비밀번호 재설정</button>
+					</div>
 			</div>
 			
 		</div>
 	</div>    
 </body>
 </html>
+<%@ include file="PWfind_js.jsp" %> 

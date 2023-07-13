@@ -3,9 +3,9 @@
 
 <script>
 	var idChek = 0;
-	$('#id').on('change', function(){
+ 	$('#id').on('change', function(){
 		idChek = 0;
-	})
+	}) 
 	// 아이디 중복확인으로 확인된 아이디가 저장될 곳
 	let checkedID = "";	
 	function idCheck_go(){
@@ -37,7 +37,7 @@
 					alert("사용가능한 아이디 입니다.");
 					checkedID = result;
 					$('input[name="id"]').val(checkedID);
-					idChek = 1;
+					idChek = 1; 
 				}else{
 					alert("중복된 아이디 입니다.");
 					input_ID.focus();
@@ -82,9 +82,10 @@
 	
 	var emailChk = 0;
 	$('#email').on('change', function(){
-		passChk = 0;
+		emailChk = 0;
 	})
-	$('#emailauth').click(function() {
+		
+	$('#emailauth').click(function () {
 		const email = $('#email').val() + $('#domainselect').val(); // 이메일 주소값 얻어오기!
 		console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
 		const checkInput = $('.mail-check-input') // 인증번호 입력하는곳 
@@ -94,7 +95,6 @@
 			type : 'get',
 			url :  '<%=request.getContextPath()%>/member/mailCheck.do?email=' + email,
 			success : function (data) {
-				console.log("data : " +  data);
 				checkInput.attr('disabled',false);
 				code = data;
 			},
@@ -106,8 +106,8 @@
 	
 	// 인증번호 비교 
 	// blur -> focus가 벗어나는 경우 발생
-	$('.mail-check-input').blur(function () {
-		const inputCode = $(this).val();
+	$('#emailauthchk').click(function () {
+		const inputCode = $('.mail-check-input').val();
 		const $resultMsg = $('#emailauthchk');
 		
 		if(inputCode === code){
@@ -121,9 +121,36 @@
 	        $('#domainselect').attr('onChange', 'this.selectedIndex = this.initialSelect'); 
 		}else{
 			alert('인증번호가 불일치 합니다. 다시 확인해주세요!.');
+			emailChk = 0;
 			$resultMsg.css('color','red');
 		}
-	});
+	});	
 	
+	function submit_go(){
 		
+		if($('input[name="id"]').val() == ""){
+			alert("아이디는 필수 입니다.");
+			return false;
+		};
+		if($('input[name="id"]').val() != checkedID){
+			alert("아이디 중복확인이 필요합니다.");
+			return false;
+		};
+		if($('input[name="pwd"]').val() == ""){
+			alert("패스워드는 필수입니다.");
+			return false;
+		};
+		if($('input[name="name"]').val() == ""){
+			alert("이름은 필수입니다.");
+			return false;
+		};
+
+  		if(emailChk != 1){
+			alert("이메일 인증이 필요합니다.");
+			return false;
+		};  
+		
+	$('#registBtn').submit();
+	
+	}; 
 </script>
