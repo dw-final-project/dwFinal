@@ -15,5 +15,9 @@ public interface EstimateDAO {
 	EstimateVO selectdetail(String est_no) throws SQLException;
 
 	void insertEstimate(EstimateVO vo) throws SQLException;
+
+	List<EstimateVO> selectDetail(String est_no) throws SQLException;
+
+	String selectEname(int emp_no) throws SQLException;
 	
 }
