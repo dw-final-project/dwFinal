@@ -29,19 +29,19 @@
 					</div>
 					<div class="card-body pad">
 						<div>
-							<table style="font-size: 0.8em;">
+							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
-									<th width="50px" style="text-align: center;"></th>
+									<th width="60px" style="text-align: center;"></th>
 									<th width="350px" style="text-align: center;">제목</th>
 									<th width="150px" style="text-align: center;">받는 사람</th>
 									<th width="220px" style="text-align: center;">업체명</th>
-									<th width="120px" style="text-align: center;">첨부파일 여부</th>
+									<th width="150px" style="text-align: center;">첨부파일 여부</th>
 									<th width="300px" style="text-align: center;">보낸 시간</th>
 								</tr>
 								<c:forEach items="${note}" var="note" varStatus="loop">
 									<tr style="height: 20px;"></tr>
 									<tr>
-										<td id="read_${loop.index}" style="text-align: center; height:80%; font-weight:bold; font-size: 0.7em; color: ${note.readable == 'N' ? 'red' : 'blue' };">
+										<td id="read_${loop.index}" style="text-align: center; height:80%; font-weight:bold; font-size: 0.6em; color: ${note.readable == 'N' ? 'red' : 'blue' };">
 										${note.readable == 'N' ? '안읽음' : '읽음' }
 										</td>
 										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/mymenu/detail.do?n_no=${note.n_no }&send=Y', '쪽지보기', 700, 1000, '${loop.index}')">${note.title }</a></td>
