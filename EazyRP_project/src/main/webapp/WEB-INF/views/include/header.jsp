@@ -97,25 +97,17 @@
 
     <nav class="navbar navbar-expand-lg bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">로고</a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          </ul>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-              </li>
-            </ul>
-            <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
+        <a class="navbar-brand" href="/common/main.do"><img src="../../../img/EazyRP.png" style="width: 100px;"></a>
+            <form class="d-flex" id="selectCompany" method="post" action="">
+             <select class="form-control" name="selectedC_no" style="font-size: 0.8em; border: 2px red solid;">
+				<option value="">업체 선택</option>
+				<option value="C000001" ${selectedC_no eq 'C000001' ? 'selected' : '' }>(주)지민식품</option>
+				<option value="C000002" ${selectedC_no eq 'C000002' ? 'selected' : '' }>희성전자</option>
+				<option value="C000003" ${selectedC_no eq 'C000003' ? 'selected' : '' }>석준물산</option>
+				<option value="C000004" ${selectedC_no eq 'C000004' ? 'selected' : '' }>(주)소라전자</option>
+				<option value="C000005" ${selectedC_no eq 'C000005' ? 'selected' : '' }>민준식품</option>
+				<option value="C000006" ${selectedC_no eq 'C000006' ? 'selected' : '' }>지환물산</option>
+			</select>
             </form>
           </div>
         </div>
