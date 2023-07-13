@@ -1,15 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<style>
-	html{
-		height: 115%;
-	}
-</style>
-<script>
-	console.log('${mcode}')
-	console.log('${smallMenuList}')
-</script>
 <c:set var="mcode">${mcode }</c:set>
 <c:set var="subMenuList2">${subMenuList[mcode] }</c:set>
 <nav id="navSideBar"class="d-flex flex-column p-3 sideMenuList" style=" float:left ; width: 15%; height: 100%; display: inline; background: linear-gradient(to bottom, #7bc4b2, #00ff72);">

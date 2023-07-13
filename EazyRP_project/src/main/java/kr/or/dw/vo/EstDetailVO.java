@@ -1,7 +1,6 @@
 package kr.or.dw.vo;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.Data;
 
 @Data
-public class EstimateVO {
+public class EstDetailVO {
 	
 	private int estdetail_no;
 	private String est_no;
@@ -23,10 +22,6 @@ public class EstimateVO {
 	private String pr_no;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date regdate;
-	private String c_no;
-	 
-	
-	
 	
 }   
 
