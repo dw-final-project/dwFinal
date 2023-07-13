@@ -34,8 +34,10 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
+
 	@Autowired
 	private MailSendService mailService;
+
 	
 	// 아이디 중복확인
 	@RequestMapping("/idCheck") 
@@ -55,6 +57,7 @@ public class MemberController {
 	};
 
 	//회원가입 페이지 이동
+
 		@GetMapping("/registerForm")
 		public void registerForm() {}
 		
@@ -67,7 +70,7 @@ public class MemberController {
 			return mailService.joinEmail(email);
 					
 		};
-		
+
 	// 회원가입 
 	@RequestMapping("/register")
 	public String register(MemberVO member, HttpServletRequest req, HttpServletResponse res) throws Exception{

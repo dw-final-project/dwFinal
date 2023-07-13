@@ -30,7 +30,7 @@
 	</select>
 	
 	<insert id="sendNote">
-		INSERT INTO note VALUES (n_no_seq.nextval, #{c_dept}, #{caller}, '', #{con}, sysdate, #{title}, #{files}, #{r_dept}, #{receiver}, '', #{c_company}, #{r_company}, 'N')
+		INSERT INTO note VALUES (n_no_seq.nextval, #{c_dept}, #{caller}, '', #{con}, sysdate, #{title}, #{files}, #{r_dept}, #{receiver}, '', #{c_company}, #{r_company}, 'N', #{realFileName})
 	</insert>
 	
 	<select id="getNoteList" resultType="note">

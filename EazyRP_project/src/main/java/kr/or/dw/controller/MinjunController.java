@@ -26,14 +26,14 @@ import kr.or.dw.vo.ProcessVO;
 @RequestMapping("/erp5")
 public class MinjunController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HeesungController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MinjunController.class);
 	
 	@Autowired
 	private MenuService menuService;
 	
 	@RequestMapping("/shop")
 	public ModelAndView index(ModelAndView mnv, String mcode) throws SQLException{
-		String url = "/minjun/main.page";
+		String url = "/minjun/shop.page";
 		
 		mnv.addObject("mcode", mcode);
 		mnv.setViewName(url);
@@ -47,21 +47,16 @@ public class MinjunController {
 		return url;
 	}
 	
+
 	@RequestMapping("/product.do")
-	public ModelAndView productMain(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException {
+	public ModelAndView productMain(String mcode, ModelAndView mnv) throws SQLException {
 		String url = "minjun/product";
 		
-		// 메뉴 리스트
-		List<MenuVO> menuList = menuService.selectMainMenuList(); 
-		MenuVO menu = menuService.selectMenuByMcode(mcode);
-		
-		mnv.addObject("menu", menu);
-		mnv.addObject("menuList", menuList);
-		
+		mnv.addObject("mcode", mcode);
 		mnv.setViewName(url);
-		
 		return mnv;
 	}
+
 	
 	@RequestMapping("/productRegistForm")
 	public String productRegistForm() {
@@ -69,21 +64,18 @@ public class MinjunController {
 		return url;
 	}
 	
+
 	@RequestMapping("/order.do")
-	public ModelAndView orderMain(@RequestParam(defaultValue="M000000")String mcode, ModelAndView mnv) throws SQLException {
+	public ModelAndView orderMain(String mcode, ModelAndView mnv) throws SQLException {
 		String url = "minjun/order";
 		
-		// 메뉴 리스트
-		List<MenuVO> menuList = menuService.selectMainMenuList(); 
-		MenuVO menu = menuService.selectMenuByMcode(mcode);
 		
-		mnv.addObject("menu", menu);
-		mnv.addObject("menuList", menuList);
-		
+		mnv.addObject("mcode", mcode);		
 		mnv.setViewName(url);
 		
 		return mnv;
 	}
+
 	
 	@RequestMapping("/orderRegistForm")
 	public String orderRegistForm() {
