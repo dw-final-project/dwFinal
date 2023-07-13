@@ -46,8 +46,11 @@ public class MyMenuController {
 	}
 	
 	@RequestMapping("/noteRegist")
-	public String noteRegist(NoteVO note, int reply, HttpServletResponse res, @RequestParam("file") MultipartFile file) throws SQLException, IOException{
+	public String noteRegist(NoteVO note, String reply, HttpServletResponse res, MultipartFile file) throws SQLException, IOException{
 		NoteVO noteVo = new NoteVO();
+		System.out.println(note.getReceiver());
+		System.out.println(note.getCon());
+		System.out.println(file);
 		if(file != null) {
 			UUID uuid = UUID.randomUUID();
 			String[] uuids = uuid.toString().split("-");
@@ -74,16 +77,18 @@ public class MyMenuController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		} else {
+			noteVo.setRealFileName("");
+			note.setFiles("");
 		}
-		
 		
 		
 		int emp_no = note.getReceiver(); // 받는사람 emp_no
 		int writer = 1;
 		EmpVO emp = mymenuService.selectEmp(emp_no); // 받는사람 정보
 		EmpVO emp2 = mymenuService.selectEmp(writer); // 보낸사람 정보
-
-		if(emp.getDept_no() != null) {
+		
+		if(emp.getDept_no() != null || emp.getDept_no() != "") {
 			noteVo.setR_dept(emp.getDept_no());
 		} else {
 			noteVo.setR_dept("");
@@ -109,9 +114,11 @@ public class MyMenuController {
 		
 		noteVo.setReceiver(emp_no);
 		noteVo.setR_company(emp.getC_no());
+
 		
 		mymenuService.sendNote(noteVo);
-		if(reply == 1) {
+		System.out.println("5");
+		if(reply == "1") {
 			res.setContentType("text/html; charset=utf-8");
 			PrintWriter out = res.getWriter();
 			out.println("<script>");

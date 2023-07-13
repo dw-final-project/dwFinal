@@ -2,9 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ include file="../include/header.jsp" %>
-
-<%@ include file="../include/sidebar.jsp" %>
 <div style="height: 100px"></div>
 <section class="content container-fluid">
 		<div class="row justify-content-center">

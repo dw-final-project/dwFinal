@@ -14,8 +14,8 @@
 	<div>내용 : ${note.con }</div>
 	<div>
 		첨부파일 :
-		${note.fileRealName != null ? ${note.fileRealName} : ""}
-		<button id="downloadBtn">다운로드</button>
+		${note.realFileName}
+		${note.realFileName != null ? "<button id='downloadBtn'>다운로드</button>" : "없음"}
 	</div>
 	<button id="replyBtn">답장하기</button>
 	<button id="deleteBtn">삭제</button>
