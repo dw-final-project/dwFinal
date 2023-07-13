@@ -9,7 +9,7 @@
 			<div class="col-md-10" style="max-width: 1100px;">
 				<div class="card card-outline card-info">
 					<div class="card-header">
-						<h3 class="card-title p-1">쪽지함</h3>
+						<h3 class="card-title p-1">보낸 쪽지함</h3>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm" method="post" action="/mymenu/sendSearch.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
@@ -39,7 +39,7 @@
 									<th width="300px" style="text-align: center;">보낸 시간</th>
 								</tr>
 								<c:forEach items="${note}" var="note" varStatus="loop">
-									<tr style="height: 10px;"></tr>
+									<tr style="height: 20px;"></tr>
 									<tr>
 										<td id="read_${loop.index}" style="text-align: center; height:80%; font-weight:bold; font-size: 0.7em; color: ${note.readable == 'N' ? 'red' : 'blue' };">
 										${note.readable == 'N' ? '안읽음' : '읽음' }

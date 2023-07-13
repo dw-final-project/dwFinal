@@ -38,19 +38,17 @@
 									<th width="120px" style="text-align: center;">첨부파일 여부</th>
 									<th width="300px" style="text-align: center;">보낸 시간</th>
 								</tr>
-									<c:forEach items="${note}" var="note" varStatus="loop">
 									<tr style="height: 20px;"></tr>
 									<tr>
 										<td id="read_${loop.index}" style="text-align: center; height:80%; font-weight:bold; font-size: 0.7em; color: ${note.readable == 'N' ? 'red' : 'blue' };">
-										${note.readable == 'N' ? '안읽음' : '읽음' }
+										1
 										</td>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/mymenu/detail.do?n_no=${note.n_no }&send=Y', '쪽지보기', 700, 1000, '${loop.index}')">${note.title }</a></td>
-										<td style="text-align: center;">${note.callerName }</td>
-										<td style="text-align: center;">${note.c_cname }</td>
-										<td style="text-align: center;">${note.files == "" || note.files == null ? "N" : "Y" }</td>
-										<td style="text-align: center;">${note.senddate }</td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/mymenu/detail.do?n_no=${note.n_no }&send=N', '쪽지보기', 700, 1000, '${loop.index}')">2</a></td>
+										<td style="text-align: center;">3</td>
+										<td style="text-align: center;">4</td>
+										<td style="text-align: center;">5</td>
+										<td style="text-align: center;">6</td>
 									</tr>
-								</c:forEach>
 							</table>
 							<div class="card-footer">
 								<%@ include file="/WEB-INF/views/common/pagination2.jsp" %>
@@ -69,35 +67,5 @@
 	
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 	
-<script>
-		
-	$('#searchBtn').on('click', function(){
-		$('#searchForm').submit();
-	})
-	
-	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight, index){
-		var selectedElement = document.getElementById("read_"+index);
-		  if (selectedElement) {
-		    selectedElement.style.color = "blue";
-		    selectedElement.innerHTML = "읽음";
-		  }
-		winleft = (screen.width - WinWidth) / 2;
-		wintop = (screen.height - WinHeight) / 2;
-		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
-								+ "height=" + WinHeight + ",top="+ wintop + ",left="
-								+ winleft + ",resizable=yes,status=yes");
-		win.focus();
-	};
-	
-	function OpenWindow2(UrlStr, WinTitle, WinWidth, WinHeight){
-		winleft = (screen.width - WinWidth) / 2;
-		wintop = (screen.height - WinHeight) / 2;
-		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
-								+ "height=" + WinHeight + ",top="+ wintop + ",left="
-								+ winleft + ",resizable=yes,status=yes");
-		win.focus();
-	};
 
-	
-</script>
 <%@ include file="../include/footer_js.jsp" %>
