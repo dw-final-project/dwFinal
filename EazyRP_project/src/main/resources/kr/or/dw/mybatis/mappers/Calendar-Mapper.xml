@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dw.dao.CalendarDAO">
+
+	<resultMap id="calendarRM" type="Calendar">
+    <id property="calendarNo" column="CALENDAR_NO" />
+    <result property="calendarTitle" column="CALENDAR_TITLE" />
+    <result property="calendarMemo" column="CALENDAR_MEMO" />
+    <result property="calendarStart" column="CALENDAR_START" />
+    <result property="calendarEnd" column="CALENDAR_END" />
+  </resultMap>
+	
+	<select id="getCalendar" resultMap="calendarRM">
+		select * from calendar 
+	</select>
+
+</mapper>
