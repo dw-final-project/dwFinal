@@ -13,57 +13,6 @@
 <!-- 페이징 -->
 <c:set var="cri" value="${pageMaker.cri }"/>
 
-<style> /* 소라 사이드바 스타일 */
-    html, body{
-      width: 100%;
-      height: 100%;
-    }
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-
-    .b-example-divider {
-      height: 3rem;
-      background-color: rgba(0, 0, 0, .1);
-      border: solid rgba(0, 0, 0, .15);
-      border-width: 1px 0;
-      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .05);
-    }
-
-    .b-example-vr {
-      flex-shrink: 0;
-      width: 1.5rem;
-      height: 100vh;
-    }
-
-    .bi {
-      vertical-align: -.125em;
-      fill: currentColor;
-    }
-
-    .p-2 {
-      color: whitesmoke;
-    }
-
-    .nav d-flex {
-      justify-content: space-evenly;
-    }
-    
-    .container {
-    	
-    }
-</style>
-
 <body>
 <div class="container col-10">
 	
@@ -147,45 +96,67 @@
 <%-- 			<%@ include file="/WEB-INF/views/common/pagination.jsp" %> --%>
 			</div>
 		</div>
-		<div class="row-2">
+		<div class="row ">
 			<div class="col-8">
-				<div class="card-body">
-					<div id='calendar'></div>
+				<div style="display: flex; align-items: end; justify-content: end;">
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/mymenu/communication.do', '쪽지쓰기', 700, 1000)"
+					style="width: 100px; margin: 20px; align-self: center;">쪽지 쓰기</button>
 				</div>
 			</div>
 			
-			 <!-- modal 추가 -->
-	    <div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-	        aria-hidden="true">
-	        <div class="modal-dialog" role="document">
-	            <div class="modal-content">
-	                <div class="modal-header">
-	                    <h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
-	                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	                        <span aria-hidden="true">&times;</span>
-	                    </button>
-	                </div>
-	                <div class="modal-body">
-	                    <div class="form-group">
-	                        <label for="taskId" class="col-form-label">일정 내용</label>
-	                        <input type="text" class="form-control" id="calendar_content" name="calendar_content">
-	                        <label for="taskId" class="col-form-label">시작 날짜</label>
-	                        <input type="date" class="form-control" id="calendar_start_date" name="calendar_start_date">
-	                        <label for="taskId" class="col-form-label">종료 날짜</label>
-	                        <input type="date" class="form-control" id="calendar_end_date" name="calendar_end_date">
-	                    </div>
-	                </div>
-	                <div class="modal-footer">
-	                    <button type="button" class="btn btn-warning" id="addCalendar">추가</button>
-	                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-	                        id="sprintSettingModalClose">취소</button>
-	                </div>
-	    
-	            </div>
-	        </div>
-	    </div>
-	[출처] [2021.05.26] FullCalendar - 일정 캘린더 구현|작성자 psy승짱
-
+		</div>
+		<div class="row ">
+			<div class="col-md-10" style="max-width: 1100px;">
+				<div class="card card-outline card-info">
+					<div class="card-header">
+						<h3 class="card-title p-1">받은 쪽지함</h3>
+						<div class="input-group row" style="width: 90%; margin-left: 50%;">
+						<form id="searchForm" method="post" action="/mymenu/search.do?mcode=${mcode }" style="display: contents;">
+							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
+								<option value="tcw" ${searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
+								<option value="t" ${searchType eq 't' ? 'selected' : '' }>제  목</option>
+								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>보낸사람</option>
+								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>업  체</option>
+							</select>
+							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
+							<span class="input-group-append col-md-3" style=" padding: 0px;">
+								<button class="btn btn-primary" type="button" id="searchBtn">
+									<i class="fa fa-fw fa-search" style="font-size: 0.8em; padding: 0px;"></i>
+								</button>
+							</span>
+						</form>
+						</div>
+					</div>
+					<div class="card-body pad">
+						<div>
+							<table style="font-size: 0.8em;">
+								<tr>
+									<th width="50px" style="text-align: center;"></th>
+									<th width="350px" style="text-align: center;">제목</th>
+									<th width="150px" style="text-align: center;">보낸 사람</th>
+									<th width="220px" style="text-align: center;">업체명</th>
+									<th width="120px" style="text-align: center;">첨부파일 여부</th>
+									<th width="300px" style="text-align: center;">보낸 시간</th>
+								</tr>
+									<tr style="height: 20px;"></tr>
+									<tr>
+										<td id="read_${loop.index}" style="text-align: center; height:80%; font-weight:bold; font-size: 0.7em; color: ${note.readable == 'N' ? 'red' : 'blue' };">
+										1
+										</td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/mymenu/detail.do?n_no=${note.n_no }&send=N', '쪽지보기', 700, 1000, '${loop.index}')">2</a></td>
+										<td style="text-align: center;">3</td>
+										<td style="text-align: center;">4</td>
+										<td style="text-align: center;">5</td>
+										<td style="text-align: center;">6</td>
+									</tr>
+							</table>
+							<div class="card-footer">
+								<%@ include file="/WEB-INF/views/common/pagination2.jsp" %>
+							</div>
+						</div>
+					</div>
+					</div>
+			</div>
 			
 		</div>
 	</section>
@@ -203,64 +174,7 @@
 								+ winleft + ",resizable=yes,status=yes");
 	}
 	
-	 document.addEventListener('DOMContentLoaded', function () {
-         var calendarEl = document.getElementById('calendar');
-         var calendar = new FullCalendar.Calendar(calendarEl, {
-             timeZone: 'UTC',
-             initialView: 'dayGridMonth', // 홈페이지에서 다른 형태의 view를 확인할  수 있다.
-             events:[ // 일정 데이터 추가 , DB의 event를 가져오려면 JSON 형식으로 변환해 events에 넣어주면된다.
-                 {
-                     title:'일정',
-                     start:'2021-05-26 00:00:00',
-                     end:'2021-05-27 24:00:00' 
-                     // color 값을 추가해 색상도 변경 가능 자세한 내용은 하단의 사이트 참조
-                 }
-             ], headerToolbar: {
-                 center: 'addEventButton' // headerToolbar에 버튼을 추가
-             }, customButtons: {
-                 addEventButton: { // 추가한 버튼 설정
-                     text : "일정 추가",  // 버튼 내용
-                     click : function(){ // 버튼 클릭 시 이벤트 추가
-                         $("#calendarModal").modal("show"); // modal 나타내기
-
-                         $("#addCalendar").on("click",function(){  // modal의 추가 버튼 클릭 시
-                             var content = $("#calendar_content").val();
-                             var start_date = $("#calendar_start_date").val();
-                             var end_date = $("#calendar_end_date").val();
-                             
-                             //내용 입력 여부 확인
-                             if(content == null || content == ""){
-                                 alert("내용을 입력하세요.");
-                             }else if(start_date == "" || end_date ==""){
-                                 alert("날짜를 입력하세요.");
-                             }else if(new Date(end_date)- new Date(start_date) < 0){ // date 타입으로 변경 후 확인
-                                 alert("종료일이 시작일보다 먼저입니다.");
-                             }else{ // 정상적인 입력 시
-                                 var obj = {
-                                     "title" : content,
-                                     "start" : start_date,
-                                     "end" : end_date
-                                 }//전송할 객체 생성
-
-                                 console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
-                             }
-                         });
-                     }
-                 }
-             },
-             editable: true, // false로 변경 시 draggable 작동 x 
-             displayEventTime: false // 시간 표시 x
-         });
-         calendar.render();
-     });
 </script>
- <style>
-        #calendarBox{
-            width: 70%;
-            padding-left: 15%;
-        }
-
-</style>
 
 <!-- jQuery -->
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
