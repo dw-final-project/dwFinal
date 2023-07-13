@@ -32,12 +32,14 @@ public class CommonController {
 	@Autowired
 	private MenuService menuService;
 
+	
+	
 	@GetMapping("/common/loginForm")
 	public String loginForm(HttpServletResponse res) throws Exception {
 		String url = "/common/loginForm";
 		return url;
 	}
-
+	
 
 	@RequestMapping("/common/main")
 	public ModelAndView index(ModelAndView mnv, HttpSession session) throws SQLException{
@@ -62,6 +64,7 @@ public class CommonController {
 		return "/common/registerForm";
 
 	}
+	
 	
 	
 }
