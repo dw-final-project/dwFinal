@@ -46,26 +46,29 @@
 						<th>진행상태</th>
 						<th>첨부파일여부</th>
 					</tr>
-					<c:if test="${empty estimList }">
-						<tr>
-							<td colspan="5">
-								<strong>해당 게시글이 없습니다.</strong>
-							</td>
-						</tr>
-					</c:if>
+<%-- 					<c:if test="${empty estimList }"> --%>
+<!-- 						<tr> -->
+<!-- 							<td colspan="5"> -->
+<!-- 								<strong>해당 게시글이 없습니다.</strong> -->
+<!-- 							</td> -->
+<!-- 						</tr> -->
+<%-- 					</c:if> --%>
+					<script>
+						console.log('${estimList}')
+					</script>
 					<c:forEach items="${estimList }" var="estimate">		
-						<c:set var="est_no">${estimate.est_no }</c:set>
+<%-- 						<c:set var="est_no">${estimate.EST_NO }</c:set> --%>
 						<tr style="font-size: 0.85em;">
-							<td><a href="javascript:OpenWindow('estimateSelect.do?est_no=${estimate.est_no }','견적서 조회', 800 ,800);">${estimate.est_no }</a></td>
+							<td><a href="javascript:OpenWindow('estimateDetail.do?est_no=${estimate.EST_NO }','견적서 조회', 800 ,800);">${estimate.EST_NO }</a></td>
 							<td>
-							<fmt:formatDate value="${estimate.regdate }" pattern="yyyy-MM-dd"></fmt:formatDate>
+							<fmt:formatDate value="${estimate.REGDATE }" pattern="yyyy-MM-dd"></fmt:formatDate>
 							</td>
-							<td>${estimate.c_no }</td>
-							<td>${enameList[est_no] }</td>
-							<td>${estimate.pr_no } 외 ${pr_size[est_no] } 건</td>
-							<td>${sumAmount[est_no] }</td>
-							<td>${estimate.progress }</td>
-							<td>${estimate.files != null ? "y" : "n"}</td>
+							<td>${estimate.C_NAME }</td>
+							<td>${estimate.E_NAME }</td>
+							<td>${estimate.P_AMOUNT_NAME }</td>
+							<td>${estimate.AMOUNT }</td>
+							<td>${estimate.PROGRESS }</td>
+							<td>${estimate.FILES != null ? "y" : "n"}</td>
 						</tr>
 					</c:forEach>
 				</table>

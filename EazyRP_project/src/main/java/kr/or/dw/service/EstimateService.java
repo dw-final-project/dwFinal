@@ -10,8 +10,9 @@ public interface EstimateService {
 
 	Map<String, Object> selectEstimList() throws SQLException;
 
-	EstimateVO selectdetail(String est_no) throws SQLException;
+	List<EstimateVO> selectDetail(String est_no) throws SQLException;
 
 	void estimateInsert(EstimateVO vo) throws SQLException;
+
 
 }
