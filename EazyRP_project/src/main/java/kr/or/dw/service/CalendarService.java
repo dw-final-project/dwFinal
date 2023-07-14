@@ -8,5 +8,7 @@ import kr.or.dw.vo.CalendarVO;
 public interface CalendarService {
 	
 	List<CalendarVO> getCalendar() throws SQLException;
+
+	void registCalendar(CalendarVO calendar) throws SQLException;
 	
 }

@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class CalendarVO {
-	private int calendarNo;
-	private String calendarTitle;
-	private String calendarMemo;
-	private String calendarStart;
-	private String calendarEnd;
+	private int calendar_no;
+	private String calendar_title;
+	private String calendar_memo;
+	private String calendar_start;
+	private String calendar_end;
 }
