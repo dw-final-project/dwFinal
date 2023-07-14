@@ -9,6 +9,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.dw.service.MailSendService;
 import kr.or.dw.service.MemberService;
 import kr.or.dw.vo.MemberVO;
 
@@ -33,11 +35,9 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
-<<<<<<< Updated upstream
-=======
-//	@Autowired
-//	private MailSendService mailService;
->>>>>>> Stashed changes
+
+	@Autowired
+	private MailSendService mailService;
 	
 	// 아이디 중복확인
 	@RequestMapping("/idCheck") 
@@ -57,20 +57,20 @@ public class MemberController {
 	};
 
 	//회원가입 페이지 이동
-	@GetMapping("/registerForm")
-	public void registerForm() {}
-	
-	//이메일 인증
 
-	@GetMapping("/mailCheck")
-	@ResponseBody
-	public String mailCheck(String email) throws Exception{
-		System.out.println("이메일 인증 요청이 들어옴!");
-		System.out.println("이메일 인증 이메일 : " + email);
-		return mailService.joinEmail(email);
-				
-	};
-	
+		@GetMapping("/registerForm")
+		public void registerForm() {}
+		
+		//이메일 인증
+		@GetMapping("/mailCheck")
+		@ResponseBody
+		public String mailCheck(String email) throws Exception{
+			System.out.println("이메일 인증 요청이 들어옴!");
+			System.out.println("이메일 인증 이메일 : " + email);
+			return mailService.joinEmail(email);
+					
+		};
+
 	// 회원가입 
 	@RequestMapping("/register")
 	public String register(MemberVO member, HttpServletRequest req, HttpServletResponse res) throws Exception{
@@ -82,19 +82,15 @@ public class MemberController {
 	      out.println("<script>");
 	      out.println("alert('회원가입이 정상적으로 되었습니다.');");
 	      out.println("</script>");
-	      return "/common/main.do";
+	      return "/common/loginForm";
 	}
-
-	/*
-	 * @GetMapping("/mailCheck")
-	 * 
-	 * @ResponseBody public String mailCheck(String email) throws Exception{
-	 * System.out.println("이메일 인증 요청이 들어옴!"); System.out.println("이메일 인증 이메일 : " +
-	 * email); return mailService.joinEmail(email);
-	 * 
-	 * }
-	 */
-
 	
+	@GetMapping("/PWfindForm")
+	public String loginForm(String id, String email, HttpServletResponse res) throws Exception {
+		MemberVO member = memberService.selectMemberById(id);
+		
+		String url = "/common/PWfindForm";
+		return url;
+	}
 
 }

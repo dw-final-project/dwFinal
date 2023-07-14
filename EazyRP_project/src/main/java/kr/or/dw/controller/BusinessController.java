@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.common.collect.Sets.SetView;
 
 import kr.or.dw.service.EstimateService;
-import kr.or.dw.service.MenuService;
+import kr.or.dw.service.MenuService;	
 import kr.or.dw.service.SiService;
 import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.SiVO;
@@ -42,27 +43,22 @@ public class BusinessController {
 	@Autowired
 	private SiService siService;
 	
-	@RequestMapping("/business")
+	@RequestMapping("/estimate")
 	public ModelAndView main(ModelAndView mnv, String mcode) throws SQLException {
 		String url = "jihwan/main.page";
 		
-		List<EstimateVO> estimList = estimateService.selectEstimList();
+		Map<String, Object> dataMap = estimateService.selectEstimList();
+		
 		mnv.addObject("mcode", mcode);
 		mnv.setViewName(url);
-<<<<<<< Updated upstream
-		mnv.addObject("estimList" ,estimList);
-		System.out.println(estimList.get(0).getFiles());
-		System.out.println(estimList.get(1).getFiles());
-=======
-		mnv.addObject("estimList", estimList);
-		
->>>>>>> Stashed changes
+		mnv.addAllObjects(dataMap);
+
 		return mnv;
 	}
 	
-	@RequestMapping("/estimate")
+	@RequestMapping("/estimate_regist")
 	public String esti() {
-		String url = "jihwan/estimate";
+		String url = "jihwan/estimate_regist.open";
 		return url;
 	}
 
@@ -71,7 +67,7 @@ public class BusinessController {
 		
 		
 		EstimateVO estVo = estimateService.selectdetail(est_no);
-		String url = "jihwan/estimateSelect.page";
+		String url = "jihwan/estimateSelect.open";
 		mnv.addObject("estVo", estVo);
 		mnv.setViewName(url);
 		return mnv;
@@ -104,7 +100,7 @@ public class BusinessController {
 			String fileRealName = multi.getOriginalFilename();
 			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
 			String uploadFolder = "C:\\upload\\";
-			vo.setFileName(uniqueName+fileExtension);
+			vo.setFiles(uniqueName+fileExtension);
 			
 			
 			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후

@@ -3,62 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+ <!-- fullcalendar -->
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
+ <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
+
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
 
 <!-- 페이징 -->
 <c:set var="cri" value="${pageMaker.cri }"/>
-
-<style> /* 소라 사이드바 스타일 */
-    html, body{
-      width: 100%;
-      height: 100%;
-    }
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-
-    .b-example-divider {
-      height: 3rem;
-      background-color: rgba(0, 0, 0, .1);
-      border: solid rgba(0, 0, 0, .15);
-      border-width: 1px 0;
-      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .05);
-    }
-
-    .b-example-vr {
-      flex-shrink: 0;
-      width: 1.5rem;
-      height: 100vh;
-    }
-
-    .bi {
-      vertical-align: -.125em;
-      fill: currentColor;
-    }
-
-    .p-2 {
-      color: whitesmoke;
-    }
-
-    .nav d-flex {
-      justify-content: space-evenly;
-    }
-    
-    .container {
-    	
-    }
-</style>
 
 <body>
 <div class="container col-10">
@@ -69,7 +22,7 @@
 		<jsp:param value="목록" name="item"/>
 	</jsp:include> --%>
 	<h3>상품관리</h3>
-	<section class="row">
+	<section class="row-1">
 		<div class="col-1"></div>
 		<div class="card col-10" style="margin-top:3em;">
 			<div class="card-header with-border">
@@ -138,10 +91,71 @@
 					</c:forEach>
 				</table>
 			</div>
-			
 			<div class="card-footer">
 				페이지처리 위치
 <%-- 			<%@ include file="/WEB-INF/views/common/pagination.jsp" %> --%>
+			</div>
+		</div>
+		<div class="row ">
+			<div class="col-8">
+				<div style="display: flex; align-items: end; justify-content: end;">
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/mymenu/communication.do', '쪽지쓰기', 700, 1000)"
+					style="width: 100px; margin: 20px; align-self: center;">쪽지 쓰기</button>
+				</div>
+			</div>
+			
+		</div>
+		<div class="row ">
+			<div class="col-md-10" style="max-width: 1100px;">
+				<div class="card card-outline card-info">
+					<div class="card-header">
+						<h3 class="card-title p-1">받은 쪽지함</h3>
+						<div class="input-group row" style="width: 90%; margin-left: 50%;">
+						<form id="searchForm" method="post" action="/mymenu/search.do?mcode=${mcode }" style="display: contents;">
+							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
+								<option value="tcw" ${searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
+								<option value="t" ${searchType eq 't' ? 'selected' : '' }>제  목</option>
+								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>보낸사람</option>
+								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>업  체</option>
+							</select>
+							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
+							<span class="input-group-append col-md-3" style=" padding: 0px;">
+								<button class="btn btn-primary" type="button" id="searchBtn">
+									<i class="fa fa-fw fa-search" style="font-size: 0.8em; padding: 0px;"></i>
+								</button>
+							</span>
+						</form>
+						</div>
+					</div>
+					<div class="card-body pad">
+						<div>
+							<table style="font-size: 0.8em;">
+								<tr>
+									<th width="50px" style="text-align: center;"></th>
+									<th width="350px" style="text-align: center;">제목</th>
+									<th width="150px" style="text-align: center;">보낸 사람</th>
+									<th width="220px" style="text-align: center;">업체명</th>
+									<th width="120px" style="text-align: center;">첨부파일 여부</th>
+									<th width="300px" style="text-align: center;">보낸 시간</th>
+								</tr>
+									<tr style="height: 20px;"></tr>
+									<tr>
+										<td id="read_${loop.index}" style="text-align: center; height:80%; font-weight:bold; font-size: 0.7em; color: ${note.readable == 'N' ? 'red' : 'blue' };">
+										1
+										</td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/mymenu/detail.do?n_no=${note.n_no }&send=N', '쪽지보기', 700, 1000, '${loop.index}')">2</a></td>
+										<td style="text-align: center;">3</td>
+										<td style="text-align: center;">4</td>
+										<td style="text-align: center;">5</td>
+										<td style="text-align: center;">6</td>
+									</tr>
+							</table>
+							<div class="card-footer">
+								<%@ include file="/WEB-INF/views/common/pagination2.jsp" %>
+							</div>
+						</div>
+					</div>
+					</div>
 			</div>
 			
 		</div>
@@ -159,10 +173,9 @@
 								+ "height=" + WinHeight + ",top="+ wintop + ",left="
 								+ winleft + ",resizable=yes,status=yes");
 	}
+	
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <!-- jQuery -->
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <%@ include file="../include/footer_js.jsp" %>

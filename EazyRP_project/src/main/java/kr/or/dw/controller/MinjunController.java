@@ -26,11 +26,7 @@ import kr.or.dw.vo.ProcessVO;
 @RequestMapping("/erp5")
 public class MinjunController {
 	
-<<<<<<< Updated upstream
-//	private static final Logger logger = LoggerFactory.getLogger(HeesungController.class);
-=======
 	private static final Logger logger = LoggerFactory.getLogger(MinjunController.class);
->>>>>>> Stashed changes
 	
 	@Autowired
 	private MenuService menuService;
@@ -51,22 +47,7 @@ public class MinjunController {
 		return url;
 	}
 	
-<<<<<<< Updated upstream
-	/*
-	 * @RequestMapping("/product.do") public ModelAndView
-	 * productMain(@RequestParam(defaultValue="M000000")String mcode, ModelAndView
-	 * mnv) throws SQLException { String url = "minjun/product";
-	 * 
-	 * // 메뉴 리스트 List<MenuVO> menuList = menuService.selectMainMenuList(); MenuVO
-	 * menu = menuService.selectMenuByMcode(mcode);
-	 * 
-	 * mnv.addObject("menu", menu); mnv.addObject("menuList", menuList);
-	 * 
-	 * mnv.setViewName(url);
-	 * 
-	 * return mnv; }
-	 */
-=======
+
 	@RequestMapping("/product.do")
 	public ModelAndView productMain(String mcode, ModelAndView mnv) throws SQLException {
 		String url = "minjun/product";
@@ -75,7 +56,7 @@ public class MinjunController {
 		mnv.setViewName(url);
 		return mnv;
 	}
->>>>>>> Stashed changes
+
 	
 	@RequestMapping("/productRegistForm")
 	public String productRegistForm() {
@@ -83,22 +64,7 @@ public class MinjunController {
 		return url;
 	}
 	
-<<<<<<< Updated upstream
-	/*
-	 * @RequestMapping("/order.do") public ModelAndView
-	 * orderMain(@RequestParam(defaultValue="M000000")String mcode, ModelAndView
-	 * mnv) throws SQLException { String url = "minjun/order";
-	 * 
-	 * // 메뉴 리스트 List<MenuVO> menuList = menuService.selectMainMenuList(); MenuVO
-	 * menu = menuService.selectMenuByMcode(mcode);
-	 * 
-	 * mnv.addObject("menu", menu); mnv.addObject("menuList", menuList);
-	 * 
-	 * mnv.setViewName(url);
-	 * 
-	 * return mnv; }
-	 */
-=======
+
 	@RequestMapping("/order.do")
 	public ModelAndView orderMain(String mcode, ModelAndView mnv) throws SQLException {
 		String url = "minjun/order";
@@ -109,7 +75,7 @@ public class MinjunController {
 		
 		return mnv;
 	}
->>>>>>> Stashed changes
+
 	
 	@RequestMapping("/orderRegistForm")
 	public String orderRegistForm() {

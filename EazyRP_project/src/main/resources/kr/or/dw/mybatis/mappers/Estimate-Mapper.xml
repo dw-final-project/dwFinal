@@ -3,8 +3,21 @@
 <mapper namespace="kr.or.dw.dao.EstimateDAO">
 
 <select id="selectEstimList" resultType="estimate">
-	SELECT *
+	SELECT est_no
 	FROM estimate
+</select>
+
+
+<select id="selectDetail" parameterType="str" resultType="estimate">
+	SELECT *
+	  FROM estdetail
+	 WHERE est_no = #{est_no}
+</select>
+
+<select id="selectEname" parameterType="int" resultType="str">
+	SELECT e_name
+	  FROM emp
+	 WHERE emp_no = #{emp_no}
 </select>
 
 <select id="selectdetail" resultType="estimate">
