@@ -62,13 +62,12 @@ public class BusinessController {
 		return url;
 	}
 
-	@RequestMapping("/estimateSelect")
-	public ModelAndView estSel(ModelAndView mnv ,String est_no) throws SQLException {
+	@RequestMapping("/estimateDetail")
+	public ModelAndView estDetail (ModelAndView mnv ,String est_no) throws SQLException {
 		
-		
-		EstimateVO estVo = estimateService.selectdetail(est_no);
-		String url = "jihwan/estimateSelect.open";
-		mnv.addObject("estVo", estVo);
+		List<EstimateVO> estimList = estimateService.selectDetail(est_no);
+		String url = "jihwan/estimateDetail.open";
+		mnv.addObject("estimList", estimList);
 		mnv.setViewName(url);
 		return mnv;
 	}
