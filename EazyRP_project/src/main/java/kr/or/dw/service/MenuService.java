@@ -13,5 +13,7 @@ public interface MenuService {
 
 	Map<String, Object> selectSubMenuList(List<MenuVO> menuList) throws SQLException;
 
+	String getUrl(String mcode) throws SQLException;
+
 	
 }

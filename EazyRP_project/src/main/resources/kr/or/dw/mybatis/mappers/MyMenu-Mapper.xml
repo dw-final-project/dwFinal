@@ -44,6 +44,7 @@ FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 	AND n.n_no = b.n_no
 	AND n.n_no = c.n_no
 	AND n.n_no = d.n_no
+	AND n.R_company = #{c_no}
 	ORDER BY n.n_no DESC
 	</select>
 	
@@ -81,6 +82,7 @@ FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 	AND n.n_no = b.n_no
 	AND n.n_no = c.n_no
 	AND n.n_no = d.n_no
+	AND n.R_company = #{c_no}
 			<if test="searchType == 't'.toString()">
 				AND n.title LIKE '%' || #{keyword} || '%'
 			</if>
@@ -125,7 +127,7 @@ FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 	AND n.n_no = b.n_no
 	AND n.n_no = c.n_no
 	AND n.n_no = d.n_no
-		AND n.caller = #{emp_no}
+	AND n.R_company = #{c_no}
 		ORDER BY n.n_no DESC
 	</select>
 	
@@ -140,6 +142,7 @@ FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 	AND n.n_no = b.n_no
 	AND n.n_no = c.n_no
 	AND n.n_no = d.n_no
+	AND n.R_company = #{c_no}
 			<if test="searchType == 't'.toString()">
 				AND n.title LIKE '%' || #{keyword} || '%'
 			</if>
