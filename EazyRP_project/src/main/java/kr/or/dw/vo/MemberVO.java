@@ -23,7 +23,7 @@ public class MemberVO {
 	private String c_no;  // 업체코드
 	private String email;                          
 	private String addr;
-	
+	private int enabled;
 	
 	public MemberVO() {};
 	

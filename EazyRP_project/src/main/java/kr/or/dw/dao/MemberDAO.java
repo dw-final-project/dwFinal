@@ -13,4 +13,6 @@ public interface MemberDAO {
 
 	void insertMember(MemberVO member) throws SQLException;
 
+	String selectErank(int u_no) throws SQLException;
+
 }

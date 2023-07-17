@@ -86,9 +86,8 @@ public class MemberController {
 	}
 	
 	@GetMapping("/PWfindForm")
-	public String loginForm(String id, String email, HttpServletResponse res) throws Exception {
-		MemberVO member = memberService.selectMemberById(id);
-		
+	public String loginForm(HttpServletResponse res) throws Exception {
+
 		String url = "/common/PWfindForm";
 		return url;
 	}
