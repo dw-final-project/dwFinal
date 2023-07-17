@@ -98,21 +98,19 @@
     <nav class="navbar navbar-expand-lg bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="/common/main.do"><img src="<%=request.getContextPath() %>/resources/img/EazyRP.png" style="width: 100px;"></a>
-            <form class="d-flex" id="selectCompany" method="post" action="">
-             <select class="form-control" name="selectedC_no" style="font-size: 0.8em; border: 2px red solid;">
-				<option value="">업체 선택</option>
-				<option value="C000001" ${selectedC_no eq 'C000001' ? 'selected' : '' }>(주)지민식품</option>
-				<option value="C000002" ${selectedC_no eq 'C000002' ? 'selected' : '' }>희성전자</option>
-				<option value="C000003" ${selectedC_no eq 'C000003' ? 'selected' : '' }>석준물산</option>
-				<option value="C000004" ${selectedC_no eq 'C000004' ? 'selected' : '' }>(주)소라전자</option>
-				<option value="C000005" ${selectedC_no eq 'C000005' ? 'selected' : '' }>민준식품</option>
-				<option value="C000006" ${selectedC_no eq 'C000006' ? 'selected' : '' }>지환물산</option>
+            <form class="d-flex" id="selectCompany" method="post" action="/common/change.do?mcode=${mcode }">
+             <select class="form-control" name="selectedC_no" style="font-size: 0.8em; border: 2px red solid; text-align: center;">
+				<option value="" style=" text-align: center;">업체 선택</option>
+				<option style=" text-align: center;" value="C000001" ${c_no eq 'C000001' ? 'selected' : '' }>(주)지민식품</option>
+				<option style=" text-align: center;" value="C000002" ${c_no eq 'C000002' ? 'selected' : '' }>희성전자</option>
+				<option style=" text-align: center;" value="C000003" ${c_no eq 'C000003' ? 'selected' : '' }>석준물산</option>
+				<option style=" text-align: center;" value="C000004" ${c_no eq 'C000004' ? 'selected' : '' }>(주)소라전자</option>
+				<option style=" text-align: center;" value="C000005" ${c_no eq 'C000005' ? 'selected' : '' }>민준식품</option>
+				<option style=" text-align: center;" value="C000006" ${c_no eq 'C000006' ? 'selected' : '' }>지환물산</option>
 			</select>
+			<input class="btn btn-warning" style="font-size: 0.8em;" id="submitBtn" type="submit" value="업체 변경">
             </form>
           </div>
-        </div>
-
-      </div>
     </nav>
 
     <nav class="nav d-flex" style="padding: 0 16.66666667%; padding-top: 6px; background-color: #7bc4b2; justify-content:space-evenly;">
@@ -123,7 +121,12 @@
          </li>
          </c:forEach>
   </nav>
-  
+  <script>
+	$('#submitBtn').on('click', function(){
+		alert('설정이 완료되었습니다.');
+		location.reload(true);
+	})
+</script>
 <!--   <nav class="flex-column p-3 sideMenuList" style=" float:left ; width: 15%; height: 100%; display: none; background-color: #7bc4b2;"> -->
 
 <!--   </nav> -->

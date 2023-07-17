@@ -18,6 +18,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -58,7 +59,7 @@ public class MyMenuController {
 	}
 	
 	@RequestMapping("/noteRegist")
-	public String noteRegist(NoteVO note, String reply, HttpServletResponse res, MultipartFile file) throws SQLException, IOException{
+	public String noteRegist(HttpSession session, NoteVO note, String reply, HttpServletResponse res, MultipartFile file) throws SQLException, IOException{
 		NoteVO noteVo = new NoteVO();
 		System.out.println(note.getReceiver());
 		System.out.println(note.getCon());
@@ -96,7 +97,7 @@ public class MyMenuController {
 		
 		
 		int emp_no = note.getReceiver(); // 받는사람 emp_no
-		int writer = 1;
+		int writer = (int) session.getAttribute("emp_no");
 		EmpVO emp = mymenuService.selectEmp(emp_no); // 받는사람 정보
 		EmpVO emp2 = mymenuService.selectEmp(writer); // 보낸사람 정보
 		
@@ -149,12 +150,15 @@ public class MyMenuController {
 	}
 	
 	@RequestMapping("/noteList")
-	public ModelAndView noteList(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
+	public ModelAndView noteList(HttpSession session, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
 		String url="/mymenu/noteList.page";
-		System.out.println(cri.getPage());
+		Map<String, Object> dataMap = new HashMap<String, Object>();
 		Map<String, Object> note = new HashMap<String, Object>();
-				
-		note = mymenuService.getNoteList(cri);
+		String c_no = (String) session.getAttribute("c_no");
+		
+		dataMap.put("c_no", c_no);
+		dataMap.put("cri", cri);
+		note = mymenuService.getNoteList(dataMap);
 		
 		mnv.setViewName(url);
 		mnv.addAllObjects(note);
@@ -164,10 +168,15 @@ public class MyMenuController {
 	}
     
     @RequestMapping("/sendNoteList")
-    public ModelAndView sendNoteList(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
+    public ModelAndView sendNoteList(HttpSession session, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
+		Map<String, Object> dataMap = new HashMap<String, Object>();
 		Map<String, Object> note = new HashMap<String, Object>();
-		int emp_no = 1;
-		note = mymenuService.getSendNoteList(emp_no, cri);
+		String c_no = (String) session.getAttribute("c_no");
+		System.out.println(c_no);
+		
+		dataMap.put("c_no", c_no);
+		dataMap.put("cri", cri);
+		note = mymenuService.getSendNoteList(dataMap, cri);
 		
 		mnv.addAllObjects(note);
     	
@@ -272,7 +281,7 @@ public class MyMenuController {
 	}
 	
 	@RequestMapping("/sendSearch")
-	public ModelAndView sendSearch(ModelAndView mnv, String mcode, String keyword, String searchType) throws SQLException {
+	public ModelAndView sendSearch(HttpSession session, ModelAndView mnv, String mcode, String keyword, String searchType) throws SQLException {
 		String url = "/mymenu/sendNoteList.page";
 		Map<String, String> valMap = new HashMap<>();
 		valMap.put("keyword", keyword);

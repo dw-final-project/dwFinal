@@ -15,6 +15,8 @@ public interface MenuDAO {
 
 	List<MenuVO> selectSubMenuList(String mcode) throws SQLException;
 
+	String getURL(String mcode) throws SQLException;
+
 	
 
 }
