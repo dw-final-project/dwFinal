@@ -115,8 +115,6 @@ public class CommonController {
 			String getUrlResult = getUrl.substring(0, getUrl.indexOf("."));
 			String modMcode = mcode.substring(0, 3) + "0000";
 			System.out.println(modMcode);
-
-			String modMcode = mcode.substring(0,3) + "0000";
 			url = getUrl + "?mcode=" + modMcode;
 		}
 		
