@@ -48,7 +48,7 @@
 	
 	function submit_go(){
 		
-		if($('input[name="id"]').val() == ""){
+		if($('input[name="name"]').val() == ""){
 			alert("아이디는 필수 입니다.");
 			return false;
 		};
