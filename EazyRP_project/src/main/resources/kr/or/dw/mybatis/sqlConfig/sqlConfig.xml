@@ -16,6 +16,7 @@
 		<typeAlias type="kr.or.dw.vo.SiVO" alias="si"/>
 		<typeAlias type="kr.or.dw.vo.MemberVO" alias="member"/>
 		<typeAlias type="kr.or.dw.vo.CalendarVO" alias="calendar"/>
+		<typeAlias type="kr.or.dw.vo.ProductVO" alias="product"/>
 	</typeAliases>
 
 </configuration>
