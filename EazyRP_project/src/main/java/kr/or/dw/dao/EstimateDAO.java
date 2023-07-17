@@ -13,9 +13,11 @@ public interface EstimateDAO {
 
 	List<Map<String, Object>> selectEstimList() throws SQLException;
 
-	List<EstimateVO> selectDetail(String est_no) throws SQLException;
+	Map<String, Object> selectDetail(String est_no) throws SQLException;
 
 	void insertEstimate(EstimateVO vo) throws SQLException;
+
+	List<Map<String, Object>> forEstimList(String est_no) throws SQLException;
 
 
 	

@@ -22,6 +22,7 @@ public class EstimateServiceImpl implements EstimateService {
 	@Override
 	public Map<String, Object> selectEstimList() throws SQLException {
 		
+		List<Map<String, Object>> estimList = estimateDAO.selectEstimList();
 //		List<EstimateVO> estimList = new ArrayList<EstimateVO>();
 //		Map<String, Integer> pr_size = new HashMap<String, Integer>();
 //		Map<String, Integer> sumAmount = new HashMap<String, Integer>();
@@ -30,7 +31,6 @@ public class EstimateServiceImpl implements EstimateService {
 //		Map<String, String> prnameList = new HashMap<String,String>();
 //		
 //		int count = 0;
-		List<Map<String, Object>> estimList = estimateDAO.selectEstimList();
 		
 		
 //		for(EstimateVO est : estNoList) {
@@ -70,10 +70,10 @@ public class EstimateServiceImpl implements EstimateService {
 //		}
 //		
 		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("estimList", estimList);
 //		dataMap.put("sumAmount", sumAmount);
 //		dataMap.put("pr_size", pr_size);
 //		dataMap.put("enameList", enameList);
-		dataMap.put("estimList", estimList);
 //		dataMap.put("cnameList", cnameList);
 //		dataMap.put("prnameList",prnameList);
 		
@@ -81,9 +81,17 @@ public class EstimateServiceImpl implements EstimateService {
 	}
 	
 	@Override
-	public List<EstimateVO> selectDetail(String est_no) throws SQLException {
-		List<EstimateVO> estimList = estimateDAO.selectDetail(est_no);
-		return estimList;
+	public Map<String, Object> selectDetail(String est_no) throws SQLException {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		Map<String, Object> est = (Map<String, Object>) estimateDAO.selectDetail(est_no);
+		
+		List<Map<String, Object>> estPr = estimateDAO.forEstimList(est_no);
+		
+		dataMap.put("estPr",estPr);
+		dataMap.put("est", est);
+		
+		return dataMap;
 	}
 
 	@Override
