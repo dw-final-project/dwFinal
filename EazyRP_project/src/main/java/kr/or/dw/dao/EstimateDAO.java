@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.dw.vo.EstimateVO;
+import kr.or.dw.vo.ProductVO;
 
 @Mapper
 public interface EstimateDAO {
@@ -18,6 +19,14 @@ public interface EstimateDAO {
 	void insertEstimate(EstimateVO vo) throws SQLException;
 
 	List<Map<String, Object>> forEstimList(String est_no) throws SQLException;
+
+	List<ProductVO> getSelectProductListCno(String c_name) throws SQLException;
+
+	List<ProductVO> getSelectProductList(String pr_name) throws SQLException;
+
+	List<ProductVO> getProduct(Map<String, String> map) throws SQLException;
+
+	List<ProductVO> getProductList() throws SQLException;
 
 
 	

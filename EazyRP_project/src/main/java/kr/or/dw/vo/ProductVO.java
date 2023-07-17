@@ -19,6 +19,7 @@ public class ProductVO {
 	private String sp_no;
 	private int quantity;
 	private String wh_no;
+	private String c_name;
 
 	public ProductVO() {};
 	
