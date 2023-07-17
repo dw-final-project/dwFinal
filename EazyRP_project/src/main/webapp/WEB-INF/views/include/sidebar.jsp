@@ -1,22 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <nav class="d-flex flex-column flex-shrink-0 p-3 bg-white " style=" float:left ; width: 20%; height: 100%; display: inline">
-      
-        <div class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-           <span class="fs-5 fw-semibold"> 관리자 문의 </span>
-        </div>
-        <ul class="list-unstyledv ps-0">
-          <li class="mb-1" style="list-style: none;">
-            <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false"
-            href="/mymenu/communication.do">
-              쪽지 보내기
-            </a>
-          </li>
-          <li class="mb-1" style="list-style: none;">
-            <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false"
-            href="/mymenu/noteList.do">
-              쪽지함
-            </a>
-          </li>
-        </ul>     
-        </nav>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="mcode">${mcode }</c:set>
+<c:set var="subMenuList2">${subMenuList[mcode] }</c:set>
+<nav id="navSideBar"class="d-flex flex-column p-3 sideMenuList" style=" float:left ; width: 15%; height: 100%; display: inline; background: linear-gradient(to bottom, #7bc4b2, #00ff72);">
+
+	<c:forEach items="${subMenuList[mcode]}" var="subMenu">
+		<a class="p-2 a nav-link bold fw-bold " href="javascript:goPage('${subMenu.murl }', '${subMenu.mcode }');" data-url="${subMenu.mcode }" aria-expanded="true" style="color: white; text-decoration-line: none;">${subMenu.mname }</a>
+		<c:set var="mcode">${subMenu.mcode }</c:set>
+			<ul style="list-style-type: none;">
+			<c:forEach items="${smallMenuList[mcode] }" var="smallMenu">
+				<li>	
+					<a class="p-2 a nav-link " href="javascript:goPage('${smallMenu.murl }', '${smallMenu.mcode }');" data-url="${smallMenu.mcode }" aria-expanded="true" style="color: white; text-decoration-line: none;">&nbsp;&nbsp;&nbsp;&nbsp;${smallMenu.mname }</a>
+				</li>
+			</c:forEach>
+			</ul>
+	</c:forEach>
+</nav>

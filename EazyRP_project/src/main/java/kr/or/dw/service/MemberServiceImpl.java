@@ -2,6 +2,8 @@ package kr.or.dw.service;
 
 import java.sql.SQLException;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import kr.or.dw.dao.MemberDAO;
@@ -17,5 +19,12 @@ public class MemberServiceImpl implements MemberService{
 		MemberVO member = memberDAO.selectMemberById(id);
 		return member;
 	}
+
+	@Override
+	public void register(MemberVO member) throws SQLException {
+		memberDAO.insertMember(member);
+	}
+
+
 
 }

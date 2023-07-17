@@ -3,6 +3,7 @@ package kr.or.dw.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,26 +14,39 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.dw.service.MenuService;
 import kr.or.dw.service.ProcessService;
+import kr.or.dw.vo.MenuVO;
 import kr.or.dw.vo.ProcessVO;
 
 @Controller
-@RequestMapping("/erp4")
+@RequestMapping("/erp5")
 public class MinjunController {
-
+	
 	private static final Logger logger = LoggerFactory.getLogger(MinjunController.class);
 	
-	@RequestMapping("/shop.do")
-	public String main() {
-		return "minjun/main";
+	@Autowired
+	private MenuService menuService;
+	
+	@RequestMapping("/shop")
+	public ModelAndView index(ModelAndView mnv, String mcode) throws SQLException{
+		String url = "/minjun/shop.page";
+		
+		mnv.addObject("mcode", mcode);
+		mnv.setViewName(url);
+		return mnv;
+	}
+
+	
+	@RequestMapping("/shopRegistForm")
+	public String shopRegistForm() {
+		String url = "minjun/shop_open_regist";
+		return url;
 	}
 	
-<<<<<<< Updated upstream
-	
-=======
-
 	@RequestMapping("/product")
 	public ModelAndView productMain(String mcode, ModelAndView mnv) throws SQLException {
 		String url = "minjun/product";
@@ -43,6 +57,7 @@ public class MinjunController {
 	}
 
 	
+	
 	@RequestMapping("/productRegistForm")
 	public String productRegistForm() {
 		String url = "minjun/product_open_regist";
@@ -50,7 +65,7 @@ public class MinjunController {
 	}
 	
 
-	@RequestMapping("/order")
+	@RequestMapping("/order.do")
 	public ModelAndView orderMain(String mcode, ModelAndView mnv) throws SQLException {
 		String url = "minjun/order";
 		
@@ -78,5 +93,5 @@ public class MinjunController {
 		out.println("window.opener.location.reload(true); window.close();");
 		out.println("</script>");
 	}
->>>>>>> Stashed changes
+
 }

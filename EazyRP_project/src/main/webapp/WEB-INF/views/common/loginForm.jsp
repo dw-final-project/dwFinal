@@ -140,7 +140,7 @@ body {
 				<h4 class="modal-title">로그인</h4>
 			</div>
 			<div class="modal-body">
-				<form action="<%=request.getContextPath() %>/common/login.do" method="post">
+				<form id="loginForm" action="<%=request.getContextPath() %>/common/login.do" method="post">
 					<div class="form-group">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -150,17 +150,30 @@ body {
 					<div class="form-group">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-							<input type="text" class="form-control" name="password" placeholder="패스워드" required="required">
+							<input type="password" class="form-control" name="pwd" placeholder="패스워드" required="required">
 						</div>
 					</div>
+					</form>
 					<div class="form-group">
-						<button type="submit" class="btn btn-info btn-block btn-lg">로그인</button>
-						<button type="submit" class="btn btn-info btn-block btn-lg">회원가입</button>
+						<button type="submit" class="btn btn-info btn-block btn-sm" id="loginBtn">로그인</button>
+						<button type="submit" class="btn btn-info btn-block btn-sm" id="regiser" >회원가입</button>
 					</div>
-					<p class="hint-text text-info"><a href="#">아이디/비번찾기</a></p>
-				</form>
+					<p class="hint-text text-info"><a href="#" id="pwfind">아이디/비번찾기</a></p>
 			</div>
 		</div>
 	</div>    
 </body>
+<script>
+$(function(){
+
+	$('#regiser').on('click', function(){
+		location.href = "/common/registerForm"; 
+	});
+	
+	$('#pwfind').on('click', function(){
+		location.href = "/member/PWfindForm"; 
+	});
+})
+</script>
+
 </html>

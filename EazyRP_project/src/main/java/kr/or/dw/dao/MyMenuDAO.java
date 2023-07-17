@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
 
+import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.NoteVO;
 
@@ -24,13 +26,19 @@ public interface MyMenuDAO {
 
 	public void sendNote(NoteVO noteVo) throws SQLException;
 
-	public List<NoteVO> getNoteList() throws SQLException;
-
 	public NoteVO selectNote(int n_no) throws SQLException;
 
 	public void readableUpdate(int n_no) throws SQLException;
 
 	public void deleteNote(int n_no) throws SQLException;
+
+	public List<NoteVO> searchNote(Map<String, String> valMap) throws SQLException;
+
+	public List<NoteVO> getSendNoteList(int emp_no) throws SQLException;
+
+	public List<NoteVO> getNoteList(SearchCriteria cri, RowBounds rowBounds) throws SQLException;
+
+	public int selectSearchNoteListCount(SearchCriteria cri) throws SQLException;
 	
 	
 

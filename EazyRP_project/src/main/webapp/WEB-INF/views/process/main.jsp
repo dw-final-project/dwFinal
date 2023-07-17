@@ -3,106 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%@ include file="../include/header.jsp" %>
-<%@ include file="../include/sidebar.jsp" %>
-
 <!-- 페이징 -->
 <c:set var="cri" value="${pageMaker.cri }"/>
 
-<style> /* 소라 사이드바 스타일 */
-    html, body{
-      width: 100%;
-      height: 100%;
-    }
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-
-    .b-example-divider {
-      height: 3rem;
-      background-color: rgba(0, 0, 0, .1);
-      border: solid rgba(0, 0, 0, .15);
-      border-width: 1px 0;
-      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .05);
-    }
-
-    .b-example-vr {
-      flex-shrink: 0;
-      width: 1.5rem;
-      height: 100vh;
-    }
-
-    .bi {
-      vertical-align: -.125em;
-      fill: currentColor;
-    }
-
-    .p-2 {
-      color: whitesmoke;
-    }
-
-    .nav d-flex {
-      justify-content: space-evenly;
-    }
-    
-    .container {
-    	
-    }
-</style>
-
 <body>
-
-<!-- <div class="container col-10">
-	sidebar   
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style=" float:left ; width: 20%; height: 100%; display: inline;">
-      <div class="d-flex align-items-center pb-3 mb-3 text-decoration-none border-bottom">
-        <span class="fs-5 fw-semibold"> 개인정보 </span>
-      </div>
-      <ul class="list-unstyled ps-0">
-        <li class="mb-1">
-          <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-            개인정보 조회 및 수정
-          </a>
-        </li>
-        <li class="mb-1">
-          <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-            회원탈퇴
-          </a>
-        </li>
-      </ul>
-        <div class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-           <span class="fs-5 fw-semibold"> 관리자 문의 </span>
-        </div>
-        <ul class="list-unstyledv ps-0">
-          <li class="mb-1" style="list-style: none;">
-            <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-              관리자 문의하기
-            </a>
-          </li>
-          <li class="mb-1" style="list-style: none;">
-            <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-              문의 답변 확인
-            </a>
-          </li>
-        </ul>     
-        </div> -->
 	
 	<div class="content-wrapper">
-<%-- 			<jsp:include page="../content_header.jsp"> --%>
-<%-- 				<jsp:param value="게시판리스트" name="subject"/> --%>
-<%-- 				<jsp:param value="목록" name="item"/> --%>
-<%-- 			</jsp:include> --%>
-		
 		<h1>공정 관리 페이지</h1>
 		<section class="row">
 			<div class="col-1"></div>
@@ -120,7 +26,7 @@
 							<input class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="${cri.keyword }">
 							<span class="input-group-append">
 								<button class="btn btn-primary" type="button" onclick="searchList_go(1);">
-									<i class="fa-search">검색</i>
+									<i>검색</i>
 								</button>
 							</span>
 						</div>
@@ -159,9 +65,15 @@
 				<div class="card-footer">
 					<%@ include file="/WEB-INF/views/common/pagination.jsp" %>
 				</div>
+				
+				<!-- 캘린더 이동 페이지 -->
+				<button type="button" class="btn btn-danger" id="calendarBtn" onclick="OpenWindow('calendar.do', '일정관리', 800, 700);">일정 관리 페이지</button>
+			
 			</div>
 		</section>
 	</div>
+	
+	
 </body>
 </html>
 
@@ -183,6 +95,8 @@
     // 	if (window.opener) window.opener.location.reload(true);
 		window.close();
 	}
+	
+	
 	
 </script>
 

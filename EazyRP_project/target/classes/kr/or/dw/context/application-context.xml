@@ -13,13 +13,15 @@
 	<bean id="processService" class="kr.or.dw.service.ProcessServiceImpl"/>
 	<bean id="mymenuService" class="kr.or.dw.service.MyMenuServiceImpl"/>
 	<bean id="estimateService" class="kr.or.dw.service.EstimateServiceImpl"/>
-<<<<<<< HEAD
 	<bean id="siService" class="kr.or.dw.service.SiServiceImpl"/>
 	
-=======
 	<bean id="memberService" class="kr.or.dw.service.MemberServiceImpl"/>
 	<bean id="mailService" class="kr.or.dw.service.MailSendServiceImpl"/>
-	   <!-- 이메일 인증 관련 빈 등록 -->
+	
+	<!-- 풀캘린더 API -->
+	<bean id="calendarService" class="kr.or.dw.service.CalendarServiceImpl"/>
+   
+   <!-- 이메일 인증 관련 빈 등록 -->
    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
       <property name="host" value="smtp.gmail.com" />
       <property name="port" value="587" />
@@ -39,5 +41,4 @@
       </property>
       
    </bean>
->>>>>>> 8fe51e588779946bb7a850fefb494c63f861ace6
 </beans>

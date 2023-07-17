@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.vo.CompanyVO;
 import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.NoteVO;
@@ -22,11 +23,15 @@ public interface MyMenuService {
 
 	void sendNote(NoteVO noteVo) throws SQLException;
 
-	List<NoteVO> getNoteList() throws SQLException;
+	Map<String, Object> getNoteList(SearchCriteria cri) throws SQLException;
 
-	NoteVO selectNote(int n_no) throws SQLException;
+	NoteVO selectNote(int n_no, String send) throws SQLException;
 
 	void deleteNote(int n_no) throws SQLException;
+
+	List<NoteVO> searchNote(Map<String, String> valMap) throws SQLException;
+
+	Map<String, Object> getSendNoteList(int emp_no, SearchCriteria cri) throws SQLException;
 
 
 }

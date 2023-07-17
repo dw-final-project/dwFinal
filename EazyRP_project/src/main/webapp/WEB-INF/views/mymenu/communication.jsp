@@ -18,14 +18,14 @@
 						</div>
 					</div>
 					<div class="card-body pad">
-						<form role="form" method="post" action="/mymenu/noteRegist.do" name="registForm">
+						<form role="form" method="post" action="/mymenu/noteRegist.do" name="registForm" enctype="multipart/form-data">
 							<div class="form-group">
 								<label for="title">제 목</label>
 								<input type="text" id="title" name="title" class="form-control" placeholder="제목을 입력하세요.">
 							</div>
 							<div class="form-group">
 								<input type="hidden" name="reply" value="0">
-								<input type="hidden" name="writer" id="writer" value="1">
+								<input type="hidden" name="writer" id="writer">
 								<input type="hidden" name="receiver" id="receiver">
 								<label for="writer">받는사람</label>
 								<input type="text" id="name" name="name" class="form-control" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 800, 600)">
@@ -37,7 +37,7 @@
 							</div>
 							<div class="form-group">
 								<label for="file">첨부파일</label>
-								<input type="file" name="file">
+								<input type="file" name="file"> 
 							</div>
 						</form>
 					</div>
