@@ -22,8 +22,6 @@
 	 GROUP BY ed.est_no
 </select>
 
-
-<<<<<<< Updated upstream
 <select id="selectDetail" parameterType="str" resultType="Map">
 	SELECT ed.EST_NO
 		  ,MAX(ed.regdate) regdate
@@ -51,15 +49,7 @@
 	  	  ,(SELECT wh_name FROM WAREHOUSE WHERE wh_no = ed.wh_no) wh_name
   	  FROM ESTDETAIL ed
 	 where est_no = #{est_no}
-=======
-
-<select id="selectDetail" parameterType="str" resultType="estimate">
-	SELECT est_no
-	  FROM estdetail
-	 WHERE est_no = #{est_no}
->>>>>>> Stashed changes
 </select>
-
 <!-- <select id="selectEname" parameterType="int" resultType="str"> -->
 <!-- 	SELECT e_name -->
 <!-- 	  FROM emp -->

@@ -74,12 +74,13 @@ public class CommonController {
 		String url = "";
 		System.out.println(mcode);
 		if(mcode == null || mcode.equals("")) {
-			url = "/common/main.main";
+			url = "/common/main.do";
 		} else {
 			String getUrl = menuService.getUrl(mcode);
 			String getUrlResult = getUrl.substring(0, getUrl.indexOf("."));
-			
-			url = getUrlResult + ".page?mcode=" + mcode;
+			String modMcode = mcode.substring(0, 3) + "0000";
+			System.out.println(modMcode);
+			url = getUrl + "?mcode=" + modMcode;
 		}
 		
 		System.out.println("url = " + url);
@@ -100,8 +101,7 @@ public class CommonController {
 		
 		System.out.println(session.getAttribute("emp_no"));
 		System.out.println(session.getAttribute("c_no"));
-		mnv.setViewName(url);
-		mnv.addObject("mcode", mcode);
+		mnv.setViewName("redirect:" + url);
 		
 		return mnv;
 		
