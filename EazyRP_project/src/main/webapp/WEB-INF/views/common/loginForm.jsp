@@ -3,14 +3,15 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Bootstrap Flat Modal Login Modal Form</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.2.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <style>
 html {
     height: 100%;
@@ -153,12 +154,12 @@ body {
 							<input type="password" class="form-control" name="pwd" placeholder="패스워드" required="required">
 						</div>
 					</div>
-					</form>
 					<div class="form-group">
 						<button type="submit" class="btn btn-info btn-block btn-sm" id="loginBtn">로그인</button>
-						<button type="submit" class="btn btn-info btn-block btn-sm" id="regiser" >회원가입</button>
+						<button type="button" class="btn btn-info btn-block btn-sm" id="regiser" >회원가입</button>
 					</div>
-					<p class="hint-text text-info"><a href="#" id="pwfind">아이디/비번찾기</a></p>
+					</form>
+					<p class="hint-text text-info"><a href="#" id="idfind">아이디 </a> / <a href="#" id="pwfind">비밀번호찾기</a></p>
 			</div>
 		</div>
 	</div>    
@@ -173,6 +174,10 @@ $(function(){
 	$('#pwfind').on('click', function(){
 		location.href = "/member/PWfindForm"; 
 	});
+	$('#idfind').on('click', function(){
+		location.href = "/member/IDfindForm"; 
+	});
+	
 })
 </script>
 

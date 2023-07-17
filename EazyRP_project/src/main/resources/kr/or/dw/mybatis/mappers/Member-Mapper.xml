@@ -16,6 +16,12 @@
 		VALUES(member_seq.nextVal, #{id}, #{pwd}, #{email}, #{tel}, #{birth}, #{name}, #{addr}, 1, SYSDATE)
 	</insert> 
 	
+	<select id="selectErank" parameterType="int" resultType="String">
+		SELECT e_rank
+		  FROM emp
+		 WHERE u_no = #{u_no}
+	</select>
+	
 	<!-- <select id="selectAllMemberList" resultType="member">
 		SELECT *
 		  FROM member
