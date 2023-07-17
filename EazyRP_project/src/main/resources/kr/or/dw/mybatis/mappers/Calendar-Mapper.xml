@@ -16,7 +16,7 @@
 	<insert id="insertCalendar" parameterType="calendar">
 		INSERT INTO calendar
 					(calendar_no, calendar_title, calendar_start, calendar_end)
-			VALUES(pc_no_seq.nextVal, #{calendar_title}, #{calendar_start}, #{calendar_end})
+			VALUES(pc_no_seq.nextVal, #{calendar_title}, TO_DATE(#{calendar_start}, 'yyyy-MM-dd HH24:MI:SS'), TO_DATE(#{calendar_end}, 'yyyy-MM-dd HH24:MI:SS'))
 	</insert>
 
 </mapper>

@@ -3,6 +3,7 @@ package kr.or.dw.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +47,6 @@ public class CalendarController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			System.out.println("2" + calendarList);
 			return mnv;
 		}
 		
@@ -54,9 +54,8 @@ public class CalendarController {
 		public void add(CalendarVO calendar, HttpServletRequest req, HttpServletResponse res) throws IOException, SQLException {
 			
 			System.out.println("컨트롤러 /erp4/add 진입");
-		
 			calendarService.registCalendar(calendar);
-			
+
 			res.setContentType("text/html; charset=utf-8");
 			PrintWriter out = res.getWriter();
 			out.println("<script>");
