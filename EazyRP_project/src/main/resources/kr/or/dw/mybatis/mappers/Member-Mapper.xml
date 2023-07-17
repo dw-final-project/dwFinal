@@ -22,6 +22,14 @@
 		 WHERE u_no = #{u_no}
 	</select>
 	
+	<select id="selectUserFind" resultType="String">
+		SELECT u_no
+		  FROM member
+		 WHERE id = #{id}
+		   AND email = #{email}
+	</select>	
+	
+	
 	<!-- <select id="selectAllMemberList" resultType="member">
 		SELECT *
 		  FROM member
@@ -29,17 +37,6 @@
 	</select>
 	
 	
-	<update id="updateMember" parameterType="member">
-		UPDATE member
-		SET
-			pwd 		= #{pwd}
-		   ,email 		= #{email}
-		   ,phone 		= #{phone}
-		   ,name 		= #{name}
-		   ,picture 	= #{picture}
-		   ,authority 	= #{authority}
-		WHERE id = #{id}
-	</update>
 
 	<delete id="deleteMember" parameterType="str">
 		DELETE FROM member

@@ -1,12 +1,13 @@
 package kr.or.dw.controller;
 
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -31,14 +32,46 @@ public class CommonController {
 	
 	@Autowired
 	private MenuService menuService;
-
-	@Autowired
-	private MemberService memberService;
 	
 	@GetMapping("/common/loginForm")
 	public String loginForm(HttpServletResponse res) throws Exception {
 		String url = "/common/loginForm";
 		return url;
+	}
+	
+	@RequestMapping("/security/accessDenied")
+	public String accessDenied(HttpServletResponse res) throws Exception{
+		String url = "security/accessDenied.open";
+		
+		res.setStatus(302);
+		
+		return url;
+	}
+	
+	@RequestMapping("/common/LoginTimeOut")
+	public void loginTimeOut(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		
+		out.println("<script>");
+		out.println("alert('세션이 만료되었습니다.\\n다시 로그인하세요!')");
+		out.println("location.href='/';");
+		out.println("</script>");
+		out.close();
+	}
+	
+	@RequestMapping("/common/LoginExpired")
+	public void loginExpired(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		
+		out.println("<script>");
+		out.println("alert('중복 로그인이 확인되었습니다.\\n 다시 로그인하면 다른 장치의 로그인은 해제됩니다!')");
+		out.println("location.href='/';");
+		out.println("</script>");
+		out.close();
 	}
 	
 	@RequestMapping("/common/main")
