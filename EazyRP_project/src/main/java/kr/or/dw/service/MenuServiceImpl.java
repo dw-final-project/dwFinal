@@ -49,6 +49,13 @@ public class MenuServiceImpl implements MenuService{
 		return dataMap;
 	}
 
+	@Override
+	public String getUrl(String mcode) throws SQLException {
+		String url = menuDAO.getURL(mcode);
+		
+		return url;
+	}
+
 
 
 

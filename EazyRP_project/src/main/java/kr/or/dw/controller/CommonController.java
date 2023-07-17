@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -32,19 +32,20 @@ public class CommonController {
 	@Autowired
 	private MenuService menuService;
 
-	
-	
 	@GetMapping("/common/loginForm")
 	public String loginForm(HttpServletResponse res) throws Exception {
 		String url = "/common/loginForm";
 		return url;
 	}
-	
+
 
 	@RequestMapping("/common/main")
-	public ModelAndView index(ModelAndView mnv, HttpSession session) throws SQLException{
+	public ModelAndView index(ModelAndView mnv, HttpSession session, HttpServletRequest req) throws SQLException{
 		String url = "/common/main.main";
-		
+		if(session.getAttribute("c_no") == null) {
+			session.setAttribute("c_no", "");
+			session.setAttribute("emp_no", 0);
+		}
 		List<MenuVO> menuList = menuService.selectMainMenuList();
 		Map<String, Object> dataMap = menuService.selectSubMenuList(menuList);
 		Map<String, List<MenuVO>> subMenuList = (Map<String, List<MenuVO>>) dataMap.get("subMenuList");
@@ -65,6 +66,46 @@ public class CommonController {
 
 	}
 	
+	@RequestMapping("/common/change")
+	public ModelAndView change(ModelAndView mnv, String mcode, HttpSession session,String selectedC_no, HttpServletRequest req) throws SQLException{
+		String str = req.getRequestURI();
+		String result = str.substring(0, str.indexOf("."));
+		System.out.println(result);
+		String url = "";
+		System.out.println(mcode);
+		if(mcode == null || mcode.equals("")) {
+			url = "/common/main.main";
+		} else {
+			String getUrl = menuService.getUrl(mcode);
+			String getUrlResult = getUrl.substring(0, getUrl.indexOf("."));
+			
+			url = getUrlResult + ".page?mcode=" + mcode;
+		}
+		
+		System.out.println("url = " + url);
+		session.setAttribute("c_no", selectedC_no);
+		if(selectedC_no.equals("C000001")) {
+			session.setAttribute("emp_no", 1);
+		} else if(selectedC_no.equals("C000002")) {
+			session.setAttribute("emp_no", 2);
+		} else if(selectedC_no.equals("C000003")) {
+			session.setAttribute("emp_no", 3);
+		} else if(selectedC_no.equals("C000004")) {
+			session.setAttribute("emp_no", 4);
+		} else if(selectedC_no.equals("C000005")) {
+			session.setAttribute("emp_no", 5);
+		} else if(selectedC_no.equals("C000006")) {
+			session.setAttribute("emp_no", 6);
+		}
+		
+		System.out.println(session.getAttribute("emp_no"));
+		System.out.println(session.getAttribute("c_no"));
+		mnv.setViewName(url);
+		mnv.addObject("mcode", mcode);
+		
+		return mnv;
+		
+	}
 	
 	
 }

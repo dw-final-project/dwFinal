@@ -49,6 +49,7 @@
 	function searchList_go(page, url){
 		
 		let mcode = sessionStorage.getItem("mcode");
+		let murl = sessionStorage.getItem("murl");
 		
 		let modMcode = mcode.substring(0,3) + "0000";
 		
@@ -71,7 +72,7 @@
 		if(url){
 			searchForm.attr("action", url);
 		}else{
-			searchForm.attr("action", "process.do?mcode=" + modMcode);
+			searchForm.attr("action", murl + "?mcode=" + modMcode);
 		}
 		console.log(searchForm)
 		searchForm.submit();

@@ -18,6 +18,8 @@
 		 WHERE upcode = #{mcode}
 		   AND isnav = 1
 	</select>
-	
+	<select id="getURL" resultType="str">
+		SELECT murl FROM menu WHERE mcode = #{mcode}
+	</select>
 	
 </mapper>
