@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" rel="stylesheet">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <!DOCTYPE html>
 <html>
@@ -65,6 +67,7 @@
         }
     </style>
 </head>
+	
 
 <body>
     <h2>DW 견적서 상세</h2>
@@ -75,114 +78,47 @@
 	</div>
 	<!-- card footer End -->
 <form role="form">
-<input type="hidden" name="est_no" value="${estVo.est_no }">
+<input type="hidden" name="est_no" value="${est.EST_NO }">
 	<table>
         <tr>
             <td width="40%" align="center"><b>견적서 코드</b></td>
-            <td width="100%"><input type="text" style="width: 100%;" value="${estVo.est_no }" readonly></td>
+            <td width="100%"><input type="text" style="width: 100%;" value="${est.EST_NO }" readonly></td>
         </tr>
         <tr>
             <td align="center">등록일자</td>
-            <td><input type="text" style="width: 100%;" value="${estVo.sys_regdate }"></td>
+            <td><input type="text" style="width: 100%;" value="${est.REGDATE }"></td>
         </tr>
         <tr>
-            <td align="center">사원 번호</td>
-            <td><input type="text" style="width: 100%;" value="${estVo.emp_no }"></td>
+            <td align="center">외화 명</td>
+            <td><input type="text" style="width: 100%;" value="${est.FC_NAME }"></td>
         </tr>
         <tr>
-            <td align="center">외화 코드</td>
-            <td><input type="text" style="width: 100%;" value="${estVo.fc_no }"></td>
+            <td align="center">담당자</td>
+            <td><input type="text" style="width: 100%;" value="${est.E_NAME }"></td>
         </tr>
         <tr>
-            <td align="center">최초 등록자</td>
-            <td><input type="text" style="width: 100%;" value="${estVo.sys_reg }"></td>
+            <td align="center">첨부파일</td>
+            <td><input type="file" style="width: 100%;" value="${est.FILES != null ? "${est.files }" : "파일이 존재하지 않습니다."}"></td>
         </tr>
     </table>
     <table>
         <tr>
-            <th rowspan="2" align="center" style="width: 20%;">사용 구분</th>
-            <th rowspan="2" align="center" style="width: 20%;">진행 상태</th>
-            <th colspan="2" align="center" style="width: 40%;">금액(비용)</th>
-            <th rowspan="2" align="center" style="width: 20%;">비고</th>
+            <th align="center" style="width: 20%;">제품명</th>
+            <th align="center" style="width: 20%;">창고</th>           
+            <th align="center" style="width: 20%;">수량</th>
+            <th align="center" style="width: 20%;">가격</th>
         </tr>
+       <c:forEach items="${estPr }" var="est">
         <tr>
-            <th align="center">제품 코드</th>
-            <th align="center">수량</th>
+            <td><input type="text" style="width: 100%;" style="width: 100%;" value="${est.P_NAME }"></td>
+            <td><input type="text" style="width: 100%;" style="width: 100%;" value="${est.WH_NAME }"></td>
+            <td><input type="text" style="width: 100%;" style="width: 100%;" value="${est.QUANTITY }"></td>
+            <td><input type="text" style="width: 100%;" style="width: 100%;" value="${est.AMOUNT }"></td>
         </tr>
-        <tr>
-            <td rowspan="12" align="center">
-            <input type="text" style="width: 100%;" value="${estVo.enabled }"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;" value="${estVo.progress }"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;" value="${estVo.wh_no }"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;" value="${estVo.quantity }"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-        </tr>
-        <tr>
-            <td><input type="text" style="width: 100%;" style="width: 100%;">4</td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;">5</td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;">6</td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;">7</td>
-        </tr>
-        <tr>
-            <td rowspan="2"><input type="text" style="width: 100%;" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-        </tr>
-        <tr>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-        </tr>
-        <tr>
-            <td rowspan="2"><input type="text" style="width: 100%;" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-        </tr>
-        <tr>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-        </tr>
-        <tr>
-            <td rowspan="3"><input type="text" style="width: 100%;" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-        </tr>
-        <tr>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;"></td>
-        </tr>
-        <tr>
-            <td><input type="text" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;"></td>
-        </tr>
-        <tr>
-            <td rowspan="2"><input type="text" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;"></td>
-        </tr>
-        <tr>
-            <td><input type="text" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;"></td>
-            <td><input type="text" style="width: 100%;"></td>
-        </tr>
-        <tr>
-            <td align="center"><input type="text" style="width: 100%;"></td>
-            <td colspan="3"><input type="text" style="width: 100%;"></td>
-        </tr>
-        <tr class="files">
-            <td colspan="3" align="center">첨부 파일</td>
-            <td colspan="2" align="center"><input type="text" style="width: 100%;"></td>
-        </tr>
+        </c:forEach>
         <tr class="total">
             <td colspan="3" align="center">총계</td>
-            <td colspan="2" align="center"><input type="text" style="width: 100%;" value="${estVo.amount }"></td>
+            <td colspan="2" align="center"><input type="text" style="width: 100%;" value="${est.AMOUNT }"></td>
         </tr>
     </table>
 </form>

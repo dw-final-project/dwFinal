@@ -81,9 +81,17 @@ public class EstimateServiceImpl implements EstimateService {
 	}
 	
 	@Override
-	public List<EstimateVO> selectDetail(String est_no) throws SQLException {
-		List<EstimateVO> estimList = estimateDAO.selectDetail(est_no);
-		return estimList;
+	public Map<String, Object> selectDetail(String est_no) throws SQLException {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		Map<String, Object> est = (Map<String, Object>) estimateDAO.selectDetail(est_no);
+		
+		List<Map<String, Object>> estPr = estimateDAO.forEstimList(est_no);
+		
+		dataMap.put("estPr",estPr);
+		dataMap.put("est", est);
+		
+		return dataMap;
 	}
 
 	@Override
