@@ -27,8 +27,8 @@
 								<input type="hidden" name="reply" value="0">
 								<input type="hidden" name="writer" id="writer">
 								<input type="hidden" name="receiver" id="receiver">
-								<label for="writer">받는사람</label>
-								<input type="text" id="name" name="name" class="form-control" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 800, 600)">
+								<label for="writer">받는 업체</label>
+								<input type="text" id="name" name="name" class="form-control" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
 							</div>
 							<div class="form-group">
 								<label for="content">내 용</label>
@@ -37,7 +37,8 @@
 							</div>
 							<div class="form-group">
 								<label for="file">첨부파일</label>
-								<input type="file" name="file"> 
+								<input type="file" id="file" name="file"> 
+								<input type="hidden" id="fileName" name="fileName" value="">
 							</div>
 						</form>
 					</div>
@@ -47,7 +48,11 @@
 	</section>
 	
 <script>
-
+	$('#file').on('change', function(){
+		alert($('#file').val());
+		$('#fileName').val($('#file').val());
+		alert($('#fileName').val())
+	})
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 		winleft = (screen.width - WinWidth) / 2;
 		wintop = (screen.height - WinHeight) / 2;

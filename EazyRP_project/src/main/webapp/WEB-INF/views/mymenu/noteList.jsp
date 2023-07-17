@@ -43,13 +43,13 @@
 										<td id="read_${loop.index}" style="text-align: center; height:80%; font-weight:bold; font-size: 0.6em; color: ${note.readable == 'N' ? 'red' : 'blue' };">
 										${note.readable == 'N' ? '안읽음' : '읽음' }
 										</td>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/mymenu/detail.do?n_no=${note.n_no }&send=Y', '쪽지보기', 700, 1000, '${loop.index}')">${note.title }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/mymenu/detail.do?n_no=${note.n_no }&send=N', '쪽지보기', 700, 1000, '${loop.index}')">${note.title }</a></td>
 										<td style="text-align: center;">${note.callerName }</td>
 										<td style="text-align: center;">${note.c_cname }</td>
 										<td style="text-align: center;">${note.files == "" || note.files == null ? "N" : "Y" }</td>
 										<td style="text-align: center;">${note.senddate }</td>
 									</tr>
-								</c:forEach>
+									</c:forEach>
 							</table>
 							<div class="card-footer">
 								<%@ include file="/WEB-INF/views/common/pagination2.jsp" %>

@@ -21,6 +21,16 @@
 	
 	<select id="getEmp" resultType="emp">
 		SELECT e.*, c.c_name FROM emp e, company c WHERE c_name LIKE '%' || #{c_name} || '%' AND e_name LIKE '%' || #{name} || '%' AND e.c_no = c.c_no
+		<if test="searchType == 'w'.toString()">
+			AND e.e_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND c.c_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'w'.toString()">
+			AND (e.e_name LIKE '%' || #{keyword} || '%'
+			OR c.c_name LIKE '%' || #{keyword} || '%')
+		</if>
 		ORDER BY e.e_name
 	</select>
 	
@@ -30,7 +40,7 @@
 	</select>
 	
 	<insert id="sendNote">
-		INSERT INTO note VALUES (n_no_seq.nextval, #{c_dept}, #{caller}, '', #{con}, sysdate, #{title}, #{files}, #{r_dept}, #{receiver}, '', #{c_company}, #{r_company}, 'N', #{realFileName})
+		INSERT INTO note VALUES (n_no_seq.nextval, #{caller}, '', #{con}, sysdate, #{title}, #{files}, #{receiver}, '', #{c_company}, #{r_company}, 'N', #{realFileName})
 	</insert>
 	
 	<select id="getNoteList" resultType="note">
@@ -127,7 +137,7 @@ FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 	AND n.n_no = b.n_no
 	AND n.n_no = c.n_no
 	AND n.n_no = d.n_no
-	AND n.R_company = #{c_no}
+	AND n.c_company = #{c_no}
 		ORDER BY n.n_no DESC
 	</select>
 	
