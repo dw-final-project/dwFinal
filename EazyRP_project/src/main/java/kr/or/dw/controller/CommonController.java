@@ -77,9 +77,13 @@ public class CommonController {
 			url = "/common/main.do";
 		} else {
 			String getUrl = menuService.getUrl(mcode);
+<<<<<<< Updated upstream
 			String getUrlResult = getUrl.substring(0, getUrl.indexOf("."));
 			String modMcode = mcode.substring(0, 3) + "0000";
 			System.out.println(modMcode);
+=======
+			String modMcode = mcode.substring(0,3) + "0000";
+>>>>>>> Stashed changes
 			url = getUrl + "?mcode=" + modMcode;
 		}
 		
