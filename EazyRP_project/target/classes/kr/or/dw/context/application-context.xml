@@ -18,6 +18,8 @@
 	<bean id="memberService" class="kr.or.dw.service.MemberServiceImpl"/>
 	<bean id="mailService" class="kr.or.dw.service.MailSendServiceImpl"/>
 	
+	<bean id="productService" class="kr.or.dw.service.ProductServiceImpl"/>
+	
 	<!-- 풀캘린더 API -->
 	<bean id="calendarService" class="kr.or.dw.service.CalendarServiceImpl"/>
    
