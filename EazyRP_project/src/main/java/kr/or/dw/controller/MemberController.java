@@ -73,10 +73,13 @@ public class MemberController {
 
 	// 회원가입 
 	@RequestMapping("/register")
-	public String register(MemberVO member, HttpServletRequest req, HttpServletResponse res) throws Exception{
+	public String register(MemberVO member, String domainselect, HttpServletRequest req, HttpServletResponse res) throws Exception{
 	    System.out.println(member.getId());  
+
+		System.out.println("세팅 전 : " + member.getEmail());
+		member.setEmail(member.getEmail()+ domainselect);
+		System.out.println("세팅 후 : " + member.getEmail());
 		memberService.register(member);
-	   
 		  res.setContentType("text/html; charset=utf-8");
 	      PrintWriter out = res.getWriter();
 	      out.println("<script>");
@@ -86,10 +89,36 @@ public class MemberController {
 	}
 	
 	@GetMapping("/PWfindForm")
-	public String loginForm(HttpServletResponse res) throws Exception {
+	public String PWfind(HttpServletResponse res) throws Exception {
 
 		String url = "/common/PWfindForm";
 		return url;
 	}
+	
+	@RequestMapping("/PWfindForm")
+	public String PWfind(MemberVO member, HttpServletRequest req, HttpServletResponse res) throws Exception {
+		String status = memberService.pwFind(member);
+		String url = "";
+		if(status == null || status.equals("")) {
+			
+		} else {
+			
+		}
+		
+		return url;
+	}
+	
+	@GetMapping("/IDfindForm")
+	public String IDFind(HttpServletResponse res) throws Exception {
+		String url = "/common/IDfindForm";
+		return url;
+	}
+	
+//	@GetMapping("/PWrenew")
+//	public String PWrenew(HttpServletRequest res) throws Exception{
+//		
+//		String url = "/member/PWrenew";
+//		return url;
+//	}
 
 }

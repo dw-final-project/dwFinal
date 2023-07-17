@@ -1,5 +1,6 @@
 package kr.or.dw.controller;
 
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -37,8 +38,42 @@ public class CommonController {
 		String url = "/common/loginForm";
 		return url;
 	}
-
-
+	
+	@RequestMapping("/security/accessDenied")
+	public String accessDenied(HttpServletResponse res) throws Exception{
+		String url = "security/accessDenied.open";
+		
+		res.setStatus(302);
+		
+		return url;
+	}
+	
+	@RequestMapping("/common/LoginTimeOut")
+	public void loginTimeOut(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		
+		out.println("<script>");
+		out.println("alert('세션이 만료되었습니다.\\n다시 로그인하세요!')");
+		out.println("location.href='/';");
+		out.println("</script>");
+		out.close();
+	}
+	
+	@RequestMapping("/common/LoginExpired")
+	public void loginExpired(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		
+		out.println("<script>");
+		out.println("alert('중복 로그인이 확인되었습니다.\\n 다시 로그인하면 다른 장치의 로그인은 해제됩니다!')");
+		out.println("location.href='/';");
+		out.println("</script>");
+		out.close();
+	}
+	
 	@RequestMapping("/common/main")
 	public ModelAndView index(ModelAndView mnv, HttpSession session, HttpServletRequest req) throws SQLException{
 		String url = "/common/main.main";
@@ -77,13 +112,11 @@ public class CommonController {
 			url = "/common/main.do";
 		} else {
 			String getUrl = menuService.getUrl(mcode);
-<<<<<<< Updated upstream
 			String getUrlResult = getUrl.substring(0, getUrl.indexOf("."));
 			String modMcode = mcode.substring(0, 3) + "0000";
 			System.out.println(modMcode);
-=======
+
 			String modMcode = mcode.substring(0,3) + "0000";
->>>>>>> Stashed changes
 			url = getUrl + "?mcode=" + modMcode;
 		}
 		

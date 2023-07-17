@@ -32,7 +32,7 @@ public class MailSendServiceImpl implements MailSendService{
 			makeRandomNumber();
 			String setFrom = "olo56576044@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력 
 			String toMail = email;
-			String title = "회원 가입 인증 이메일 입니다."; // 이메일 제목 
+			String title = "인증 이메일 입니다."; // 이메일 제목 
 			String content = 
 				    "인증 번호는 " + authNumber + "입니다." + 
 				    "<br>" + 

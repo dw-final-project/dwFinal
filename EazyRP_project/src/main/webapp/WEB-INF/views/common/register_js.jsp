@@ -127,7 +127,6 @@
 	});	
 	
 	function submit_go(){
-		
 		if($('input[name="id"]').val() == ""){
 			alert("아이디는 필수 입니다.");
 			return false;
@@ -150,7 +149,7 @@
 			return false;
 		};  
 		
-	$('#registBtn').submit();
+	$('#registForm').submit();
 	
 	}; 
 </script>
