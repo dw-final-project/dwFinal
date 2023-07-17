@@ -42,44 +42,14 @@
 	 GROUP BY ed.est_no
 </select>
 
-<<<<<<< HEAD
-
-<select id="selectDetail" parameterType="str" resultType="Map">
-	SELECT ed.EST_NO
-		  ,MAX(ed.regdate) regdate
-		  ,MAX((SELECT c_name FROM company WHERE c_no = ed.C_NO)) c_name
-		  ,MAX((SELECT e_name FROM emp WHERE emp_no = ed.EMP_NO)) e_name
-		  ,MAX((SELECT fc_name FROM fc WHERE fc_no = ed.fc_no)) fc_name
-		  ,MAX((SELECT pr_name FROM product WHERE pr_no = ed.pr_no)) p_name
-		  ,MAX((SELECT wh_name FROM WAREHOUSE WHERE wh_no = ed.wh_no)) wh_name
-		  ,MAX(ed.QUANTITY) QUANTITY
-		  ,count(ed.PR_NO) pr_no
-		  ,SUM(ed.amount) amount
-		  ,MAX(ed.PROGRESS) progress
-		  ,MAX(ed.FILES) files 
-	  FROM ESTIMATE e , ESTDETAIL ed
-	 WHERE 1=1
-	   AND e.EST_NO = ed.EST_NO
-	   AND ed.est_no = #{est_no}
-	 GROUP BY ed.est_no
-</select>
-
-=======
->>>>>>> minjun
 <select id="forEstimList" resultType="Map">
 	SELECT amount
 	  	  ,quantity
 	  	  ,(SELECT pr_name FROM product WHERE pr_no = ed.pr_no) p_name
 	  	  ,(SELECT wh_name FROM WAREHOUSE WHERE wh_no = ed.wh_no) wh_name
   	  FROM ESTDETAIL ed
-<<<<<<< HEAD
-	 where est_no = #{est_no} 
-
-=======
 	 where est_no = #{est_no}
->>>>>>> minjun
 </select>
-
 <!-- <select id="selectEname" parameterType="int" resultType="str"> -->
 <!-- 	SELECT e_name -->
 <!-- 	  FROM emp -->
