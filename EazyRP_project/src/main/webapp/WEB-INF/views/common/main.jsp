@@ -24,13 +24,13 @@
                     <thead>
                       <tr>
                         <th class="p-2 mb-2 align-middle scope=" >
-                          <font style="vertical-align: inherit; vertical-align: inherit; color: black;">결제서류명</font>
+                          <font style="vertical-align: inherit; vertical-align: inherit; color: black;">결재서류명</font>
                         </th>
                         <th class="p-2 mb-2 align-middle scope=" >
                           <font style="vertical-align: inherit; vertical-align: inherit; color: black;">기안자</font>
                         </th>
                         <th class="p-2 mb-2 align-middle scope=" >
-                          <font style="vertical-align: inherit; vertical-align: inherit; color: black;">결제자</font>
+                          <font style="vertical-align: inherit; vertical-align: inherit; color: black;">결재자</font>
                         </th>
                         <th class="p-2 mb-2 align-middle scope=" >
                           <font style="vertical-align: inherit; vertical-align: inherit; color: black;">진행상태</font>

@@ -47,8 +47,7 @@ public class MinjunController {
 		return url;
 	}
 	
-
-	@RequestMapping("/product.do")
+	@RequestMapping("/product")
 	public ModelAndView productMain(String mcode, ModelAndView mnv) throws SQLException {
 		String url = "minjun/product";
 		
@@ -57,6 +56,7 @@ public class MinjunController {
 		return mnv;
 	}
 
+	
 	
 	@RequestMapping("/productRegistForm")
 	public String productRegistForm() {
@@ -93,4 +93,5 @@ public class MinjunController {
 		out.println("window.opener.location.reload(true); window.close();");
 		out.println("</script>");
 	}
+
 }

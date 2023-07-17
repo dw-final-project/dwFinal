@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
@@ -42,34 +43,31 @@ public class BusinessController {
 	@Autowired
 	private SiService siService;
 	
-	@RequestMapping("/business")
+	@RequestMapping("/estimate")
 	public ModelAndView main(ModelAndView mnv, String mcode) throws SQLException {
 		String url = "jihwan/main.page";
 		
-		List<EstimateVO> estimList = estimateService.selectEstimList();
+		Map<String, Object> dataMap = estimateService.selectEstimList();
+		
 		mnv.addObject("mcode", mcode);
 		mnv.setViewName(url);
-
-		mnv.addObject("estimList" ,estimList);
-		System.out.println(estimList.get(0).getFiles());
-		System.out.println(estimList.get(1).getFiles());
+		mnv.addAllObjects(dataMap);
 
 		return mnv;
 	}
 	
-	@RequestMapping("/estimate")
+	@RequestMapping("/estimate_regist")
 	public String esti() {
-		String url = "jihwan/estimate";
+		String url = "jihwan/estimate_regist.open";
 		return url;
 	}
 
-	@RequestMapping("/estimateSelect")
-	public ModelAndView estSel(ModelAndView mnv ,String est_no) throws SQLException {
+	@RequestMapping("/estimateDetail")
+	public ModelAndView estDetail (ModelAndView mnv ,String est_no) throws SQLException {
 		
-		
-		EstimateVO estVo = estimateService.selectdetail(est_no);
-		String url = "jihwan/estimateSelect.page";
-		mnv.addObject("estVo", estVo);
+		List<EstimateVO> estimList = estimateService.selectDetail(est_no);
+		String url = "jihwan/estimateDetail.open";
+		mnv.addObject("estimList", estimList);
 		mnv.setViewName(url);
 		return mnv;
 	}
@@ -101,7 +99,7 @@ public class BusinessController {
 			String fileRealName = multi.getOriginalFilename();
 			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
 			String uploadFolder = "C:\\upload\\";
-			vo.setFileName(uniqueName+fileExtension);
+			vo.setFiles(uniqueName+fileExtension);
 			
 			
 			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후

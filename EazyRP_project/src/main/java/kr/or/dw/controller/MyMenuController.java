@@ -3,26 +3,38 @@ package kr.or.dw.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.service.MyMenuService;
 import kr.or.dw.vo.CompanyVO;
 import kr.or.dw.vo.EmpVO;
@@ -46,8 +58,11 @@ public class MyMenuController {
 	}
 	
 	@RequestMapping("/noteRegist")
-	public String noteRegist(NoteVO note, int reply, HttpServletResponse res, @RequestParam("file") MultipartFile file) throws SQLException, IOException{
+	public String noteRegist(NoteVO note, String reply, HttpServletResponse res, MultipartFile file) throws SQLException, IOException{
 		NoteVO noteVo = new NoteVO();
+		System.out.println(note.getReceiver());
+		System.out.println(note.getCon());
+		System.out.println(file);
 		if(file != null) {
 			UUID uuid = UUID.randomUUID();
 			String[] uuids = uuid.toString().split("-");
@@ -74,16 +89,18 @@ public class MyMenuController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		} else {
+			noteVo.setRealFileName("");
+			note.setFiles("");
 		}
-		
 		
 		
 		int emp_no = note.getReceiver(); // 받는사람 emp_no
 		int writer = 1;
 		EmpVO emp = mymenuService.selectEmp(emp_no); // 받는사람 정보
 		EmpVO emp2 = mymenuService.selectEmp(writer); // 보낸사람 정보
-
-		if(emp.getDept_no() != null) {
+		
+		if(emp.getDept_no() != null || emp.getDept_no() != "") {
 			noteVo.setR_dept(emp.getDept_no());
 		} else {
 			noteVo.setR_dept("");
@@ -109,9 +126,10 @@ public class MyMenuController {
 		
 		noteVo.setReceiver(emp_no);
 		noteVo.setR_company(emp.getC_no());
+
 		
 		mymenuService.sendNote(noteVo);
-		if(reply == 1) {
+		if(reply == "1") {
 			res.setContentType("text/html; charset=utf-8");
 			PrintWriter out = res.getWriter();
 			out.println("<script>");
@@ -131,13 +149,33 @@ public class MyMenuController {
 	}
 	
 	@RequestMapping("/noteList")
-	public ModelAndView noteList(ModelAndView mnv) throws SQLException{
+	public ModelAndView noteList(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
 		String url="/mymenu/noteList.page";
-		
-		List<NoteVO> note = mymenuService.getNoteList();
+		System.out.println(cri.getPage());
+		Map<String, Object> note = new HashMap<String, Object>();
+				
+		note = mymenuService.getNoteList(cri);
 		
 		mnv.setViewName(url);
-		mnv.addObject("note", note);
+		mnv.addAllObjects(note);
+		mnv.addObject("mcode", mcode);
+		
+		return mnv;
+	}
+    
+    @RequestMapping("/sendNoteList")
+    public ModelAndView sendNoteList(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
+		Map<String, Object> note = new HashMap<String, Object>();
+		int emp_no = 1;
+		note = mymenuService.getSendNoteList(emp_no, cri);
+		
+		mnv.addAllObjects(note);
+    	
+    	String url="mymenu/sendNoteList.page";
+		
+		
+		mnv.setViewName(url);
+		mnv.addObject("mcode", mcode);
 		
 		return mnv;
 	}
@@ -175,14 +213,14 @@ public class MyMenuController {
 	}
 	
 	@RequestMapping("/detail")
-	public ModelAndView detail(ModelAndView mnv, int n_no) throws SQLException, IOException {
-		
+	public ModelAndView detail(ModelAndView mnv, int n_no, String send) throws SQLException, IOException {
 		
 		String url = "/mymenu/detail";
-		NoteVO note = mymenuService.selectNote(n_no);
+		NoteVO note = mymenuService.selectNote(n_no, send);
 		
 		mnv.setViewName(url);
 		mnv.addObject("note", note);
+		mnv.addObject("send", send);
 		
 		return mnv;
 	}
@@ -217,7 +255,7 @@ public class MyMenuController {
 
 	
 	@RequestMapping("/search")
-	public ModelAndView search(ModelAndView mnv, String keyword, String searchType) throws SQLException {
+	public ModelAndView search(ModelAndView mnv, String mcode, String keyword, String searchType) throws SQLException {
 		String url = "/mymenu/noteList.page";
 		Map<String, String> valMap = new HashMap<>();
 		valMap.put("keyword", keyword);
@@ -227,29 +265,47 @@ public class MyMenuController {
 		mnv.addObject("note", note);
 		mnv.addObject("keyword", keyword);
 		mnv.addObject("searchType", searchType);
+		mnv.addObject("mcode", mcode);
 		mnv.setViewName(url);
 		
 		return mnv;
 	}
 	
-	@RequestMapping("/download")
-	public void download(String files, HttpServletResponse res) {
-		String uploadFolder = "C:\\upload\\";
-		File file = new File(uploadFolder + files);
+	@RequestMapping("/sendSearch")
+	public ModelAndView sendSearch(ModelAndView mnv, String mcode, String keyword, String searchType) throws SQLException {
+		String url = "/mymenu/sendNoteList.page";
+		Map<String, String> valMap = new HashMap<>();
+		valMap.put("keyword", keyword);
+		valMap.put("searchType", searchType);
+		List<NoteVO> note = null;
+		note = mymenuService.searchNote(valMap);
+		mnv.addObject("note", note);
+		mnv.addObject("keyword", keyword);
+		mnv.addObject("mcode", mcode);
+		mnv.addObject("searchType", searchType);
+		mnv.setViewName(url);
 		
-	        try(
-	                FileInputStream fis = new FileInputStream(file);
-	                OutputStream out = res.getOutputStream();
-	        ){
-	        	    int readCount = 0;
-	        	    byte[] buffer = new byte[1024];
-	            while((readCount = fis.read(buffer)) != -1){
-	            		out.write(buffer,0,readCount);
-	            }
-	        }catch(Exception ex){
-	            throw new RuntimeException("file Save Error");
-	        }
-		
+		return mnv;
 	}
 	
+	private static final String FOLDER_PATH = "C:\\upload\\";
+
+    @RequestMapping("/download")
+    public ResponseEntity<FileSystemResource> downloadFile(@RequestParam("files") String fileName, HttpServletResponse response) throws IOException {
+        String filePath = FOLDER_PATH + fileName;
+        File file = new File(filePath);
+
+        if (file.exists()) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", fileName);
+
+            FileSystemResource resource = new FileSystemResource(file);
+            return new ResponseEntity<>(resource, headers, org.springframework.http.HttpStatus.OK);
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return null;
+        }
+    }
+
 }
