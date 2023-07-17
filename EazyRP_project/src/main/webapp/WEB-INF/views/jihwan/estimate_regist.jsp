@@ -110,7 +110,7 @@
         </thead>
         <tbody id="prInput">
         <tr>
-            <td><input type="text" name="pr_no" style="width: 100%;" value=""></td>
+            <td><input type="text" name="pr_no" style="width: 100%;" value="" onclick="OpenWindow('/erp4/findProduct.do', '제품 찾기', 800, 600)"></td>
             <td><input type="text" name="wh_no" style="width: 100%;" value=""></td>
             <td><input type="text" name="quantity" style="width: 100%;" value=""></td>
             <td><input type="text" name="amount" style="width: 100%;" value=""></td>

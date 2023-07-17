@@ -29,6 +29,7 @@ import kr.or.dw.service.MyMenuService;
 import kr.or.dw.service.SiService;
 import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.EstimateVO;
+import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.SiVO;
 
 @Controller
@@ -165,26 +166,26 @@ public class BusinessController {
 	}
 	
 	@RequestMapping("/findProduct")
-	public ModelAndView findProduct(ModelAndView mnv, String c_name) throws SQLException {
-		String url = "mymenu/findProduct";
+	public ModelAndView findProduct(ModelAndView mnv, String pr_name ,String c_name) throws SQLException {
+		String url = "jihwan/findProduct";
 		if(c_name == "") {
 			c_name = null;
 		}
-		List<EmpVO> emp = null;
-		if(c_name != null && name == null) {
-			emp = mymenuService.getSelectEmpListCno(c_name);
-		} else if (name != null && c_name == null) {
-			emp = mymenuService.getSelectEmpList(name);
-		} else if (name != null && c_name != null){
+		List<ProductVO> product = null;
+		if(c_name != null && pr_name == null) {
+			product = estimateService.getSelectProductListCno(c_name);
+		} else if (pr_name != null && c_name == null) {
+			product = estimateService.getSelectProductList(pr_name);
+		} else if (pr_name != null && c_name != null){
 			Map<String, String> map = new HashMap<>();
 			map.put("c_name", c_name);
-			map.put("name", name);
-			emp = mymenuService.getEmp(map);
+			map.put("pr_name", pr_name);
+			product = estimateService.getProduct(map);
 		} else {
-			emp = mymenuService.getEmpList();
+			product = estimateService.getProductList();
 		}
 		mnv.setViewName(url);
-		mnv.addObject("emp", emp);
+		mnv.addObject("product", product);
 		
 		return mnv;
 	}

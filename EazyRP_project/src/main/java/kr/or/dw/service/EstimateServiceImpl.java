@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.dw.dao.EstimateDAO;
 import kr.or.dw.vo.EstimateVO;
+import kr.or.dw.vo.ProductVO;
 
 @Service
 public class EstimateServiceImpl implements EstimateService {
@@ -98,6 +99,35 @@ public class EstimateServiceImpl implements EstimateService {
 	public void estimateInsert(EstimateVO vo) throws SQLException {
 		 estimateDAO.insertEstimate(vo);
 		
+	}
+
+	@Override
+	public List<ProductVO> getSelectProductListCno(String c_name) throws SQLException {
+		List<ProductVO> product = null;
+		product = estimateDAO.getSelectProductListCno(c_name);
+		return product;
+	}
+
+	@Override
+	public List<ProductVO> getSelectProductList(String pr_name) throws SQLException {
+		List<ProductVO> product = null;
+		product = estimateDAO.getSelectProductList(pr_name);
+		return product;
+	}
+
+	@Override
+	public List<ProductVO> getProduct(Map<String, String> map) throws SQLException {
+		
+		List<ProductVO> product = null;
+		product = estimateDAO.getProduct(map);
+		return product;
+	}
+
+	@Override
+	public List<ProductVO> getProductList() throws SQLException {
+		List<ProductVO> product = null;
+		product = estimateDAO.getProductList();
+		return product;
 	}
 	
 	
