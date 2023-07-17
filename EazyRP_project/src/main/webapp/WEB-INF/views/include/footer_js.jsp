@@ -7,6 +7,7 @@
 	function goPage(murl, mcode){
 
 		sessionStorage.setItem("mcode", mcode);
+		sessionStorage.setItem("murl", murl);
 		
 		let modMcode = mcode.substring(0,3) + "0000";
 
