@@ -13,6 +13,7 @@ public interface EstimateService {
 	Map<String, Object> selectDetail(String est_no) throws SQLException;
 
 	void estimateInsert(EstimateVO vo) throws SQLException;
-
+	
+	
 
 }
