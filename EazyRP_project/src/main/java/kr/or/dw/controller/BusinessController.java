@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -23,8 +24,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.common.collect.Sets.SetView;
 
 import kr.or.dw.service.EstimateService;
-import kr.or.dw.service.MenuService;	
+import kr.or.dw.service.MenuService;
+import kr.or.dw.service.MyMenuService;
 import kr.or.dw.service.SiService;
+import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.SiVO;
 
@@ -42,6 +45,9 @@ public class BusinessController {
 	
 	@Autowired
 	private SiService siService;
+	
+	@Autowired
+	private MyMenuService mymenuService;
 	
 	@RequestMapping("/estimate")
 	public ModelAndView main(ModelAndView mnv, String mcode) throws SQLException {
@@ -128,6 +134,59 @@ public class BusinessController {
 		out.println("alert('성공적으로 등록되었습니다.')");
 		out.println("window.opener.location.reload(true); window.close();");
 		out.println("</script>");
+	}
+	
+	@RequestMapping("/findPeople")
+	public ModelAndView findPeople(ModelAndView mnv, String name, String c_name) throws SQLException {
+		String url = "mymenu/findPeople";
+		if(name == "") {
+			name = null;
+		}
+		if(c_name == "") {
+			c_name = null;
+		}
+		List<EmpVO> emp = null;
+		if(c_name != null && name == null) {
+			emp = mymenuService.getSelectEmpListCno(c_name);
+		} else if (name != null && c_name == null) {
+			emp = mymenuService.getSelectEmpList(name);
+		} else if (name != null && c_name != null){
+			Map<String, String> map = new HashMap<>();
+			map.put("c_name", c_name);
+			map.put("name", name);
+			emp = mymenuService.getEmp(map);
+		} else {
+			emp = mymenuService.getEmpList();
+		}
+		mnv.setViewName(url);
+		mnv.addObject("emp", emp);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/findProduct")
+	public ModelAndView findProduct(ModelAndView mnv, String c_name) throws SQLException {
+		String url = "mymenu/findProduct";
+		if(c_name == "") {
+			c_name = null;
+		}
+		List<EmpVO> emp = null;
+		if(c_name != null && name == null) {
+			emp = mymenuService.getSelectEmpListCno(c_name);
+		} else if (name != null && c_name == null) {
+			emp = mymenuService.getSelectEmpList(name);
+		} else if (name != null && c_name != null){
+			Map<String, String> map = new HashMap<>();
+			map.put("c_name", c_name);
+			map.put("name", name);
+			emp = mymenuService.getEmp(map);
+		} else {
+			emp = mymenuService.getEmpList();
+		}
+		mnv.setViewName(url);
+		mnv.addObject("emp", emp);
+		
+		return mnv;
 	}
 	
 	
