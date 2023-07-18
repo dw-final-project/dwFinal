@@ -7,6 +7,13 @@
 <head>
 <meta charset="UTF-8">
 <title>사람찾기</title>
+<style>
+	.trHover:hover{
+		background-color: #dfdfdf;
+		transition-propety: background-color;
+		transition-duration: 1s;
+	}
+</style>
 </head>
 <body>
 <div class="card-body pad">
@@ -27,14 +34,15 @@
 	<div>	
 		<table style="font-size: 0.8em;" class="table table-borderd text-center">
 			<tr>
-				<th width="80px" style="text-align: center;">이름</th>
-				<th width="160px" style="text-align: center;">업체명</th>
+				<th width="100px" style="text-align: center;">이름</th>
+				<th width="100px" style="text-align: center;">업체명</th>
 			</tr>
 				<c:forEach items="${emp }" var="emp">
-				<tr>
+				<tr class="trHover">
 					<td style="text-align: center;" id="name">${emp.e_name }</td>
-					<td style="text-align: center;" id="emp_no">${emp.emp_no }</td>
+					<td style="text-align: center;" id="c_name">${emp.c_name }</td>
 				</tr>
+				<input type="hidden" id="emp_no" value="${emp.emp_no }">
 				</c:forEach>
 		</table>
 	</div>
@@ -49,8 +57,8 @@
 
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <script>
-	$('ul').on('click', function(){
-		$('#name', opener.document).val($(this).find('#name').text());
+	$('tr').on('click', function(){
+		$('#name', opener.document).val($(this).find('#c_name').text() + " / " + $(this).find('#name').text());
 		$('#receiver', opener.document).val($(this).find("#emp_no").text());
 		window.close();
 	})

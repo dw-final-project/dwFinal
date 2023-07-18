@@ -28,7 +28,7 @@
 								<input type="hidden" name="writer" id="writer">
 								<input type="hidden" name="receiver" id="receiver">
 								<label for="writer">받는 업체</label>
-								<input type="text" id="name" name="name" class="form-control" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
+								<input type="text" style="background-color: white;" id="name" name="name" class="form-control" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
 							</div>
 							<div class="form-group">
 								<label for="content">내 용</label>
