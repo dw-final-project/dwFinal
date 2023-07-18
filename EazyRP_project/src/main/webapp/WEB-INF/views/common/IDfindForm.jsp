@@ -150,7 +150,6 @@ body {
 <body>
 <!-- Modal HTML -->
 	<div class="modal-dialog modal-login ">
-	<div class="modal-dialog modal-login ">
 		<div class="modal-content " style="padding-left: 45px; padding-right: 5px;">
 			<div class="modal-header">				
 				<h4 class="modal-title">ID 찾기</h4>
@@ -175,7 +174,7 @@ body {
 					<div class="form-group d-flex">
 						<div class="input-group inputText">
 							<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-							<input type="text" class="form-control" name="password" placeholder="인증번호" required="required">
+							<input type="text" class="form-control mail-check-input" name="password" placeholder="인증번호" required="required">
 						</div>
 						<div>
 							<input type="button" class="chkbtn" id="emailchk" name="emailchk" required="required" value="인증번호 확인">			
