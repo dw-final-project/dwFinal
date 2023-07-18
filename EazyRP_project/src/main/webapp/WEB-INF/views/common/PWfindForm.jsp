@@ -181,7 +181,7 @@ body {
 					</div>
 				</form>
 					<div class="form-group findbtn">
-						<button type="submit" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;" id="pwrenew" onclick="submit_go();">비밀번호 재설정</button>
+						<button type="button" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;" id="pwrenew" onclick="submit_go();">비밀번호 재설정</button>
 					</div>
 			</div>
 			

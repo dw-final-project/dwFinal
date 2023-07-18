@@ -22,13 +22,25 @@
 		 WHERE u_no = #{u_no}
 	</select>
 	
-	<select id="selectUserFind" resultType="String">
+	<select id="selectPWFind" resultType="String">
 		SELECT u_no
 		  FROM member
 		 WHERE id = #{id}
 		   AND email = #{email}
 	</select>	
+
+	<select id="selectIDFind" resultType="member">
+		SELECT u_no
+		  FROM member
+		 WHERE name = #{name}
+		   AND email = #{email}
+	</select>	
 	
+	<update id="updatePwd" parameterType="member">
+		UPDATE member 
+		SET pwd = #pwd# 
+		 WHERE  u_no = #{u_no}
+	</update>
 	
 	<!-- <select id="selectAllMemberList" resultType="member">
 		SELECT *

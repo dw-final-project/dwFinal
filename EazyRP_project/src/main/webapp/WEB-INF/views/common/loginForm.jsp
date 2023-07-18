@@ -168,14 +168,14 @@ body {
 $(function(){
 
 	$('#regiser').on('click', function(){
-		location.href = "/common/registerForm"; 
+		location.href = "/common/registerForm.do"; 
 	});
 	
 	$('#pwfind').on('click', function(){
-		location.href = "/member/PWfindForm"; 
+		location.href = "/member/PWfindForm.do"; 
 	});
 	$('#idfind').on('click', function(){
-		location.href = "/member/IDfindForm"; 
+		location.href = "/member/IDfindForm.do"; 
 	});
 	
 })
