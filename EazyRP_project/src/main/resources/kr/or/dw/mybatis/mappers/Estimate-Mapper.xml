@@ -75,6 +75,12 @@
 <!-- 	WHERE est_no = #{est_no} -->
 <!-- </select> -->
 
+<select id="getProductList" resultType="product">
+	SELECT p.pr_name, c.c_name
+	FROM product p, company c
+	WHERE p.c_no = c.c_no;
+</select>
+
 <insert id="insertEstimate">
 	INSERT INTO estimate (
 		est_no,
