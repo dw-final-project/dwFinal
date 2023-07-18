@@ -15,10 +15,6 @@ public interface EstimateService {
 
 	void estimateInsert(EstimateVO vo) throws SQLException;
 
-	List<ProductVO> getSelectProductListCno(String c_name) throws SQLException;
-
-	List<ProductVO> getSelectProductList(String pr_name) throws SQLException;
-
 	List<ProductVO> getProduct(Map<String, String> map) throws SQLException;
 
 	List<ProductVO> getProductList() throws SQLException;

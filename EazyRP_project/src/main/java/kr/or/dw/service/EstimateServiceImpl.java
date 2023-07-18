@@ -101,19 +101,6 @@ public class EstimateServiceImpl implements EstimateService {
 		
 	}
 
-	@Override
-	public List<ProductVO> getSelectProductListCno(String c_name) throws SQLException {
-		List<ProductVO> product = null;
-		product = estimateDAO.getSelectProductListCno(c_name);
-		return product;
-	}
-
-	@Override
-	public List<ProductVO> getSelectProductList(String pr_name) throws SQLException {
-		List<ProductVO> product = null;
-		product = estimateDAO.getSelectProductList(pr_name);
-		return product;
-	}
 
 	@Override
 	public List<ProductVO> getProduct(Map<String, String> map) throws SQLException {

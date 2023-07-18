@@ -78,7 +78,7 @@
         <tr>
             <td width="40%" align="center"><b>담당자</b></td>
             <input type="hidden" name="emp_no" id="emp_no" value="">
-            <td><input type="text" style="width: 100%;" value="" id="name" name="name" readonly onclick="OpenWindow('/erp4/findPeople.do', '사람찾기', 800, 600)"></td>
+            <td><input type="text" style="width: 100%;" value="" id="name" name="name" readonly onclick="OpenWindow('/erp4/findPeople.do', '제품찾기', 800, 600)"></td>
         </tr>
         <tr>
             <td width="40%" align="center"><b>외화 코드</b></td>
@@ -131,7 +131,7 @@
 	// 파일 추가 버튼
 	$('#addPutBtn').on('click', function(){
 		$('#prInput').append('<tr>'+
-	            '<td><input type="text" name="pr_no" style="width: 100%;" value=""></td>' +
+	            '<td><input type="text" name="pr_no" style="width: 100%;" value="" onclick="OpenWindow("/erp4/findProduct.do", "제품 찾기", 800, 600)"></td>' +
 	            '<td><input type="text" name="wh_no" style="width: 100%;" value=""></td>' +
 	            '<td><input type="text" name="quantity" style="width: 100%;" value=""></td>' +
 	            '<td><input type="text" name="amount" style="width: 100%;" value=""></td>' +
