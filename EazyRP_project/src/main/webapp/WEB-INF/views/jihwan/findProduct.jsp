@@ -6,6 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>제품 찾기</title>
+<style>
+	.trHover:hover{
+		background-color: #dfdfdf;
+		transition-propety: background-color;
+		transition-duration: 1s;
+	}
+</style>
 </head>
 <body>
 <div class="card-body pad">
@@ -18,7 +25,7 @@
 				<option value="c" ${searchType eq 'c' ? 'selected' : '' }>업  체</option>
 			</select>
 			<input class="form-control" type="text" name="keyword" style="width: 50%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
-			<button class="btn btn-primary" type="submit" id="searchBtn">
+			<button class="btn btn-primary" type="button" id="searchBtn">
 				<i class="fa fa-fw fa-search" style="font-size: 0.8em; padding: 0px;"></i>
 			</button>
 		</form>
@@ -26,14 +33,17 @@
 	<div>	
 		<table id="tab" style="font-size: 0.8em;" class="table table-borderd text-center">
 			<tr>
-				<th width="80px" style="text-align: center;">제품이름</th>
-				<th width="160px" style="text-align: center;">업체명</th>
+				<th width="100px" style="text-align: center;">제품이름</th>
+				<th width="100px" style="text-align: center;">업체명</th>
+				<th width="100px" style="text-align: center;">금액</th>
 			</tr>
 			<c:forEach items="${product}" var="pro">
 				<tr>
 					<td style="text-align: center;" class="pr_name">${pro.pr_name}</td>
 					<td style="text-align: center;" class="c_name">${pro.c_name}</td>
+					<td style="text-align: center;" class="pr_exprice">${pro.pr_exprice }</td>
 					<input type="hidden" class="cost" value="${pro.pr_exprice }">
+					
 				</tr>
 				
 			</c:forEach>
@@ -66,7 +76,12 @@
 			parentEl.parents('tr').find('input#cost').val(price);
 			window.close();
 		});
-
+		
+		$('#searchBtn').on('click', function(){
+			$('#searchForm').submit();
+		
+		})
+		
 		$('#searchForm').on('submit', function(e) {
 			e.preventDefault(); 
 
@@ -81,7 +96,7 @@
 				c_name : c_name,
 				pr_name : pr_name,
 			};
-
+		
 			$.ajax({
 				type: 'POST',
 				url: url,
