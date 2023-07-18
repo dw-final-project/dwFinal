@@ -109,11 +109,12 @@
         </tr>
         </thead>
         <tbody id="prInput">
+        <input type="hidden" value="" id="cnt">
         <tr>
-            <td><input type="text" name="pr_no" style="width: 100%;" value="" onclick="OpenWindow('/erp4/findProduct.do', '제품 찾기', 800, 600)"></td>
-            <td><input type="text" name="wh_no" style="width: 100%;" value=""></td>
-            <td><input type="text" name="quantity" style="width: 100%;" value=""></td>
-            <td><input type="text" name="amount" style="width: 100%;" value=""></td>
+            <td><input type="text" id="0" class="pr_names" name="pr_no" style="width: 100%;" value=""></td>
+            <td><input type="text" id="wh_no" name="wh_no" style="width: 100%;" value=""></td>
+            <td><input type="text" id="quantity1" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>
+            <td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>
             <td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>
         </tr>
         </tbody>
@@ -126,23 +127,44 @@
 </form>
 </body>
 
-
 <script>
+	let cnt = 1;
 	// 파일 추가 버튼
 	$('#addPutBtn').on('click', function(){
+		cnt++;
 		$('#prInput').append('<tr>'+
-	            '<td><input type="text" name="pr_no" style="width: 100%;" value="" onclick="OpenWindow("/erp4/findProduct.do", "제품 찾기", 800, 600)"></td>' +
-	            '<td><input type="text" name="wh_no" style="width: 100%;" value=""></td>' +
-	            '<td><input type="text" name="quantity" style="width: 100%;" value=""></td>' +
-	            '<td><input type="text" name="amount" style="width: 100%;" value=""></td>' +
-	            '<td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>' +
-	        '</tr>');
+        '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_no" style="width: 100%;" value=""></td>'+
+        '<td><input type="text" id="wh_no" name="wh_no" style="width: 100%;" value=""></td>'+
+        '<td><input type="text" id="quantity' + cnt + '" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
+        '<td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>'+
+        '<td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>'+
+    	'</tr>');
+		
+// 		$('script').append(
+// 			'$("#quantity' + cnt + '").on("keyup", function(){'+
+// 				'alert($(this).val())'+
+// 				'$(this).parent().next().children().val($(this).val()*$(this).next().val())});'
+// 		)
+	});
+	
+	// 제품코드 td 클릭 이벤트
+	$(document).on('click', '.pr_names', function(){
+		let idVal = $(this).attr('id');
+		$('#cnt').val(idVal);
+		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 800, 600);
+		
+// 		openWin.document.getElementById('cnt').value = cnt;
 	});
 	
 	// 파일 삭제 버튼
 	$('#prInput').on('click', '#cancelBtn', function(){
 		$(this).parent('td').parent('tr').remove();
 	});
+	
+	$(document).on('keyup', '.quantity', function(){
+// 		let quantity = $(this).val();
+		$(this).parent().next().children().val($(this).val()*$(this).next().val());
+	})
 	
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 		winleft = (screen.width - WinWidth) / 2;
@@ -151,6 +173,7 @@
 								+ "height=" + WinHeight + ",top="+ wintop + ",left="
 								+ winleft + ",resizable=yes,status=yes");
 		win.focus();
+		return win;
 	};
 </script>
 
@@ -185,8 +208,11 @@ window.onload = function(){
 	});
 	
 	
+	
+	
 }
 
 </script>
+
 <script	src="<%=request.getContextPath()%>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 </html>
