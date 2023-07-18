@@ -79,20 +79,22 @@
 	WHERE p.c_no = c.c_no
 </select>
 
+
 <select id="getProduct" resultType="product">
-		SELECT p.pr_name, c.c_name FROM product p, company c WHERE c_name LIKE '%' || #{c_name} || '%' AND pr_name LIKE '%' || #{pr_name} || '%' AND p.c_no = c.c_no
+		SELECT p.*, c.c_name FROM product p, company c WHERE p.c_no = c.c_no
 		<if test="searchType == 'w'.toString()">
 			AND p.pr_name LIKE '%' || #{keyword} || '%'
 		</if>
 		<if test="searchType == 'c'.toString()">
 			AND c.c_name LIKE '%' || #{keyword} || '%'
 		</if>
-		<if test="searchType == 'w'.toString()">
+		<if test="searchType == 'cw'.toString()">
 			AND (p.pr_name LIKE '%' || #{keyword} || '%'
 			OR c.c_name LIKE '%' || #{keyword} || '%')
 		</if>
 		ORDER BY p.pr_name
 	</select>
+
 
 <insert id="insertEstimate">
 	INSERT INTO estimate (

@@ -166,6 +166,21 @@ public class BusinessController {
 		return mnv;
 	}
 	
+//	@RequestMapping("/findProduct")
+//	public ResponseEntity<List<ProductVO>> findProduct2(String c_name , String pr_name) throws SQLException {
+//		ResponseEntity<List<ProductVO>> entity = null;
+//		
+//		List<ProductVO> product = estimateService.getProductList();
+//		try {
+//			entity = new ResponseEntity<List<ProductVO>>(product, HttpStatus.OK);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			entity = new ResponseEntity<List<ProductVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//		
+//		return entity;
+//	}
+	
 	@RequestMapping("/findProduct")
 	public ModelAndView findProduct(ModelAndView mnv, String pr_name, String c_name, String searchType, String keyword) throws SQLException {
 		String url = "jihwan/findProduct";
@@ -197,20 +212,6 @@ public class BusinessController {
 		return mnv;
 	}
 	
-//	@RequestMapping("/findProduct")
-//	public ResponseEntity<List<ProductVO>> findProduct2(String c_name , String pr_name) throws SQLException {
-//		ResponseEntity<List<ProductVO>> entity = null;
-//		
-//		List<ProductVO> product = estimateService.getProductList();
-//		try {
-//			entity = new ResponseEntity<List<ProductVO>>(product, HttpStatus.OK);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			entity = new ResponseEntity<List<ProductVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//		
-//		return entity;
-//	}
 	
 //	@RequestMapping("/modifyForm")
 //	public void modifyform() {

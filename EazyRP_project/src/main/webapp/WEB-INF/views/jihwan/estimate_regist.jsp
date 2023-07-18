@@ -78,7 +78,7 @@
         <tr>
             <td width="40%" align="center"><b>담당자</b></td>
             <input type="hidden" name="emp_no" id="emp_no" value="">
-            <td><input type="text" style="width: 100%;" value="" id="name" name="name" readonly onclick="OpenWindow('/erp4/findPeople.do', '제품찾기', 800, 600)"></td>
+            <td><input type="text" style="width: 100%;" value="" id="name" name="name" readonly onclick="OpenWindow('/erp4/findPeople.do', '사람찾기', 400, 600)"></td>
         </tr>
         <tr>
             <td width="40%" align="center"><b>외화 코드</b></td>
