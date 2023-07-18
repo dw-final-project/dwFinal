@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -184,8 +186,8 @@ public class BusinessController {
 		} else {
 			product = estimateService.getProductList();
 		}
-		
 		mnv.setViewName(url);
+		System.out.println(product.get(0).getPr_exprice());
 		mnv.addObject("product", product);
 		mnv.addObject("pr_name", pr_name);
 		mnv.addObject("c_name", c_name);
@@ -195,7 +197,20 @@ public class BusinessController {
 		return mnv;
 	}
 	
-	
+//	@RequestMapping("/findProduct")
+//	public ResponseEntity<List<ProductVO>> findProduct2(String c_name , String pr_name) throws SQLException {
+//		ResponseEntity<List<ProductVO>> entity = null;
+//		
+//		List<ProductVO> product = estimateService.getProductList();
+//		try {
+//			entity = new ResponseEntity<List<ProductVO>>(product, HttpStatus.OK);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			entity = new ResponseEntity<List<ProductVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//		
+//		return entity;
+//	}
 	
 //	@RequestMapping("/modifyForm")
 //	public void modifyform() {

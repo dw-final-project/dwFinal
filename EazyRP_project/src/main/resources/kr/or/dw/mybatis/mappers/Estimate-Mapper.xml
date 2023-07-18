@@ -74,13 +74,13 @@
 <!-- 	WHERE est_no = #{est_no} -->
 <!-- </select> -->
 <select id="getProductList" resultType="product">
-	SELECT p.pr_name, c.c_name
+	SELECT p.*, c.*
 	FROM product p, company c
 	WHERE p.c_no = c.c_no
 </select>
 
 <select id="getProduct" resultType="product">
-		SELECT p.pr_name, c.c_name FROM product p, company c WHERE c_name LIKE '%' || #{c_name} || '%' AND pr_name LIKE '%' || #{name} || '%' AND p.c_no = c.c_no
+		SELECT p.pr_name, c.c_name FROM product p, company c WHERE c_name LIKE '%' || #{c_name} || '%' AND pr_name LIKE '%' || #{pr_name} || '%' AND p.c_no = c.c_no
 		<if test="searchType == 'w'.toString()">
 			AND p.pr_name LIKE '%' || #{keyword} || '%'
 		</if>
