@@ -51,18 +51,15 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="taskId" class="col-form-label" id="">일정 내용</label>
-                        <input type="text" class="form-control" id="title" value="" name="calendar_content">
+                        <input type="text" class="form-control" id="title" value="" name="calendar_title">
                         <label for="taskId" class="col-form-label" id="">시작 시간</label>
-                        <input type="time" class="form-control" id="startTime" name="calendar_start_date">
+                        <input type="time" class="form-control" id="startTime" value="" name="calendar_start">
                         <label for="taskId" class="col-form-label" id="">종료 시간</label>
-                        <input type="time" class="form-control" id="endTime" name="calendar_end_date">
+                        <input type="time" class="form-control" id="endTime" value="" name="calendar_end">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -74,29 +71,27 @@
         </div>
     </div>
     
-	<!-- 값이 있는 modal 추가 -->
+	<!-- modal 디테일 및 수정, 삭제 -->
     <div class="modal fade" id="calendarDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
 	                    <div class="form-group">
 	                        <label for="taskId" class="col-form-label" id="">일정 내용</label>
-	                        <input type="text" class="form-control" id="modifyTitle" value="" name="calendar_content">
+	                        <input type="text" class="form-control" id="modifyTitle" value="" name="calendar_title">
 	                        <label for="taskId" class="col-form-label" id="">시작 시간</label>
-	                        <input type="time" class="form-control" id="modifyStartTime" value="" name="calendar_start_date">
+	                        <input type="time" class="form-control" id="modifyStartTime" value="" name="calendar_start">
 	                        <label for="taskId" class="col-form-label" id="">종료 시간</label>
-	                        <input type="time" class="form-control" id="modifyEndTime" value="" name="calendar_end_date">
+	                        <input type="time" class="form-control" id="modifyEndTime" value="" name="calendar_end">
+	                        <input type="hidden" name="calendar_no" id="calendar_no">
 	                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="modifyCalendar">수정</button>
+                    <button type="button" class="btn btn-success" id="modifyCalendarBtn">수정</button>
                     <button type="button" class="btn btn-danger" id="removeCalendar">삭제</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeModifyCalendar">취소</button>
                 </div>
@@ -105,8 +100,6 @@
     </div>
 
 <script>
-
-	
 
   document.addEventListener('DOMContentLoaded', function() {
 		var calendarEl = document.getElementById('calendar');
@@ -131,28 +124,120 @@
 		            	title : '<%=vo.getCalendar_title()%>',
 		                start : '<%=vo.getCalendar_start()%>',
 		                end : '<%=vo.getCalendar_end()%>',
+		                cal_no : '<%=vo.getCalendar_no()%>',
 		                color : '#' + Math.round(Math.random() * 0xffffff).toString(16)
 			            },
 					<%}
 				}%>
 			],
 			
+			
+				
 			eventClick:function(info) {
-				alert(info.event.title);
-				let calendar_start = info.event.start.toISOString().slice(11, 16);
-			  	let calendar_end = info.event.end.toISOString().slice(11, 16);
-			  	$('#modifyEndTime')
-				alert(calendar_start);
+				
+				console.log(info.event._def.extendedProps.cal_no + "됐다시발");
+				
+				let calendar_start = new Date(info.event.start.getTime() );
+				let calendar_end = new Date(info.event.end.getTime() );
+				
+				let calendar_start_hour = ("0" + calendar_start.getHours()).slice(-2);
+				let calendar_start_minute = ("0" + calendar_start.getMinutes()).slice(-2);
+				let calendar_end_hour = ("0" + calendar_end.getHours()).slice(-2);
+				let calendar_end_minute = ("0" + calendar_end.getMinutes()).slice(-2);
+				
+				calendar_start = calendar_start_hour + ":" + calendar_start_minute;
+				calendar_end = calendar_end_hour + ":" + calendar_end_minute;
+				
 				$('#modifyTitle').attr('value', info.event.title);
 				$('#modifyStartTime').attr('value', calendar_start);
 				$('#modifyEndTime').attr('value', calendar_end);
+				$('#calendar_no').attr('value', info.event._def.extendedProps.cal_no);
 	            $("#calendarDetailModal").modal("show");
+	            
+	            // 디테일 캘린더 닫기 버튼
+	        	$("#closeModifyCalendar").on("click", function() {
+					$("#calendarDetailModal").modal("hide");
+				});
+	        	
+	            // 캘린더 삭제 버튼
+	        	$("#removeCalendar").on("click", function() {
+					$("#calendarDetailModal").modal("hide");
+				});
+	        	
+	        		
+	            // 캘린더 수정 완료 버튼
+	        	$("#modifyCalendarBtn").on("click", function() {
+	        		
+	        		console.log(calendar_no);
+	        		
+	        		var title = $('#modifyTitle').val();
+					var startTime = $('#modifyStartTime').val();
+					var endTime = $('#modifyEndTime').val();
+					
+						var endDate = new Date(info.endStr);
+						var startDate = new Date(info.startStr);
+				        endDate.setDate(endDate.getDate() - 1); // 일자를 1일 뒤로 당김
+				        
+				        console.log(title);
+				        console.log(startTime);
+				        console.log(endTime);
+					
+		        		let stdFormat = info.event._instance.range.start.toISOString().slice(0, 10) + " " + startTime;
+		                let endFormat = info.event._instance.range.end.toISOString().slice(0, 10) + " " + endTime;
+						
+		                console.log(stdFormat);
+						console.log(endFormat);
+				        
+	        		
+				      //내용 입력 여부 확인
+                        if(title == null || title == ""){
+                            alert("내용을 입력하세요.");
+                        }else if(startTime == "" || endTime ==""){
+                            alert("시간을 입력하세요.");
+                        }else if(String(endDate) == String(startDate) && parseInt(endTime) - parseInt(startTime) < 0){ // date 타입으로 변경 후 확인
+                        	alert("종료 시간이 시작 시간보다 빠릅니다.\n시간을 올바르게 설정해주세요.");
+                        }else{ // 정상적인 입력 시
+
+                        	$.ajax({
+								  url: "/erp4/calendar/modify",
+								  type: "POST",
+								  data : { 
+									 	calendar_title: title,	// 키값 : 벨류값
+									  	calendar_start: stdFormat ,	// 키값 : 벨류값
+									  	calendar_end: endFormat,	// 키값 : 벨류값
+									  	calendar_no: info.event._def.extendedProps.cal_no
+								  },
+								  traditional: true,
+								  async: false, //동기
+								  success : function(data){
+									  alert("일정이 수정 되었습니다.");
+									  alert(data);
+// 									  $("#calendarModal").modal("hide");
+// 									  location.reload();
+								  },
+								  error : function(request,status,error){
+									alert("에러 났음."); // 실패 시 처리
+								  }
+							});
+		
+							calendar.addEvent({
+								title: title,
+								start: startTime,
+								end: endTime,
+								calendar_no: calendar_no
+// 								allDay: arg.allDay
+							})
+							
+                        };
+				});
+				
+	            
 	            return false;
             },
 			
 			// 날짜 클릭
             dateClick: function() {
-            
+            	
             },
 			selectable : true,
 			droppable : true,
@@ -161,18 +246,24 @@
 			// 이벤트명 : function(){} : 각 날짜에 대한 이벤트를 통해 처리할 내용
 			// 클릭 & 드래그로 일정 추가
 			select: function(arg) { 
-				
                 $("#calendarModal").modal("show");
-                
                 $("#addCalendar").on("click", function () {
+                	
+                	console.log(arg);
+                	
 					var title = $('#title').val();
 					var startTime = $('#startTime').val();
 					var endTime = $('#endTime').val();
+					var calendar_no = $('#calendar_no').val();
+					
+					 console.log(title);
+				        console.log(startTime);
+				        console.log(endTime);
+				        console.log(arg.endStr);
 					
 						var endDate = new Date(arg.endStr);
 						var startDate = new Date(arg.startStr);
 				        endDate.setDate(endDate.getDate() - 1); // 일자를 1일 뒤로 당김
-				        console.log(startTime);
 				      //내용 입력 여부 확인
                         if(title == null || title == ""){
                             alert("내용을 입력하세요.");
@@ -214,9 +305,11 @@
 				}),
 				
 				$("#closeCalendar").on("click", function() {
+					 $("#endTime").val('');
+					 $("#startTime").val('');
+					 $("#title").val('');
 					 $("#calendarModal").modal("hide");
-				})
-				,
+				}),
 				
 				calendar.unselect();
 			},

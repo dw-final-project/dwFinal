@@ -13,5 +13,7 @@ public interface CalendarDAO {
 	List<CalendarVO> getCalendar() throws SQLException;
 
 	void insertCalendar(CalendarVO calendar) throws SQLException;
-	
+
+	void updateCalendar(CalendarVO calendar) throws SQLException;
+
 }

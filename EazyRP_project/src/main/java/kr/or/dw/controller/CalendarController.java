@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.plaf.synth.SynthSplitPaneUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.microsoft.schemas.office.visio.x2012.main.DataType;
+
+import javassist.expr.Instanceof;
 import kr.or.dw.command.PageMaker;
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.service.CalendarService;
@@ -42,6 +46,7 @@ public class CalendarController {
 			try {
 				calendarList = calendarService.getCalendar();
 				request.setAttribute("calendarList", calendarList);
+				mnv.addObject("calendarList", calendarList);
 				mnv.setViewName(url);
 				System.out.println("1" + calendarList);
 			} catch (Exception e) {
@@ -59,10 +64,19 @@ public class CalendarController {
 			res.setContentType("text/html; charset=utf-8");
 			PrintWriter out = res.getWriter();
 			out.println("<script>");
-//			out.println("window.opener.location.reload();");
-//			out.println("location.href='detail.do?pc_code=" + process.getPc_code() + "';");
-			out.println("alert('수정 되었습니다.')");
+			out.println("alert('등록 되었습니다.')");
 			out.println("</script>");
+		}
+		
+		@RequestMapping("/calendar/modify")
+		public void modify(CalendarVO calendar) throws SQLException, IOException {
+			
+			System.out.println("컨트롤러 /erp4/calendar/modify 진입");
+			
+			System.out.println(calendar);
+			System.out.println("번호다" + calendar.getCalendar_no());
+			System.out.println(calendar.getCalendar_end());
+			calendarService.modify(calendar);
 		}
 		
 	}

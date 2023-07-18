@@ -18,5 +18,13 @@
 					(calendar_no, calendar_title, calendar_start, calendar_end)
 			VALUES(pc_no_seq.nextVal, #{calendar_title}, TO_DATE(#{calendar_start}, 'yyyy-MM-dd HH24:MI:SS'), TO_DATE(#{calendar_end}, 'yyyy-MM-dd HH24:MI:SS'))
 	</insert>
+	
+	<update id="updateCalendar" parameterType="calendar">
+		UPDATE	calendar
+		SET		calendar_title 	= #{calendar_title},
+				calendar_start	= TO_DATE(#{calendar_start},'yyyy-MM-dd HH24:MI'),
+				calendar_end	= TO_DATE(#{calendar_end}, 'yyyy-MM-dd HH24:MI')
+		WHERE	calendar_no		= #{calendar_no}
+	</update>
 
 </mapper>
