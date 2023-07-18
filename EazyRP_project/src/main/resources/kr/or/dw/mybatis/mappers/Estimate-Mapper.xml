@@ -42,8 +42,6 @@
 	 GROUP BY ed.est_no
 </select>
 
-<<<<<<< Updated upstream
-=======
 <select id="selectDetail" parameterType="str" resultType="Map">
 	SELECT ed.EST_NO
 		  ,MAX(ed.regdate) regdate
@@ -64,18 +62,13 @@
 	 GROUP BY ed.est_no
 </select>
 
->>>>>>> Stashed changes
 <select id="forEstimList" resultType="Map">
 	SELECT amount
 	  	  ,quantity
 	  	  ,(SELECT pr_name FROM product WHERE pr_no = ed.pr_no) p_name
 	  	  ,(SELECT wh_name FROM WAREHOUSE WHERE wh_no = ed.wh_no) wh_name
   	  FROM ESTDETAIL ed
-<<<<<<< Updated upstream
-	 where est_no = #{est_no}
-=======
 	 WHERE est_no = #{est_no} 
->>>>>>> Stashed changes
 </select>
 
 <select id="getProductList" resultType="product">
