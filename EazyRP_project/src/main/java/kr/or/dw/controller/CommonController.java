@@ -122,20 +122,24 @@ public class CommonController {
 		session.setAttribute("c_no", selectedC_no);
 		if(selectedC_no.equals("C000001")) {
 			session.setAttribute("emp_no", 1);
+			session.setAttribute("c_name", "(주)지민식품");
 		} else if(selectedC_no.equals("C000002")) {
 			session.setAttribute("emp_no", 2);
+			session.setAttribute("c_name", "희성전자");
 		} else if(selectedC_no.equals("C000003")) {
 			session.setAttribute("emp_no", 3);
+			session.setAttribute("c_name", "석준물산");
 		} else if(selectedC_no.equals("C000004")) {
 			session.setAttribute("emp_no", 4);
+			session.setAttribute("c_name", "(주)소라전자");
 		} else if(selectedC_no.equals("C000005")) {
 			session.setAttribute("emp_no", 5);
+			session.setAttribute("c_name", "민준식품");
 		} else if(selectedC_no.equals("C000006")) {
 			session.setAttribute("emp_no", 6);
+			session.setAttribute("c_name", "지환물산");
 		}
 		
-		System.out.println(session.getAttribute("emp_no"));
-		System.out.println(session.getAttribute("c_no"));
 		mnv.setViewName("redirect:" + url);
 		
 		return mnv;

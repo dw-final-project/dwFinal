@@ -148,6 +148,9 @@ public class MyMenuController {
 		
 		dataMap.put("c_no", c_no);
 		dataMap.put("cri", cri);
+		System.out.println(cri.getPage());
+		System.out.println(cri.getPageStartRowNum());
+		System.out.println(cri.getPerPageNum());
 		note = mymenuService.getNoteList(dataMap);
 		
 		mnv.setViewName(url);

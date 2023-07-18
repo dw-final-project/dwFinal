@@ -11,7 +11,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">받은 쪽지함</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm" method="post" action="/mymenu/search.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/mymenu/search.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="tcw" ${searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
 								<option value="t" ${searchType eq 't' ? 'selected' : '' }>제  목</option>
@@ -52,7 +52,7 @@
 									</c:forEach>
 							</table>
 							<div class="card-footer">
-								<%@ include file="/WEB-INF/views/common/pagination2.jsp" %>
+								<%@ include file="/WEB-INF/views/common/pagination.jsp" %>
 							</div>
 						</div>
 					</div>
@@ -71,7 +71,7 @@
 <script>
 		
 	$('#searchBtn').on('click', function(){
-		$('#searchForm').submit();
+		$('#searchForm2').submit();
 	})
 	
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight, index){

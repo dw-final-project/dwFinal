@@ -74,14 +74,17 @@ public class MyMenuServiceImpl implements MyMenuService{
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		dataMap.put("cri", cri);
-		dataMap.put("rowbounds", rowBounds);
-		List<NoteVO> note = mymenuDAO.getNoteList(dataMap);
+		Map<String, Object> dataMap2 = new HashMap<String, Object>();
+		dataMap2.put("cri", cri);
+		dataMap2.put("c_no", c_no);
+		dataMap2.put("rowbounds", rowBounds);
+		List<NoteVO> note = mymenuDAO.getNoteList(dataMap2);
 		
-		int totalCount = mymenuDAO.selectSearchNoteListCount(dataMap);
+		int totalCount = mymenuDAO.selectSearchNoteListCount(dataMap2);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
+
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("note", note);

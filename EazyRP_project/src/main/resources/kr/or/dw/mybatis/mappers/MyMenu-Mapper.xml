@@ -20,14 +20,14 @@
 	</select>
 	
 	<select id="getEmp" resultType="emp">
-		SELECT e.*, c.c_name FROM emp e, company c WHERE c_name LIKE '%' || #{c_name} || '%' AND e_name LIKE '%' || #{name} || '%' AND e.c_no = c.c_no
+		SELECT e.*, c.c_name FROM emp e, company c WHERE e.c_no = c.c_no
 		<if test="searchType == 'w'.toString()">
 			AND e.e_name LIKE '%' || #{keyword} || '%'
 		</if>
 		<if test="searchType == 'c'.toString()">
 			AND c.c_name LIKE '%' || #{keyword} || '%'
 		</if>
-		<if test="searchType == 'w'.toString()">
+		<if test="searchType == 'cw'.toString()">
 			AND (e.e_name LIKE '%' || #{keyword} || '%'
 			OR c.c_name LIKE '%' || #{keyword} || '%')
 		</if>
@@ -44,7 +44,7 @@
 	</insert>
 	
 	<select id="getNoteList" resultType="note">
-		SELECT n.* , a.e_name callerName, b.e_name RECEIVERname, c.c_name c_cname, d.c_name r_cname
+		SELECT ROWNUM,n.* , a.e_name callerName, b.e_name RECEIVERname, c.c_name c_cname, d.c_name r_cname
 FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 	(SELECT * FROM note n, emp e WHERE n.RECEIVER = e.EMP_NO) b,
 	(SELECT * FROM note n, COMPANY c WHERE n.C_COMPANY = c.C_NO) c,
@@ -55,7 +55,7 @@ FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 	AND n.n_no = c.n_no
 	AND n.n_no = d.n_no
 	AND n.R_company = #{c_no}
-	ORDER BY n.n_no DESC
+	ORDER BY ROWNUM DESC
 	</select>
 	
 	<select id="selectNote" resultType="note">
@@ -82,7 +82,7 @@ FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 	</delete>
 	
 	<select id="searchNote" resultType="note">
-				SELECT n.* , a.e_name callerName, b.e_name RECEIVERname, c.c_name c_cname, d.c_name r_cname
+				SELECT ROWNUM, n.* , a.e_name callerName, b.e_name RECEIVERname, c.c_name c_cname, d.c_name r_cname
 FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 	(SELECT * FROM note n, emp e WHERE n.RECEIVER = e.EMP_NO) b,
 	(SELECT * FROM note n, COMPANY c WHERE n.C_COMPANY = c.C_NO) c,
@@ -123,11 +123,11 @@ FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 			<if test="searchType == 'r'.toString()">
 			 	AND b.e_name LIKE '%' || #{keyword} || '%'
 			</if>
-			ORDER BY n.n_no DESC
+			ORDER BY ROWNUM DESC
 	</select>
 	
 	<select id="getSendNoteList" resultType="note">
-	SELECT n.* , a.e_name callerName, b.e_name RECEIVERname, c.c_name c_cname, d.c_name r_cname
+	SELECT ROWNUM, n.* , a.e_name callerName, b.e_name RECEIVERname, c.c_name c_cname, d.c_name r_cname
 	FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 	(SELECT * FROM note n, emp e WHERE n.RECEIVER = e.EMP_NO) b,
 	(SELECT * FROM note n, COMPANY c WHERE n.C_COMPANY = c.C_NO) c,
@@ -138,7 +138,7 @@ FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 	AND n.n_no = c.n_no
 	AND n.n_no = d.n_no
 	AND n.c_company = #{c_no}
-		ORDER BY n.n_no DESC
+		ORDER BY ROWNUM DESC
 	</select>
 	
 	<select id="selectSearchNoteListCount" resultType="int">
