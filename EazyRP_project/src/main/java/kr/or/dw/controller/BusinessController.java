@@ -165,29 +165,36 @@ public class BusinessController {
 	}
 	
 	@RequestMapping("/findProduct")
-	public ModelAndView findProduct(ModelAndView mnv, String pr_name ,String c_name) throws SQLException {
+	public ModelAndView findProduct(ModelAndView mnv, String pr_name, String c_name, String searchType, String keyword) throws SQLException {
 		String url = "jihwan/findProduct";
-		if(c_name == "") {
-			c_name = null;
+		if(searchType == "") {
+			searchType = null;
+		}
+		if(keyword == "") {
+			keyword = null;
 		}
 		List<ProductVO> product = null;
-		if(c_name != null && pr_name == null) {
-			product = estimateService.getSelectProductListCno(c_name);
-		} else if (pr_name != null && c_name == null) {
-			product = estimateService.getSelectProductList(pr_name);
-		} else if (pr_name != null && c_name != null){
-			Map<String, String> map = new HashMap<>();
-			map.put("c_name", c_name);
-			map.put("pr_name", pr_name);
-			product = estimateService.getProduct(map);
+		Map<String, String> dataMap = new HashMap<>();
+		dataMap.put("pr_name", pr_name);
+		dataMap.put("c_name", c_name);
+		dataMap.put("searchType", searchType);
+		dataMap.put("keyword", keyword);
+		if(keyword != null){
+			product = estimateService.getProduct(dataMap);
 		} else {
 			product = estimateService.getProductList();
 		}
+		
 		mnv.setViewName(url);
 		mnv.addObject("product", product);
+		mnv.addObject("pr_name", pr_name);
+		mnv.addObject("c_name", c_name);
+		mnv.addObject("searchType", searchType);
+		mnv.addObject("keyword", keyword);
 		
 		return mnv;
 	}
+	
 	
 	
 //	@RequestMapping("/modifyForm")
