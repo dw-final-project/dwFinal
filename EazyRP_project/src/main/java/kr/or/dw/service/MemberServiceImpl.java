@@ -27,9 +27,21 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public String pwFind(MemberVO member) throws SQLException {
-		String PW = memberDAO.selectUserFind(member);
+		String PW = memberDAO.selectPWFind(member);
 		
 		return PW;
+	}
+
+	@Override
+	public MemberVO idFind(MemberVO member) throws SQLException {
+		MemberVO mem = memberDAO.selectIDFind(member);
+		return mem;
+	}
+
+	@Override
+	public String pwRenew(MemberVO member) throws SQLException {
+		String renew = memberDAO.updatePwd(member);
+		return renew;
 	}
 
 

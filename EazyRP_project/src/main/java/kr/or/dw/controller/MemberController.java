@@ -88,37 +88,64 @@ public class MemberController {
 	      return "/common/loginForm";
 	}
 	
-	@GetMapping("/PWfindForm")
-	public String PWfind(HttpServletResponse res) throws Exception {
+	@RequestMapping("/IDfindForm")
+	public String IDfindForm(HttpServletResponse res) throws Exception {
 
-		String url = "/common/PWfindForm";
+		String url = "/common/IDfindForm";
+		return url;
+	}
+	@RequestMapping("/IDfind")
+	public String IDfind(MemberVO member, HttpServletRequest req, HttpServletResponse res) throws SQLException, IOException {
+		MemberVO status = memberService.idFind(member);
+		String url = "";
+	
+		res.setContentType("text/html; charset=utf-8");
+	      PrintWriter out = res.getWriter();
+		if(status == null || status.equals("")) {			
+			url = "/common/IDfindForm";
+			  out.println("<script>");
+		      out.println("alert('회원님의 이름 또는 이메일를 다시 확인해주세요.');");
+		      out.println("</script>");
+		}else {
+	      out.println("<script>");
+	      out.println("alert('회원님의 ID는 " + status.getId() + " 입니다.');");
+	      out.println("</script>");
+	      url = "/common/loginForm";
+		}
 		return url;
 	}
 	
+	
 	@RequestMapping("/PWfindForm")
+	public String PWfindForm() {
+		return "/common/PWfindForm";
+	}
+
+	@RequestMapping("/PWfind")
 	public String PWfind(MemberVO member, HttpServletRequest req, HttpServletResponse res) throws Exception {
-		String status = memberService.pwFind(member);
+		String status2 = memberService.pwFind(member);
 		String url = "";
-		if(status == null || status.equals("")) {
-			
+		res.setContentType("text/html; charset=utf-8");
+	      PrintWriter out = res.getWriter();
+		if(status2 == null || status2.equals("")) {
+			url = "/common/PWfindForm";
+			  out.println("<script>");
+		      out.println("alert('회원님의 아이디 또는 이메일를 다시 확인해주세요.');");
+		      out.println("</script>");
 		} else {
-			
+			url = "/common/PWrenew";
 		}
 		
 		return url;
 	}
 	
-	@GetMapping("/IDfindForm")
-	public String IDFind(HttpServletResponse res) throws Exception {
-		String url = "/common/IDfindForm";
+	@RequestMapping("/PWrenew")
+	public String PWrenew (MemberVO member, HttpServletRequest req, HttpServletResponse res) throws Exception{
+		String pw = memberService.pwRenew(member);
+		String url = "/common/loginForm";
+				
 		return url;
 	}
 	
-//	@GetMapping("/PWrenew")
-//	public String PWrenew(HttpServletRequest res) throws Exception{
-//		
-//		String url = "/member/PWrenew";
-//		return url;
-//	}
-
+	
 }

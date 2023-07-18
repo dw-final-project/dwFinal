@@ -15,6 +15,10 @@ public interface MemberDAO {
 
 	String selectErank(int u_no) throws SQLException;
 
-	String selectUserFind(MemberVO member) throws SQLException;
+	String selectPWFind(MemberVO member) throws SQLException;
+
+	MemberVO selectIDFind(MemberVO member)throws SQLException;
+
+	String updatePwd(MemberVO member) throws SQLException;
 
 }
