@@ -45,7 +45,7 @@ import kr.or.dw.vo.NoteVO;
 @RequestMapping("/mymenu")
 public class MyMenuController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CommonController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MyMenuController.class);
 	
 	@Autowired
 	private MyMenuService mymenuService;
@@ -73,7 +73,7 @@ public class MyMenuController {
 			String fileRealName = file.getOriginalFilename();
 			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
 			noteVo.setRealFileName(fileRealName);
-			String uploadFolder = "C:\\upload\\";
+			String uploadFolder = session.getServletContext().getRealPath("/resources/saveFiles/");
 			note.setFiles(uniqueName+fileExtension);
 			
 			
@@ -145,7 +145,6 @@ public class MyMenuController {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		Map<String, Object> note = new HashMap<String, Object>();
 		String c_no = (String) session.getAttribute("c_no");
-		
 		dataMap.put("c_no", c_no);
 		dataMap.put("cri", cri);
 		System.out.println(cri.getPage());
@@ -183,8 +182,8 @@ public class MyMenuController {
 	}
 	
 	@RequestMapping("/deleteNote")
-	public void deleteNote(int n_no, HttpServletResponse res, String files) throws SQLException, IOException {
-		String uploadFolder = "C:\\upload\\";
+	public void deleteNote(HttpSession session, int n_no, HttpServletResponse res, String files) throws SQLException, IOException {
+		String uploadFolder = session.getServletContext().getRealPath("/resources/saveFiles/");
 		File file = new File(uploadFolder + files);
 		file.delete();
 		mymenuService.deleteNote(n_no);
@@ -293,11 +292,11 @@ public class MyMenuController {
 		return mnv;
 	}
 	
-	private static final String FOLDER_PATH = "C:\\upload\\";
 
     @RequestMapping("/download")
-    public ResponseEntity<FileSystemResource> downloadFile(@RequestParam("files") String fileName, HttpServletResponse response) throws IOException {
-        String filePath = FOLDER_PATH + fileName;
+    public ResponseEntity<FileSystemResource> downloadFile(HttpSession session, @RequestParam("files") String fileName, HttpServletResponse response) throws IOException {
+    	String uploadFolder = session.getServletContext().getRealPath("/resources/saveFiles/");
+    	String filePath = uploadFolder + fileName;
         File file = new File(filePath);
 
         if (file.exists()) {
