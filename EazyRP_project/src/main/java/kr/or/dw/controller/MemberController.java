@@ -73,10 +73,13 @@ public class MemberController {
 
 	// 회원가입 
 	@RequestMapping("/register")
-	public String register(MemberVO member, HttpServletRequest req, HttpServletResponse res) throws Exception{
+	public String register(MemberVO member, String domainselect, HttpServletRequest req, HttpServletResponse res) throws Exception{
 	    System.out.println(member.getId());  
+
+		System.out.println("세팅 전 : " + member.getEmail());
+		member.setEmail(member.getEmail()+ domainselect);
+		System.out.println("세팅 후 : " + member.getEmail());
 		memberService.register(member);
-	   
 		  res.setContentType("text/html; charset=utf-8");
 	      PrintWriter out = res.getWriter();
 	      out.println("<script>");
@@ -85,12 +88,64 @@ public class MemberController {
 	      return "/common/loginForm";
 	}
 	
-	@GetMapping("/PWfindForm")
-	public String loginForm(String id, String email, HttpServletResponse res) throws Exception {
-		MemberVO member = memberService.selectMemberById(id);
-		
-		String url = "/common/PWfindForm";
+	@RequestMapping("/IDfindForm")
+	public String IDfindForm(HttpServletResponse res) throws Exception {
+
+		String url = "/common/IDfindForm";
 		return url;
 	}
+	@RequestMapping("/IDfind")
+	public String IDfind(MemberVO member, HttpServletRequest req, HttpServletResponse res) throws SQLException, IOException {
+		MemberVO status = memberService.idFind(member);
+		String url = "";
+	
+		res.setContentType("text/html; charset=utf-8");
+	      PrintWriter out = res.getWriter();
+		if(status == null || status.equals("")) {			
+			url = "/common/IDfindForm";
+			  out.println("<script>");
+		      out.println("alert('회원님의 이름 또는 이메일를 다시 확인해주세요.');");
+		      out.println("</script>");
+		}else {
+	      out.println("<script>");
+	      out.println("alert('회원님의 ID는 " + status.getId() + " 입니다.');");
+	      out.println("</script>");
+	      url = "/common/loginForm";
+		}
+		return url;
+	}
+	
+	
+	@RequestMapping("/PWfindForm")
+	public String PWfindForm() {
+		return "/common/PWfindForm";
+	}
 
+	@RequestMapping("/PWfind")
+	public String PWfind(MemberVO member, HttpServletRequest req, HttpServletResponse res) throws Exception {
+		String status2 = memberService.pwFind(member);
+		String url = "";
+		res.setContentType("text/html; charset=utf-8");
+	      PrintWriter out = res.getWriter();
+		if(status2 == null || status2.equals("")) {
+			url = "/common/PWfindForm";
+			  out.println("<script>");
+		      out.println("alert('회원님의 아이디 또는 이메일를 다시 확인해주세요.');");
+		      out.println("</script>");
+		} else {
+			url = "/common/PWrenew";
+		}
+		
+		return url;
+	}
+	
+	@RequestMapping("/PWrenew")
+	public String PWrenew (MemberVO member, HttpServletRequest req, HttpServletResponse res) throws Exception{
+		String pw = memberService.pwRenew(member);
+		String url = "/common/loginForm";
+				
+		return url;
+	}
+	
+	
 }

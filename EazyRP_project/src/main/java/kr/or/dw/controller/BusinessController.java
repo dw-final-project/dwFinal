@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,9 +26,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.common.collect.Sets.SetView;
 
 import kr.or.dw.service.EstimateService;
-import kr.or.dw.service.MenuService;	
+import kr.or.dw.service.MenuService;
+import kr.or.dw.service.MyMenuService;
 import kr.or.dw.service.SiService;
+import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.EstimateVO;
+import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.SiVO;
 
 @Controller
@@ -42,6 +48,9 @@ public class BusinessController {
 	
 	@Autowired
 	private SiService siService;
+	
+	@Autowired
+	private MyMenuService mymenuService;
 	
 	@RequestMapping("/estimate")
 	public ModelAndView main(ModelAndView mnv, String mcode) throws SQLException {
@@ -62,13 +71,13 @@ public class BusinessController {
 		return url;
 	}
 
-	@RequestMapping("/estimateSelect")
-	public ModelAndView estSel(ModelAndView mnv ,String est_no) throws SQLException {
+	@RequestMapping("/estimateDetail")
+	public ModelAndView estDetail (ModelAndView mnv ,String est_no) throws SQLException {
 		
+		Map<String, Object> dataMap = estimateService.selectDetail(est_no);
 		
-		EstimateVO estVo = estimateService.selectdetail(est_no);
-		String url = "jihwan/estimateSelect.open";
-		mnv.addObject("estVo", estVo);
+		String url = "jihwan/estimateDetail.open";
+		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
 		return mnv;
 	}
@@ -128,6 +137,79 @@ public class BusinessController {
 		out.println("alert('성공적으로 등록되었습니다.')");
 		out.println("window.opener.location.reload(true); window.close();");
 		out.println("</script>");
+	}
+	
+	@RequestMapping("/findPeople")
+	public ModelAndView findPeople(ModelAndView mnv, String searchType, String keyword) throws SQLException {
+		String url = "mymenu/findPeople";
+		if(searchType == "") {
+			searchType = null;
+		}
+		if(keyword == "") {
+			keyword = null;
+		}
+		List<EmpVO> emp = null;
+		Map<String, String> dataMap = new HashMap<>();
+		dataMap.put("searchType", searchType);
+		dataMap.put("keyword", keyword);
+		if(keyword != null){
+			emp = mymenuService.getEmp(dataMap);
+		} else {
+			emp = mymenuService.getEmpList();
+		}
+		
+		mnv.setViewName(url);
+		mnv.addObject("emp", emp);
+		mnv.addObject("searchType", searchType);
+		mnv.addObject("keyword", keyword);
+		
+		return mnv;
+	}
+	
+//	@RequestMapping("/findProduct")
+//	public ResponseEntity<List<ProductVO>> findProduct2(String c_name , String pr_name) throws SQLException {
+//		ResponseEntity<List<ProductVO>> entity = null;
+//		
+//		List<ProductVO> product = estimateService.getProductList();
+//		try {
+//			entity = new ResponseEntity<List<ProductVO>>(product, HttpStatus.OK);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			entity = new ResponseEntity<List<ProductVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//		
+//		return entity;
+//	}
+	
+	@RequestMapping("/findProduct")
+	public ModelAndView findProduct(ModelAndView mnv, String pr_name, String c_name, String searchType, String keyword) throws SQLException {
+		String url = "jihwan/findProduct";
+		if(searchType == "") {
+			searchType = null;
+		}
+		if(keyword == "") {
+			keyword = null;
+		}
+		List<ProductVO> product = null;
+		Map<String, String> dataMap = new HashMap<>();
+		dataMap.put("pr_name", pr_name);
+		dataMap.put("c_name", c_name);
+		dataMap.put("searchType", searchType);
+		dataMap.put("keyword", keyword);
+		if(keyword != null){
+			product = estimateService.getProduct(dataMap);
+		} else {
+			product = estimateService.getProductList();
+		}
+		mnv.setViewName(url);
+		System.out.println(product.get(0).getPr_exprice());
+		mnv.addObject("product", product);
+		mnv.addObject("pr_name", pr_name);
+		mnv.addObject("c_name", c_name);
+		mnv.addObject("searchType", searchType);
+		mnv.addObject("keyword", keyword);
+		
+		return mnv;
 	}
 	
 	

@@ -56,18 +56,15 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="taskId" class="col-form-label" id="">일정 내용</label>
-                        <input type="text" class="form-control" id="title" value="" name="calendar_content">
+                        <input type="text" class="form-control" id="title" value="" name="calendar_title">
                         <label for="taskId" class="col-form-label" id="">시작 시간</label>
-                        <input type="time" class="form-control" id="startTime" name="calendar_start_date">
+                        <input type="time" class="form-control" id="startTime" value="" name="calendar_start">
                         <label for="taskId" class="col-form-label" id="">종료 시간</label>
-                        <input type="time" class="form-control" id="endTime" name="calendar_end_date">
+                        <input type="time" class="form-control" id="endTime" value="" name="calendar_end">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -79,25 +76,23 @@
         </div>
     </div>
     
-	<!-- 값이 있는 modal 추가 -->
+	<!-- modal 디테일 및 수정, 삭제 -->
     <div class="modal fade" id="calendarDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
 	                    <div class="form-group">
 	                        <label for="taskId" class="col-form-label" id="">일정 내용</label>
-	                        <input type="text" class="form-control" id="modifyTitle" value="" name="calendar_content">
+	                        <input type="text" class="form-control" id="modifyTitle" value="" name="calendar_title">
 	                        <label for="taskId" class="col-form-label" id="">시작 시간</label>
-	                        <input type="time" class="form-control" id="modifyStartTime" value="" name="calendar_start_date">
+	                        <input type="time" class="form-control" id="modifyStartTime" value="" name="calendar_start">
 	                        <label for="taskId" class="col-form-label" id="">종료 시간</label>
-	                        <input type="time" class="form-control" id="modifyEndTime" value="" name="calendar_end_date">
+	                        <input type="time" class="form-control" id="modifyEndTime" value="" name="calendar_end">
+	                        <input type="hidden" name="calendar_no" id="calendar_no">
 	                    </div>
                 </div>
                 <div class="modal-footer">
@@ -110,8 +105,6 @@
     </div>
 
 <script>
-
-	
 
   document.addEventListener('DOMContentLoaded', function() {
 		var calendarEl = document.getElementById('calendar');
@@ -447,9 +440,7 @@
 			// 이벤트명 : function(){} : 각 날짜에 대한 이벤트를 통해 처리할 내용
 			// 클릭 & 드래그로 일정 추가
 			select: function(arg) { 
-				
                 $("#calendarModal").modal("show");
-                
                 $("#addCalendar").on("click", function () {
                 	
 					var title = $('#title').val();
@@ -501,9 +492,11 @@
 			}),
 				
 				$("#closeCalendar").on("click", function() {
+					 $("#endTime").val('');
+					 $("#startTime").val('');
+					 $("#title").val('');
 					 $("#calendarModal").modal("hide");
-				})
-				,
+				}),
 				
 				calendar.unselect();
 			},

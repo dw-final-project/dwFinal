@@ -1,6 +1,5 @@
-
-<!DOCTYPE html>
-<html lang="en">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -151,39 +150,38 @@ body {
 <body>
 <!-- Modal HTML -->
 	<div class="modal-dialog modal-login ">
-	<div class="modal-dialog modal-login ">
 		<div class="modal-content " style="padding-left: 45px; padding-right: 5px;">
 			<div class="modal-header">				
 				<h4 class="modal-title">ID 찾기</h4>
 			</div>
 			<div class="modal-body">
-				<form action="/examples/actions/confirmation.php" method="post">
+				<form id="idFindForm"action="/member/IDfind.do" method="post">
 					<div class="form-group">
 						<div class="input-group inputText">
 							<span class="input-group-addon"><i class="fa fa-user"></i></span>
-							<input type="text" class="form-control" name="name" placeholder="이름" required="required">
+							<input type="text" class="form-control" id="name" name="name" placeholder="이름" required="required">
 						</div>
 					</div>
 					<div class="form-group d-flex">
 						<div class="input-group inputText">
 							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-							<input type="text" class="form-control" name="email" placeholder="이메일" required="required">
+							<input type="text" class="form-control" id="email" name="email" placeholder="이메일" required="required">
 						</div>
 						<div>
-							<input type="button" class="chkbtn" name="emailchk" required="required" value="인증번호 전송">							
+							<input type="button" class="chkbtn" name="emailauth" id="emailauth" required="required" value="인증번호 전송">							
 						</div>
 					</div>
 					<div class="form-group d-flex">
 						<div class="input-group inputText">
 							<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-							<input type="text" class="form-control" name="password" placeholder="인증번호" required="required">
+							<input type="text" class="form-control mail-check-input" name="password" placeholder="인증번호" required="required">
 						</div>
 						<div>
-							<input type="button" class="chkbtn" name="emailchk" required="required" value="인증번호 확인">			
+							<input type="button" class="chkbtn" id="emailchk" name="emailchk" required="required" value="인증번호 확인">			
 						</div>
 					</div>
 					<div class="form-group findbtn">
-						<button type="submit" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;">ID 찾기</button>
+						<button type="submit" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;" onclick="submit_go();">ID 찾기</button>
 					</div>
 				</form>
 			</div>
@@ -192,3 +190,4 @@ body {
 	</div>    
 </body>
 </html>
+<%@ include file="IDfind_js.jsp" %> 

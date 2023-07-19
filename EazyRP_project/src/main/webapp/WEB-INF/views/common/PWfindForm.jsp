@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Bootstrap Flat Modal Login Modal Form</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -152,10 +151,10 @@ body {
 	<div class="modal-dialog modal-login ">
 		<div class="modal-content " style="padding-left: 45px; padding-right: 5px;">
 			<div class="modal-header">				
-				<h4 class="modal-title">PW 찾기</h4>
+				<h4 class="modal-title">비밀번호 찾기</h4>
 			</div>
 			<div class="modal-body">
-				<form id="pwFindForm" action="/member/PWfindForm.do" method="post">
+				<form id="pwFindForm" action="/member/PWfind.do" method="post">
 					<div class="form-group">
 						<div class="input-group inputText">
 							<span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -182,9 +181,7 @@ body {
 					</div>
 				</form>
 					<div class="form-group findbtn">
-						<button type="submit" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;" >ID 찾기</button>
-						&nbsp;&nbsp;&nbsp;&nbsp;
-						<button type="submit" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;" id="pwrenew" onclick="submit_go();">비밀번호 재설정</button>
+						<button type="button" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;" id="pwrenew" onclick="submit_go();">비밀번호 재설정</button>
 					</div>
 			</div>
 			

@@ -16,6 +16,32 @@
 		VALUES(member_seq.nextVal, #{id}, #{pwd}, #{email}, #{tel}, #{birth}, #{name}, #{addr}, 1, SYSDATE)
 	</insert> 
 	
+	<select id="selectErank" parameterType="int" resultType="String">
+		SELECT e_rank
+		  FROM emp
+		 WHERE u_no = #{u_no}
+	</select>
+	
+	<select id="selectPWFind" resultType="String">
+		SELECT u_no
+		  FROM member
+		 WHERE id = #{id}
+		   AND email = #{email}
+	</select>	
+
+	<select id="selectIDFind" resultType="member">
+		SELECT u_no
+		  FROM member
+		 WHERE name = #{name}
+		   AND email = #{email}
+	</select>	
+	
+	<update id="updatePwd" parameterType="member">
+		UPDATE member 
+		SET pwd = #pwd# 
+		 WHERE  u_no = #{u_no}
+	</update>
+	
 	<!-- <select id="selectAllMemberList" resultType="member">
 		SELECT *
 		  FROM member
@@ -23,17 +49,6 @@
 	</select>
 	
 	
-	<update id="updateMember" parameterType="member">
-		UPDATE member
-		SET
-			pwd 		= #{pwd}
-		   ,email 		= #{email}
-		   ,phone 		= #{phone}
-		   ,name 		= #{name}
-		   ,picture 	= #{picture}
-		   ,authority 	= #{authority}
-		WHERE id = #{id}
-	</update>
 
 	<delete id="deleteMember" parameterType="str">
 		DELETE FROM member

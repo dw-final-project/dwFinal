@@ -68,30 +68,34 @@ public class MyMenuServiceImpl implements MyMenuService{
 	}
 
 	@Override
-	public Map<String, Object> getNoteList(SearchCriteria cri) throws SQLException {
+	public Map<String, Object> getNoteList(Map<String, Object> dataMap) throws SQLException {
+		SearchCriteria cri = (SearchCriteria) dataMap.get("cri");
+		String c_no = (String) dataMap.get("c_no");
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
+		Map<String, Object> dataMap2 = new HashMap<String, Object>();
+		dataMap2.put("cri", cri);
+		dataMap2.put("c_no", c_no);
+		dataMap2.put("rowbounds", rowBounds);
+		List<NoteVO> note = mymenuDAO.getNoteList(dataMap2);
 		
-		
-		List<NoteVO> note = mymenuDAO.getNoteList(cri, rowBounds);
-		
-		int totalCount = mymenuDAO.selectSearchNoteListCount(cri);
-		System.out.println(totalCount);
+		int totalCount = mymenuDAO.selectSearchNoteListCount(dataMap2);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
+
 		
-		Map<String, Object> dataMap = new HashMap<String, Object>();
-		dataMap.put("note", note);
-		dataMap.put("pageMaker", pageMaker);
-		return dataMap;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("note", note);
+		map.put("pageMaker", pageMaker);
+		return map;
 	}
 
 	@Override
 	public NoteVO selectNote(int n_no, String send) throws SQLException {
 		NoteVO note = mymenuDAO.selectNote(n_no);
-		if(send == "N") {
+		if(send.equals("N")) {
 			mymenuDAO.readableUpdate(n_no);
 		}
 		return note;
@@ -110,20 +114,18 @@ public class MyMenuServiceImpl implements MyMenuService{
 	}
 
 	@Override
-	public Map<String, Object> getSendNoteList(int emp_no, SearchCriteria cri) throws SQLException {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+	public Map<String, Object> getSendNoteList(Map<String, Object> dataMap, SearchCriteria cri) throws SQLException {
 		
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		int totalCount = mymenuDAO.selectSearchNoteListCount(cri);
+		int totalCount = mymenuDAO.selectSearchNoteListCount(dataMap);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
 		
 		
-		List<NoteVO> note = mymenuDAO.getSendNoteList(emp_no);
+		List<NoteVO> note = mymenuDAO.getSendNoteList(dataMap);
 		
 		dataMap.put("note", note);
 		dataMap.put("pageMaker", pageMaker);

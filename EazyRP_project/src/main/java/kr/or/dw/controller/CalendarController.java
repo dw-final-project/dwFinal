@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.plaf.synth.SynthSplitPaneUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.microsoft.schemas.office.visio.x2012.main.DataType;
+
+import javassist.expr.Instanceof;
 import kr.or.dw.command.PageMaker;
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.service.CalendarService;
@@ -43,6 +47,7 @@ public class CalendarController {
 			try {
 				calendarList = calendarService.getCalendar();
 				request.setAttribute("calendarList", calendarList);
+				mnv.addObject("calendarList", calendarList);
 				mnv.setViewName(url);
 				System.out.println("1" + calendarList);
 			} catch (Exception e) {
@@ -82,6 +87,17 @@ public class CalendarController {
 			calendarService.remove(calendar);
 			System.out.println("컨트롤러 /erp4/calendar/remove 탈출");
 			return "test";
+		}
+		
+		@RequestMapping("/calendar/modify")
+		public void modify(CalendarVO calendar) throws SQLException, IOException {
+			
+			System.out.println("컨트롤러 /erp4/calendar/modify 진입");
+			
+			System.out.println(calendar);
+			System.out.println("번호다" + calendar.getCalendar_no());
+			System.out.println(calendar.getCalendar_end());
+			calendarService.modify(calendar);
 		}
 		
 	}

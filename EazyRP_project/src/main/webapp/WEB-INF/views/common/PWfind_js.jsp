@@ -7,8 +7,8 @@
 		emailChk = 0;
 	})
 		
-	$('#emailchk').click(function () {
-		const email = $('#email').val() + $('#domainselect').val(); // 이메일 주소값 얻어오기!
+	$('#emailauth').on('click', function () {
+		const email = $('#email').val(); // 이메일 주소값 얻어오기!
 		console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
 		const checkInput = $('.mail-check-input') // 인증번호 입력하는곳 
 		
@@ -31,21 +31,15 @@
 	// blur -> focus가 벗어나는 경우 발생
 	$('#emailchk').click(function () {
 		const inputCode = $('.mail-check-input').val();
-		const $resultMsg = $('#emailchk');
-		
+
 		if(inputCode === code){
 			emailChk = 1;
 			alert('인증번호가 일치합니다.');
-			$resultMsg.css('color','green');
 			$('#mail-Check-Btn').attr('disabled',true);
 			$('#email').attr('readonly',true);
-			$('#domainselect').attr('readonly',true);
-	 		$('#domainselect').attr('onFocus', 'this.initialSelect = this.selectedIndex');
-	        $('#domainselect').attr('onChange', 'this.selectedIndex = this.initialSelect'); 
 		}else{
 			alert('인증번호가 불일치 합니다. 다시 확인해주세요!.');
 			emailChk = 0;
-			$resultMsg.css('color','red');
 		}
 	});	
 	
@@ -61,7 +55,7 @@
 			return false;
 		};  
 		
-	$('#pwrenew').submit();
+	$('#pwFindForm').submit();
 	
 	}; 
 </script>
