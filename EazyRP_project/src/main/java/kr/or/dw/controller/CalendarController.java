@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.microsoft.schemas.office.visio.x2012.main.DataType;
@@ -61,11 +62,31 @@ public class CalendarController {
 			System.out.println("컨트롤러 /erp4/add 진입");
 			calendarService.registCalendar(calendar);
 
-			res.setContentType("text/html; charset=utf-8");
-			PrintWriter out = res.getWriter();
-			out.println("<script>");
-			out.println("alert('등록 되었습니다.')");
-			out.println("</script>");
+		}
+		
+		@RequestMapping("/calendar/modify")
+		@ResponseBody
+		public String modify(CalendarVO calendar) throws SQLException, IOException {
+			
+			System.out.println("컨트롤러 /erp4/calendar/modify 진입");
+			
+			System.out.println(calendar);
+			System.out.println("번호다" + calendar.getCalendar_no());
+			System.out.println(calendar.getCalendar_end());
+			calendarService.modify(calendar);
+			
+			return "SUCCESS";
+			
+		}
+		
+		@RequestMapping("/calendar/remove")
+		@ResponseBody
+		public String remove(CalendarVO calendar) throws SQLException {
+			
+			System.out.println("컨트롤러 /erp4/calendar/remove 진입");
+			calendarService.remove(calendar);
+			System.out.println("컨트롤러 /erp4/calendar/remove 탈출");
+			return "test";
 		}
 		
 		@RequestMapping("/calendar/modify")
