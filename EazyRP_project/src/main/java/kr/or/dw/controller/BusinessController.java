@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,7 @@ import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.SiVO;
+import kr.or.dw.vo.WareHouseVO;
 
 @Controller
 @RequestMapping("/erp4")
@@ -66,9 +68,14 @@ public class BusinessController {
 	}
 	
 	@RequestMapping("/estimate_regist")
-	public String esti() {
+	public ModelAndView esti(ModelAndView mnv ,HttpSession session) throws SQLException{
+		int empno = (int)session.getAttribute("emp_no");
+		String ename = estimateService.ename(empno);
 		String url = "jihwan/estimate_regist.open";
-		return url;
+		mnv.setViewName(url);
+		mnv.addObject("empno",empno);
+		mnv.addObject("ename",ename);
+		return mnv;
 	}
 
 	@RequestMapping("/estimateDetail")
@@ -202,7 +209,6 @@ public class BusinessController {
 			product = estimateService.getProductList();
 		}
 		mnv.setViewName(url);
-		System.out.println(product.get(0).getPr_exprice());
 		mnv.addObject("product", product);
 		mnv.addObject("pr_name", pr_name);
 		mnv.addObject("c_name", c_name);
@@ -210,6 +216,63 @@ public class BusinessController {
 		mnv.addObject("keyword", keyword);
 		
 		return mnv;
+	}
+	
+	@RequestMapping("/findWareHouse")
+	public ModelAndView findWareHouse(ModelAndView mnv, String searchType, String keyword) throws SQLException {
+		String url = "jihwan/findWareHouse";
+
+		if(searchType == "") {
+			searchType = null;
+		}
+		if(keyword == "") {
+			keyword = null;
+		}
+		List<WareHouseVO> warehouse = null;
+		Map<String, String> dataMap = new HashMap<>();
+		dataMap.put("searchType", searchType);
+		dataMap.put("keyword", keyword);
+		if(keyword != null){
+			warehouse = estimateService.getWareHouse(dataMap);
+			System.out.println(warehouse.get(0).getWh_name());
+		} else {
+			warehouse = estimateService.getWareHouseList();
+		}
+		
+		mnv.setViewName(url);
+		mnv.addObject("warehouse",warehouse );
+		mnv.addObject("searchType", searchType);
+		mnv.addObject("keyword", keyword);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/insertEstimate")
+	public void insertEstimate (String[] pr_no, String fc_no, String files, String[] wh_no, int[] quantity, int[] amount,  HttpServletResponse res) throws Exception {
+		
+		
+		List<EstimateVO> vo = null;
+		for(int i= 0; i < pr_no.length; i++) {
+			EstimateVO est = null;
+			est.setPr_no(pr_no[i]);
+			est.setFc_no(fc_no);
+			est.setFiles(files);
+			est.setWh_no(wh_no[i]);
+			est.setQuantity(quantity);
+			est.setAmount(amount);
+			
+			
+			vo.set(i, est);
+		}
+		
+		estimateService.insertEstimate(vo);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 등록되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
 	}
 	
 	
