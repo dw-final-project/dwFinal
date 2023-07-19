@@ -71,7 +71,7 @@ public class CalendarController {
 			System.out.println("컨트롤러 /erp4/calendar/modify 진입");
 			
 			System.out.println(calendar);
-			System.out.println("번호다" + calendar.getCalendar_no());
+			System.out.println("calendar_no : " + calendar.getCalendar_no());
 			System.out.println(calendar.getCalendar_end());
 			calendarService.modify(calendar);
 			
@@ -87,17 +87,6 @@ public class CalendarController {
 			calendarService.remove(calendar);
 			System.out.println("컨트롤러 /erp4/calendar/remove 탈출");
 			return "test";
-		}
-		
-		@RequestMapping("/calendar/modify")
-		public void modify(CalendarVO calendar) throws SQLException, IOException {
-			
-			System.out.println("컨트롤러 /erp4/calendar/modify 진입");
-			
-			System.out.println(calendar);
-			System.out.println("번호다" + calendar.getCalendar_no());
-			System.out.println(calendar.getCalendar_end());
-			calendarService.modify(calendar);
 		}
 		
 	}
