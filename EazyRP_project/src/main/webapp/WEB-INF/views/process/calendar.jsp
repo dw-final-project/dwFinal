@@ -13,8 +13,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!-- 화면 해상도에 따라 글자 크기 대응(모바일 대응) -->
+  		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
 		<!-- jquery CDN -->
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<!-- moment CDN -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 		<!-- fullcalendar CDN -->
 		<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
 		<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
@@ -66,8 +71,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" id="addCalendar">추가</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeCalendar">취소</button>
+                    <button type="button" class="btn btn-warning" id="addCalendar">등록</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeCalendar">닫기</button>
                 </div>
     
             </div>
@@ -96,9 +101,9 @@
 	                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="modifyCalendar">수정</button>
-                    <button type="button" class="btn btn-danger" id="removeCalendar">삭제</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeModifyCalendar">취소</button>
+                    <button type="button" class="btn btn-success" id="modifyCalendarBtn">수정</button>
+                    <button type="button" class="btn btn-danger" id="removeCalendarBtn">삭제</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeModifyCalendar">닫기</button>
                 </div>
             </div>
         </div>
@@ -114,6 +119,11 @@
 			initialView : 'dayGridMonth',
 			locale : 'ko', // 한국어 설정
 // 			initialDate: '', // 초기 로딩 날짜.
+// 			height: '700px', // calendar 높이 설정
+	        expandRows: true, // 화면에 맞게 높이 재설정
+	        slotMinTime: '08:00', // Day 캘린더에서 시작 시간
+	        slotMaxTime: '20:00', // Day 캘린더에서 종료 시간
+	        dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
 			
 			// 헤더
 			headerToolbar : {
@@ -123,36 +133,312 @@
 	            },
 	            
 			// 일정 표시
-			events : [ 
-	    	    <%List<CalendarVO> calendarList = (List<CalendarVO>) request.getAttribute("calendarList");%>
-	            <%if (calendarList != null) {%>
-		            <%for (CalendarVO vo : calendarList) {%>
-			            {
-		            	title : '<%=vo.getCalendar_title()%>',
-		                start : '<%=vo.getCalendar_start()%>',
-		                end : '<%=vo.getCalendar_end()%>',
-		                color : '#' + Math.round(Math.random() * 0xffffff).toString(16)
-			            },
-					<%}
-				}%>
+			events: [
+				<c:forEach var="vo" items="${calendarList}">
+					{
+					  title: '${vo.getCalendar_title()}',
+					  start: '${vo.getCalendar_start()}',
+					  end: '${vo.getCalendar_end()}',
+					  cal_no: '${vo.getCalendar_no()}',
+					  color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
+					},
+				</c:forEach>
 			],
 			
-			eventClick:function(info) {
-				alert(info.event.title);
-				let calendar_start = info.event.start.toISOString().slice(11, 16);
-			  	let calendar_end = info.event.end.toISOString().slice(11, 16);
-			  	$('#modifyEndTime')
-				alert(calendar_start);
+			// 일정 드롭다운 이벤트
+			eventDrop: function (info) {
+				
+				console.log("123");
+				
+				// 시작 시간 변환
+				var startTimeInput = document.getElementById('modifyStartTime');
+				var startTimeValue = info.event.start;
+				var startTimeFormatted = formatTime(startTimeValue);
+				startTimeInput.value = startTimeFormatted;
+
+				// 종료 시간 변환
+				var endTimeInput = document.getElementById('modifyEndTime');
+				var endTimeValue = info.event.end;
+				var endTimeFormatted = formatTime(endTimeValue);
+				endTimeInput.value = endTimeFormatted;
+
+				// 시간 포맷 변환 함수
+				function formatTime(time) {
+// 				  var date = new Date(time);
+				  var hours = time.getHours().toString().padStart(2, '0');
+				  var minutes = time.getMinutes().toString().padStart(2, '0');
+				  var formattedTime = hours + ':' + minutes;
+				  return formattedTime;
+				}
+				
+				// 한국 표준시간으로 변환하는 함수
+				function convertKST(date){
+					// 1. 현재 시간(Locale)
+					const curr = new Date();
+					console.log("현재시간(Locale) : " + curr + '<br>');
+
+					// 2. UTC 시간 계산
+// 					const utc = curr.getTime() + (curr.getTimezoneOffset() * 60 * 1000);
+					const utc = date.getTime();
+
+					// 3. UTC to KST (UTC + 9시간)
+					const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+					const kr_curr = new Date(utc - (KR_TIME_DIFF));
+
+					console.log("한국시간 : " + kr_curr);
+					return kr_curr;
+				}
+				
+				function convertYMD(date){
+					let year = date.getFullYear();
+					let month = ('0' + (date.getMonth() + 1)).slice(-2);
+					let day = ('0' + date.getDate()).slice(-2);
+					let dateStr = year + '-' + month  + '-' + day;
+					return dateStr;
+				}
+				
+// 				// 날짜  형변환
+// 				let calendar_start = new Date(info.event.start.getTime() );
+// 				let calendar_end = new Date(info.event.end.getTime() );
+				
+// 				let calendar_start_hour = ("0" + calendar_start.getHours()).slice(-2);
+// 				let calendar_start_minute = ("0" + calendar_start.getMinutes()).slice(-2);
+// 				let calendar_end_hour = ("0" + calendar_end.getHours()).slice(-2);
+// 				let calendar_end_minute = ("0" + calendar_end.getMinutes()).slice(-2);
+// 				console.log(info)
+// 				calendar_start = calendar_start_hour + ":" + calendar_start_minute;
+// 				calendar_end = calendar_end_hour + ":" + calendar_end_minute;
+// 				console.log(new Date().setTime(info.event._instance.range.start));
+// 				let modStartTime = info.event._instance.range.start;
+// 				let modEndTime = info.event._instance.range.end;
+// 				console.log('modStartTime : ' + modStartTime);
+// 				console.log('modEndTime : ' + modEndTime);
+// 				console.log('modStartHour : ' + modStartTime.getHours() + ':' + modStartTime.getMinutes());
+// 				console.log('modEndHour : ' + modEndTime.getHours() + ':' + modEndTime.getMinutes());
+// 				modStartTime = convertKST(modStartTime);
+// 				let startYMD = convertYMD(modStartTime);
+// 				modEndTime = convertKST(modEndTime);
+// 				let endYMD = convertYMD(modEndTime);
+// 				console.log(startYMD + " " + formatTime(modStartTime));
+// 				console.log(endYMD + " " + formatTime(modEndTime));
+	            // 이전에 등록한 일정의 정보를 이벤트를 클릭했을때 나타나는 해당 모달로 불러온다
 				$('#modifyTitle').attr('value', info.event.title);
-				$('#modifyStartTime').attr('value', calendar_start);
-				$('#modifyEndTime').attr('value', calendar_end);
+				$('#modifyStartTime').attr('value', info.event.start);
+				$('#modifyEndTime').attr('value', info.event.end);
+	            console.log(info.event.title);
+	            console.log(info.event.start);
+	            console.log(info.event.end);
+				
+				var title = $('#modifyTitle').val();
+				var startTime = $('#modifyStartTime').val();
+				var endTime = $('#modifyEndTime').val();
+
+				var endDate = new Date(info.endStr);
+				var startDate = new Date(info.startStr);
+		        endDate.setDate(endDate.getDate() - 1); // 일자를 1일 뒤로 당김
+		        
+        		let stdFormat = info.event._instance.range.start.toISOString().slice(0, 10) + " " + startTime;
+                let endFormat = info.event._instance.range.end.toISOString().slice(0, 10) + " " + endTime;
+				console.log(stdFormat);
+				console.log(endFormat);
+
+                   	$.ajax({
+						  url: "/erp4/calendar/modify",
+						  type: "POST",
+						  data : { 
+							 	calendar_title: title,	// 키값 : 벨류값
+							  	calendar_start: stdFormat,	// 키값 : 벨류값
+							  	calendar_end: endFormat,	// 키값 : 벨류값
+							  	calendar_no: info.event._def.extendedProps.cal_no
+						  },
+//							  traditional: true,
+//							  async: false, //동기
+						  success : function(data){
+							  alert("일정이 수정 되었습니다.");
+							  alert(data);
+							  $("#calendarModal").modal("hide");
+							  location.reload();
+						  },
+						  error : function(request,status,error){
+							alert("에러 났음."); // 실패 시 처리
+						  }
+					});
+	
+			},
+				
+			eventClick:function(info) {
+				
+				// 시작 시간 변환
+				var startTimeInput = document.getElementById('modifyStartTime');
+				var startTimeValue = info.event.start;
+				var startTimeFormatted = formatTime(startTimeValue);
+				startTimeInput.value = startTimeFormatted;
+
+				// 종료 시간 변환
+				var endTimeInput = document.getElementById('modifyEndTime');
+				var endTimeValue = info.event.end;
+				var endTimeFormatted = formatTime(endTimeValue);
+				endTimeInput.value = endTimeFormatted;
+
+				// 시간 포맷 변환 함수
+				function formatTime(time) {
+// 				  var date = new Date(time);
+				  var hours = time.getHours().toString().padStart(2, '0');
+				  var minutes = time.getMinutes().toString().padStart(2, '0');
+				  var formattedTime = hours + ':' + minutes;
+				  return formattedTime;
+				}
+				
+				// 한국 표준시간으로 변환하는 함수
+				function convertKST(date){
+					// 1. 현재 시간(Locale)
+					const curr = new Date();
+					console.log("현재시간(Locale) : " + curr + '<br>');
+
+					// 2. UTC 시간 계산
+// 					const utc = curr.getTime() + (curr.getTimezoneOffset() * 60 * 1000);
+					const utc = date.getTime();
+
+					// 3. UTC to KST (UTC + 9시간)
+					const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+					const kr_curr = new Date(utc - (KR_TIME_DIFF));
+
+					console.log("한국시간 : " + kr_curr);
+					return kr_curr;
+				}
+				
+				function convertYMD(date){
+					let year = date.getFullYear();
+					let month = ('0' + (date.getMonth() + 1)).slice(-2);
+					let day = ('0' + date.getDate()).slice(-2);
+					let dateStr = year + '-' + month  + '-' + day;
+					return dateStr;
+				}
+				
+// 				// 날짜  형변환
+// 				let calendar_start = new Date(info.event.start.getTime() );
+// 				let calendar_end = new Date(info.event.end.getTime() );
+				
+// 				let calendar_start_hour = ("0" + calendar_start.getHours()).slice(-2);
+// 				let calendar_start_minute = ("0" + calendar_start.getMinutes()).slice(-2);
+// 				let calendar_end_hour = ("0" + calendar_end.getHours()).slice(-2);
+// 				let calendar_end_minute = ("0" + calendar_end.getMinutes()).slice(-2);
+// 				console.log(info)
+// 				calendar_start = calendar_start_hour + ":" + calendar_start_minute;
+// 				calendar_end = calendar_end_hour + ":" + calendar_end_minute;
+// 				console.log(new Date().setTime(info.event._instance.range.start));
+// 				let modStartTime = info.event._instance.range.start;
+// 				let modEndTime = info.event._instance.range.end;
+// 				console.log('modStartTime : ' + modStartTime);
+// 				console.log('modEndTime : ' + modEndTime);
+// 				console.log('modStartHour : ' + modStartTime.getHours() + ':' + modStartTime.getMinutes());
+// 				console.log('modEndHour : ' + modEndTime.getHours() + ':' + modEndTime.getMinutes());
+// 				modStartTime = convertKST(modStartTime);
+// 				let startYMD = convertYMD(modStartTime);
+// 				modEndTime = convertKST(modEndTime);
+// 				let endYMD = convertYMD(modEndTime);
+// 				console.log(startYMD + " " + formatTime(modStartTime));
+// 				console.log(endYMD + " " + formatTime(modEndTime));
+	            // 이전에 등록한 일정의 정보를 이벤트를 클릭했을때 나타나는 해당 모달로 불러온다
+				$('#modifyTitle').attr('value', info.event.title);
+				$('#modifyStartTime').attr('value', info.event.start);
+				$('#modifyEndTime').attr('value', info.event.end);
+	            console.log(info.event.title);
+	            console.log(info.event.start);
+	            console.log(info.event.end);
+// 				$('#calendar_no').attr('value', info.event._def.extendedProps.cal_no);
 	            $("#calendarDetailModal").modal("show");
-	            return false;
-            },
-			
-			// 날짜 클릭
-            dateClick: function() {
-            
+	            
+	            // 디테일 캘린더 닫기 버튼
+	        	$("#closeModifyCalendar").on("click", function() {
+					$("#calendarDetailModal").modal("hide");
+				});
+	        	
+	            // 캘린더 삭제 버튼
+	        	$("#removeCalendarBtn").on("click", function() {
+	        		
+	        		$.ajax({
+						  url: "/erp4/calendar/remove",
+						  type: "POST",
+						  data : { 
+							  	calendar_no: info.event._def.extendedProps.cal_no
+						  },
+// 						  traditional: true,
+// 						  async: false, //동기
+						  success : function(res){
+							  alert("일정이 삭제 되었습니다.");
+							  $("#calendarDetailModal").modal("hide");
+							  location.reload();
+						  },
+						  error : function(request,status,error){
+							  console.log("에러 발생:");
+							    console.log(request);
+							    console.log(status);
+							    console.log(error);
+							  alert("에러 났음."); // 실패 시 처리
+						  } 
+					});
+// 	        		alert("일정이 삭제 되었습니다.");
+// 					  $("#calendarDetailModal").modal("hide");
+// 					  location.reload();
+				});
+	        	
+	        		
+	            // 캘린더 수정 완료 버튼
+	        	$("#modifyCalendarBtn").on("click", function() {
+	        		
+	        		var title = $('#modifyTitle').val();
+					var startTime = $('#modifyStartTime').val();
+					var endTime = $('#modifyEndTime').val();
+
+					var endDate = new Date(info.endStr);
+					var startDate = new Date(info.startStr);
+			        endDate.setDate(endDate.getDate() - 1); // 일자를 1일 뒤로 당김
+			        
+	        		let stdFormat = info.event._instance.range.start.toISOString().slice(0, 10) + " " + startTime;
+	                let endFormat = info.event._instance.range.end.toISOString().slice(0, 10) + " " + endTime;
+					console.log(stdFormat);
+					console.log(endFormat);
+					//내용 입력 여부 확인
+					if(title == null || title == ""){
+					    alert("내용을 입력하세요.");
+					}else if(startTime == "" || endTime ==""){
+					    alert("시간을 입력하세요.");
+					}else if(String(endDate) == String(startDate) && parseInt(endTime) - parseInt(startTime) < 0){ // date 타입으로 변경 후 확인
+						alert("종료 시간이 시작 시간보다 빠릅니다.\n시간을 올바르게 설정해주세요.");
+					}else{ // 정상적인 입력 시
+
+                       	$.ajax({
+							  url: "/erp4/calendar/modify",
+							  type: "POST",
+							  data : { 
+								 	calendar_title: title,	// 키값 : 벨류값
+								  	calendar_start: stdFormat,	// 키값 : 벨류값
+								  	calendar_end: endFormat,	// 키값 : 벨류값
+								  	calendar_no: info.event._def.extendedProps.cal_no
+							  },
+// 							  traditional: true,
+// 							  async: false, //동기
+							  success : function(data){
+								  alert("일정이 수정 되었습니다.");
+								  alert(data);
+								  $("#calendarModal").modal("hide");
+								  location.reload();
+							  },
+							  error : function(request,status,error){
+								alert("에러 났음."); // 실패 시 처리
+							  }
+						});
+		
+// 						calendar.addEvent({
+// 							title: title,
+// 							start: startTime,
+// 							end: endTime,
+// 							calendar_no: calendar_no
+// 						})
+					};
+				});
+// 	            return false;
             },
 			selectable : true,
 			droppable : true,
@@ -165,53 +451,54 @@
                 $("#calendarModal").modal("show");
                 
                 $("#addCalendar").on("click", function () {
+                	
 					var title = $('#title').val();
 					var startTime = $('#startTime').val();
 					var endTime = $('#endTime').val();
+					var calendar_no = $('#calendar_no').val();
 					
-						var endDate = new Date(arg.endStr);
-						var startDate = new Date(arg.startStr);
-				        endDate.setDate(endDate.getDate() - 1); // 일자를 1일 뒤로 당김
-				        console.log(startTime);
-				      //내용 입력 여부 확인
-                        if(title == null || title == ""){
-                            alert("내용을 입력하세요.");
-                        }else if(startTime == "" || endTime ==""){
-                            alert("시간을 입력하세요.");
-                        }else if(String(endDate) == String(startDate) && parseInt(endTime) - parseInt(startTime) < 0){ // date 타입으로 변경 후 확인
-                        	alert("종료 시간이 시작 시간보다 빠릅니다.\n시간을 올바르게 설정해주세요.");
-                        }else{ // 정상적인 입력 시
-						
-                        	$.ajax({
-								  url: "/erp4/add",
-								  type: "POST",
-								  data : { 
-									 	calendar_title: title,	// 키값 : 벨류값
-									  	calendar_start: arg.startStr + startTime ,	// 키값 : 벨류값
-									  	calendar_end: endDate.toISOString().slice(0, 10) + " " + endTime,	// 키값 : 벨류값
-								  },
-								  traditional: true,
-								  async: false, //동기
-								  success : function(data){
-									  alert("일정이 등록되었습니다.");
-									  $("#calendarModal").modal("hide");
-									  location.reload();
-								  },
-								  error : function(request,status,error){
-									alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-									console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-								  }
-							});
+					var endDate = new Date(arg.endStr);
+					var startDate = new Date(arg.startStr);
+			        endDate.setDate(endDate.getDate() - 1); // 일자를 1일 뒤로 당김
+					//내용 입력 여부 확인
+					if(title == null || title == ""){
+					    alert("내용을 입력하세요.");
+					}else if(startTime == "" || endTime ==""){
+					    alert("시간을 입력하세요.");
+					}else if(String(endDate) == String(startDate) && parseInt(endTime) - parseInt(startTime) < 0){ // date 타입으로 변경 후 확인
+						alert("종료 시간이 시작 시간보다 빠릅니다.\n시간을 올바르게 설정해주세요.");
+					}else{ // 정상적인 입력 시
+				
+	                 	$.ajax({
+							 url: "/erp4/add",
+							 type: "POST",
+							 data : { 
+							 	calendar_title: title,	// 키값 : 벨류값
+							  	calendar_start: arg.startStr + startTime ,	// 키값 : 벨류값
+							  	calendar_end: endDate.toISOString().slice(0, 10) + " " + endTime,	// 키값 : 벨류값
+							 },
+							 traditional: true,
+							 async: false, //동기
+							 success : function(data){
+							  alert("일정이 등록되었습니다.");
+							  $("#calendarModal").modal("hide");
+							  location.reload();
+							 },
+							 error : function(request,status,error){
+								alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+								console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+							 }
+						});
 		
-							calendar.addEvent({
-								title: title,
-								start: startTime,
-								end: endTime,
-								allDay: arg.allDay
-							})
+					calendar.addEvent({
+						title: title,
+						start: startTime,
+						end: endTime,
+						allDay: arg.allDay
+					})
 							
-                        };
-				}),
+				};
+			}),
 				
 				$("#closeCalendar").on("click", function() {
 					 $("#calendarModal").modal("hide");
