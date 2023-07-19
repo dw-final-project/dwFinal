@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.ProductVO;
+import kr.or.dw.vo.WareHouseVO;
 
 @Mapper
 public interface EstimateDAO {
@@ -23,6 +24,12 @@ public interface EstimateDAO {
 	List<ProductVO> getProduct(Map<String, String> map) throws SQLException;
 
 	List<ProductVO> getProductList() throws SQLException;
+
+	List<WareHouseVO> getWareHouse(Map<String, String> dataMap) throws SQLException;
+
+	List<WareHouseVO> getWareHouseList() throws SQLException;
+
+	String ename(int empno) throws SQLException;
 
 
 	

@@ -18,7 +18,7 @@
 <div class="card-body pad">
 	<div>
 	<div class="input-group row" style="width: 100%; margin: 0px 0px 20px 0px; justify-content: center;">
-		<form id="searchForm" method="post" action="/jihwan/findProduct.do" style="display: contents;">
+		<form id="searchForm" method="post" action="/erp4/findProduct.do" style="display: contents;">
 			<select class="form-control" name="searchType" id="searchType" style="font-size: 0.8em; width: 30%;">
 				<option value="cw" ${searchType eq 'cw' ? 'selected' : '' }>전  체</option>
 				<option value="w" ${searchType eq 'w' ? 'selected' : '' }>이  름</option>
@@ -43,7 +43,7 @@
 					<td style="text-align: center;" class="c_name">${pro.c_name}</td>
 					<td style="text-align: center;" class="pr_exprice">${pro.pr_exprice }</td>
 					<input type="hidden" class="cost" value="${pro.pr_exprice }">
-					
+					<input type="hidden" id="pr_no" value="${pro.pr_no}">
 				</tr>
 				
 			</c:forEach>
@@ -65,7 +65,9 @@
 	$(document).ready(function() {
 		let parentInputId = opener.$("#cnt").val();
 		
+		
 		$('#tab').on('click', 'tr', function() {
+			let pr_noName = $(this).find('#pr_no').val();
 			let productName = $(this).find('.pr_name').text();
 			let companyName = $(this).find('.c_name').text();
 			let price = $(this).find('.cost').val();
@@ -74,6 +76,8 @@
 			parentEl.val(productName);
 			$('#c_name', opener.document).val(companyName);
 			parentEl.parents('tr').find('input#cost').val(price);
+			$('#pr_no', opener.document).val(pr_noName);
+			parentEl.parents('tr').find('input[name="pr_no"]').val(pr_noName);
 			window.close();
 		});
 		
@@ -82,33 +86,33 @@
 		
 		})
 		
-		$('#searchForm').on('submit', function(e) {
-			e.preventDefault(); 
+// 		$('#searchForm').on('submit', function(e) {
+// 			e.preventDefault(); 
 
-			let searchType = $('#searchType').val();
-			let keyword = $('input[name="keyword"]').val();
-			let c_name = $('.c_name').val();
-			let pr_name = $('.pr_name').val();
-			let url = '/erp4/findProduct.do';
-			let data = {
-				searchType: searchType,
-				keyword: keyword,
-				c_name : c_name,
-				pr_name : pr_name,
-			};
+// 			let searchType = $('#searchType').val();
+// 			let keyword = $('input[name="keyword"]').val();
+// 			let c_name = $('.c_name').val();
+// 			let pr_name = $('.pr_name').val();
+// 			let url = '/erp4/findProduct.do';
+// 			let data = {
+// 				searchType: searchType,
+// 				keyword: keyword,
+// 				c_name : c_name,
+// 				pr_name : pr_name,
+// 			};
 		
-			$.ajax({
-				type: 'POST',
-				url: url,
-				data: data,
-				success: function(response) {
-					$('#tab').html(response); 
-					console.log(response);
-				},
-				error: function(xhr, status, error) {
-					console.error(error);
-				}
-			});
-		});
+// 			$.ajax({
+// 				type: 'POST',
+// 				url: url,
+// 				data: data,
+// 				success: function(response) {
+// 					$('#tab').html(response); 
+// 					console.log(response);
+// 				},
+// 				error: function(xhr, status, error) {
+// 					console.error(error);
+// 				}
+// 			});
+// 		});
 	});
 </script>
