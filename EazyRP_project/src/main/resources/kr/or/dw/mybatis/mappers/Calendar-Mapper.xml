@@ -22,9 +22,15 @@
 	<update id="updateCalendar" parameterType="calendar">
 		UPDATE	calendar
 		SET		calendar_title 	= #{calendar_title},
-				calendar_start	= TO_DATE(#{calendar_start},'yyyy-MM-dd HH24:MI'),
-				calendar_end	= TO_DATE(#{calendar_end}, 'yyyy-MM-dd HH24:MI')
+				calendar_start	= TO_DATE(#{calendar_start}, 'yyyy-MM-dd HH24:MI:SS'),
+				calendar_end	= TO_DATE(#{calendar_end}, 'yyyy-MM-dd HH24:MI:SS')
 		WHERE	calendar_no		= #{calendar_no}
 	</update>
+	
+	<delete id="deleteCalendar" parameterType="calendar">
+		DELETE 
+		FROM	calendar
+		WHERE	calendar_no	= #{calendar_no}
+	</delete>
 
 </mapper>

@@ -49,9 +49,7 @@
 	
 <script>
 	$('#file').on('change', function(){
-		alert($('#file').val());
 		$('#fileName').val($('#file').val());
-		alert($('#fileName').val())
 	})
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 		winleft = (screen.width - WinWidth) / 2;

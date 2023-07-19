@@ -48,7 +48,7 @@
 								</td>
 							</tr>
 						</c:if>
-						<c:forEach items="${processList }" var="process">		
+						<%-- <c:forEach items="${processList }" var="process">		
 							<tr style="font-size: 0.85em;">
 								<td>${process.pc_no }</td>
 								<td>
@@ -58,7 +58,7 @@
 								<td>${process.pc_order}</td>
 								<td><span class="badge bg-red" onclick="">등록</span></td>
 							</tr>
-						</c:forEach>
+						</c:forEach> --%>
 					</table>
 				</div>
 				<!-- 페이징 -->

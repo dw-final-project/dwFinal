@@ -16,4 +16,6 @@ public interface CalendarDAO {
 
 	void updateCalendar(CalendarVO calendar) throws SQLException;
 
+	void deleteCalendar(CalendarVO calendar) throws SQLException;
+
 }
