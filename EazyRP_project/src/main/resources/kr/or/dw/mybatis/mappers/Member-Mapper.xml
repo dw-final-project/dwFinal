@@ -12,8 +12,8 @@
 	</select>
 	
 	<insert id="insertMember" parameterType="member">
-		INSERT INTO member(u_no, id, pwd, email, tel, birth, name, addr, enabled, regdate)
-		VALUES(member_seq.nextVal, #{id}, #{pwd}, #{email}, #{tel}, #{birth}, #{name}, #{addr}, 1, SYSDATE)
+		INSERT INTO member(u_no, id, pwd, email, gen, tel, birth, name, addr, enabled, regdate)
+		VALUES(member_seq.nextVal, #{id}, #{pwd}, #{email}, #{gen}, #{tel}, #{birth}, #{name}, #{addr}, 1, SYSDATE)
 	</insert> 
 	
 	<select id="selectErank" parameterType="int" resultType="String">
@@ -30,16 +30,16 @@
 	</select>	
 
 	<select id="selectIDFind" resultType="member">
-		SELECT u_no
+		SELECT *
 		  FROM member
 		 WHERE name = #{name}
 		   AND email = #{email}
 	</select>	
 	
-	<update id="updatePwd" parameterType="member">
+	<update id="updatePwd" >
 		UPDATE member 
-		SET pwd = #pwd# 
-		 WHERE  u_no = #{u_no}
+		  SET pwd = #{pwd} 
+		 WHERE  id = #{id}
 	</update>
 	
 	<!-- <select id="selectAllMemberList" resultType="member">

@@ -16,7 +16,7 @@
           <div class="d-flex align-items-center pb-3 mb-3 text-center link-dark text-decoration-none border-bottom">
             <span class="fs-5 fw-semibold "> 개인정보 수정 </span>
           </div>
-          <form method="post">
+          <form id="modProfile" action="/member/modProfile.do"method="post">
             <!-- .form-group -->
           
             <div class="form-group">

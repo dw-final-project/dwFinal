@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.dw.service.MailSendService;
 import kr.or.dw.service.MemberService;
@@ -65,8 +67,6 @@ public class MemberController {
 		@GetMapping("/mailCheck")
 		@ResponseBody
 		public String mailCheck(String email) throws Exception{
-			System.out.println("이메일 인증 요청이 들어옴!");
-			System.out.println("이메일 인증 이메일 : " + email);
 			return mailService.joinEmail(email);
 					
 		};
@@ -74,17 +74,17 @@ public class MemberController {
 	// 회원가입 
 	@RequestMapping("/register")
 	public String register(MemberVO member, String domainselect, HttpServletRequest req, HttpServletResponse res) throws Exception{
-	    System.out.println(member.getId());  
 
-		System.out.println("세팅 전 : " + member.getEmail());
+
 		member.setEmail(member.getEmail()+ domainselect);
-		System.out.println("세팅 후 : " + member.getEmail());
 		memberService.register(member);
+		
 		  res.setContentType("text/html; charset=utf-8");
 	      PrintWriter out = res.getWriter();
 	      out.println("<script>");
 	      out.println("alert('회원가입이 정상적으로 되었습니다.');");
 	      out.println("</script>");
+	      
 	      return "/common/loginForm";
 	}
 	
@@ -94,25 +94,27 @@ public class MemberController {
 		String url = "/common/IDfindForm";
 		return url;
 	}
-	@RequestMapping("/IDfind")
-	public String IDfind(MemberVO member, HttpServletRequest req, HttpServletResponse res) throws SQLException, IOException {
-		MemberVO status = memberService.idFind(member);
-		String url = "";
 	
+	@RequestMapping("/IDfind")
+	public void IDfind(MemberVO member, HttpServletRequest req, HttpServletResponse res) throws SQLException, IOException {
+		MemberVO status = memberService.idFind(member);
+//		String url="";
+		
 		res.setContentType("text/html; charset=utf-8");
-	      PrintWriter out = res.getWriter();
-		if(status == null || status.equals("")) {			
-			url = "/common/IDfindForm";
-			  out.println("<script>");
-		      out.println("alert('회원님의 이름 또는 이메일를 다시 확인해주세요.');");
-		      out.println("</script>");
+		System.out.println(status.getId());
+	    PrintWriter out = res.getWriter();
+		if(status == null || status.equals("")) {	
+		  out.println("<script>");
+		  out.println("alert('회원님의 이름 또는 이메일를 다시 확인해주세요.');");
+		  out.println("location.href='/common/IDfindForm';");
+		  out.println("</script>");
 		}else {
 	      out.println("<script>");
 	      out.println("alert('회원님의 ID는 " + status.getId() + " 입니다.');");
+	      out.println("location.href='/common/loginForm';");
 	      out.println("</script>");
-	      url = "/common/loginForm";
 		}
-		return url;
+		
 	}
 	
 	
@@ -122,30 +124,31 @@ public class MemberController {
 	}
 
 	@RequestMapping("/PWfind")
-	public String PWfind(MemberVO member, HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public ModelAndView PWfind(MemberVO member, HttpServletRequest req, HttpServletResponse res, ModelAndView mnv) throws Exception {
 		String status2 = memberService.pwFind(member);
-		String url = "";
-		res.setContentType("text/html; charset=utf-8");
-	      PrintWriter out = res.getWriter();
+		
 		if(status2 == null || status2.equals("")) {
-			url = "/common/PWfindForm";
-			  out.println("<script>");
-		      out.println("alert('회원님의 아이디 또는 이메일를 다시 확인해주세요.');");
-		      out.println("</script>");
-		} else {
-			url = "/common/PWrenew";
+			mnv.setViewName("/common/PWfindForm");
+		} else {			
+			mnv.addObject("id", member.getId());
+			mnv.setViewName("/common/PWrenew");
 		}
 		
-		return url;
+		return mnv;
 	}
-	
 	@RequestMapping("/PWrenew")
-	public String PWrenew (MemberVO member, HttpServletRequest req, HttpServletResponse res) throws Exception{
-		String pw = memberService.pwRenew(member);
+	public ModelAndView PWrenew (ModelAndView mnv, String pwd, String id) throws Exception{
 		String url = "/common/loginForm";
-				
-		return url;
+		
+		memberService.pwRenew(pwd, id);		
+		mnv.setViewName(url);
+		
+		return mnv;
 	}
 	
+	@RequestMapping("/modProfile")
+	public String Profile(HttpServletResponse res) throws SQLException {
+		return "/common/modProfile";
+	}
 	
 }
