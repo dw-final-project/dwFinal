@@ -41,6 +41,15 @@ public class MemberController {
 	@Autowired
 	private MailSendService mailService;
 	
+	@RequestMapping("/mypage")
+	public ModelAndView index(ModelAndView mnv, String mcode) throws SQLException{
+		String url = "/common/userProfile.page";
+		
+		mnv.addObject("mcode", mcode);
+		mnv.setViewName(url);
+		return mnv;
+	}
+	
 	// 아이디 중복확인
 	@RequestMapping("/idCheck") 
 	public ResponseEntity<String> idCheck(String id, HttpServletRequest req){
@@ -74,8 +83,6 @@ public class MemberController {
 	// 회원가입 
 	@RequestMapping("/register")
 	public String register(MemberVO member, String domainselect, HttpServletRequest req, HttpServletResponse res) throws Exception{
-
-
 		member.setEmail(member.getEmail()+ domainselect);
 		memberService.register(member);
 		
@@ -96,9 +103,8 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/IDfind")
-	public void IDfind(MemberVO member, HttpServletRequest req, HttpServletResponse res) throws SQLException, IOException {
+	public void IDfind(MemberVO member, HttpServletResponse res) throws SQLException, IOException {
 		MemberVO status = memberService.idFind(member);
-//		String url="";
 		
 		res.setContentType("text/html; charset=utf-8");
 		System.out.println(status.getId());
@@ -146,9 +152,26 @@ public class MemberController {
 		return mnv;
 	}
 	
-	@RequestMapping("/modProfile")
-	public String Profile(HttpServletResponse res) throws SQLException {
+	@RequestMapping("/modProfileForm")
+	public String modProfile(){		
 		return "/common/modProfile";
+	}	
+
+	@RequestMapping("/modProfile")
+	public String Profile(MemberVO member, HttpServletResponse res) throws Exception {
+		String Profile = memberService.modProfile(member);
+		String url = "";
+		if(Profile == null || Profile.equals("")) {
+			  url = "/common/modProfile";
+		}else {
+			url="/common/userProfile";
+		}
+		return url;
+	}
+	
+	@RequestMapping("/userProfile")
+	public String userProfile(HttpServletResponse res) throws SQLException {
+		return "/common/userProfile";
 	}
 	
 }

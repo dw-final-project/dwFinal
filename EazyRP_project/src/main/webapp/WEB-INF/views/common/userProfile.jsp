@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>개인정보수정</title>
+<title>개인정보조회</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -61,126 +61,77 @@
 
     .nav d-flex {
       justify-content: space-evenly;
-    }
+    } */
 
-  </style>
-  <!-- Custom styles for this template -->
+    .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
 </head>
 
-<body class="bg-light">
-
-  <nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">로고</a>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        </ul>
-        <div>
-        </div>
-      </div>
-
-    </div>
-  </nav>
-
-  <div class="nav-scroller py-1 mb-2">
-    <nav class="nav d-flex" style="background-color: #4685e4; justify-content:space-evenly;">
-      <a class="p-2" style="color: white; text-decoration-line: none;" href="#">개인정보/문의</a>
-      <a class="p-2" style="color: white; text-decoration-line: none;" href="#">나만의 메뉴</a>
-      <a class="p-2" style="color: white; text-decoration-line: none;" href="#">재고 1</a>
-      <a class="p-2" style="color: white; text-decoration-line: none;" href="#">재고 2</a>
-      <a class="p-2" style="color: white; text-decoration-line: none;" href="#">관리</a>
-    </nav>
-  </div>
   
   <!-- main -->
   <div class="main" style="height: 80%; display: flex;">
 
-    <!-- sidebar -->   
-    <nav class="d-flex flex-column flex-shrink-0 p-3 bg-white " style=" float:left ; width: 20%; height: 100%; display: inline">
-      <div class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-        <span class="fs-5 fw-semibold"> 개인정보 </span>
-      </div>
-      <ul class="list-unstyled ps-0">
-        <li class="mb-1">
-          <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-            개인정보 조회 및 수정
-          </a>
-        </li>
-        <li class="mb-1">
-          <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-            회원탈퇴
-          </a>
-        </li>
-      </ul>
-        <div class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-           <span class="fs-5 fw-semibold"> 관리자 문의 </span>
-        </div>
-        <ul class="list-unstyledv ps-0">
-          <li class="mb-1" style="list-style: none;">
-            <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-              관리자 문의하기
-            </a>
-          </li>
-          <li class="mb-1" style="list-style: none;">
-            <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-              문의 답변 확인
-            </a>
-          </li>
-        </ul>     
-        </nav>
-
      <!-- 11111 -->
-     <div class="h-60 col-lg-8" style="align-items: center; display: flex; justify-content: center;">
+     <div class="h-60 col-lg-8 container text-center;" style="align-items: center; display: flex; justify-content: center;">
+
       <!-- .card -->
-      <div class="card card-fluid" >
-        
-        
-        <div class="card-body">
-          <!-- form -->
+      <div class="card card-fluid" style="width: 80%;">
+        <div class="card-body" style="text-align: center;">
           <!-- form -->
           <div class="d-flex align-items-center pb-3 mb-3 text-center link-dark text-decoration-none border-bottom">
-            <span class="fs-5 fw-semibold "> 개인정보 수정 </span>
+            <span class="fs-5 fw-semibold "> 개인정보 조회 </span>
           </div>
-          <form method="post">
-            <!-- .form-group -->
-          
-            <div class="form-group">
-              <label for="email">Email</label> 
-              <div class="input-group">
-                <input type="email" class="form-control" id="email" required="">
-                <button type="submit" class="btn btn-primary" disabled>인증번호 전송</button>
+          <!-- .form-group -->
+          <form action="/member/userProfile.do" method="post" style="text-align: -webkit-center; width: 100%;align-items: center; display: inline-block;">
+            <div class="mb-8 row"  style="align-items: center; justify-content: center;">
+              <label for="staticid" class="col-sm-2 col-form-label">아이디</label>
+              <div class="col-sm-8">
+                <input type="id" readonly class="form-control-plaintext" id="staticid" name="id" value="${member.id }" readonly>
               </div>
             </div>
-            <div class="form-group">
-              <label for="emailchk">인증번호</label> 
-              <div class="input-group">
-                <input type="email" class="form-control" id="emailchk">
-                <button type="submit" class="btn btn-primary" disabled>인증번호 확인</button>
+
+            <div class="mb-8 row" style="align-items: center; justify-content: center;" >
+              <label for="staticname" class="col-sm-2 col-form-label">이 름</label>
+              <div class="col-sm-8">
+                <input type="name" readonly class="form-control-plaintext" id="staticname" name="name"value="${member.name }" readonly>
               </div>
             </div>
-            <div class="form-group">
-              <label for="input02">비밀번호 변경</label> 
-              <input type="password" class="form-control" id="input02" required="">
+
+            <div class="mb-8 row" style="align-items: center; justify-content: center;" >
+              <label for="staticphone" class="col-sm-2 col-form-label">연락처</label>
+              <div class="col-sm-8">
+                <input type="phone" readonly class="form-control-plaintext" id="staticphone" name="tel" value="${member.tel }" readonly>
+              </div>
             </div>
-              <div class="form-group">  
-              <label for="input02">비밀번호 확인</label> 
-              <input type="password" class="form-control" id="input02" required="">
+
+            <div class="mb-8 row" style="align-items: center; justify-content: center;" > 
+              <label for="staticadd" class="col-sm-2 col-form-label">집주소</label>
+              <div class="col-sm-8">
+                <input type="add" readonly class="form-control-plaintext" id="addr" name="addr"value="${member.addr }" readonly>
+              </div>
+            </div>
+            <div class="mb-8 row" style="align-items: center; justify-content: center;">
+              <label for="staticEmail" class="col-sm-2 col-form-label">이메일</label>
+              <div class="col-sm-8">
+                <input type="emailstaticadd" readonly class="form-control-plaintext" id="Email" name="email" value="${member.email }" readonly>
+              </div>
+            </div>
             </div><!-- /.form-group -->
-              <button type="submit" class="btn btn-primary" disabled>비밀번호 변경</button>
-              <button type="submit" class="btn btn-primary" disabled>취 소</button>
           </form><!-- /form -->
+ 
+            <div class="btn" style="border:0">
+              <button type="submit" class="btn btn-primary " disabled>비밀번호 변경</button>
+              <button type="submit" class="btn btn-primary" disabled>정보 변경</button>
+              <button type="submit" class="btn btn-primary" disabled>회원탈퇴</button>
+            </div>
         </div><!-- /.card-body -->
       </div><!-- /.card -->
     </div>
-  </div>
-    
-    <!-- footer -->
-    
-    
-    
-  </body>
-  
   </html>
+<%@ include file="../include/footer_js.jsp"%>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-

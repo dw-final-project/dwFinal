@@ -22,4 +22,8 @@ public interface MemberDAO {
 
 	void updatePwd(@Param("pwd") String pwd, @Param("id") String id) throws SQLException;
 
+	String modProfile(MemberVO member) throws SQLException;
+
+
+
 }

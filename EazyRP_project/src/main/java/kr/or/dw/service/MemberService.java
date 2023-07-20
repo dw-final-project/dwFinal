@@ -18,5 +18,8 @@ public interface MemberService {
 
 	void pwRenew(String pwd, String id) throws SQLException;
 
+	String modProfile(MemberVO member) throws SQLException;
+
+
 
 }

@@ -44,6 +44,12 @@ public class MemberServiceImpl implements MemberService{
 		 memberDAO.updatePwd(pwd, id);
 	}
 
+	@Override
+	public String modProfile(MemberVO member) throws SQLException {
+		String mod = memberDAO.modProfile(member);
+		return mod;
+	}
+
 
 
 }
