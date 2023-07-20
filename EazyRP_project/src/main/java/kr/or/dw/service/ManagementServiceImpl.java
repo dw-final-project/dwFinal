@@ -13,6 +13,7 @@ import kr.or.dw.command.PageMaker;
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.dao.ManagementDAO;
 import kr.or.dw.vo.DraftVO;
+import kr.or.dw.vo.PlVO;
 
 @Service
 public class ManagementServiceImpl implements ManagementService{
@@ -52,6 +53,22 @@ public class ManagementServiceImpl implements ManagementService{
 	@Override
 	public void documentRegist(DraftVO draft) throws SQLException {
 		managementDAO.documentRegist(draft);
+	}
+
+	@Override
+	public DraftVO selectDraft(String dr_no) throws SQLException {
+		DraftVO draft = null;
+		
+		draft = managementDAO.selectDraft(dr_no);
+		return draft;
+	}
+
+	@Override
+	public PlVO getPl(String pl_no) throws SQLException {
+		PlVO pl = null;
+		pl = managementDAO.getPl(pl_no);
+		
+		return pl;
 	}
 
 }

@@ -7,7 +7,7 @@
 		FROM draft d, emp e
 		WHERE d.c_no = #{c_no}
 		  AND d.emp_no = e.emp_no
-		ORDER BY d.DR_NO
+		ORDER BY d.DR_NO DESC
 	</select>
 	
 	<select id="getDraftCount" resultType="int">
@@ -29,9 +29,24 @@
 		#{pl_no},
 		'',
 		'',
-		#{c_no}
+		#{c_no},
+		#{realFileName}
 		)
 		
 	</insert>
+	
+	<select id="selectDraft" resultType="draft">
+		SELECT d.*, e.e_name e_name
+		FROM draft d, emp e
+		WHERE d.dr_no = #{dr_no}
+		  AND d.emp_no = e.emp_no
+		ORDER BY d.DR_NO
+	</select>
+	
+	<select id="getPl" resultType="pl">
+		SELECT *
+		  FROM pl
+		 WHERE pl_no = #{pl_no}
+	</select>
 
 </mapper>
