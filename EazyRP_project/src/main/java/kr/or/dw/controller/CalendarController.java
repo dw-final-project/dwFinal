@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.microsoft.schemas.office.visio.x2012.main.DataType;
-
 import javassist.expr.Instanceof;
 import kr.or.dw.command.PageMaker;
 import kr.or.dw.command.SearchCriteria;

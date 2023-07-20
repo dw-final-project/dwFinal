@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.dw.vo.DraftVO;
+import kr.or.dw.vo.PlVO;
 
 @Mapper
 public interface ManagementDAO {
@@ -16,6 +17,10 @@ public interface ManagementDAO {
 	int getDraftCount(Map<String, Object> dataMap2) throws SQLException;
 
 	void documentRegist(DraftVO draft) throws SQLException;
+
+	DraftVO selectDraft(String dr_no) throws SQLException;
+
+	PlVO getPl(String pl_no) throws SQLException;
 
 
 }

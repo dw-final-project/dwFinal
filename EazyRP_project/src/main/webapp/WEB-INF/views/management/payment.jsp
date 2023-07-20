@@ -43,7 +43,7 @@
 									<tr>
 										<td></td>
 										<td style="text-align: center;">${dr.sys_regdate }</td>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/management/detail.do?n_no=${note.n_no }&send=N', '쪽지보기', 700, 1000, '${loop.index}')">${dr.title }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/management/detail.do?dr_no=${dr.dr_no }&send=N', '기안문 조회', 700, 1000, '${loop.index}')">${dr.title }</a></td>
 										<td style="text-align: center;">${dr.gb }</td>
 										<td style="text-align: center;">${dr.e_name}</td>
 										<td id="read_${loop.index}" style="text-align: center; height:80%; font-weight:bold; font-size: 0.6em; color: ${dr.pl_progress == '결재완료' ? 'blue' : 'red' };">
@@ -76,11 +76,6 @@
 	})
 	
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight, index){
-		var selectedElement = document.getElementById("read_"+index);
-		  if (selectedElement) {
-		    selectedElement.style.color = "blue";
-		    selectedElement.innerHTML = "읽음";
-		  }
 		winleft = (screen.width - WinWidth) / 2;
 		wintop = (screen.height - WinHeight) / 2;
 		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "

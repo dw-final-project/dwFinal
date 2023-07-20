@@ -16,7 +16,7 @@ public interface MemberService {
 
 	MemberVO idFind(MemberVO member) throws SQLException;
 
-	String pwRenew(MemberVO member) throws SQLException;
+	void pwRenew(String pwd, String id) throws SQLException;
 
 
 }

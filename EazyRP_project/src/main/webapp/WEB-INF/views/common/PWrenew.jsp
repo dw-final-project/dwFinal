@@ -158,21 +158,22 @@ body {
 				<h4 class="modal-title">PW 재설정</h4>
 			</div>
 			<div class="modal-body">
-				<form id="PWrenewForm" action="/member/PWrenew.do" method="post">
+				<form role="PWrenewForm" id="PWrenewForm" action="/member/PWrenew.do" method="post">
+					<input type="hidden" name="id" value="${id }">
 					<div class="form-group">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-							<input type="password" class="form-control" name="password" placeholder="PW" required="required">
+							<input type="password" class="form-control" name="pwd" placeholder="PW" required="required">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-							<input type="password" class="form-control" name="password" placeholder="PW 확인" required="required">
+							<input type="password" class="form-control" name="pwchk" placeholder="PW 확인" required="required">
 						</div>
 					</div>
 					<div class="form-group findbtn">
-						<button type="submit" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;">비밀번호 재설정</button>
+						<button type="submit" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;" onclick="submit_go();">비밀번호 재설정</button>
 					</div>
 				</form>
 			</div>
@@ -181,3 +182,4 @@ body {
 	</div>    
 </body>
 </html>
+<%@ include file="PWrenew_js.jsp" %> 

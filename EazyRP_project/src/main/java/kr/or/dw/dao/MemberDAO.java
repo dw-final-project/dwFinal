@@ -3,6 +3,7 @@ package kr.or.dw.dao;
 import java.sql.SQLException;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import kr.or.dw.vo.MemberVO;
 
@@ -19,6 +20,6 @@ public interface MemberDAO {
 
 	MemberVO selectIDFind(MemberVO member)throws SQLException;
 
-	String updatePwd(MemberVO member) throws SQLException;
+	void updatePwd(@Param("pwd") String pwd, @Param("id") String id) throws SQLException;
 
 }
