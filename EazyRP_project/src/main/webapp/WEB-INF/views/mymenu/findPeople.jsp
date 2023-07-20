@@ -40,9 +40,8 @@
 				<c:forEach items="${emp }" var="emp">
 				<tr class="trHover">
 					<td style="text-align: center;" id="name">${emp.e_name }</td>
-					<td style="text-align: center;" id="c_name">${emp.c_name }</td>
+					<td style="text-align: center;" id="c_name">${emp.c_name }<input type="hidden" id="emp_no" value="${emp.emp_no }"></td>
 				</tr>
-				<input type="hidden" id="emp_no" value="${emp.emp_no }">
 				</c:forEach>
 		</table>
 	</div>
@@ -59,7 +58,7 @@
 <script>
 	$('tr').on('click', function(){
 		$('#name', opener.document).val($(this).find('#c_name').text() + " / " + $(this).find('#name').text());
-		$('#receiver', opener.document).val($(this).find("#emp_no").text());
+		$('#receiver', opener.document).val($(this).find("#emp_no").val());
 		window.close();
 	})
 
