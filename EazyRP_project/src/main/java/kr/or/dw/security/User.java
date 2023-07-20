@@ -13,16 +13,13 @@ import kr.or.dw.vo.MemberVO;
 public class User implements UserDetails{
 	
 	private MemberVO member;
-	private String e_rank;
-	public User(MemberVO member, String e_rank) {
+	public User(MemberVO member) {
 		this.member = member;
-		this.e_rank = e_rank;
 	}
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
-		roles.add(new SimpleGrantedAuthority(e_rank));
 		return roles;
 	}
 
