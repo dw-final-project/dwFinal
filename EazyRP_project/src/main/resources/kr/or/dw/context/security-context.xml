@@ -60,11 +60,11 @@
 			authentication-failure-handler-ref="loginFailureHandler"
 		/>
 		
-		<logout
-			logout-url="/common/logout"
-			invalidate-session="true"
-			logout-success-url="/"
-		/>
+<!-- 		<logout -->
+<!-- 			logout-url="/common/logout" -->
+<!-- 			invalidate-session="true" -->
+<!-- 			logout-success-url="/" -->
+<!-- 		/> -->
 		
 		<session-management invalid-session-url="/common/LoginTimeOut">
 			<concurrency-control 

@@ -39,9 +39,9 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public String pwRenew(MemberVO member) throws SQLException {
-		String renew = memberDAO.updatePwd(member);
-		return renew;
+	public void pwRenew(String pwd, String id) throws SQLException {
+		System.out.println("서비스 임플 진입");
+		 memberDAO.updatePwd(pwd, id);
 	}
 
 
