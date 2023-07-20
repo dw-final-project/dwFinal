@@ -72,13 +72,13 @@
 <body>
     <h2>DW 견적서 등록</h2>
 	<!-- card footer End -->
-<form role="form" method="post" action="/erp4/insertEstimate.do" enctype="files">
+<form role="form" method="post" action="/erp4/insertEstimate.do" enctype="multipart/form-data">
 	<table>
         <tr>
             <td width="40%" align="center"><b>담당자</b></td>
             
-            <td><input type="hidden" name="emp_no" id="emp_no" value="${empno }">
-            <input type="text" style="width: 100%;" value="${ename }" id="name" name="name" readonly onclick="OpenWindow('/erp4/findPeople.do', '사람찾기', 400, 600)"></td>
+            <td><input type="hidden" name="emp_no" id="receiver" value="${empno }">
+            <input type="text" style="width: 100%;" value="${ename }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)"></td>
         </tr>
         <tr>
             <td width="40%" align="center"><b>외화 코드</b></td>
@@ -93,7 +93,9 @@
         </tr>
         <tr>
             <td align="center"><b>첨부파일</b></td>
-            <td><input type="file" style="width: 100%;"  name ="files" value=""></td>
+            <td><input type="file" style="width: 100%;"  name ="files" value="">
+            	<input type="hidden" id="fileName" name="fileName" value=""> 
+            </td>
         </tr>
     </table>
     <button type="button" id="addPutBtn">제품추가</button>

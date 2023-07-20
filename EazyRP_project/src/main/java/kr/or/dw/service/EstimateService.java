@@ -25,6 +25,8 @@ public interface EstimateService {
 	List<WareHouseVO> getWareHouseList() throws SQLException;
 
 	String ename(int empno) throws SQLException;
+
+	void insertEstimate(List<EstimateVO> vo) throws SQLException;
 	
 	
 

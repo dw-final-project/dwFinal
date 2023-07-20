@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,48 +104,48 @@ public class BusinessController {
 		String url = "jihwan/s_Sheet";
 		return url;
 	}
-	
-	@RequestMapping("/estimateInsert")
-	public void estimateInsert(@RequestParam("files")MultipartFile multi, EstimateVO vo,HttpServletResponse res) throws SQLException, IOException{
-		// 파일저장 및 파일명 가져오기
-		if(multi != null) {
-			UUID uuid = UUID.randomUUID();
-			String[] uuids = uuid.toString().split("-");
-			
-			String uniqueName = uuids[0];
-			
-			String fileRealName = multi.getOriginalFilename();
-			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
-			String uploadFolder = "C:\\upload\\";
-			vo.setFiles(uniqueName+fileExtension);
-			
-			
-			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
-			
-			if(!saveFile.exists()) {
-				saveFile.mkdirs();
-			}
-			
-			try {
-				multi.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		// 가져온 파일명 estimateVO에 set
-
-		// DB에 Insert
-		estimateService.estimateInsert(vo);
-		System.out.println(vo.getEst_no());
-		res.setContentType("text/html; charset=utf-8");
-		PrintWriter out = res.getWriter();
-		out.println("<script>");
-		out.println("alert('성공적으로 등록되었습니다.')");
-		out.println("window.opener.location.reload(true); window.close();");
-		out.println("</script>");
-	}
+//	
+//	@RequestMapping("/estimateInsert")
+//	public void estimateInsert(@RequestParam("files")MultipartFile multi, EstimateVO vo,HttpServletResponse res) throws SQLException, IOException{
+//		// 파일저장 및 파일명 가져오기
+//		if(multi != null) {
+//			UUID uuid = UUID.randomUUID();
+//			String[] uuids = uuid.toString().split("-");
+//			
+//			String uniqueName = uuids[0];
+//			
+//			String fileRealName = multi.getOriginalFilename();
+//			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
+//			String uploadFolder = "C:\\upload\\";
+//			vo.setFiles(uniqueName+fileExtension);
+//			
+//			
+//			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
+//			
+//			if(!saveFile.exists()) {
+//				saveFile.mkdirs();
+//			}
+//			
+//			try {
+//				multi.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
+//			} catch (IllegalStateException e) {
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		// 가져온 파일명 estimateVO에 set
+//
+//		// DB에 Insert
+//		estimateService.estimateInsert(vo);
+//		System.out.println(vo.getEst_no());
+//		res.setContentType("text/html; charset=utf-8");
+//		PrintWriter out = res.getWriter();
+//		out.println("<script>");
+//		out.println("alert('성공적으로 등록되었습니다.')");
+//		out.println("window.opener.location.reload(true); window.close();");
+//		out.println("</script>");
+//	}
 	
 	@RequestMapping("/findPeople")
 	public ModelAndView findPeople(ModelAndView mnv, String searchType, String keyword) throws SQLException {
@@ -248,22 +249,54 @@ public class BusinessController {
 	}
 	
 	@RequestMapping("/insertEstimate")
-	public void insertEstimate (String[] pr_no, String fc_no, String files, String[] wh_no, int[] quantity, int[] amount,  HttpServletResponse res) throws Exception {
+	public void insertEstimate (@RequestParam("files")MultipartFile multi, int emp_no, String[] pr_no, String fc_no, String[] wh_no, int[] quantity, int[] amount,  HttpServletResponse res) throws Exception {
 		
+		List<EstimateVO> vo = new ArrayList<EstimateVO>();
 		
-		List<EstimateVO> vo = null;
+		String filess = "";
+		
+		if(!multi.isEmpty()) {
+			UUID uuid = UUID.randomUUID();
+			String[] uuids = uuid.toString().split("-");
+			
+			String uniqueName = uuids[0];
+			
+			String fileRealName = multi.getOriginalFilename();
+			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
+			String uploadFolder = "C:\\upload\\";
+			
+			filess = uniqueName+fileExtension;
+			
+			
+			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
+			
+			if(!saveFile.exists()) {
+				saveFile.mkdirs();
+			}
+			
+			try {
+				multi.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		for(int i= 0; i < pr_no.length; i++) {
-			EstimateVO est = null;
+			EstimateVO est = new EstimateVO();
+			est.setEmp_no(emp_no);
 			est.setPr_no(pr_no[i]);
 			est.setFc_no(fc_no);
-			est.setFiles(files);
 			est.setWh_no(wh_no[i]);
-			est.setQuantity(quantity);
-			est.setAmount(amount);
+			est.setAmount(amount[i]);
+			est.setQuantity(quantity[i]);
+			est.setFiles(filess);
 			
-			
-			vo.set(i, est);
+			vo.add(est);	
 		}
+		
+		System.out.println(vo);
 		
 		estimateService.insertEstimate(vo);
 		
@@ -273,6 +306,8 @@ public class BusinessController {
 		out.println("alert('성공적으로 등록되었습니다.')");
 		out.println("window.opener.location.reload(true); window.close();");
 		out.println("</script>");
+		
+		
 	}
 	
 	
