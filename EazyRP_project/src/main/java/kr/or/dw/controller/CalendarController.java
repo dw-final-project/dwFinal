@@ -72,7 +72,6 @@ public class CalendarController {
 			System.out.println("calendar_no : " + calendar.getCalendar_no());
 			System.out.println(calendar.getCalendar_end());
 			calendarService.modify(calendar);
-			
 			return "SUCCESS";
 			
 		}
