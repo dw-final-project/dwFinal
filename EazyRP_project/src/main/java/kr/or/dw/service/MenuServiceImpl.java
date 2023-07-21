@@ -56,6 +56,20 @@ public class MenuServiceImpl implements MenuService{
 		return url;
 	}
 
+	@Override
+	public List<String> getE_name(String selectedC_no) throws SQLException {
+		List<String> e_name = menuDAO.getE_name(selectedC_no);
+		
+		return e_name;
+	}
+
+	@Override
+	public List<String> getEmp_no(String selectedC_no) throws SQLException {
+		List<String> emp_no = menuDAO.getEmp_no(selectedC_no);
+		
+		return emp_no;
+	}
+
 
 
 

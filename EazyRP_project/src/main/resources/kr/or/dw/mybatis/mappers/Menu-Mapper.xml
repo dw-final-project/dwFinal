@@ -22,4 +22,11 @@
 		SELECT murl FROM menu WHERE mcode = #{mcode}
 	</select>
 	
+	<select id="getE_name" resultType="str">
+		SELECT e_name FROM emp WHERE c_no = #{selectedC_no}
+	</select>	
+	
+	<select id="getEmp_no" resultType="str">
+		SELECT emp_no FROM emp WHERE c_no = #{selectedC_no}
+	</select>
 </mapper>

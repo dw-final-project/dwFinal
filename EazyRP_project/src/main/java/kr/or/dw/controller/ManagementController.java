@@ -11,11 +11,37 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.aspose.cells.CellsException;
+import com.aspose.cells.ImageOrPrintOptions;
+import com.aspose.cells.Range;
+import com.aspose.cells.SheetRender;
+import com.aspose.cells.Workbook;
+import com.aspose.cells.Worksheet;
+import com.aspose.cells.Cell;
+import com.aspose.cells.Cells;
+import com.aspose.cells.LoadOptions;
+import com.aspose.cells.Workbook;
+import com.aspose.cells.Worksheet;
+
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import javax.imageio.ImageIO;
+
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.service.ManagementService;
 import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.PlVO;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -29,6 +55,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,10 +63,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.core.ApplicationContext;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -178,73 +201,51 @@ public class ManagementController {
 	
 	
 	@RequestMapping("/detail")
-	public ModelAndView detail(String dr_no, ModelAndView mnv, HttpSession session) throws SQLException {
+	public ModelAndView detail(String dr_no, ModelAndView mnv, HttpSession session) throws Exception {
 		DraftVO draft = null;
 		Map<String, Object> dataMap = new HashMap<>();
 		draft = managementService.selectDraft(dr_no);
-        FileInputStream file= null;
-		String fileName = draft.getFiles();
-		String uploadPath = session.getServletContext().getRealPath("/resources/documents/");
-		
-		File saveFile = new File(uploadPath+fileName);
-		  try {
-			  	file = new FileInputStream(saveFile);
-		        XSSFWorkbook workbook = new XSSFWorkbook(file);
-		        List<String> content = new ArrayList<String>();
-		        int rowNo = 0;
-		        int cellIndex = 0;
-		        String val = "";
+		String fileName = draft.getFiles();  // 파일 이름
+		String uploadPath = session.getServletContext().getRealPath("/resources/documents/"); // 파일 경로
+				
+		String saveFile = (uploadPath+fileName); // 파일경로 + 파일이름
+        List<String> data = new ArrayList<>();
+		try {
+            // 엑셀 파일 로드
+            LoadOptions loadOptions = new LoadOptions();
+            Workbook workbook = new Workbook(saveFile, loadOptions);
 
-		        XSSFSheet sheet = workbook.getSheetAt(0); 
-		        
+            // 첫 번째 시트 가져오기
+            Worksheet worksheet = workbook.getWorksheets().get(0);
 
-		        int rows = sheet.getPhysicalNumberOfRows();
-		        for(rowNo = 0; rowNo <= rows; rowNo++){
-		            XSSFRow row = sheet.getRow(rowNo);
-		            if(row != null){
-		                int cells = row.getPhysicalNumberOfCells();
-		                for(cellIndex = 0; cellIndex <= cells; cellIndex++){  
-		                    XSSFCell cell = row.getCell(cellIndex);       
-		                    String value = "";	                    
-		                    if(cell == null) {
-		                        continue;
-		                    }else{
-		                        switch (cell.getCellType()){
-		                        case FORMULA:
-		                            value = cell.getCellFormula();
-		                            break;
-		                        case NUMERIC:
-		                            value = cell.getNumericCellValue() + "";
-		                            break;
-		                        case STRING:
-		                            value = cell.getStringCellValue() + "";
-		                            break;
-		                        case BLANK:
-		                            value = cell.getBooleanCellValue() + "";
-		                            break;
-		                        case ERROR:
-		                            value = cell.getErrorCellValue() + "";
-		                            break;
-		                        }
-		                    }
-		                    if(!value.equals("false")) {
-		                    	System.out.println( rowNo + "번 행 : " + cellIndex + "번 열 값은: " + value);
-		                    	content.add(value);
-		                    }
-		                }
-		            }
-		        } 
-		        
-		        System.out.println(content);
-				mnv.addObject("content", content);
-		    }catch(Exception e) {
-	    		e.printStackTrace();
-	    	}
-		
-		String url = "/management/documentView1";
+            // 모든 행을 반복하여 데이터를 2차원 List에 저장
+            Cells cells = worksheet.getCells();
+            int maxRow = cells.getMaxDataRow() + 1;
+            int maxColumn = cells.getMaxDataColumn() + 1;
+            for (int row = 0; row < maxRow; row++) {
+                for (int column = 0; column < maxColumn; column++) {
+                    // 각 셀의 데이터를 문자열로 변환하여 2차원 리스트에 추가
+                    Cell cell = cells.get(row, column);
+                    data.add((String)cell.getStringValue());
+                }
+            }
+            // 데이터 확인
+                for (int i = 0; i < data.size(); i++) {
+                    System.out.println(i + "번쨰 = " + data.get(i));
+                    System.out.println(i + "번쨰 타입 = "+ data.get(i).getClass());
+                }
+
+            // Clean up resources
+            workbook.dispose();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		String url = "";
+		url = "/management/detailD002";
 		String pl_no = draft.getPl_no();
 		PlVO pl = managementService.getPl(pl_no);
 		
+		dataMap.put("data", data);
 		dataMap.put("draft", draft);
 		dataMap.put("pl", pl);
 		
@@ -253,7 +254,6 @@ public class ManagementController {
 		
 		return mnv;
 	}
-	
-	
+	 
 
 }
