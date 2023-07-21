@@ -75,10 +75,13 @@ public class MyMenuServiceImpl implements MyMenuService{
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		Map<String, Object> dataMap2 = new HashMap<String, Object>();
+		
+		dataMap2.put("keyword", cri.getKeyword());
+		dataMap2.put("searchType", cri.getSearchType());
 		dataMap2.put("cri", cri);
 		dataMap2.put("c_no", c_no);
-		dataMap2.put("rowbounds", rowBounds);
-		List<NoteVO> note = mymenuDAO.getNoteList(dataMap2);
+//		dataMap2.put("rowbounds", rowBounds);
+		List<NoteVO> note = mymenuDAO.getNoteList(dataMap2, rowBounds);
 		
 		int totalCount = mymenuDAO.selectSearchNoteListCount(dataMap2);
 		PageMaker pageMaker = new PageMaker();
@@ -107,10 +110,20 @@ public class MyMenuServiceImpl implements MyMenuService{
 	}
 
 	@Override
-	public List<NoteVO> searchNote(Map<String, String> valMap) throws SQLException {
-		List<NoteVO> note = mymenuDAO.searchNote(valMap);
+	public List<NoteVO> searchNote(Map<String, String> dataMap) throws SQLException {
+		String c_no = (String) dataMap.get("c_no");
+		Map<String, Object> dataMap2 = new HashMap<String, Object>();
+		dataMap2.put("c_no", c_no);
+//		dataMap2.put("rowbounds", rowBounds);
 		
-		return note;
+		int totalCount = mymenuDAO.selectSearchNoteListCount(dataMap2);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setTotalCount(totalCount);
+
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pageMaker", pageMaker);
+		return null;
 	}
 
 	@Override

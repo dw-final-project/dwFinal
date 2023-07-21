@@ -28,7 +28,7 @@ public class EmpVO {
 	private String sys_updatedate;
 	private String sys_reg;
 	private String c_name;
-	
+	private String stampImg;
 	
 	
 	

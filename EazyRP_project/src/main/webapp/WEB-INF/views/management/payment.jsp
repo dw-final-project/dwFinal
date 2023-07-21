@@ -11,10 +11,10 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">전자결재</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/mymenu/search.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/management/payment.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
-								<option value="t" ${searchType eq 'd' ? 'selected' : '' }>서류구분</option>
+								<option value="d" ${searchType eq 'd' ? 'selected' : '' }>서류구분</option>
 								<option value="t" ${searchType eq 't' ? 'selected' : '' }>결재서류명</option>
 								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>기안자</option>
 								<option value="p" ${searchType eq 'p' ? 'selected' : '' }>진행상태</option>
@@ -46,8 +46,32 @@
 										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/management/detail.do?dr_no=${dr.dr_no }&send=N', '기안문 조회', 700, 1000, '${loop.index}')">${dr.title }</a></td>
 										<td style="text-align: center;">${dr.gb }</td>
 										<td style="text-align: center;">${dr.e_name}</td>
-										<td id="read_${loop.index}" style="text-align: center; height:80%; font-weight:bold; font-size: 0.6em; color: ${dr.pl_progress == '결재완료' ? 'blue' : 'red' };">
-										${dr.pl_progress}
+										<td id="read_${loop.index}" style="text-align: center; height:80%; font-weight:bold; font-size: 0.6em; color: 
+										<c:if test="${dr.pl_progress eq '0'}">
+										black
+										</c:if>
+										<c:if test="${dr.pl_progress eq '1' || dr.pl_progress eq '2'}">
+										#ae78ff
+										</c:if>
+										<c:if test="${dr.pl_progress eq '3'}">
+										blue
+										</c:if>
+										<c:if test="${dr.pl_progress eq '1fail' || dr.pl_progress eq '2fail' || dr.pl_progress eq '3fail'}">
+										red
+										</c:if>
+										;">
+										<c:if test="${dr.pl_progress eq '0'}">
+											결재 대기중
+										</c:if>
+										<c:if test="${dr.pl_progress eq '1' || dr.pl_progress eq '2'}">
+											결재 진행중(${dr.pl_progress})
+										</c:if>
+										<c:if test="${dr.pl_progress eq '3'}">
+											결재 완료
+										</c:if>
+										<c:if test="${dr.pl_progress eq '1fail' || dr.pl_progress eq '2fail' || dr.pl_progress eq '3fail'}">
+											반려
+										</c:if>
 										</td>
 									</tr>
 									</c:forEach>

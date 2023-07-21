@@ -1,18 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.dw.dao.ManagementDAO">
-
 	<select id="getAllDraft" resultType="draft">
-		SELECT d.*, e.e_name e_name
+		SELECT ROWNUM, d.*, e.e_name e_name
 		FROM draft d, emp e
 		WHERE d.c_no = #{c_no}
 		  AND d.emp_no = e.emp_no
+		  <if test="searchType == 'd'.toString()">
+				AND d.gb LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 't'.toString()">
+				AND d.title LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'w'.toString()">
+				AND e.e_name LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'p'.toString()">
+			 	AND d.PL_PROGRESS LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'all'.toString()">
+				AND ( 
+				d.gb LIKE '%' || #{keyword} || '%'
+				OR
+				d.title LIKE '%' || #{keyword} || '%'
+				OR
+				e.e_name LIKE '%' || #{keyword} || '%'
+				OR
+				d.PL_PROGRESS LIKE '%' || #{keyword} || '%'
+				)
+			</if>
 		ORDER BY d.DR_NO DESC
 	</select>
 	
 	<select id="getDraftCount" resultType="int">
-		SELECT COUNT(*) FROM draft
-		WHERE c_no = #{c_no}
+		SELECT COUNT(*) FROM draft d, emp e
+		WHERE d.emp_no = e.emp_no
+		  AND d.c_no = #{c_no}
+		 <if test="searchType == 'd'.toString()">
+				AND d.gb LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 't'.toString()">
+				AND d.title LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'w'.toString()">
+				AND e.e_name LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'p'.toString()">
+			 	AND d.PL_PROGRESS LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'all'.toString()">
+				AND ( 
+				d.gb LIKE '%' || #{keyword} || '%'
+				OR
+				d.title LIKE '%' || #{keyword} || '%'
+				OR
+				e.e_name LIKE '%' || #{keyword} || '%'
+				OR
+				d.PL_PROGRESS LIKE '%' || #{keyword} || '%'
+				)
+			</if>
 	</select>
 	
 	<insert id="documentRegist">
@@ -24,13 +70,16 @@
 		#{dg_no},
 		#{gb},
 		#{files},
-		'결재진행중(0)',
+		'0',
 		#{con},
 		#{pl_no},
 		'',
 		'',
 		#{c_no},
-		#{realFileName}
+		#{realFileName},
+		'',
+		'',
+		''
 		)
 		
 	</insert>
@@ -48,5 +97,21 @@
 		  FROM pl
 		 WHERE pl_no = #{pl_no}
 	</select>
+	
+	<select id="getRank" resultType="str">
+		SELECT e_rank
+		  FROM emp
+		 WHERE emp_no = #{emp_no1}
+		   OR emp_no = #{emp_no2}
+		   OR emp_no = #{emp_no3}
+	</select>
+	
+	<update id="updateDraft">
+		UPDATE draft SET pl_progress = #{no} WHERE dr_no = #{dr_no}
+	</update>
+	
+	<update id="failDraft">
+		UPDATE draft SET pl_progress = #{no}, failComment = #{failComment} WHERE dr_no = #{dr_no}
+	</update>
 
 </mapper>

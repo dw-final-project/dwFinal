@@ -96,20 +96,20 @@
 		border: 2px red solid;
 		text-align: center;
 		width: 100px;
-		${c_no eq "" ? "animation: ct2 1s infinite;" : ""}
+		${c_no eq "" || emp_no eq 0 ? "animation: ct2 1s infinite;" : ""}
 		
 	}
 	@keyframes ct2 {
-	     50% {border: 2px #ffae00 solid;}
+	     50% {border: 2px yellow solid;}
 	}
 	
 	#animation {
      color: red;
-     ${c_no eq "" ? "animation: ct 1s infinite;" : ""}
+     ${c_no eq "" || emp_no eq 0 ? "animation: ct 1s infinite;" : ""}
 	}
 	
 	@keyframes ct {
-	     50% {color: #ffae00;}
+	     50% {color: yellow;}
 	}
 </style>
 
@@ -117,8 +117,8 @@
 
     <nav class="navbar navbar-expand-lg bg-light">
     	<c:if test="${empty c_no || emp_no eq 0}">
-		    <div style="position: absolute; z-index: 2; right: 80px; top: 55px; font-size: 0.8em; font-weight: bold;" id="animation">
-		        체험하실 업체와 직원을 선택해주세요.
+		    <div style="position: absolute; z-index: 2; right: 80px; top: 55px; font-weight: bold;" id="animation">
+		        체험하실 업체와 직원을 먼저 선택해주세요.
 		    </div>
 		</c:if>
       <div class="container-fluid" style="position: relative;">
@@ -137,8 +137,8 @@
 				<input class="btn btn-warning" style="font-size: 0.8em; margin: 0px 5px 0px 5px;" id="submitBtn" type="submit" value="업체 변경">
 	           </form>
 	           <form class="d-flex" id="selectCompany" method="post" action="/common/empChange.do?mcode=${mcode }">
-	             <select id="selectOp" class="form-control" name="selectedEmp" >
-					<option value="" style=" text-align: center;">직원 선택</option>
+	             <select id="selectOp" class="form-control" name="selectedEmp" style="${c_no eq '' ? 'background-color: gray;' : ''}" >
+					<option value="" style=" text-align: center;" >직원 선택</option>
 						<c:forEach items="${empMap['e_nameList']}" var="eName" varStatus="loop">
 						    <c:set var="empNo" value="${empMap['emp_noList'][loop.index]}" />
 						    <option style="text-align: center;" value="${empNo}" ${empNo eq selectedEmpNo ? 'selected' : ''}>${eName}</option>

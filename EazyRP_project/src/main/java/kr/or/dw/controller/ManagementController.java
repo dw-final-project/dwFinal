@@ -102,6 +102,8 @@ public class ManagementController {
 		mnv.setViewName(url);
 		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(draft);
+		mnv.addObject("keyword", cri.getKeyword());
+		mnv.addObject("searchType", cri.getSearchType());
 		
 		return mnv;
 	}
@@ -153,7 +155,6 @@ public class ManagementController {
 	public void regist(HttpServletRequest req, MultipartFile file, String fileName, HttpServletResponse res, DraftVO draft, HttpSession session) throws SQLException, IOException {
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
-		
 		if(!fileName.trim().equals("")) {
 			UUID uuid = UUID.randomUUID();
 			String[] uuids = uuid.toString().split("-");
@@ -184,13 +185,14 @@ public class ManagementController {
 			draft.setRealFileName("");
 		}
 		
+		String empNoString = (String) session.getAttribute("emp_no");
+		int empNo = Integer.parseInt(empNoString);
+		draft.setEmp_no(empNo);
 		
-		draft.setEmp_no((int)session.getAttribute("emp_no"));
 		draft.setC_no((String)session.getAttribute("c_no"));
 		
 		
 		managementService.documentRegist(draft);
-		
 
 		out.println("<script>");
 		out.println("alert('기안문 작성이 되었습니다.')");
@@ -244,16 +246,86 @@ public class ManagementController {
 		url = "/management/detailD002";
 		String pl_no = draft.getPl_no();
 		PlVO pl = managementService.getPl(pl_no);
-		
+		List<String> rank = managementService.getRank(pl);
+		int pl_pro = 0;
+		String fail = "N";
+		if(draft.getPl_progress().equals("0")) {
+			pl_pro = pl.getEmp_no1();
+		} else if(draft.getPl_progress().equals("1")) {
+			pl_pro = pl.getEmp_no2();
+		} else if(draft.getPl_progress().equals("2")) {
+			pl_pro = pl.getEmp_no3();
+		} else {
+			pl_pro = 99999999;
+			fail = "Y";
+		}
+		int emp_no = Integer.parseInt((String) session.getAttribute("emp_no"));
+		String avail = "N";
+		if(pl_pro == emp_no) {
+			avail = "Y";
+		}
 		dataMap.put("data", data);
 		dataMap.put("draft", draft);
 		dataMap.put("pl", pl);
+		dataMap.put("rank", rank);
+		dataMap.put("avail", avail);
+		dataMap.put("fail", fail);
 		
 		mnv.setViewName(url);
 		mnv.addAllObjects(dataMap);
 		
 		return mnv;
 	}
-	 
+	
+	@RequestMapping("/payForm")
+	public void payForm(HttpServletResponse res, String dr_no, String pl_progress) throws SQLException, IOException {
+		
+		Map<String, String> dataMap = new HashMap<>();
+		dataMap.put("dr_no", dr_no);
+		dataMap.put("pl_progress", pl_progress);
+		
+		managementService.updateDraft(dataMap);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('기안문 결재가 완료되었습니다.')");
+		out.println("setTimeout(function() {");
+		out.println("  window.opener.location.reload(true);");
+		out.println("  location.reload(true);");
+		out.println("}, 10);");
+		out.println("</script>");
+		
+	}
+	
+	@RequestMapping("/failForm")
+	public void failForm(HttpServletResponse res, String dr_no, String pl_progress, String failComment) throws SQLException, IOException {
+		Map<String, String> dataMap = new HashMap<>();
+		dataMap.put("dr_no", dr_no);
+		dataMap.put("pl_progress", pl_progress);
+		dataMap.put("failComment", failComment);
+		managementService.failDraft(dataMap);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('기안문 반려가 완료되었습니다.')");
+		out.println("setTimeout(function() {");
+		out.println("  window.opener.location.reload(true);");
+		out.println("  location.reload(true);");
+		out.println("}, 10);");
+		out.println("</script>");
+		
+	}
+	
+	@RequestMapping("/failComment")
+	public ModelAndView failComment(ModelAndView mnv,  String dr_no, String pl_progress) {
+		String url = "/management/failComment";
+		
+		mnv.setViewName(url);
+		mnv.addObject("dr_no", dr_no);
+		mnv.addObject("pl_progress", pl_progress);
+		return mnv;
+	}
 
 }

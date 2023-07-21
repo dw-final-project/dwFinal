@@ -23,10 +23,10 @@
 	</select>
 	
 	<select id="getE_name" resultType="str">
-		SELECT e_name FROM emp WHERE c_no = #{selectedC_no}
+		SELECT e_name FROM emp WHERE c_no = #{selectedC_no} ORDER BY e_name
 	</select>	
 	
 	<select id="getEmp_no" resultType="str">
-		SELECT emp_no FROM emp WHERE c_no = #{selectedC_no}
+		SELECT emp_no FROM emp WHERE c_no = #{selectedC_no} ORDER BY e_name
 	</select>
 </mapper>

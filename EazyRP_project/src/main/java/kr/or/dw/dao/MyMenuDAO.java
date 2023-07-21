@@ -36,7 +36,7 @@ public interface MyMenuDAO {
 
 	public List<NoteVO> getSendNoteList(Map<String, Object> dataMap) throws SQLException;
 
-	public List<NoteVO> getNoteList(Map<String, Object> dataMap) throws SQLException;
+	public List<NoteVO> getNoteList(Map<String, Object> dataMap, RowBounds rowBounds) throws SQLException;
 
 	public int selectSearchNoteListCount(Map<String, Object> dataMap) throws SQLException;
 	

@@ -17,4 +17,10 @@ public interface ManagementService {
 
 	PlVO getPl(String pl_no) throws SQLException;
 
+	List<String> getRank(PlVO pl) throws SQLException;
+
+	void updateDraft(Map<String, String> dataMap) throws SQLException;
+
+	void failDraft(Map<String, String> dataMap) throws SQLException;
+
 }

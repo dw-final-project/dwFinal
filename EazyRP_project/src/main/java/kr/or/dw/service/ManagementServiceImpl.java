@@ -30,10 +30,10 @@ public class ManagementServiceImpl implements ManagementService{
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		Map<String, Object> dataMap2 = new HashMap<String, Object>();
+		dataMap2.put("keyword", cri.getKeyword());
+		dataMap2.put("searchType", cri.getSearchType());
 		dataMap2.put("cri", cri);
 		dataMap2.put("c_no", c_no);
-		dataMap2.put("rowbounds", rowBounds);
-		
 		int totalCount = managementDAO.getDraftCount(dataMap2);
 		
 		PageMaker pageMaker = new PageMaker();
@@ -41,7 +41,7 @@ public class ManagementServiceImpl implements ManagementService{
 		pageMaker.setTotalCount(totalCount);
 
 		
-		draft = managementDAO.getAllDraft(dataMap);
+		draft = managementDAO.getAllDraft(dataMap2, rowBounds);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("draft", draft);
@@ -69,6 +69,47 @@ public class ManagementServiceImpl implements ManagementService{
 		pl = managementDAO.getPl(pl_no);
 		
 		return pl;
+	}
+
+	@Override
+	public List<String> getRank(PlVO pl) throws SQLException {
+		List<String> rank = managementDAO.getRank(pl);
+		
+		return rank;
+	}
+
+	@Override
+	public void updateDraft(Map<String, String> dataMap) throws SQLException {
+		String no = "";
+		String pl_progress = dataMap.get("pl_progress");
+		if(pl_progress.equals("0")) {
+			no = "1";
+		} else if(pl_progress.equals("1")) {
+			no = "2";
+		} else if(pl_progress.equals("2")) {
+			no = "3";
+		}
+		dataMap.put("no", no);
+		System.out.println(no);
+		System.out.println(pl_progress);
+		managementDAO.updateDraft(dataMap);
+	}
+
+	@Override
+	public void failDraft(Map<String, String> dataMap) throws SQLException {
+		String no = "";
+		String pl_progress = dataMap.get("pl_progress");
+		if(pl_progress.equals("0")) {
+			no = "1fail";
+		} else if(pl_progress.equals("1")) {
+			no = "2fail";
+		} else if(pl_progress.equals("2")) {
+			no = "3fail";
+		}
+		System.out.println(no);
+		System.out.println(pl_progress);
+		dataMap.put("no", no);
+		managementDAO.failDraft(dataMap);
 	}
 
 }

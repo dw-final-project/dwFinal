@@ -150,6 +150,8 @@ public class MyMenuController {
 		System.out.println(cri.getPage());
 		System.out.println(cri.getPageStartRowNum());
 		System.out.println(cri.getPerPageNum());
+		System.out.println(cri.getKeyword());
+		System.out.println(cri.getSearchType());
 		note = mymenuService.getNoteList(dataMap);
 		
 		mnv.setViewName(url);
