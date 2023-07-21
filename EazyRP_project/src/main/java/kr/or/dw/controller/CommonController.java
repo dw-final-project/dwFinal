@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.dw.service.CalendarService;
 import kr.or.dw.service.MemberService;
 import kr.or.dw.service.MenuService;
+import kr.or.dw.vo.CalendarVO;
 import kr.or.dw.vo.MenuVO;
 
 @Controller
@@ -33,6 +35,9 @@ public class CommonController {
 	
 	@Autowired
 	private MenuService menuService;
+	
+	@Autowired
+	private CalendarService calendarService;
 
 	@GetMapping("/common/loginForm")
 	public String loginForm(HttpServletResponse res) throws Exception {
@@ -94,6 +99,20 @@ public class CommonController {
 		Map<String, Object> dataMap = menuService.selectSubMenuList(menuList);
 		Map<String, List<MenuVO>> subMenuList = (Map<String, List<MenuVO>>) dataMap.get("subMenuList");
 		Map<String, List<MenuVO>> smallMenuList = (Map<String, List<MenuVO>>) dataMap.get("smallMenuList");
+		
+		// FullCalendar start ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+		List<CalendarVO> calendarList = null;
+		try {
+			calendarList = calendarService.getCalendar();
+			req.setAttribute("calendarList", calendarList);
+			mnv.addObject("calendarList", calendarList);
+			mnv.setViewName(url);
+			System.out.println("1" + calendarList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// FullCalendar end ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+		
 		
 		session.setAttribute("menuList", menuList);
 		session.setAttribute("subMenuList", subMenuList);

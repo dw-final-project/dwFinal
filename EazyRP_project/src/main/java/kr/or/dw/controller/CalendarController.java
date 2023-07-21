@@ -29,17 +29,17 @@ import kr.or.dw.vo.CalendarVO;
 
 //일정보기
 @Controller
-@RequestMapping("/erp4")
+@RequestMapping("/calendar")
 public class CalendarController {
 
 	@Autowired
 	private CalendarService calendarService;
 
-	@RequestMapping(value = "/calendar", method = RequestMethod.GET)
+	@RequestMapping(value = "/start", method = RequestMethod.GET)
 	public ModelAndView getCalendarList(ModelAndView mnv, HttpServletRequest request) {
 			
-			System.out.println("컨트롤러 진입");
-			String url = "process/calendar.open";
+			System.out.println("컨트롤러 /calendar/start 진입");
+			String url = "common/calendar.open";
 			
 			List<CalendarVO> calendarList = null;
 			try {
@@ -54,19 +54,19 @@ public class CalendarController {
 			return mnv;
 		}
 		
-		@RequestMapping("/add")
+		@RequestMapping("/regist")
 		public void add(CalendarVO calendar, HttpServletRequest req, HttpServletResponse res) throws IOException, SQLException {
 			
-			System.out.println("컨트롤러 /erp4/add 진입");
+			System.out.println("컨트롤러 : /calendar/regist 진입");
 			calendarService.registCalendar(calendar);
 
 		}
 		
-		@RequestMapping("/calendar/modify")
+		@RequestMapping("/modify")
 		@ResponseBody
 		public String modify(CalendarVO calendar) throws SQLException, IOException {
 			
-			System.out.println("컨트롤러 /erp4/calendar/modify 진입");
+			System.out.println("컨트롤러 : /calendar/modify 진입");
 			
 			System.out.println(calendar);
 			System.out.println("calendar_no : " + calendar.getCalendar_no());
@@ -76,13 +76,12 @@ public class CalendarController {
 			
 		}
 		
-		@RequestMapping("/calendar/remove")
+		@RequestMapping("/remove")
 		@ResponseBody
 		public String remove(CalendarVO calendar) throws SQLException {
 			
-			System.out.println("컨트롤러 /erp4/calendar/remove 진입");
+			System.out.println("컨트롤러 /calendar/remove 진입");
 			calendarService.remove(calendar);
-			System.out.println("컨트롤러 /erp4/calendar/remove 탈출");
 			return "test";
 		}
 		
