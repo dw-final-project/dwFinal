@@ -66,24 +66,27 @@
 	</section>
 	
 <script>
+
 	$('#file').on('change', function(){
 		$('#fileName').val($('#file').val());
 	})
 	
 	$('#document').on('change', function(){
-		if($('#document').val() == 'a'){
+		if($('#document').val() == 'B'){
 			$('#dg_no').val('D001')
 			$('#gb').val('휴가신청서')
-		} else if($('#document').val() == 'b'){
+		} else if($('#document').val() == 'A'){
 			$('#dg_no').val('D002')
 			$('#gb').val('출장보고서')
-		} else if($('#document').val() == 'c'){
+		} else if($('#document').val() == 'C'){
 			$('#dg_no').val('D003')
 			$('#gb').val('발주보고서')
-		} else if($('#document').val() == 'd'){
+		} else if($('#document').val() == 'D'){
 			$('#dg_no').val('D004')
 			$('#gb').val('지출결의서')
 		}
+		alert($('#dg_no').val());
+		alert($('#gb').val());
 	})
 	
 	$('#pl_no').on('change', function(){

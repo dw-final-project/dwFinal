@@ -96,7 +96,7 @@ public class MyMenuController {
 		}
 		
 		int emp_no = note.getReceiver(); // 받는사람 emp_no
-		int writer = (int) session.getAttribute("emp_no");
+		int writer = Integer.parseInt((String) session.getAttribute("emp_no"));
 		EmpVO emp = mymenuService.selectEmp(emp_no); // 받는사람 정보
 		EmpVO emp2 = mymenuService.selectEmp(writer); // 보낸사람 정보
 		
@@ -147,11 +147,6 @@ public class MyMenuController {
 		String c_no = (String) session.getAttribute("c_no");
 		dataMap.put("c_no", c_no);
 		dataMap.put("cri", cri);
-		System.out.println(cri.getPage());
-		System.out.println(cri.getPageStartRowNum());
-		System.out.println(cri.getPerPageNum());
-		System.out.println(cri.getKeyword());
-		System.out.println(cri.getSearchType());
 		note = mymenuService.getNoteList(dataMap);
 		
 		mnv.setViewName(url);
@@ -166,11 +161,10 @@ public class MyMenuController {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		Map<String, Object> note = new HashMap<String, Object>();
 		String c_no = (String) session.getAttribute("c_no");
-		System.out.println(c_no);
 		
 		dataMap.put("c_no", c_no);
 		dataMap.put("cri", cri);
-		note = mymenuService.getSendNoteList(dataMap, cri);
+		note = mymenuService.getSendNoteList(dataMap);
 		
 		mnv.addAllObjects(note);
     	

@@ -112,4 +112,10 @@ public class ManagementServiceImpl implements ManagementService{
 		managementDAO.failDraft(dataMap);
 	}
 
+	@Override
+	public String getE_name(int emp_no) throws SQLException {
+		String ename = managementDAO.getE_name(emp_no);
+		return ename;
+	}
+
 }

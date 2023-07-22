@@ -70,6 +70,12 @@ public class MenuServiceImpl implements MenuService{
 		return emp_no;
 	}
 
+	@Override
+	public String selectEname(String selectedEmp) throws SQLException {
+		String ename = menuDAO.selectEname(selectedEmp);
+		return ename;
+	}
+
 
 
 

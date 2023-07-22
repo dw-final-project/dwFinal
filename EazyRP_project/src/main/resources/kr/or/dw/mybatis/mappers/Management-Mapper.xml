@@ -77,8 +77,6 @@
 		'',
 		#{c_no},
 		#{realFileName},
-		'',
-		'',
 		''
 		)
 		
@@ -113,5 +111,9 @@
 	<update id="failDraft">
 		UPDATE draft SET pl_progress = #{no}, failComment = #{failComment} WHERE dr_no = #{dr_no}
 	</update>
+	
+	<select id="getE_name" resultType="str">
+		SELECT e_name FROM emp WHERE emp_no = #{emp_no}
+	</select>
 
 </mapper>

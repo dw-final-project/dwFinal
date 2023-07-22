@@ -29,5 +29,7 @@ public interface ManagementDAO {
 
 	void failDraft(Map<String, String> dataMap) throws SQLException;
 
+	String getE_name(int emp_no) throws SQLException;
+
 
 }

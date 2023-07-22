@@ -153,6 +153,9 @@ public class ManagementController {
 	
 	@RequestMapping("/regist")
 	public void regist(HttpServletRequest req, MultipartFile file, String fileName, HttpServletResponse res, DraftVO draft, HttpSession session) throws SQLException, IOException {
+		System.out.println(draft.getDg_no());
+		System.out.println(draft.getGb());
+		
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
 		if(!fileName.trim().equals("")) {
@@ -243,7 +246,7 @@ public class ManagementController {
             e.printStackTrace();
         }
 		String url = "";
-		url = "/management/detailD002";
+		url = "/management/detail";
 		String pl_no = draft.getPl_no();
 		PlVO pl = managementService.getPl(pl_no);
 		List<String> rank = managementService.getRank(pl);
@@ -264,13 +267,23 @@ public class ManagementController {
 		if(pl_pro == emp_no) {
 			avail = "Y";
 		}
+		String modify = "N";
+		if(draft.getEmp_no() == emp_no) {
+			modify = "Y";
+		}
+		String ename = managementService.getE_name(draft.getEmp_no());
+		
+		String dg_no = draft.getDg_no();
+		System.out.println("dg_no = " + dg_no);
+		dataMap.put("draftEname", ename);
 		dataMap.put("data", data);
 		dataMap.put("draft", draft);
 		dataMap.put("pl", pl);
 		dataMap.put("rank", rank);
 		dataMap.put("avail", avail);
 		dataMap.put("fail", fail);
-		
+		dataMap.put("modify", modify);
+		dataMap.put("dg_no", dg_no);
 		mnv.setViewName(url);
 		mnv.addAllObjects(dataMap);
 		
@@ -290,10 +303,8 @@ public class ManagementController {
 		PrintWriter out = res.getWriter();
 		out.println("<script>");
 		out.println("alert('기안문 결재가 완료되었습니다.')");
-		out.println("setTimeout(function() {");
-		out.println("  window.opener.location.reload(true);");
-		out.println("  location.reload(true);");
-		out.println("}, 10);");
+		out.println("window.opener.location.reload(true);");
+		out.println("location.reload(true);");
 		out.println("</script>");
 		
 	}
