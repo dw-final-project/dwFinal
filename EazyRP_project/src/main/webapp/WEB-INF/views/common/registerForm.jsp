@@ -196,11 +196,11 @@ body {
 						</div>
 						<div class="input-group"></div>
 						<div class="input-group">
-							<select class="form-select form-select-sm" aria-label="Default select example" name="gen" style="border-radius: 7px; margin-left: 10px;">
+							<select class="form-select form-select-sm" aria-label="Default select example" id="gen" name="gen" style="border-radius: 7px; margin-left: 10px;">
 								<option disabled="disabled" selected="selected">성별</option>
-								<option>남성</option>
-								<option>여성</option>
-								<option>기타</option>
+								<option value="남성">남성</option>
+								<option value="여성">여성</option>
+								<option value="기타">기타</option>
 							</select>
 						</div>
 					</div>
@@ -277,6 +277,7 @@ $(function(){
 /* 	$('#registBtn').on('click', function(){
 		$('#registForm').submit();
 	}); */
+	let gen = $('#gen').val();
 	
 	$('#cencle').on('click', function(){
 		location.href = "/common/loginForm"; 

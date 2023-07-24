@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import kr.or.dw.dao.EstimateDAO;
 import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.ProductVO;
+import kr.or.dw.vo.WareHouseVO;
 
 @Service
 public class EstimateServiceImpl implements EstimateService {
@@ -97,23 +98,10 @@ public class EstimateServiceImpl implements EstimateService {
 
 	@Override
 	public void estimateInsert(EstimateVO vo) throws SQLException {
-		 estimateDAO.insertEstimate(vo);
+		 estimateDAO.estimateInsert(vo);
 		
 	}
 
-	@Override
-	public List<ProductVO> getSelectProductListCno(String c_name) throws SQLException {
-		List<ProductVO> product = null;
-		product = estimateDAO.getSelectProductListCno(c_name);
-		return product;
-	}
-
-	@Override
-	public List<ProductVO> getSelectProductList(String pr_name) throws SQLException {
-		List<ProductVO> product = null;
-		product = estimateDAO.getSelectProductList(pr_name);
-		return product;
-	}
 
 	@Override
 	public List<ProductVO> getProduct(Map<String, String> map) throws SQLException {
@@ -128,6 +116,43 @@ public class EstimateServiceImpl implements EstimateService {
 		List<ProductVO> product = null;
 		product = estimateDAO.getProductList();
 		return product;
+	}
+
+	@Override
+	public List<WareHouseVO> getWareHouse(Map<String, String> dataMap) throws SQLException {
+		
+		List<WareHouseVO> warehouse = null;
+		warehouse = estimateDAO.getWareHouse(dataMap);
+		return warehouse;
+		
+	}
+
+	@Override
+	public List<WareHouseVO> getWareHouseList() throws SQLException {
+		List<WareHouseVO> warehouse = null;
+		warehouse = estimateDAO.getWareHouseList();
+		return warehouse;
+		
+	}
+
+	@Override
+	public String ename(int empno) throws SQLException {
+		String ename = estimateDAO.ename(empno);
+		
+		return ename;
+	}
+
+	@Override
+	public void insertEstimate(List<EstimateVO> vo) throws SQLException {
+		estimateDAO.insertEstimate(vo.get(0));
+		String est_no = vo.get(0).getEst_no();
+		System.out.println(est_no);
+		
+		for (EstimateVO est : vo ) {
+			est.setEst_no(est_no);
+			estimateDAO.insertEstimateDetail(est);
+		}
+		
 	}
 	
 	

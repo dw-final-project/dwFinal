@@ -74,14 +74,20 @@ public class MyMenuServiceImpl implements MyMenuService{
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		dataMap.put("cri", cri);
-		dataMap.put("rowbounds", rowBounds);
-		List<NoteVO> note = mymenuDAO.getNoteList(dataMap);
+		Map<String, Object> dataMap2 = new HashMap<String, Object>();
 		
-		int totalCount = mymenuDAO.selectSearchNoteListCount(dataMap);
+		dataMap2.put("keyword", cri.getKeyword());
+		dataMap2.put("searchType", cri.getSearchType());
+		dataMap2.put("cri", cri);
+		dataMap2.put("c_no", c_no);
+//		dataMap2.put("rowbounds", rowBounds);
+		List<NoteVO> note = mymenuDAO.getNoteList(dataMap2, rowBounds);
+		
+		int totalCount = mymenuDAO.selectSearchNoteListCount(dataMap2);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
+
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("note", note);
@@ -104,25 +110,44 @@ public class MyMenuServiceImpl implements MyMenuService{
 	}
 
 	@Override
-	public List<NoteVO> searchNote(Map<String, String> valMap) throws SQLException {
-		List<NoteVO> note = mymenuDAO.searchNote(valMap);
+	public List<NoteVO> searchNote(Map<String, String> dataMap) throws SQLException {
+		String c_no = (String) dataMap.get("c_no");
+		Map<String, Object> dataMap2 = new HashMap<String, Object>();
+		dataMap2.put("c_no", c_no);
+//		dataMap2.put("rowbounds", rowBounds);
 		
-		return note;
+		int totalCount = mymenuDAO.selectSearchNoteListCount(dataMap2);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setTotalCount(totalCount);
+
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pageMaker", pageMaker);
+		return null;
 	}
 
 	@Override
-	public Map<String, Object> getSendNoteList(Map<String, Object> dataMap, SearchCriteria cri) throws SQLException {
+	public Map<String, Object> getSendNoteList(Map<String, Object> dataMap) throws SQLException {
 		
+		SearchCriteria cri = (SearchCriteria) dataMap.get("cri");
+		String c_no = (String) dataMap.get("c_no");
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		int totalCount = mymenuDAO.selectSearchNoteListCount(dataMap);
+		Map<String, Object> dataMap2 = new HashMap<String, Object>();
+		
+		dataMap2.put("keyword", cri.getKeyword());
+		dataMap2.put("searchType", cri.getSearchType());
+		dataMap2.put("cri", cri);
+		dataMap2.put("c_no", c_no);
+		
+		int totalCount = mymenuDAO.selectSearchNoteListCount(dataMap2);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
 		
 		
-		List<NoteVO> note = mymenuDAO.getSendNoteList(dataMap);
+		List<NoteVO> note = mymenuDAO.getSendNoteList(dataMap2, rowBounds);
 		
 		dataMap.put("note", note);
 		dataMap.put("pageMaker", pageMaker);

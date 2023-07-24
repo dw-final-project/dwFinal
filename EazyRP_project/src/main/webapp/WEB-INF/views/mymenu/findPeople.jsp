@@ -7,12 +7,19 @@
 <head>
 <meta charset="UTF-8">
 <title>사람찾기</title>
+<style>
+	.trHover:hover{
+		background-color: #dfdfdf;
+		transition-propety: background-color;
+		transition-duration: 1s;
+	}
+</style>
 </head>
 <body>
 <div class="card-body pad">
 	<div>
 	<div class="input-group row" style="width: 100%; margin: 0px 0px 20px 0px; justify-content: center;">
-		<form method="post" action="/mymenu/findPeople.do" style="display: contents;">
+		<form method="post" id="searchForm" action="/mymenu/findPeople.do" style="display: contents;">
 			<select class="form-control" name="searchType" id="searchType" style="font-size: 0.8em; width: 30%;">
 				<option value="cw" ${searchType eq 'cw' ? 'selected' : '' }>전  체</option>
 				<option value="w" ${searchType eq 'w' ? 'selected' : '' }>이  름</option>
@@ -27,13 +34,13 @@
 	<div>	
 		<table style="font-size: 0.8em;" class="table table-borderd text-center">
 			<tr>
-				<th width="80px" style="text-align: center;">이름</th>
-				<th width="160px" style="text-align: center;">업체명</th>
+				<th width="100px" style="text-align: center;">이름</th>
+				<th width="100px" style="text-align: center;">업체명</th>
 			</tr>
 				<c:forEach items="${emp }" var="emp">
-				<tr>
+				<tr class="trHover">
 					<td style="text-align: center;" id="name">${emp.e_name }</td>
-					<td style="text-align: center;" id="emp_no">${emp.emp_no }</td>
+					<td style="text-align: center;" id="c_name">${emp.c_name }<input type="hidden" id="emp_no" value="${emp.emp_no }"></td>
 				</tr>
 				</c:forEach>
 		</table>
@@ -49,10 +56,13 @@
 
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <script>
-	$('ul').on('click', function(){
-		$('#name', opener.document).val($(this).find('#name').text());
-		$('#receiver', opener.document).val($(this).find("#emp_no").text());
+	$('tr').on('click', function(){
+		$('#name', opener.document).val($(this).find('#c_name').text() + " / " + $(this).find('#name').text());
+		$('#receiver', opener.document).val($(this).find("#emp_no").val());
 		window.close();
 	})
 
+	$('#searchBtn').on('click', function(){
+		$('#searchForm').submit();
+	})
 </script>

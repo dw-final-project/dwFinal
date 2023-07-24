@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+
 <script>
 
 	var passChk = 0;
@@ -36,17 +37,14 @@
 	
 
 	
-	function submit_go(){
-		if($('input[name="id"]').val() != regPass){
-			alert("영문 소문자, 대문자, 특수문자, 숫자가 반드시 하나 이상씩 입력.");
-			return false;
-		};
-		if($('input[name="pwd"]').val() == ""){
-			alert("패스워드는 필수입니다.");
-			return false;
-		};
+ function submit_go(){
 
-	$('#PWrenewForm').submit();
+		if($('input[name="pwd"]').val() == ""){
+ 			alert("패스워드는 필수입니다.");
+ 			return false;
+ 		};
+
+ 	$('#PWrenewForm').submit();
 	
-	}; 
+ 	};  
 </script>

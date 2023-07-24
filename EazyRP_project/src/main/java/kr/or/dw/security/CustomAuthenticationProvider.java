@@ -25,11 +25,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider{
 		String login_pwd = (String) auth.getCredentials();	// 로그인 시도한 PASSWORD 를 가져온다.
 		
 		MemberVO member = null;
-		String e_rank = null;
 		
 		try {
 			member = memberDAO.selectMemberById(login_id);
-			e_rank = memberDAO.selectErank(member.getU_no());
 		} catch (SQLException e) {
 			throw new AuthenticationServiceException("Internal server error !!"); 
 		}
@@ -39,7 +37,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider{
 				throw new DisabledException("정지된 계정입니다. \\n관리자에게 문의하세요.");
 			}
 			
-			User authUser = new User(member, e_rank);
+			User authUser = new User(member);
 			
 			// 스프링 시큐리티 내부 클래스로 인증 토큰 생성한다.
 			UsernamePasswordAuthenticationToken result =

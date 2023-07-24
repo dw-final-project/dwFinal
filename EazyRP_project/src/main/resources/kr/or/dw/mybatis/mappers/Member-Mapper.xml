@@ -12,8 +12,8 @@
 	</select>
 	
 	<insert id="insertMember" parameterType="member">
-		INSERT INTO member(u_no, id, pwd, email, tel, birth, name, addr, enabled, regdate)
-		VALUES(member_seq.nextVal, #{id}, #{pwd}, #{email}, #{tel}, #{birth}, #{name}, #{addr}, 1, SYSDATE)
+		INSERT INTO member(u_no, id, pwd, email, gen, tel, birth, name, addr, enabled, regdate)
+		VALUES(member_seq.nextVal, #{id}, #{pwd}, #{email}, #{gen}, #{tel}, #{birth}, #{name}, #{addr}, 1, SYSDATE)
 	</insert> 
 	
 	<select id="selectErank" parameterType="int" resultType="String">
@@ -30,66 +30,22 @@
 	</select>	
 
 	<select id="selectIDFind" resultType="member">
-		SELECT u_no
+		SELECT *
 		  FROM member
 		 WHERE name = #{name}
 		   AND email = #{email}
 	</select>	
 	
-	<update id="updatePwd" parameterType="member">
+	<update id="updatePwd" >
 		UPDATE member 
-		SET pwd = #pwd# 
-		 WHERE  u_no = #{u_no}
+		  SET pwd = #{pwd} 
+		 WHERE  id = #{id}
 	</update>
 	
-	<!-- <select id="selectAllMemberList" resultType="member">
-		SELECT *
-		  FROM member
-		 ORDER BY regdate desc
-	</select>
-	
-	
+	<update id="modProfile">
+		UPDATE member
+		  SET pwd = #{pwd}
+		WHERE email = #{email}
+	</update>
 
-	<delete id="deleteMember" parameterType="str">
-		DELETE FROM member
-		WHERE id = #{id}	
-	</delete>
-	
-	<update id="disabledMember" parameterType="str">
-		UPDATE member 
-		SET enabled = 0
-		WHERE id = #{id}
-	</update>
-	
-	<update id="enabledMember" parameterType="str">
-		UPDATE member 
-		SET enabled = 1
-		WHERE id = #{id}
-	</update>
-	
-	<sql id="search">
-		 <if test="searchType == 'i'.toString()">
-		  AND id LIKE '%' || #{keyword} || '%'
-		 </if> 
-		 <if test="searchType == 'p'.toString()">
-		 AND phone LIKE '%' || #{keyword} || '%'
-		 </if> 
-		 <if test="searchType == 'e'.toString()">
-		 AND email LIKE '%' || #{keyword} || '%'
-		 </if>
-	</sql>
-	
-	<select id="selectSearchMemberList" resultType="member">
-		SELECT *
-		  FROM member
-		WHERE 1=1
-		<include refid="search"/>
-	</select>
-	
-	<select id ="selectSearchMemberListCount" resultType="int">
-		SELECT COUNT(*)
-		FROM member
-		WHERE 1=1
-		<include refid="search"/>
-	</select> -->
 </mapper>

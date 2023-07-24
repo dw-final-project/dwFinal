@@ -6,6 +6,7 @@ import java.util.Map;
 
 import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.ProductVO;
+import kr.or.dw.vo.WareHouseVO;
 
 public interface EstimateService {
 
@@ -15,13 +16,17 @@ public interface EstimateService {
 
 	void estimateInsert(EstimateVO vo) throws SQLException;
 
-	List<ProductVO> getSelectProductListCno(String c_name) throws SQLException;
-
-	List<ProductVO> getSelectProductList(String pr_name) throws SQLException;
-
 	List<ProductVO> getProduct(Map<String, String> map) throws SQLException;
 
 	List<ProductVO> getProductList() throws SQLException;
+
+	List<WareHouseVO> getWareHouse(Map<String, String> dataMap) throws SQLException;
+
+	List<WareHouseVO> getWareHouseList() throws SQLException;
+
+	String ename(int empno) throws SQLException;
+
+	void insertEstimate(List<EstimateVO> vo) throws SQLException;
 	
 	
 

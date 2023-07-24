@@ -78,7 +78,8 @@
 			passChk = 1;
 			passCheck.attr("class", "form-control is-valid");
 		}
-	});
+	});	
+
 	
 	var emailChk = 0;
 	$('#email').on('change', function(){

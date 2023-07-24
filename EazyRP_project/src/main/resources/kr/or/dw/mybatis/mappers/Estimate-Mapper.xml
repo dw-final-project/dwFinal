@@ -74,41 +74,112 @@
 <!-- 	WHERE est_no = #{est_no} -->
 <!-- </select> -->
 <select id="getProductList" resultType="product">
-	SELECT p.pr_name, c.c_name
+	SELECT p.*, c.*
 	FROM product p, company c
-	WHERE p.c_no = c.c_no;
+	WHERE p.c_no = c.c_no
 </select>
 
-<insert id="insertEstimate">
+
+<select id="getProduct" resultType="product">
+		SELECT p.*, c.c_name FROM product p, company c WHERE p.c_no = c.c_no
+		<if test="searchType == 'w'.toString()">
+			AND p.pr_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND c.c_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'cw'.toString()">
+			AND (p.pr_name LIKE '%' || #{keyword} || '%'
+			OR c.c_name LIKE '%' || #{keyword} || '%')
+		</if>
+		ORDER BY p.pr_name
+	</select>
+
+<select id="getWareHouseList" resultType="warehouse">
+	SELECT w.*, c.*
+	FROM warehouse w , company c
+	WHERE w.c_no = c.c_no
+</select>
+
+<select id="getWareHouse" resultType="warehouse">
+	SELECT w.*, c.c_name FROM warehouse w, company c WHERE w.c_no = c.c_no
+		<if test="searchType == 'w'.toString()">
+			AND w.wh_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND c.c_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'cw'.toString()">
+			AND (w.wh_name LIKE '%' || #{keyword} || '%'
+			OR c.c_name LIKE '%' || #{keyword} || '%')
+		</if>
+		ORDER BY w.wh_name
+</select>
+
+<select id="ename" resultType="str">
+	SELECT e_name
+	FROM emp
+	WHERE emp_no = #{empno}
+</select>
+
+<insert id="insertEstimate" parameterType="estimate">
+	
+	<selectKey keyProperty="est_no" order="BEFORE" resultType="java.lang.String">
+			SELECT ('EST_') || CASE 
+				WHEN LENGTH(estimate_seq.nextval) = 1
+				THEN '00' || estimate_seq.nextval
+				WHEN LENGTH(estimate_seq.nextval) = 2
+				THEN '0' || estimate_seq.nextval
+				ELSE '' || estimate_seq.nextval
+	   	    	END EST_NO
+		   FROM dual
+	</selectKey>
 	INSERT INTO estimate (
 		est_no,
 		sys_regdate,
+		enabled,
+		sys_up,
+		sys_updatedate,
+		sys_reg
+		)
+	VALUES(
+		  #{est_no}
+		  ,sysdate
+		  ,'y'
+		  ,#{emp_no}
+		  ,sysdate
+		  ,#{emp_no}	
+	)
+</insert>
+
+<insert id="insertEstimateDetail" parameterType="estimate">
+	INSERT INTO estdetail (
+		estdetail_no,
+		est_no,
+		wh_no,
 		emp_no,
 		fc_no,
 		amount,
 		progress,
-		enabled,
-		wh_no,
 		quantity,
-		sys_up,
-		sys_updatedate,
-		sys_reg,
-		files
+		files,
+		pr_no,
+		regdate,
+		c_no
 		)
 	VALUES(
+		estdetail_seq.nextval,
 		#{est_no},
-		#{sys_regdate},
+		#{wh_no},
 		#{emp_no},
 		#{fc_no},
 		#{amount},
-		#{progress},
-		#{enabled},
-		#{wh_no},
+		'진행중',
 		#{quantity},
-		#{sys_up},
-		#{sys_updatedate},
-		#{sys_reg},
-		#{fileName}
+		#{files},
+		#{pr_no},
+		sysdate,
+		(SELECT p.c_no FROM product p, company c WHERE p.c_no = c.c_no AND p.pr_no = #{pr_no})
 	)
 </insert>
 
