@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dw.dao.MerchandiseDAO">
+	
+	<sql id="search">
+		<if test="searchType == 'd'.toString()">
+			AND sp.sp_no LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 't'.toString()">
+			AND s_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'w'.toString()">
+			AND pr_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'all'.toString()">
+			AND (
+			sp.sp_no LIKE '%' || #{keyword} || '%'
+			OR
+			s_name LIKE '%' || #{keyword} || '%'
+			OR
+			pr_name LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+	</sql>
+	
+	<!-- 셀렉트할때는 리절트타입 필요하고 insert delete 등할때는 파라미터 타입이 들어감 -->
+	<select id="selectMerchandiseList" resultType="Map">
+		SELECT  sp.sp_no,
+				s_name,
+				pr_name,
+				sp_q,
+				price,
+				status,
+				startperiod,
+				endperiod
+		  FROM shop_pr sp, product p, shop s
+		 WHERE sp.s_no = s.s_no
+		   AND sp.pr_no = p.pr_no
+		 <include refid="search"/>
+	</select>
+	
+	<select id="selectMerchandiseListCount" resultType="int">
+		SELECT COUNT(*)
+		 FROM shop_pr sp, product p, shop s
+		 WHERE sp.s_no = s.s_no
+		   AND sp.pr_no = p.pr_no
+		 <include refid="search"/>
+	</select>
+
+</mapper>

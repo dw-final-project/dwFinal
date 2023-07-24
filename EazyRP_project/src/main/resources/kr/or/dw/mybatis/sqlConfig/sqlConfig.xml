@@ -19,6 +19,8 @@
 		<typeAlias type="kr.or.dw.vo.WareHouseVO" alias="warehouse"/>
 		<typeAlias type="kr.or.dw.vo.DraftVO" alias="draft"/>
 		<typeAlias type="kr.or.dw.vo.PlVO" alias="pl"/>
+		<typeAlias type="kr.or.dw.vo.MerchandiseVO" alias="merchandise"/>
+		<typeAlias type="kr.or.dw.vo.ShopVO" alias="shop"/>
 	</typeAliases>
 
 </configuration>

@@ -20,11 +20,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.service.MenuService;
+import kr.or.dw.service.MerchandiseService;
 import kr.or.dw.service.ProcessService;
 import kr.or.dw.service.ProductService;
+import kr.or.dw.service.ShopService;
 import kr.or.dw.vo.MenuVO;
 import kr.or.dw.vo.NoteVO;
 import kr.or.dw.vo.ProcessVO;
+import kr.or.dw.vo.ProductVO;
+import kr.or.dw.vo.ShopVO;
 
 @Controller
 @RequestMapping("/erp5")
@@ -36,7 +40,10 @@ public class MinjunController {
 	private MenuService menuService;
 	
 	@Autowired
-	private ProductService productService;
+	private MerchandiseService merchandiseService;
+	
+	@Autowired
+	private ShopService shopService;
 	
 	@RequestMapping("/shop")
 	public ModelAndView index(ModelAndView mnv, String mcode) throws SQLException{
@@ -50,16 +57,16 @@ public class MinjunController {
 	
 	@RequestMapping("/shopRegistForm")
 	public String shopRegistForm() {
-		String url = "minjun/shop_open_regist";
+		String url = "minjun/shop_regist";
 		return url;
 	}
 	
-	@RequestMapping("/product")
-	public ModelAndView productMain(String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
-		String url = "minjun/product.page";
+	@RequestMapping("/merchandise")
+	public ModelAndView merchandiseMain(String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
+		String url = "minjun/merchandise.page";
 		
 		//상품 조회
-		Map<String, Object> dataMap = productService.selectProductList(cri);
+		Map<String, Object> dataMap = merchandiseService.selectMerchandiseList(cri);
 		System.out.println("상품 맵 리스트 : " + dataMap);
 		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(dataMap);
@@ -68,9 +75,9 @@ public class MinjunController {
 		return mnv;
 	}
 	
-	@RequestMapping("/productSearch")
+	@RequestMapping("/merchandiseSearch")
 	public ModelAndView search(ModelAndView mnv, String mcode, String keyword, String searchType) throws SQLException {
-		String url = "/minjun/product.page";
+		String url = "/minjun/merchandise.page";
 		Map<String, String> valMap = new HashMap<>();
 		valMap.put("keyword", keyword);
 		valMap.put("searchType", searchType);
@@ -85,9 +92,9 @@ public class MinjunController {
 		return mnv;
 	}
 	
-	@RequestMapping("/productRegistForm")
-	public String productRegistForm() {
-		String url = "minjun/product_open_regist";
+	@RequestMapping("/merchandiseRegistForm")
+	public String merchandiseRegistForm() {
+		String url = "minjun/merchandise_regist";
 		return url;
 	}
 	
@@ -106,8 +113,62 @@ public class MinjunController {
 	
 	@RequestMapping("/orderRegistForm")
 	public String orderRegistForm() {
-		String url = "minjun/order_open_regist";
+		String url = "minjun/order_regist";
 		return url;
+	}
+	
+	@RequestMapping("/findProduct2")
+	public ModelAndView findProduct(ModelAndView mnv, String pr_no,String pr_name, String c_name, String searchType, String keyword) throws SQLException {
+		String url = "minjun/findProduct2";
+		if(searchType == "") {
+			searchType = null;
+		}
+		if(keyword == "") {
+			keyword = null;
+		}
+		List<ProductVO> product = null;
+		Map<String, String> dataMap = new HashMap<>();
+		dataMap.put("pr_name", pr_name);
+		dataMap.put("c_name", c_name);
+		dataMap.put("pr_no", pr_no);
+		dataMap.put("searchType", searchType);
+		dataMap.put("keyword", keyword);
+		if(keyword != null){
+			product = merchandiseService.getProduct1(dataMap);
+		} else {
+			product = merchandiseService.getProductList1();
+		}
+		mnv.setViewName(url);
+		mnv.addAllObjects(dataMap);
+		mnv.addObject("product", product);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/findShop")
+	public ModelAndView findShop(ModelAndView mnv, String s_name, String searchType, String keyword) throws SQLException {
+		String url = "minjun/findShop";
+		if(searchType == "") {
+			searchType = null;
+		}
+		if(keyword == "") {
+			keyword = null;
+		}
+		List<ShopVO> shop = null;
+		Map<String, String> dataMap = new HashMap<>();
+		dataMap.put("s_name", s_name);
+		dataMap.put("searchType", searchType);
+		dataMap.put("keyword", keyword);
+		if(keyword != null){
+			shop = shopService.getShop(dataMap);
+		} else {
+			shop = shopService.getShopList();
+		}
+		mnv.setViewName(url);
+		mnv.addAllObjects(dataMap);
+		mnv.addObject("shop", shop);
+		
+		return mnv;
 	}
 	
 	@RequestMapping("/regist")

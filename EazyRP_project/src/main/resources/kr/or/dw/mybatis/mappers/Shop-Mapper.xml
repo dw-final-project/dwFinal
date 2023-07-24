@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dw.dao.ShopDAO">
+	
+	<select id="getShopList" resultType="shop">
+		SELECT *
+		FROM shop
+		WHERE 1=1 
+	</select>
+
+
+	<select id="getShop" resultType="shop">
+		SELECT * FROM shop WHERE 1=1
+		<if test="searchType == 'w'.toString()">
+			AND s_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND s_no LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'cw'.toString()">
+			AND (s_name LIKE '%' || #{keyword} || '%'
+			OR s_no LIKE '%' || #{keyword} || '%')
+		</if>
+		ORDER BY s_name
+	</select>
+
+</mapper>
