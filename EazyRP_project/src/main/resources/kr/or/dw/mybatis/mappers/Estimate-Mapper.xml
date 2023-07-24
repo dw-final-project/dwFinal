@@ -2,6 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.dw.dao.EstimateDAO">
 
+<sql id="search">
+		<if test="searchType == 'd'.toString()">
+			AND c_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 't'.toString()">
+			AND e_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'w'.toString()">
+			AND pr_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'p'.toString()">
+			AND progress LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'all'.toString()">
+			AND (
+			c_name LIKE '%' || #{keyword} || '%'
+			OR
+			e_name LIKE '%' || #{keyword} || '%'
+			OR
+			pr_name LIKE '%' || #{keyword} || '%'
+			OR
+			progress LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+	</sql>
+
 <select id="selectEstimList" resultType="Map">
 	SELECT ed.EST_NO
 		  ,MAX(ed.regdate) regdate
@@ -16,11 +42,28 @@
 		  ,SUM(ed.amount) amount
 		  ,MAX(ed.PROGRESS) progress
 		  ,MAX(ed.FILES) files 
-	  FROM ESTIMATE e , ESTDETAIL ed
+	  FROM ESTIMATE e , ESTDETAIL ed, company c, emp em, product p
 	 WHERE 1=1
 	   AND e.EST_NO = ed.EST_NO
+	   AND ed.c_no = c.c_no
+	   AND ed.emp_no = em.emp_no
+	   AND ed.pr_no = p.pr_no
+	   <include refid="search"/>   
 	 GROUP BY ed.est_no
+	 ORDER BY ed.est_no desc
 </select>
+
+<select id="selectSearchEstimateListCount" resultType="int">
+		SELECT COUNT(*)
+		  FROM ESTIMATE e , ESTDETAIL ed, company c, emp em, product p
+	 WHERE 1=1
+	   AND e.EST_NO = ed.EST_NO
+	   AND ed.c_no = c.c_no
+	   AND ed.emp_no = em.emp_no
+	   AND ed.pr_no = p.pr_no
+		 <include refid="search"/>
+</select>
+
 
 <select id="selectDetail" parameterType="str" resultType="Map">
 	SELECT ed.EST_NO
@@ -30,6 +73,7 @@
 		  ,MAX((SELECT fc_name FROM fc WHERE fc_no = ed.fc_no)) fc_name
 		  ,MAX((SELECT pr_name FROM product WHERE pr_no = ed.pr_no)) p_name
 		  ,MAX((SELECT wh_name FROM WAREHOUSE WHERE wh_no = ed.wh_no)) wh_name
+		  ,MAX((SELECT pr_exprice FROM product p WHERE p.pr_no = ed.pr_no)) pr_exprice
 		  ,MAX(ed.QUANTITY) QUANTITY
 		  ,count(ed.PR_NO) pr_no
 		  ,SUM(ed.amount) amount
@@ -44,11 +88,14 @@
 
 <select id="forEstimList" resultType="Map">
 	SELECT amount
-	  	  ,quantity
-	  	  ,(SELECT pr_name FROM product WHERE pr_no = ed.pr_no) p_name
-	  	  ,(SELECT wh_name FROM WAREHOUSE WHERE wh_no = ed.wh_no) wh_name
-  	  FROM ESTDETAIL ed
+	  	  ,ed.quantity
+	  	  ,p.pr_exprice
+	  	  ,p.pr_name p_name
+	  	  ,w.wh_name wh_name
+  	  FROM ESTDETAIL ed, product p, warehouse w
 	 where est_no = #{est_no}
+	   AND p.pr_no = ed.pr_no
+       AND w.wh_no = ed.wh_no
 </select>
 <!-- <select id="selectEname" parameterType="int" resultType="str"> -->
 <!-- 	SELECT e_name -->
