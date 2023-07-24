@@ -3,9 +3,6 @@
     
     
     <wb-module deploy-name="dw-1.0.0-BUILD-SNAPSHOT">
-                        		
-        
-        
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
                         		
         
