@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
 
+import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.WareHouseVO;
@@ -13,7 +15,7 @@ import kr.or.dw.vo.WareHouseVO;
 @Mapper
 public interface EstimateDAO {
 
-	List<Map<String, Object>> selectEstimList() throws SQLException;
+	List<Map<String, Object>> selectEstimList(SearchCriteria cri, RowBounds rowBounds) throws SQLException;
 
 	Map<String, Object> selectDetail(String est_no) throws SQLException;
 
@@ -34,6 +36,10 @@ public interface EstimateDAO {
 	void insertEstimateDetail(EstimateVO est) throws SQLException;
 
 	void insertEstimate(EstimateVO estimateVO) throws SQLException;
+
+	int selectSearchEstimateListCount(SearchCriteria cri) throws SQLException;
+
+	
 
 
 	

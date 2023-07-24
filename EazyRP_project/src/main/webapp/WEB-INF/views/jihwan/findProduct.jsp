@@ -78,6 +78,9 @@
 			parentEl.parents('tr').find('input#cost').val(price);
 			$('#pr_no', opener.document).val(pr_noName);
 			parentEl.parents('tr').find('input[name="pr_no"]').val(pr_noName);
+			
+// 			let quantity = parentEl.parents('tr').find('input[name="quantity"]').val();
+// 			parentEl.parents('tr').find('input[name="amount"]').val(quantity * price);
 			window.close();
 		});
 		
@@ -85,34 +88,6 @@
 			$('#searchForm').submit();
 		
 		})
-		
-// 		$('#searchForm').on('submit', function(e) {
-// 			e.preventDefault(); 
 
-// 			let searchType = $('#searchType').val();
-// 			let keyword = $('input[name="keyword"]').val();
-// 			let c_name = $('.c_name').val();
-// 			let pr_name = $('.pr_name').val();
-// 			let url = '/erp4/findProduct.do';
-// 			let data = {
-// 				searchType: searchType,
-// 				keyword: keyword,
-// 				c_name : c_name,
-// 				pr_name : pr_name,
-// 			};
-		
-// 			$.ajax({
-// 				type: 'POST',
-// 				url: url,
-// 				data: data,
-// 				success: function(response) {
-// 					$('#tab').html(response); 
-// 					console.log(response);
-// 				},
-// 				error: function(xhr, status, error) {
-// 					console.error(error);
-// 				}
-// 			});
-// 		});
 	});
 </script>

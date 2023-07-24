@@ -81,14 +81,14 @@
             <input type="text" style="width: 100%;" value="${ename }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)"></td>
         </tr>
         <tr>
-            <td width="40%" align="center"><b>외화 코드</b></td>
+            <td width="40%" align="center"><b>외화 명</b></td>
             <td><select name="fc_no" id="fc-select">
-			    <option value="FC_001">FC_001</option>
-			    <option value="FC_002">FC_002</option>
-			    <option value="FC_003">FC_003</option>
-			    <option value="FC_004">FC_004</option>
-			    <option value="FC_005">FC_005</option>
-			    <option value="FC_006">FC_006</option>
+			    <option value="FC_001">달러</option>
+			    <option value="FC_002">한화</option>
+			    <option value="FC_003">위안화</option>
+			    <option value="FC_004">엔화</option>
+			    <option value="FC_005">페소</option>
+			    <option value="FC_006">동</option>
 				</select></td>
         </tr>
         <tr>
@@ -102,8 +102,8 @@
     <table>
     	<thead>
         <tr>
-            <th align="center" style="width: 20%;">제품 코드</th>
-            <th align="center" style="width: 20%;">창고 코드</th>           
+            <th align="center" style="width: 20%;">제품명</th>
+            <th align="center" style="width: 20%;">창고명</th>           
             <th align="center" style="width: 20%;">수량</th>
             <th align="center" style="width: 20%;">가격</th>
             <th align="center" style="width: 15%;">비고</th>
@@ -159,7 +159,7 @@
 // 		openWin.document.getElementById('cnt').value = cnt;
 	});
 	
-	// 파일 삭제 버튼
+	// 제품 삭제 버튼
 	$('#prInput').on('click', '#cancelBtn', function(){
 		$(this).parent('td').parent('tr').remove();
 	});
@@ -186,44 +186,17 @@
 		win.focus();
 		return win;
 	};
+	
+	
+	
 </script>
 
 	
 
-<script>
-window.onload = function(){
+<!-- <script> -->
 
-	let formObj = $('form[role="form"]');
 
-	$('button#modifyBtn').on('click', function(){
-		formObj.attr({
-			'action' : 'modifyForm.do',
-			'method' : 'post' 
-		});
-		formObj.submit();
-	});
-	
-	$('button#removeBtn').on('click', function(){
-		if(confirm("정말 삭제하시겠습니까?")){
-			formObj.attr({
-				'action' : 'remove',
-				'method' : 'post' 
-			});
-			formObj.submit();
-		};
-	});
-	
-	$('button#listBtn').on('click', function(){
-		window.opener.location.reload(true);
-		window.close();
-	});
-	
-	
-	
-	
-}
-
-</script>
+<!-- </script> -->
 
 <script	src="<%=request.getContextPath()%>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 </html>

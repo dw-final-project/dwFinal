@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.common.collect.Sets.SetView;
 
+import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.service.EstimateService;
 import kr.or.dw.service.MenuService;
 import kr.or.dw.service.MyMenuService;
@@ -56,10 +57,10 @@ public class BusinessController {
 	private MyMenuService mymenuService;
 	
 	@RequestMapping("/estimate")
-	public ModelAndView main(ModelAndView mnv, String mcode) throws SQLException {
+	public ModelAndView main(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException {
 		String url = "jihwan/main.page";
 		
-		Map<String, Object> dataMap = estimateService.selectEstimList();
+		Map<String, Object> dataMap = estimateService.selectEstimList(cri);
 		
 		mnv.addObject("mcode", mcode);
 		mnv.setViewName(url);
@@ -70,7 +71,7 @@ public class BusinessController {
 	
 	@RequestMapping("/estimate_regist")
 	public ModelAndView esti(ModelAndView mnv ,HttpSession session) throws SQLException{
-		int empno = (int)session.getAttribute("emp_no");
+		int empno = (int) session.getAttribute("emp_no");
 		String ename = estimateService.ename(empno);
 		String url = "jihwan/estimate_regist.open";
 		mnv.setViewName(url);
@@ -83,9 +84,10 @@ public class BusinessController {
 	public ModelAndView estDetail (ModelAndView mnv ,String est_no) throws SQLException {
 		
 		Map<String, Object> dataMap = estimateService.selectDetail(est_no);
-		
 		String url = "jihwan/estimateDetail.open";
 		mnv.addAllObjects(dataMap);
+//		Map<String, Object> est2 = (Map<String, Object>) dataMap.get("est");
+//		mnv.addObject("est2",est2);
 		mnv.setViewName(url);
 		return mnv;
 	}
