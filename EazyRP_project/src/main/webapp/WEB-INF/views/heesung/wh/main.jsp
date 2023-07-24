@@ -41,7 +41,7 @@
 									<c:forEach items="${whList}" var="wh" varStatus="loop">
 									<tr>
 										<td style="text-align: center;">${wh.wh_no}</td>
-										<td style="text-align: center;">${wh.}</td>
+										<td style="text-align: center;">${wh.sys_regdate}</td>
 										<td style="text-align: center;">${note.files == "" || note.files == null ? "N" : "Y" }</td>
 										<td style="text-align: center;">${note.senddate }</td>
 										<td style="text-align: center;">${note.callerName }</td>
