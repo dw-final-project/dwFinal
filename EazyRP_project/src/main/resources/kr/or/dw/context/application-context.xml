@@ -24,6 +24,8 @@
 	<bean id="merchandiseService" class="kr.or.dw.service.MerchandiseServiceImpl"/>
 	<bean id="shopService" class="kr.or.dw.service.ShopServiceImpl"/>
 
+	<bean id="whService" class="kr.or.dw.service.WhServiceImpl"/>
+	
 	<!-- 풀캘린더 API -->
 	<bean id="calendarService" class="kr.or.dw.service.CalendarServiceImpl"/>
    

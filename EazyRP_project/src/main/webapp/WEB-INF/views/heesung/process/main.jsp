@@ -14,7 +14,7 @@
 			<div class="col-1"></div>
 			<div class="card col-10" style="margin-top:3em;">
 				<div class="card-header with-border">
-					<button type="button" class="btn btn-success" id="" onclick="OpenWindow('registForm.do', '공정등록', 800, 700);">등록</button>
+					<button type="button" class="btn btn-success" id="" onclick="OpenWindow('process/registForm.do', '공정등록', 800, 700);">등록</button>
 					<div class="card-tools">
 						<div class="input-group">
 							<select class="custom-select form-control col-md-4" name="searchType" id="searchType" style="apa">
@@ -48,17 +48,17 @@
 								</td>
 							</tr>
 						</c:if>
-						<%-- <c:forEach items="${processList }" var="process">		
+						<c:forEach items="${processList }" var="process">		
 							<tr style="font-size: 0.85em;">
 								<td>${process.pc_no }</td>
 								<td>
-									<a href="javascript:OpenWindow('detail.do?pc_code=${process.pc_code}', '공정상세보기', 800, 700);">${process.pc_code}</a>
+									<a href="javascript:OpenWindow('/erp4/process/detail.do?pc_code=${process.pc_code}', '공정상세보기', 800, 700);">${process.pc_code}</a>
 								</td>								
 								<td>${process.pc_name}</td>
 								<td>${process.pc_order}</td>
 								<td><span class="badge bg-red" onclick="">등록</span></td>
 							</tr>
-						</c:forEach> --%>
+						</c:forEach>
 					</table>
 				</div>
 				<!-- 페이징 -->
@@ -66,9 +66,6 @@
 					<%@ include file="/WEB-INF/views/common/pagination.jsp" %>
 				</div>
 				
-				<!-- 캘린더 이동 페이지 -->
-				<button type="button" class="btn btn-danger" id="calendarBtn" onclick="OpenWindow('calendar.do', '일정관리', 800, 700);">일정 관리 페이지</button>
-			
 			</div>
 		</section>
 	</div>
@@ -104,4 +101,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <!-- jQuery -->
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
-<%@ include file="../include/footer_js.jsp" %>
+<%@ include file="../../include/footer_js.jsp" %>
