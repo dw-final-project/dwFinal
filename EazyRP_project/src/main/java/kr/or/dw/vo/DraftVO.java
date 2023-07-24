@@ -21,5 +21,6 @@ public class DraftVO {
 	private String c_no;
 	private String realFileName;
 	private String failComment;
+	private int pay_no;
 	
 }

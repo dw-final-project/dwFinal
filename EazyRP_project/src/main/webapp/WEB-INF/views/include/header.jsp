@@ -168,14 +168,13 @@
   	$('#selectOp2').on('change', function(){
   		if($(this).val() != 'X'){
 	  		location.href="/common/change.do?mcode=${mcode }&selectedC_no=" + $(this).val()
-	  		alert('업체 설정이 완료되었습니다. \n직원도 설정해주세요.');
 			location.reload(true);
   		}
   	})
   	$('#selectOp').on('change', function(){
   		if($(this).val() != 'X'){
 	  		location.href="/common/empChange.do?mcode=${mcode }&selectedEmp=" + $(this).val()
-	  		alert('직원 설정까지 완료되었습니다.\n이제 서비스를 원활하게 체험하실 수 있습니다.');
+	  		alert('설정이 모두 완료되었습니다.');
 			location.reload(true);
   		}
   	})

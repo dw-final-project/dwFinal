@@ -107,7 +107,8 @@
 						<button type="button" id="failBtn" class="btn btn-danger" style="float: right;  margin-left: 10px; ${avail eq 'N' || draft.pl_progress eq '3' ? 'background-color: gray; border: none;"disabled' : '"'}>반려</button>
 						</c:if>
 						<c:if test="${modify eq 'Y' }">
-						<button type="button" id="modifyBtn" class="btn btn-danger" style="float: right; ${draft.pl_progress eq '0' || fail eq 'Y' ? '"' : 'background-color: gray; border: none;"disabled' }>수정</button>
+							<button type="button" id="modifyBtn" class="btn btn-danger" style="float: right;  margin-left: 10px;  ${draft.pl_progress eq '0' || fail eq 'Y' ? '"' : 'background-color: gray; border: none;"disabled' }>수정</button>
+							<button type="button" id="deleteBtn" class="btn btn-danger" style="float: right;  margin-left: 10px; ${draft.pl_progress eq '0' || fail eq 'Y' ? '"' : 'background-color: gray; border: none;"disabled' }>삭제</button>
 						</c:if>
 					</div>	<!-- card footer End -->
 				</div>
@@ -127,6 +128,11 @@
 			location.href="/management/payForm.do?dr_no=${draft.dr_no}&pl_progress=${draft.pl_progress}";
 		}
 	})
+	$('#deleteBtn').on('click', function(){
+		if(confirm("기안문을 삭제하시겠습니까?")){
+			location.href="/management/delete.do?dr_no=${draft.dr_no}";
+		}
+	})
 	$('#failBtn').on('click', function(){
 		if(confirm("반려를 진행하시겠습니까?")){
 			OpenWindow("/management/failComment.do?dr_no=${draft.dr_no}&pl_progress=${draft.pl_progress}",
@@ -134,8 +140,7 @@
 		}
 	})
 	$('#modifyBtn').on('click', function(){
-		window.opener.location.reload(true);
-		window.close();
+		location.href="/management/modify.do?dr_no=${draft.dr_no}"
 	})
 	
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){

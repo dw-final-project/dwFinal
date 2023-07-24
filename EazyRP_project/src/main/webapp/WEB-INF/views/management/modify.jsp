@@ -10,9 +10,9 @@
 			<div class="col-md-9" style="max-width: 600px;">
 				<div class="card card-outline card-info">
 					<div class="card-header">
-						<h3 class="card-title p-1">기안문 작성</h3>
+						<h3 class="card-title p-1">기안문 수정</h3>
 						<div class="card-tools">
-							<button type="button" class="btn btn-primary" id="registBtn">작 성</button>
+							<button type="button" class="btn btn-primary" id="registBtn">수 정</button>
 							&nbsp;&nbsp;&nbsp;
 							<button type="button" class="btn btn-warning" id="cancelBtn">취 소</button>
 						</div>
@@ -21,42 +21,44 @@
 					
 							<div class="form-group">
 								<label for="title">제 목</label>
-								<input type="text" id="title" name="title" class="form-control" placeholder="제목을 입력하세요.">
+								<input type="text" value="${draft.title }" id="title" name="title" class="form-control" placeholder="제목을 입력하세요.">
 							</div>
 							
 							<div class="form-group">
 							<form id="downloadForm" method="post" action="/management/documentDown.do">
 								<label for="writer">기안문 구분&nbsp;&nbsp;&nbsp;&nbsp;</label>
 								<select class="form-control col-md-2" name="document" id="document" style="font-size: 0.8em; width: 30%; display: inline;">
-									<option value="B">휴가신청서</option>
-									<option value="A">출장보고서</option>
-									<option value="C">발주보고서</option>
-									<option value="D">지출결의서</option>
+									<option value="B" ${draft.dg_no eq 'D001' ? 'selected' : ''}>휴가신청서</option>
+									<option value="A" ${draft.dg_no eq 'D002' ? 'selected' : ''}>출장보고서</option>
+									<option value="C" ${draft.dg_no eq 'D003' ? 'selected' : ''}>발주보고서</option>
+									<option value="D" ${draft.dg_no eq 'D004' ? 'selected' : ''}>지출결의서</option>
 								</select>
 								<input type="submit" id="downloadBtn" class="btn btn-primary"style="margin-left: 5px" value="양식 다운로드">
 							</form>
 								<label for="writer">결재라인&nbsp;&nbsp;&nbsp;&nbsp;</label>
 								<select class="form-control col-md-2" name="pl_no" id="pl_no" style="font-size: 0.8em; width: 30%; display: inline;">
-									<option value="P0001">휴가신청결재라인</option>
-									<option value="P0002">출장보고결재라인</option>
-									<option value="P0003">발주보고결재라인</option>
-									<option value="P0004">지출결의결재라인</option>
+									<option value="P0001" ${draft.pl_no eq 'P0001' ? 'selected' : ''}>휴가신청결재라인</option>
+									<option value="P0002" ${draft.pl_no eq 'P0002' ? 'selected' : ''}>출장보고결재라인</option>
+									<option value="P0003" ${draft.pl_no eq 'P0003' ? 'selected' : ''}>발주보고결재라인</option>
+									<option value="P0004" ${draft.pl_no eq 'P0004' ? 'selected' : ''}>지출결의결재라인</option>
 								</select>
 							</div>
-							<form id="registForm2" method="post" action="/management/regist.do" enctype="multipart/form-data">
-								<input type="hidden" id="dg_no" name="dg_no" value="D001">
-								<input type="hidden" name="title" id="titleHidden">
-								<input type="hidden" id="gb" name="gb" value="휴가신청서">
-								<input type="hidden" id="pl_noHidden" name="pl_no" value="P0001">
+							<form id="registForm2" method="post" action="/management/modifyDocument.do" enctype="multipart/form-data">
+								<input type="hidden" id="dg_no" name="dg_no" value="${draft.dg_no}">
+								<input type="hidden" name="title" id="titleHidden" value="${draft.title }">
+								<input type="hidden" id="gb" name="gb" value="${draft.gb}">
+								<input type="hidden" id="pl_noHidden" name="pl_no" value="${draft.pl_no}">
+								<input type="hidden" id="dr_noHidden" name="dr_no" value="${draft.dr_no}">
 								<div class="form-group">
 									<label for="content">내 용</label>
 									<textarea class="textarea" name="con" id="con" rows="10" 
-										placeholder="내용을 작성하세요." style="display: block; width:100%;"></textarea>
+										placeholder="내용을 작성하세요." style="display: block; width:100%;">${draft.con }</textarea>
 								</div>
 								<div class="form-group">
 									<label for="file">기안문 첨부</label>
-									<input type="file" id="file" name="file" accept=".xlsx, .xls"> 
+									<input type="file" id="file" name="file" value="" accept=".xlsx, .xls"> 
 									<input type="hidden" id="fileName" name="fileName" value="">
+									<input type="hidden" id="fileName" name="deleteFileName" value="${draft.files }">
 								</div>
 							</form>
 					</div>
@@ -68,14 +70,6 @@
 <script>
 
 	$('#registBtn').on('click', function(){
-		if($('#title').val() == ""){
-			alert('제목을 입력해주세요.');
-			return;
-		}
-		if($('#con').val() == ""){
-			alert('내용을 입력해주세요.');
-			return;
-		}
 		$('#fileName').val($('#file').val());
 		if($('#document').val() == 'B'){
 			$('#dg_no').val('D001')
@@ -94,6 +88,7 @@
 		$('#titleHidden').val($('#title').val());
 		$('#registForm2').submit();
 	})
+	
 	
 	$('#cancelBtn').on('click', function(){
 		window.opener.location.reload(true);

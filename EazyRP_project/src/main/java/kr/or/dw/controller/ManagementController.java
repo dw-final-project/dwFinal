@@ -38,7 +38,9 @@ import javax.imageio.ImageIO;
 
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.service.ManagementService;
+import kr.or.dw.service.MyMenuService;
 import kr.or.dw.vo.DraftVO;
+import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.PlVO;
 
 import java.awt.image.BufferedImage;
@@ -73,6 +75,9 @@ public class ManagementController {
 	private static final Logger logger = LoggerFactory.getLogger(ManagementController.class);
 	
 	@Autowired
+	private MyMenuService mymenuService;
+	
+	@Autowired
 	private ManagementService managementService;
 	
 	@RequestMapping("/main")
@@ -87,19 +92,24 @@ public class ManagementController {
 	}
 	
 	@RequestMapping("/payment")
-	public ModelAndView payment(HttpSession session, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException {
-		String url = "/management/payment.page";
-		String c_no = (String)session.getAttribute("c_no");
+	public ModelAndView payment(HttpSession session, ModelAndView mnv, String regist, String mcode, SearchCriteria cri) throws SQLException {
+		String url = "";
+		String c_no = (String) session.getAttribute("c_no");
+		int emp_no = Integer.parseInt((String) session.getAttribute("emp_no"));
+		System.out.println("컨트롤러 keyword : " + cri.getKeyword());
+		System.out.println("컨트롤러 searchType : " + cri.getSearchType());
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		Map<String, Object> draft = null;
-
+		List<PlVO> plList = managementService.getAllPl(c_no);
 		dataMap.put("cri", cri);
-		dataMap.put("c_no", c_no);
-		
+		dataMap.put("emp_no", emp_no);
+		dataMap.put("regist", "N");
+			url = "/management/payment.page";
 		draft = managementService.getAllDraft(dataMap);
 		
-		System.out.println();
+		Map<String, Object> listMap = new HashMap<String, Object>();
 		mnv.setViewName(url);
+		mnv.addObject("plList", plList);
 		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(draft);
 		mnv.addObject("keyword", cri.getKeyword());
@@ -107,6 +117,34 @@ public class ManagementController {
 		
 		return mnv;
 	}
+	
+	@RequestMapping("/registPayment")
+	public ModelAndView registPayment(HttpSession session, ModelAndView mnv, String regist, String mcode, SearchCriteria cri) throws SQLException {
+		String url = "";
+		String c_no = (String) session.getAttribute("c_no");
+		int emp_no = Integer.parseInt((String) session.getAttribute("emp_no"));
+		System.out.println("컨트롤러 keyword : " + cri.getKeyword());
+		System.out.println("컨트롤러 searchType : " + cri.getSearchType());
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> draft = null;
+		List<PlVO> plList = managementService.getAllPl(c_no);
+		dataMap.put("cri", cri);
+		dataMap.put("emp_no", emp_no);
+		dataMap.put("regist", "Y");
+		url = "/management/registPayment.page";
+		draft = managementService.getAllDraft(dataMap);
+		
+		Map<String, Object> listMap = new HashMap<String, Object>();
+		mnv.setViewName(url);
+		mnv.addObject("plList", plList);
+		mnv.addObject("mcode", mcode);
+		mnv.addAllObjects(draft);
+		mnv.addObject("keyword", cri.getKeyword());
+		mnv.addObject("searchType", cri.getSearchType());
+		
+		return mnv;
+	}
+	
 	@RequestMapping("/documentRegist")
 	public String documentRegist() {
 		return "/management/documentRegist";
@@ -153,55 +191,89 @@ public class ManagementController {
 	
 	@RequestMapping("/regist")
 	public void regist(HttpServletRequest req, MultipartFile file, String fileName, HttpServletResponse res, DraftVO draft, HttpSession session) throws SQLException, IOException {
-		System.out.println(draft.getDg_no());
-		System.out.println(draft.getGb());
-		
-		res.setContentType("text/html; charset=utf-8");
-		PrintWriter out = res.getWriter();
-		if(!fileName.trim().equals("")) {
-			UUID uuid = UUID.randomUUID();
-			String[] uuids = uuid.toString().split("-");
-			String uniqueName = uuids[0];
-			String fileRealName = file.getOriginalFilename();
-			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
-			String uploadPath = session.getServletContext().getRealPath("/resources/documents/");
-			System.out.println("경로 : " + uploadPath);
-			
-			draft.setFiles(uniqueName+fileExtension);
-			draft.setRealFileName(fileRealName);
-			
-			File saveFile = new File(uploadPath+uniqueName+fileExtension);
-			
-			if(!saveFile.exists()) {
-				saveFile.mkdirs();
-			}
-			
-			try {
-				file.transferTo(saveFile);
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else {
-			draft.setFiles("");
-			draft.setRealFileName("");
-		}
-		
-		String empNoString = (String) session.getAttribute("emp_no");
-		int empNo = Integer.parseInt(empNoString);
-		draft.setEmp_no(empNo);
-		
-		draft.setC_no((String)session.getAttribute("c_no"));
-		
-		
-		managementService.documentRegist(draft);
+	    String data = "";
+	    res.setContentType("text/html; charset=utf-8");
+	    
+	    PrintWriter out = res.getWriter();
+	    if (fileName.trim().equals("")) {
+	        out.println("<script>");
+	        out.println("alert('기안서를 첨부해주세요.')");
+	        out.println("history.go(-1)");
+	        out.println("</script>");
+	        out.close();
+	    } else {
+	        UUID uuid = UUID.randomUUID();
+	        String[] uuids = uuid.toString().split("-");
+	        String uniqueName = uuids[0];
+	        String fileRealName = file.getOriginalFilename();
+	        String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length());
+	        String uploadPath = session.getServletContext().getRealPath("/resources/documents/");
+	        System.out.println("경로 : " + uploadPath);
 
-		out.println("<script>");
-		out.println("alert('기안문 작성이 되었습니다.')");
-		out.println("window.opener.location.reload(true); window.close();");
-		out.println("</script>");
-		
+	        draft.setFiles(uniqueName + fileExtension);
+	        draft.setRealFileName(fileRealName);
+
+	        File saveFile = new File(uploadPath + uniqueName + fileExtension);
+	        String saveFile2 = uploadPath + uniqueName + fileExtension;
+	        if (!saveFile.exists()) {
+	            saveFile.mkdirs();
+	        }
+
+	        try {
+	            file.transferTo(saveFile);
+	        } catch (IllegalStateException e) {
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        
+	        
+            try {
+                // 엑셀 파일 로드
+                LoadOptions loadOptions = new LoadOptions();
+                Workbook workbook = new Workbook(saveFile2, loadOptions);
+
+                // 첫 번째 시트 가져오기
+                Worksheet worksheet = workbook.getWorksheets().get(0);
+
+                // 모든 행을 반복하여 데이터를 2차원 List에 저장
+                Cells cells = worksheet.getCells();
+                Cell cell = cells.get(0, 0);
+                data = ((String) cell.getStringValue());
+
+                workbook.dispose();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+	        
+            System.out.println(data);
+            System.out.println(draft.getGb());
+	        if (data.equals(draft.getGb())) {
+	            String empNoString = (String) session.getAttribute("emp_no");
+	            int empNo = Integer.parseInt(empNoString);
+	            draft.setEmp_no(empNo);
+
+	            draft.setC_no((String) session.getAttribute("c_no"));
+
+	            managementService.documentRegist(draft);
+
+	            out.println("<script>");
+	            out.println("alert('기안문 작성이 되었습니다.')");
+	            out.println("window.opener.location.reload(true); window.close();");
+	            out.println("</script>");
+	            out.close();
+
+	        } else {
+	            out.println("<script>");
+	            out.println("alert('첨부하신 기안문의 종류와 선택하신 기안문 구분이 일치하지 않습니다.');");
+	            out.println("history.go(-1)");
+	            out.println("</script>");
+	            out.close();
+	            saveFile.delete();
+
+	        }
+	    }
+
 	}
 	
 	
@@ -258,6 +330,8 @@ public class ManagementController {
 			pl_pro = pl.getEmp_no2();
 		} else if(draft.getPl_progress().equals("2")) {
 			pl_pro = pl.getEmp_no3();
+		} else if(draft.getPl_progress().equals("3")) {
+			
 		} else {
 			pl_pro = 99999999;
 			fail = "Y";
@@ -292,10 +366,12 @@ public class ManagementController {
 	
 	@RequestMapping("/payForm")
 	public void payForm(HttpServletResponse res, String dr_no, String pl_progress) throws SQLException, IOException {
-		
+		DraftVO draft = managementService.getDraft(dr_no);
+		String pl_no = draft.getPl_no();
 		Map<String, String> dataMap = new HashMap<>();
 		dataMap.put("dr_no", dr_no);
 		dataMap.put("pl_progress", pl_progress);
+		dataMap.put("pl_no", pl_no);
 		
 		managementService.updateDraft(dataMap);
 		
@@ -304,7 +380,7 @@ public class ManagementController {
 		out.println("<script>");
 		out.println("alert('기안문 결재가 완료되었습니다.')");
 		out.println("window.opener.location.reload(true);");
-		out.println("location.reload(true);");
+		out.println("window.close();");
 		out.println("</script>");
 		
 	}
@@ -316,15 +392,12 @@ public class ManagementController {
 		dataMap.put("pl_progress", pl_progress);
 		dataMap.put("failComment", failComment);
 		managementService.failDraft(dataMap);
-		
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
 		out.println("<script>");
 		out.println("alert('기안문 반려가 완료되었습니다.')");
-		out.println("setTimeout(function() {");
-		out.println("  window.opener.location.reload(true);");
-		out.println("  location.reload(true);");
-		out.println("}, 10);");
+		out.println("window.opener.location.reload(true);");
+		out.println("window.close();");
 		out.println("</script>");
 		
 	}
@@ -338,5 +411,238 @@ public class ManagementController {
 		mnv.addObject("pl_progress", pl_progress);
 		return mnv;
 	}
+	
+	@RequestMapping("/modify")
+	public ModelAndView modify(ModelAndView mnv, String dr_no) throws SQLException {
+		String url = "/management/modify";
+		
+		DraftVO draft = managementService.getDraft(dr_no);
+		
+		mnv.addObject("draft", draft);
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/modifyDocument")
+	public void modifyDocument(HttpServletRequest req, MultipartFile file, String deleteFileName, String fileName, HttpServletResponse res, DraftVO draft, HttpSession session) throws SQLException, IOException {
+	    String data = "";
+	    res.setContentType("text/html; charset=utf-8");
+	    
+	    PrintWriter out = res.getWriter();
+	    if (fileName.trim().equals("")) {
+	        out.println("<script>");
+	        out.println("alert('기안서를 첨부해주세요.')");
+	        out.println("history.go(-1)");
+	        out.println("</script>");
+	        out.close();
+	    } else {
+	        UUID uuid = UUID.randomUUID();
+	        String[] uuids = uuid.toString().split("-");
+	        String uniqueName = uuids[0];
+	        String fileRealName = file.getOriginalFilename();
+	        String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length());
+	        String uploadPath = session.getServletContext().getRealPath("/resources/documents/");
+	        System.out.println("경로 : " + uploadPath);
 
+	        draft.setFiles(uniqueName + fileExtension);
+	        draft.setRealFileName(fileRealName);
+
+	        File saveFile = new File(uploadPath + uniqueName + fileExtension);
+	        File deleteFile = new File(uploadPath + deleteFileName);
+	        deleteFile.delete();
+	        String saveFile2 = uploadPath + uniqueName + fileExtension;
+	        if (!saveFile.exists()) {
+	            saveFile.mkdirs();
+	        }
+
+	        try {
+	            file.transferTo(saveFile);
+	        } catch (IllegalStateException e) {
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        
+	        
+            try {
+                // 엑셀 파일 로드
+                LoadOptions loadOptions = new LoadOptions();
+                Workbook workbook = new Workbook(saveFile2, loadOptions);
+
+                // 첫 번째 시트 가져오기
+                Worksheet worksheet = workbook.getWorksheets().get(0);
+
+                // 모든 행을 반복하여 데이터를 2차원 List에 저장
+                Cells cells = worksheet.getCells();
+                Cell cell = cells.get(0, 0);
+                data = ((String) cell.getStringValue());
+
+                workbook.dispose();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+	        
+
+	        if (data.equals(draft.getGb())) {
+	            String empNoString = (String) session.getAttribute("emp_no");
+	            int empNo = Integer.parseInt(empNoString);
+	            draft.setEmp_no(empNo);
+
+	            draft.setC_no((String) session.getAttribute("c_no"));
+
+	            managementService.documentModify(draft);
+	            
+	            out.println("<script>");
+	            out.println("alert('기안문 수정이 완료되었습니다.')");
+	            out.println("window.opener.location.reload(true); window.close();");
+	            out.println("</script>");
+	            out.close();
+
+	        } else {
+	            out.println("<script>");
+	            out.println("alert('첨부하신 기안문의 종류와 선택하신 기안문 구분이 일치하지 않습니다.');");
+	            out.println("history.go(-1)");
+	            out.println("</script>");
+	            out.close();
+	            saveFile.delete();
+
+	        }
+	    }
+
+	}
+	
+	@RequestMapping("/delete")
+	public void delete(HttpServletResponse res, String dr_no, HttpSession session) throws SQLException, IOException {
+		String deleteFileName = managementService.getFileName(dr_no);
+		managementService.deleteDocument(dr_no);
+		
+		String uploadPath = session.getServletContext().getRealPath("/resources/documents/");
+
+        File deleteFile = new File(uploadPath + deleteFileName);
+        deleteFile.delete();
+        
+        res.setContentType("text/html; charset=utf-8");
+	    PrintWriter out = res.getWriter();
+	    out.println("<script>");
+        out.println("alert('기안문이 삭제되었습니다.')");
+        out.println("window.opener.location.reload(true); window.close();");
+        out.println("</script>");
+        out.close();
+	}
+	
+	@RequestMapping("/paymentLine")
+	public ModelAndView paymentLine(ModelAndView mnv, HttpSession session,String mcode, SearchCriteria cri) throws SQLException {
+		String url = "/management/payLine.page";
+		String c_no = (String) session.getAttribute("c_no");
+		List<PlVO> plList = managementService.getAllPl(c_no);
+		
+		mnv.addObject("plList", plList);
+		mnv.addObject("mcode", mcode);
+		mnv.setViewName(url);
+		return mnv;
+	}
+	
+	@RequestMapping("/payLineDetail")
+	public ModelAndView payLineDetail( ModelAndView mnv, String pl_no) throws SQLException {
+		PlVO pl = managementService.getPl(pl_no);
+		String url = "/management/payLineDetail";
+		
+		mnv.setViewName(url);
+		mnv.addObject("pl", pl);
+		return mnv;
+	}
+	
+	@RequestMapping("/registPayLine")
+	public String registPayLine() {
+		return "/management/registPayLine";
+	}
+	
+	@RequestMapping("/findPeople")
+	public ModelAndView findPeople(HttpSession session, ModelAndView mnv, String searchType, String keyword, int no) throws SQLException {
+		String url = "/management/findPeople";
+		
+		if(searchType == "") {
+			searchType = null;
+		}
+		if(keyword == "") {
+			keyword = null;
+		}
+		List<EmpVO> emp = null;
+		Map<String, String> dataMap = new HashMap<>();
+		dataMap.put("searchType", searchType);
+		dataMap.put("keyword", keyword);
+		String c_no = (String)session.getAttribute("c_no");
+		dataMap.put("c_no", c_no);
+		if(keyword != null){
+			emp = managementService.getEmp(dataMap);
+		} else {
+			emp = managementService.getEmpList(c_no);
+		}
+		
+		mnv.addObject("emp", emp);
+		mnv.addObject("searchType", searchType);
+		mnv.addObject("keyword", keyword);
+		mnv.addObject("no", no);
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/registPayLineForm")
+	public void registPayLineForm(PlVO pl, HttpServletResponse res, HttpSession session) throws SQLException, IOException {
+		pl.setC_no((String)session.getAttribute("c_no"));
+		managementService.insertPayLine(pl);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('결재라인이 추가되었습니다.')");
+		out.println("window.opener.location.reload(true);");
+		out.println("window.close();");
+		out.println("</script>");
+	}
+	
+	@RequestMapping("/deletePayLine")
+	public void deletePayLine(HttpServletResponse res, String pl_no) throws SQLException, IOException {
+		managementService.deletePayLine(pl_no);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('결재라인이 삭제되었습니다.')");
+		out.println("window.opener.location.reload(true);");
+		out.println("window.close();");
+		out.println("</script>");
+	}
+	
+	@RequestMapping("/modifyPayLine")
+	public ModelAndView modifyPayLine(ModelAndView mnv, String pl_no) throws SQLException {
+		String url = "/management/modifyPayLine";
+		PlVO pl = managementService.getPl(pl_no);
+		
+		mnv.addObject("pl", pl);
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/modifyPayLineForm")
+	public void modifyPayLine(HttpServletResponse res, PlVO pl) throws SQLException, IOException {
+		managementService.modifyPayLine(pl);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('결재라인 수정이 완료되었습니다.')");
+		out.println("window.opener.location.reload(true);");
+		out.println("window.close();");
+		out.println("</script>");
+		
+	}
+	
+	@RequestMapping("/print")
+	public void print() {
+	}
+	
 }

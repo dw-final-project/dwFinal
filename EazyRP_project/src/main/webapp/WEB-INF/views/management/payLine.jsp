@@ -9,15 +9,13 @@
 			<div class="col-md-10" style="max-width: 1100px;">
 				<div class="card card-outline card-info">
 					<div class="card-header" style="border-bottom: none;">
-						<h2 class="card-title p-1">기안문 조회</h2>
+						<h2 class="card-title p-1">결재라인</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/management/payment.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/management/paymentLine.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
-								<option value="d" ${searchType eq 'd' ? 'selected' : '' }>서류구분</option>
-								<option value="t" ${searchType eq 't' ? 'selected' : '' }>결재서류명</option>
-								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>기안자</option>
-								<option value="p" ${searchType eq 'p' ? 'selected' : '' }>진행상태</option>
+								<option value="d" ${searchType eq 'd' ? 'selected' : '' }>결재라인명</option>
+								<option value="t" ${searchType eq 't' ? 'selected' : '' }>결재자</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
@@ -33,50 +31,21 @@
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
 									<th width="90px"></th>
-									<th width="150px" style="text-align: center;">기안일자</th>
-									<th width="350px" style="text-align: center;">결재서류명</th>
-									<th width="200px" style="text-align: center;">구분</th>
-									<th width="100px" style="text-align: center;">기안자</th>
-									<th width="200px" style="text-align: center;">진행상태</th>
+									<th width="350px" style="text-align: center;">결재라인명</th>
+									<th width="200px" style="text-align: center;">결재자1</th>
+									<th width="200px" style="text-align: center;">결재자2</th>
+									<th width="200px" style="text-align: center;">결재자3</th>
+									<th width="90px"></th>
 								</tr>
-									<c:forEach items="${draft}" var="dr" varStatus="var">
+									<c:forEach items="${plList}" var="pl" varStatus="loop">
 									<tr>
 										<td style="color: red; font-size: 0.6em; font-weight: bold;">
-											<c:if test="${dr.pay_no eq emp_no}">
-												결재필요!
-											</c:if>
 										</td>
-										<td style="text-align: center;">${dr.sys_regdate }</td>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/management/detail.do?dr_no=${dr.dr_no }&send=N', '기안문 조회', 700, 1000, '${loop.index}')">${dr.title }</a></td>
-										<td style="text-align: center;">${dr.gb }</td>
-										<td style="text-align: center;">${dr.e_name}</td>
-										<td id="read_${loop.index}" style="text-align: center; height:80%; font-weight:bold; font-size: 0.6em; color: 
-										<c:if test="${dr.pl_progress eq '0'}">
-										black
-										</c:if>
-										<c:if test="${dr.pl_progress eq '1' || dr.pl_progress eq '2'}">
-										#ae78ff
-										</c:if>
-										<c:if test="${dr.pl_progress eq '3'}">
-										blue
-										</c:if>
-										<c:if test="${dr.pl_progress eq '1fail' || dr.pl_progress eq '2fail' || dr.pl_progress eq '3fail'}">
-										red
-										</c:if>
-										;">
-										<c:if test="${dr.pl_progress eq '0'}">
-											결재 대기중
-										</c:if>
-										<c:if test="${dr.pl_progress eq '1' || dr.pl_progress eq '2'}">
-											결재 진행중(${dr.pl_progress})
-										</c:if>
-										<c:if test="${dr.pl_progress eq '3'}">
-											결재 완료
-										</c:if>
-										<c:if test="${dr.pl_progress eq '1fail' || dr.pl_progress eq '2fail' || dr.pl_progress eq '3fail'}">
-											반려
-										</c:if>
-										</td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/management/payLineDetail.do?pl_no=${pl.pl_no }', '결재라인 조회', 700, 600, '${loop.index}')">${pl.pl_name }</a></td>
+										<td style="text-align: center;">${pl.e_name1}</td>
+										<td style="text-align: center;">${pl.e_name2 }</td>
+										<td style="text-align: center;">${pl.e_name3}</td>
+										<td></td>
 									</tr>
 									</c:forEach>
 							</table>
@@ -87,8 +56,8 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/management/documentRegist.do', '기안문작성', 700, 1000)"
-					style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">기안문 작성</button>
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/management/registPayLine.do', '결재라인추가', 700, 600)"
+					style="width: 120px; font-size: 0.8em; margin: 20px; align-self: center;">결재라인 추가</button>
 				</div>
 			</div>
 			

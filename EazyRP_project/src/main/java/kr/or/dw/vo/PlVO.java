@@ -15,5 +15,6 @@ public class PlVO {
 	private String e_name2;
 	private String e_name3;
 	private String c_no;
+	private String comments;
 
 }

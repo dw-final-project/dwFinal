@@ -9,9 +9,9 @@
 			<div class="col-md-10" style="max-width: 1100px;">
 				<div class="card card-outline card-info">
 					<div class="card-header" style="border-bottom: none;">
-						<h2 class="card-title p-1">기안문 조회</h2>
+						<h2 class="card-title p-1">작성 기안문</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/management/payment.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/management/registPayment.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
 								<option value="d" ${searchType eq 'd' ? 'selected' : '' }>서류구분</option>

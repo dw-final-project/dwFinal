@@ -13,6 +13,7 @@ import kr.or.dw.command.PageMaker;
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.dao.ManagementDAO;
 import kr.or.dw.vo.DraftVO;
+import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.PlVO;
 
 @Service
@@ -25,7 +26,7 @@ public class ManagementServiceImpl implements ManagementService{
 	public Map<String, Object> getAllDraft(Map<String, Object> dataMap) throws SQLException {
 		List<DraftVO> draft = null;
 		SearchCriteria cri = (SearchCriteria) dataMap.get("cri");
-		String c_no = (String) dataMap.get("c_no");
+		System.out.println(dataMap.get("emp_no"));
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
@@ -33,15 +34,19 @@ public class ManagementServiceImpl implements ManagementService{
 		dataMap2.put("keyword", cri.getKeyword());
 		dataMap2.put("searchType", cri.getSearchType());
 		dataMap2.put("cri", cri);
-		dataMap2.put("c_no", c_no);
-		int totalCount = managementDAO.getDraftCount(dataMap2);
-		
+		int totalCount = 0;
+		if(dataMap.get("regist").equals("N")) {
+			draft = managementDAO.getAllDraft(dataMap, rowBounds);
+			totalCount = managementDAO.getDraftCount(dataMap);
+		} else {
+			draft = managementDAO.getRegistDraft(dataMap, rowBounds);
+			totalCount = managementDAO.getRegistDraftCount(dataMap);
+		}
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
-
-		
-		draft = managementDAO.getAllDraft(dataMap2, rowBounds);
+		dataMap.put("keyword", cri.getKeyword());
+		dataMap.put("searchType", cri.getSearchType());
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("draft", draft);
@@ -116,6 +121,62 @@ public class ManagementServiceImpl implements ManagementService{
 	public String getE_name(int emp_no) throws SQLException {
 		String ename = managementDAO.getE_name(emp_no);
 		return ename;
+	}
+
+	@Override
+	public DraftVO getDraft(String dr_no) throws SQLException {
+		DraftVO draft = managementDAO.getDraft(dr_no);
+		
+		return draft;
+	}
+
+	@Override
+	public void documentModify(DraftVO draft) throws SQLException {
+		managementDAO.documentModify(draft);
+	}
+
+	@Override
+	public String getFileName(String dr_no) throws SQLException {
+		String fileName = managementDAO.getFileName(dr_no);
+		
+		return fileName;
+	}
+
+	@Override
+	public void deleteDocument(String dr_no) throws SQLException {
+		managementDAO.deleteDocument(dr_no);
+	}
+
+	@Override
+	public List<PlVO> getAllPl(String c_no) throws SQLException {
+		return managementDAO.getAllPl(c_no);
+	}
+
+	@Override
+	public void insertPayLine(PlVO pl) throws SQLException {
+		managementDAO.insertPayLine(pl);
+	}
+
+	@Override
+	public List<EmpVO> getEmp(Map<String, String> dataMap) throws SQLException {
+		List<EmpVO> emp = managementDAO.getEmp(dataMap);
+		return emp;
+	}
+
+	@Override
+	public List<EmpVO> getEmpList(String c_no) throws SQLException {
+		List<EmpVO> emp = managementDAO.getEmpList(c_no);
+		return emp;
+	}
+
+	@Override
+	public void deletePayLine(String pl_no) throws SQLException {
+		managementDAO.deletePayLine(pl_no);
+	}
+
+	@Override
+	public void modifyPayLine(PlVO pl) throws SQLException {
+		managementDAO.modifyPayLine(pl);
 	}
 
 }
