@@ -46,7 +46,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
-		
+		System.out.println("맥북 깃허브 테스트");
 		return mnv;
 	}
 	
