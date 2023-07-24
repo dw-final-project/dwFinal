@@ -120,7 +120,7 @@
         </tr>
     	<tbody id="prInput">
         <input type="hidden" value="" id="cnt">
-       <c:forEach items="${estPr }" var="est">
+       <c:forEach items="${estPr }" var="est" varStatus="loop">
         <tr>
         	<td><input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value="${est.P_NAME }"><input type="hidden" name="pr_no"></td>
             <td><input type="text" id="wh_no0" class="wh_names" name="wh_name" style="width: 100%;" value="${est.WH_NAME }"><input type="hidden" name="wh_no"></td>
@@ -172,7 +172,6 @@ window.onload = function(){
 
 </script>
 <script>
-
 let cnt = 1;
 // 파일 추가 버튼
 $('#addPutBtn').on('click', function(){

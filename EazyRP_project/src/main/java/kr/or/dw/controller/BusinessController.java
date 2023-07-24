@@ -71,7 +71,7 @@ public class BusinessController {
 	
 	@RequestMapping("/estimate_regist")
 	public ModelAndView esti(ModelAndView mnv ,HttpSession session) throws SQLException{
-		int empno = (int) session.getAttribute("emp_no");
+		int empno = Integer.parseInt(session.getAttribute("emp_no").toString());
 		String ename = estimateService.ename(empno);
 		String url = "jihwan/estimate_regist.open";
 		mnv.setViewName(url);

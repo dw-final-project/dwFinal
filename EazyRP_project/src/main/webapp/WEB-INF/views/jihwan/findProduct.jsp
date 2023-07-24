@@ -79,8 +79,8 @@
 			$('#pr_no', opener.document).val(pr_noName);
 			parentEl.parents('tr').find('input[name="pr_no"]').val(pr_noName);
 			
-// 			let quantity = parentEl.parents('tr').find('input[name="quantity"]').val();
-// 			parentEl.parents('tr').find('input[name="amount"]').val(quantity * price);
+			let quantity = parentEl.parents('tr').find('input[name="quantity"]').val();
+			parentEl.parents('tr').find('input[name="amount"]').val(quantity * price);
 			window.close();
 		});
 		
