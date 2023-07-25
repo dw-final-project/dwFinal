@@ -28,6 +28,10 @@ public interface EstimateService {
 	String ename(int empno) throws SQLException;
 
 	void insertEstimate(List<EstimateVO> vo) throws SQLException;
+
+	String selectFile(String files) throws SQLException;
+
+	void modifyEstimate(List<EstimateVO> modify) throws SQLException;
 	
 	
 
