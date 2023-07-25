@@ -20,7 +20,7 @@
 </head>
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <style>
-  html {
+html {
     height: 100%;
   }
 
@@ -91,34 +91,35 @@
   .table {
     color: #000;
   }
-	#selectOp{
-		font-size: 0.8em;
-		border: 2px red solid;
-		text-align: center;
-		width: 100px;
-		${c_no ne "" && emp_no eq 0 ? "animation: ct2 0.7s infinite;" : ""}
-		
-	}
-	#selectOp2{
-		font-size: 0.8em;
-		border: 2px red solid;
-		text-align: center;
-		width: 100px;
-		${c_no eq "" ? "animation: ct2 0.7s infinite;" : ""}
-		
-	}
-	@keyframes ct2 {
-	     50% {border: 2px yellow solid;}
-	}
-	
-	#animation {
+   #selectOp{
+      font-size: 0.8em;
+      border: 2px red solid;
+      text-align: center;
+      width: 100px;
+      ${c_no ne "" && emp_no eq 0 ? "animation: ct2 0.7s infinite;" : ""}
+      
+   }
+   #selectOp2{
+      font-size: 0.8em;
+      border: 2px red solid;
+      text-align: center;
+      width: 100px;
+      ${c_no eq "" ? "animation: ct2 0.7s infinite;" : ""}
+      
+   }
+   @keyframes ct2 {
+        50% {border: 2px yellow solid;}
+   }
+   
+   #animation {
      color: red;
      ${c_no eq "" || emp_no eq 0 ? "animation: ct 0.7s infinite;" : ""}
-	}
-	
-	@keyframes ct {
-	     50% {color: yellow;}
-	}
+   }
+   
+   @keyframes ct {
+        50% {color: yellow;}
+   }
+
 </style>
 
 <body class="bg-light" style="padding: 0px;">
