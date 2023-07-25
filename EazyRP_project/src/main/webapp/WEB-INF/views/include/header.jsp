@@ -20,7 +20,7 @@
 </head>
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <style>
-  html {
+html {
     height: 100%;
   }
 
@@ -91,34 +91,35 @@
   .table {
     color: #000;
   }
-	#selectOp{
-		font-size: 0.8em;
-		border: 2px red solid;
-		text-align: center;
-		width: 100px;
-		${c_no ne "" && emp_no eq 0 ? "animation: ct2 0.7s infinite;" : ""}
-		
-	}
-	#selectOp2{
-		font-size: 0.8em;
-		border: 2px red solid;
-		text-align: center;
-		width: 100px;
-		${c_no eq "" ? "animation: ct2 0.7s infinite;" : ""}
-		
-	}
-	@keyframes ct2 {
-	     50% {border: 2px yellow solid;}
-	}
-	
-	#animation {
+   #selectOp{
+      font-size: 0.8em;
+      border: 2px red solid;
+      text-align: center;
+      width: 100px;
+      ${c_no ne "" && emp_no eq 0 ? "animation: ct2 0.7s infinite;" : ""}
+      
+   }
+   #selectOp2{
+      font-size: 0.8em;
+      border: 2px red solid;
+      text-align: center;
+      width: 100px;
+      ${c_no eq "" ? "animation: ct2 0.7s infinite;" : ""}
+      
+   }
+   @keyframes ct2 {
+        50% {border: 2px yellow solid;}
+   }
+   
+   #animation {
      color: red;
      ${c_no eq "" || emp_no eq 0 ? "animation: ct 0.7s infinite;" : ""}
-	}
-	
-	@keyframes ct {
-	     50% {color: yellow;}
-	}
+   }
+   
+   @keyframes ct {
+        50% {color: yellow;}
+   }
+
 </style>
 
 <body class="bg-light" style="padding: 0px;">
@@ -159,7 +160,7 @@
     <nav class="nav d-flex" style="padding: 0 16.66666667%; padding-top: 6px; background-color: #7bc4b2; justify-content:space-evenly;">
       <c:forEach items="${menuList}" var="menu">
          <li class="nav-scroller py-1 mb-2 dropdown">
-          <a class="p-2 a nav-link  bold fw-bold" href="javascript:goPage('${menu.murl}', '${menu.mcode}');" data-url="${menu.mcode }" aria-expanded="true" style="color: white; text-decoration-line: none;">${menu.mname }</a>
+          <a class="p-2 a nav-link  bold fw-bold" href="javascript:goPage('${menu.murl}', '${menu.mcode}', '${menu.mname }');" data-url="${menu.mcode }" aria-expanded="true" style="color: white; text-decoration-line: none;">${menu.mname }</a>
           
          </li>
          </c:forEach>
