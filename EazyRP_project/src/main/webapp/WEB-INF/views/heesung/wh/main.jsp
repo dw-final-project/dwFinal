@@ -63,27 +63,12 @@
 		</div>
 	</section>
 	
-<script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 	
 <script>
 		
 	$('#searchBtn').on('click', function(){
 		$('#searchForm').submit();
 	})
-	
-	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight, index){
-		var selectedElement = document.getElementById("read_"+index);
-		  if (selectedElement) {
-		    selectedElement.style.color = "blue";
-		    selectedElement.innerHTML = "읽음";
-		  }
-		winleft = (screen.width - WinWidth) / 2;
-		wintop = (screen.height - WinHeight) / 2;
-		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
-								+ "height=" + WinHeight + ",top="+ wintop + ",left="
-								+ winleft + ",resizable=yes,status=yes");
-		win.focus();
-	};
 	
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 		winleft = (screen.width - WinWidth) / 2;
@@ -94,6 +79,6 @@
 		win.focus();
 	};
 
-	
 </script>
+
 <%@ include file="../../include/footer_js.jsp" %>
