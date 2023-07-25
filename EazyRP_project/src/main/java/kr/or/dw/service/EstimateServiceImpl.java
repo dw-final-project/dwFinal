@@ -120,6 +120,22 @@ public class EstimateServiceImpl implements EstimateService {
 		}
 		
 	}
+
+	@Override
+	public String selectFile(String files) throws SQLException {
+		
+		String estFile = estimateDAO.selectFile(files); 
+		
+		return estFile;
+	}
+
+	@Override
+	public void modifyEstimate(List<EstimateVO> modify) throws SQLException {
+		
+		estimateDAO.modifyEstimateDetail(modify);
+		
+		
+	}
 	
 	
 	

@@ -39,7 +39,10 @@ public interface EstimateDAO {
 
 	int selectSearchEstimateListCount(SearchCriteria cri) throws SQLException;
 
-	
+	String selectFile(String files) throws SQLException;
+
+	void modifyEstimateDetail(List<EstimateVO> modify) throws SQLException;
+
 
 
 	

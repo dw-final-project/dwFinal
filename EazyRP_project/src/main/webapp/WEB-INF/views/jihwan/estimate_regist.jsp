@@ -116,14 +116,14 @@
         <tr>
             <td><input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>
             <td><input type="text" id="wh_no0" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>
-            <td><input type="text" id="quantity1" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>
+            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>
             <td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>
             <td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>
         </tr>
         </tbody>
         <tr class="total">
             <td colspan="3" align="center">총계</td>
-            <td colspan="2" align="center"><input type="text" style="width: 100%;" value=""></td>
+            <td colspan="2" align="center"><input type="text" id="totalAmount" style="width: 100%;" value=""></td>
         </tr>
     </table>
             <input type="submit" class="btn btn-primary" style="text-align : center;" value="생성">
@@ -187,7 +187,15 @@
 		return win;
 	};
 	
-	
+	$(document).on('change, keyup', '#prInput', function(){
+		let sum = Number(0);
+		let inputAmount = $('input[name="amount"]').get();
+		for(let i = 0; i < inputAmount.length; i++){
+			sum += Number($('input[name="amount"]').eq(i).val());
+		}
+		
+		$('#totalAmount').val(sum);
+	})
 	
 </script>
 

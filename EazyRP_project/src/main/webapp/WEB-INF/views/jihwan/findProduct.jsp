@@ -81,6 +81,15 @@
 			
 			let quantity = parentEl.parents('tr').find('input[name="quantity"]').val();
 			parentEl.parents('tr').find('input[name="amount"]').val(quantity * price);
+			
+			let sum = Number(0);
+			let inputAmount = opener.$('input[name="amount"]').get();
+			for(let i = 0; i < inputAmount.length; i++){
+				sum += Number(opener.$('input[name="amount"]').eq(i).val());
+			}
+			
+			opener.$('#totalAmount').val(sum);
+			
 			window.close();
 		});
 		
