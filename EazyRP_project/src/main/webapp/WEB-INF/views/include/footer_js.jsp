@@ -7,10 +7,11 @@
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <script>
 
-	function goPage(murl, mcode){
+	function goPage(murl, mcode, mname){
 
 		sessionStorage.setItem("mcode", mcode);
 		sessionStorage.setItem("murl", murl);
+		sessionStorage.setItem("mname", mname);
 		
 		let modMcode = mcode.substring(0,3) + "0000";
 

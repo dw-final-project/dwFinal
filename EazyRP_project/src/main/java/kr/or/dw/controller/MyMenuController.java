@@ -51,7 +51,7 @@ public class MyMenuController {
 	private MyMenuService mymenuService;
 	
 	@RequestMapping("/communication")
-	public ModelAndView loginForm(ModelAndView mnv) throws SQLException {
+	public ModelAndView loginForm(ModelAndView mnv, HttpSession session) throws SQLException {
 		String url = "/mymenu/communication";
 		
 		mnv.setViewName(url);
@@ -149,6 +149,7 @@ public class MyMenuController {
 		dataMap.put("cri", cri);
 		note = mymenuService.getNoteList(dataMap);
 		
+		System.out.println("mname = " + session.getAttribute("mname"));
 		mnv.setViewName(url);
 		mnv.addAllObjects(note);
 		mnv.addObject("mcode", mcode);
