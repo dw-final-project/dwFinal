@@ -41,7 +41,9 @@ public interface EstimateDAO {
 
 	String selectFile(String files) throws SQLException;
 
-	void modifyEstimateDetail(List<EstimateVO> modify) throws SQLException;
+	void modifyEstimateDetail(EstimateVO est) throws SQLException;
+
+	void modifyEstimate(EstimateVO estimateVO) throws SQLException;
 
 
 
