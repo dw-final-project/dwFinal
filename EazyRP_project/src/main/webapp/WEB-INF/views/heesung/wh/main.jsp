@@ -11,7 +11,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">생산입고 목록</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/mymenu/noteList.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm" method="post" action="/erp4/wh.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2 custom-select" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="tcw" ${searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
 								<option value="t" ${searchType eq 't' ? 'selected' : '' }>제  목</option>
@@ -33,7 +33,7 @@
 								<tr>
 									<th>입고코드</th>
 									<th>등록일</th>
-									<th>공장명</th>
+									<th>창고명</th>
 									<th>제품명</th>
 									<th>수량</th>
 									<th>작업지시서</th>
@@ -42,10 +42,10 @@
 									<tr>
 										<td style="text-align: center;">${wh.wh_no}</td>
 										<td style="text-align: center;">${wh.sys_regdate}</td>
-										<td style="text-align: center;">${note.files == "" || note.files == null ? "N" : "Y" }</td>
-										<td style="text-align: center;">${note.senddate }</td>
-										<td style="text-align: center;">${note.callerName }</td>
-										<td style="text-align: center;">${note.c_cname }</td>
+										<td style="text-align: center;">${wh.wh_no2}</td>
+										<td style="text-align: center;">${wh.pr_no }</td>
+										<td style="text-align: center;">${wh.quantity }</td>
+										<td style="text-align: center;">${wh.file }</td>
 									</tr>
 									</c:forEach>
 							</table>
@@ -56,11 +56,14 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/mymenu/communication.do', '쪽지쓰기', 700, 1000)"
-					style="width: 100px; margin: 20px; align-self: center;">쪽지 쓰기</button>
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('/erp4/wh/registForm.do', '생산입고 등록', 1000, 800)"
+					style="width: 100px; margin: 20px; align-self: center;">등록</button>
 				</div>
 			</div>
-			
+			<div class="btn-group btn-group-sm">
+				<a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+				<a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+			</div>
 		</div>
 	</section>
 	
@@ -69,7 +72,7 @@
 <script>
 		
 	$('#searchBtn').on('click', function(){
-		$('#searchForm2').submit();
+		$('#searchForm').submit();
 	})
 	
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight, index){
@@ -86,7 +89,7 @@
 		win.focus();
 	};
 	
-	function OpenWindow2(UrlStr, WinTitle, WinWidth, WinHeight){
+	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 		winleft = (screen.width - WinWidth) / 2;
 		wintop = (screen.height - WinHeight) / 2;
 		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
