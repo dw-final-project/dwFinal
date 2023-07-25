@@ -56,13 +56,9 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('/erp4/wh/registForm.do', '생산입고 등록', 1000, 800)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('/erp4/wh/registForm.do', '생산입고 등록', 700, 1000)"
 					style="width: 100px; margin: 20px; align-self: center;">등록</button>
 				</div>
-			</div>
-			<div class="btn-group btn-group-sm">
-				<a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-				<a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
 			</div>
 		</div>
 	</section>
