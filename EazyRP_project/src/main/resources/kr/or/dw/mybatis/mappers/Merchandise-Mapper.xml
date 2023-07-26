@@ -27,6 +27,8 @@
 	<select id="selectMerchandiseList" resultType="Map">
 		SELECT  sp.sp_no,
 				s_name,
+				sp.s_no,
+				sp.pr_no,
 				pr_name,
 				sp_q,
 				price,
@@ -36,6 +38,7 @@
 		  FROM shop_pr sp, product p, shop s
 		 WHERE sp.s_no = s.s_no
 		   AND sp.pr_no = p.pr_no
+		   AND sp.enabled = '1'
 		 <include refid="search"/>
 	</select>
 	
@@ -46,5 +49,87 @@
 		   AND sp.pr_no = p.pr_no
 		 <include refid="search"/>
 	</select>
-
+	
+	<insert id="insertMerchandise" parameterType="merchandise">
+	
+		<selectKey keyProperty="sp_no" order="BEFORE" resultType="java.lang.String">
+				SELECT ('SP_PR_') || CASE 
+					WHEN LENGTH(shop_pr_seq.nextval) = 1
+					THEN '00' || shop_pr_seq.nextval
+					WHEN LENGTH(shop_pr_seq.nextval) = 2
+					THEN '0' || shop_pr_seq.nextval
+					ELSE '' || shop_pr_seq.nextval
+		   	    	END SP_NO
+			   FROM dual
+		</selectKey>
+		INSERT INTO shop_pr (
+			sp_no,
+			s_no,
+			pr_no,
+			sp_q,
+			price,
+			status,
+			startperiod,
+			endperiod,
+			sys_reg,
+			sys_up,
+			sys_regdate,
+			sys_updatedate,
+			enabled
+			)
+		VALUES(
+			#{sp_no},
+			#{s_no},
+			#{pr_no},
+			#{sp_q},
+			#{price},
+			#{status},
+			#{startperiod},
+			#{endperiod},
+			#{sys_reg},
+			#{sys_up},
+			sysdate,
+			sysdate,
+			'1'
+		)
+	</insert>
+	
+	<select id="selectDetail" resultType="Map">
+		SELECT  sp.sp_no,
+				s_name,
+				sp.s_no,
+				sp.pr_no,
+				pr_name,
+				sp_q,
+				price,
+				status,
+				startperiod,
+				endperiod
+		  FROM shop_pr sp, product p, shop s
+		 WHERE sp.s_no = s.s_no
+		   AND sp.pr_no = p.pr_no
+		   AND sp.sp_no = #{sp_no}
+	</select>
+	
+	<update id="modifyMerchandise" parameterType="merchandise">
+		UPDATE shop_pr SET s_no		=	#{s_no},
+						   pr_no 		=	#{pr_no},
+						    sp_q 		=	#{sp_q},
+							price 		=	#{price},
+							status		=	#{status},
+							startperiod	=	#{startperiod},
+							endperiod 	=	#{endperiod},
+							sys_updatedate = sysdate
+				WHERE sp_no = #{sp_no}
+	</update>
+	
+	<update id="deleteMerchandise" parameterType="merchandise">
+		UPDATE shop_pr SET enabled = '0',
+				sys_updatedate = sysdate
+			WHERE sp_no = #{sp_no}
+	</update>
+	
+	<delete id="deleteShopMerchandise" parameterType="str">
+		DELETE FROM shop_pr WHERE s_no = #{s_no}
+	</delete>
 </mapper>

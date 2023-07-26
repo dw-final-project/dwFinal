@@ -62,7 +62,7 @@
 		
 	$('tr').on('click', function(){
 			$('#shname', opener.document).val($(this).find('.s_name').text());
-			$('#s_no_receiver', opener.document).val($(this).find(".s_no").val());
+			$('#s_no_receiver', opener.document).val($(this).find('.s_no').text());
 			window.close();
 		})
 	
