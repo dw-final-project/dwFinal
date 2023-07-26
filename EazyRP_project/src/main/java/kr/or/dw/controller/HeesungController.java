@@ -147,6 +147,14 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		
 		String url = "heesung/wh/registForm.open";
 		return url;
+
+	}
+	
+	@RequestMapping
+	public void whRegist(WhVO whVo, HttpServletResponse res) throws SQLException {
+		
+		
+		whService.registWh(whVo);
 		
 	}
 	

@@ -22,4 +22,6 @@ public class WhVO {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date sys_updatedate;	// 수정일
 	private String sys_reg;			// 최초등록자
+	private String wh_total;		// 총합계
+	
 }

@@ -16,4 +16,6 @@ public interface WhDAO {
 
 	int selectSearchWhListCount(SearchCriteria cri) throws SQLException;
 
+	void insertWh(WhVO whVo) throws SQLException;
+
 }
