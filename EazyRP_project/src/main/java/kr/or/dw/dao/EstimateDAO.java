@@ -43,7 +43,7 @@ public interface EstimateDAO {
 
 	void modifyEstimateDetail(EstimateVO est) throws SQLException;
 
-	void modifyEstimate(EstimateVO estimateVO) throws SQLException;
+	void modifyEstimate(Map<String, String> modifyMap) throws SQLException;
 
 
 

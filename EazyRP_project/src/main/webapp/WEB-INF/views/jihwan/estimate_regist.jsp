@@ -154,7 +154,7 @@
 	$(document).on('click', '.pr_names', function(){
 		let idVal = $(this).attr('id');
 		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 800, 600);
+		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
 		
 // 		openWin.document.getElementById('cnt').value = cnt;
 	});
@@ -168,7 +168,7 @@
 	$(document).on('click', '.wh_names', function(){
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 800,600);
+		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
 	})
 	
 	// 수량 이벤트
