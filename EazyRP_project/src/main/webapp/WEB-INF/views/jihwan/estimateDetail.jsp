@@ -86,7 +86,7 @@
         </tr>
         <tr>
             <td align="center">등록일자</td>
-            <td><input type="text" style="width: 100%;" value="${est.REGDATE }"></td>
+            <td><fmt:formatDate value="${est.REGDATE }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
         </tr>
         <tr>
             <td align="center">외화 명</td>
@@ -102,7 +102,7 @@
         <tr>
             <td align="center">담당자</td>
             <td><input type="hidden" name="emp_no" id="receiver" value="${est.EMP_NO }">
-            <input type="text" style="width: 100%;" value="${est.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)"></td>
+            <input type="text" style="width: 100%;" value="${est.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 500, 500)"></td>
         </tr>
         <tr>
             <td align="center">첨부파일</td>
@@ -114,7 +114,7 @@
 			</td> 
         </tr>
     </table>
-    <button type="button" id="addPutBtn">제품추가</button>
+    <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-dark">제품추가</button>
     <table>
         <tr>
             <th align="center" style="width: 20%;">제품명</th>
@@ -128,19 +128,19 @@
        <c:forEach items="${estPr }" var="est" varStatus="loop">
         <tr>    	
        <input type="hidden" class="rownum" value="${est.ROWNUM }">
-       <input type="hidden" name="estdetail_no" value="${est.ESTDETAIL_NO }">
+       <input type="hidden" name="estdetail_no" id="dtail_no" value="${est.ESTDETAIL_NO }">
         	<td>
         	<input type="text" id="${est.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${est.P_NAME }"><input type="hidden" name="pr_no" value="${est.PR_NO }"></td>
             <td><input type="text" id="wh_no${est.ROWNUM }" class="wh_names" name="wh_name" style="width: 100%;" value="${est.WH_NAME }"><input type="hidden" name="wh_no" value="${est.WH_NO }"></td>
             <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${est.QUANTITY }"><input type="hidden" id="cost" value="${est.PR_EXPRICE }"></td>
-            <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${est.AMOUNT }"></td>
-            <td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>
+            <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${est.AMOUNT }" readonly ></td>
+            <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-secondary">삭제</button></td>
         </tr>
         </c:forEach>
         </tbody>
         <tr class="total">
             <td colspan="3" align="center">총계</td>
-            <td colspan="2" align="center"><input type="text" id="totalAmount" style="width: 100%;" value="${est.AMOUNT }"></td>
+            <td colspan="2" align="center"><input type="text" id="totalAmount" style="width: 100%;" value="${est.AMOUNT }" readonly></td>
         </tr>
     </table>
 </form>
@@ -151,7 +151,12 @@
 
 <script>
 window.onload = function(){
-
+	
+	let fc_no = "${est.FC_NO}";
+	$('#fc-select').val(fc_no);
+	$('select#fc-select').find('option[value="' + fc_no + '"]').attr('selected', 'selected');
+	console.log(fc_no);
+	
 	let formObj = $('form[role="form"]');
 
 	$('button#modifyBtn').on('click', function(){
@@ -161,7 +166,6 @@ window.onload = function(){
 // 			'enctype' : 'multipart/form-data'
 		});
 		console.log($('form[role="form"]').serializeArray());
-		debugger;
 		formObj.submit();
 	});
 	
@@ -187,15 +191,17 @@ window.onload = function(){
 let rownumList = $('.rownum');
 let cnt = rownumList.length; 
 console.log(cnt);
+let dtail_no = $('#dtail_no').val();
 // 제품 추가 버튼
 $('#addPutBtn').on('click', function(){
 	cnt++;
 	$('#prInput').append('<tr><input type="hidden" class="rownum" value="'+ cnt + '">' +
+	'<input type="hidden" name="estdetail_no" value="0">'+
     '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
     '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'+
     '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
     '<td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>'+
-    '<td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>'+
+    '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-secondary">삭제</button></td>'+
 '</tr>');
 	
 	
@@ -229,7 +235,7 @@ $('tr').on('click', function(){
 		let idVal = $(this).parents("tr").find(".rownum").val();
 		console.log(idVal);
 		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 800, 600);
+		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
 		
 	});
 	
@@ -242,7 +248,7 @@ $('tr').on('click', function(){
 	$(document).on('click', '.wh_names', function(){
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 800,600);
+		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
 	})
 	
 	// 수량 이벤트

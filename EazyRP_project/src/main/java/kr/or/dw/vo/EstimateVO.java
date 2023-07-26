@@ -24,7 +24,7 @@ public class EstimateVO {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date regdate;
 	private String c_no;
-	
+	private String realfilename;
 	
 	
 	

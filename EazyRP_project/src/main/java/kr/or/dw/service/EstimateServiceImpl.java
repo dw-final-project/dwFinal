@@ -49,7 +49,6 @@ public class EstimateServiceImpl implements EstimateService {
 	@Override
 	public Map<String, Object> selectDetail(String est_no) throws SQLException {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
-		
 		Map<String, Object> est = (Map<String, Object>) estimateDAO.selectDetail(est_no);
 		System.out.println(est.get("PR_EXPRICE"));
 		System.out.println(est.get("WH_NAME"));
@@ -130,20 +129,36 @@ public class EstimateServiceImpl implements EstimateService {
 	}
 
 	@Override
-	public void modifyEstimate(List<EstimateVO> modify) throws SQLException {
+	public void modifyEstimate(List<EstimateVO> modify, String empno) throws SQLException {
+		System.out.println("1");
+		String est_no =  modify.get(0).getEst_no();
 		
-		estimateDAO.modifyEstimate(modify.get(0));
-		String est_no = modify.get(0).getEst_no();
+		Map<String, String> modifyMap = new HashMap<>();
+		modifyMap.put("emp_no",empno);
+		modifyMap.put("est_no", est_no);
+		System.out.println("2");
+		estimateDAO.modifyEstimate(modifyMap);
+		System.out.println("3");
 		String files = modify.get(0).getFiles();
 		String c_no = modify.get(0).getC_no();
 		
+		System.out.println("modifyMap = " + modifyMap);
+		int a = 4;
 		for (EstimateVO est : modify) {
-			est.setEst_no(est_no);
-			est.setFiles(files);
-			est.setC_no(c_no);
+			System.out.println(a);
+			a++;
 			estimateDAO.modifyEstimateDetail(est);
 		}
 		
+		
+	}
+
+	@Override
+	public void deleteEstimate(String est_no) throws SQLException {
+		
+		if(est_no == est) {
+			
+		}
 		
 	}
 	

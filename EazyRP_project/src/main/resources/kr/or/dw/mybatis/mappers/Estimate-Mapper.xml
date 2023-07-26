@@ -72,6 +72,7 @@
 		  ,MAX((SELECT e_name FROM emp WHERE emp_no = ed.EMP_NO)) e_name
 		  ,MAX(ed.emp_no) emp_no
 		  ,MAX((SELECT fc_name FROM fc WHERE fc_no = ed.fc_no)) fc_name
+		  ,MAX(ed.fc_no) fc_no
 		  ,MAX((SELECT pr_name FROM product WHERE pr_no = ed.pr_no)) p_name
 		  ,MAX((SELECT wh_name FROM WAREHOUSE WHERE wh_no = ed.wh_no)) wh_name
 		  ,MAX((SELECT pr_exprice FROM product p WHERE p.pr_no = ed.pr_no)) pr_exprice
@@ -177,14 +178,7 @@
 <insert id="insertEstimate" parameterType="estimate">
 	
 	<selectKey keyProperty="est_no" order="BEFORE" resultType="java.lang.String">
-			SELECT ('EST_') || CASE 
-				WHEN LENGTH(estimate_seq.nextval) = 1
-				THEN '00' || estimate_seq.nextval
-				WHEN LENGTH(estimate_seq.nextval) = 2
-				THEN '0' || estimate_seq.nextval
-				ELSE '' || estimate_seq.nextval
-	   	    	END EST_NO
-		   FROM dual
+		<include refid="makeEstNoSeq"></include>
 	</selectKey>
 	INSERT INTO estimate (
 		est_no,
@@ -203,6 +197,22 @@
 		  ,#{emp_no}	
 	)
 </insert>
+
+<sql id="makeEstNoSeq">
+	SELECT ('EST_') || CASE 
+						WHEN LENGTH(estimate_seq.nextval) = 1
+						THEN '00' || estimate_seq.nextval
+						WHEN LENGTH(estimate_seq.nextval) = 2
+						THEN '0' || estimate_seq.nextval
+						ELSE '' || estimate_seq.nextval
+			   	      END EST_NO
+	  FROM dual
+</sql>
+
+<sql id="makeEstDetailSeq">
+	SELECT estdetail_seq.nextval
+	  FROM dual
+</sql>
 
 <insert id="insertEstimateDetail" parameterType="estimate">
 	INSERT INTO estdetail (
@@ -242,16 +252,55 @@
 </select>
 
 <update id="modifyEstimate">
-	UPDATE estimate SET (sys_up, SYS_REGDATE) = (SELECT sys_up,SYS_REGDATE  
- 	FROM ESTIMATE
- 	WHERE EST_NO = #{EST_NO})  
-WHERE est_no = #{est_no}
+	UPDATE estimate SET sys_up = #{emp_no}, sys_updatedate = sysdate
+	WHERE est_no = #{est_no}
 </update>
 
 <update id="modifyEstimateDetail" >
-	UPDATE estdetail SET emp_no = #{emp_no}, fc_no = #{fc_no}, files = #{files},
-						pr_no = #{pr_no}, wh_no = #{wh_no} ,est_no = #{est_no}
-	WHERE estdetail = #{estdetail}
+
+  MERGE 
+  INTO ESTDETAIL  
+  USING dual 
+	ON (#{estdetail_no} != 0)
+	WHEN MATCHED THEN 
+		UPDATE 
+		 SET
+		 WH_NO = #{wh_no}
+		 ,FC_NO = #{fc_no}
+		 ,AMOUNT = #{amount}
+		 ,PROGRESS = '진행중'
+		 ,EMP_NO = #{emp_no}
+		 ,QUANTITY = #{quantity}
+		 ,FILES = #{files}
+		 ,PR_NO = #{pr_no}
+		WHERE estdetail_no = #{estdetail_no}
+WHEN NOT MATCHED THEN 
+	INSERT (estdetail_no,
+		est_no,
+		wh_no,
+		emp_no,
+		fc_no,
+		amount,
+		progress,
+		quantity,
+		files,
+		pr_no,
+		regdate,
+		c_no)
+	VALUES (
+		estdetail_seq.nextval,
+		#{est_no},
+		#{wh_no},
+		#{emp_no},
+		#{fc_no},
+		#{amount},
+		'진행중',
+		#{quantity},
+		#{files},
+		#{pr_no},
+		sysdate,
+		(SELECT p.c_no FROM product p, company c WHERE p.c_no = c.c_no AND p.pr_no = #{pr_no})		
+	)
 </update>
 
 </mapper>
