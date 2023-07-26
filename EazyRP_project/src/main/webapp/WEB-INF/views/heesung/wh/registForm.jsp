@@ -77,8 +77,7 @@
 <body>
 	<h2>생산입고 등록</h2>
 	<!-- card footer End -->
-	<form role="form" method="post" action="/erp4/insertEstimate.do"
-		enctype="multipart/form-data">
+	<form role="form" method="post" action="/erp4/wh/regist.do" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td width="40%" align="center"><b>담당자</b></td>
@@ -129,7 +128,7 @@
 						<input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="">
 					</td>
 					<td>
-						<input type="text" id="amount" name="amount" style="width: 100%;" value="">
+						<input type="text" id="amount2" name="amount2" style="width: 100%;" value="">
 					</td>
 					<td style="text-align: center;">
 						<button type="button" id="cancelBtn">삭제</button>
@@ -141,7 +140,7 @@
 					총계
 				</td>
 				<td colspan="2" align="center">
-					<input type="text" style="width: 100%;" id="totalAmount" value="">
+					<input type="text" style="width: 100%;" id="totalAmount2" value="">
 				</td>
 			</tr>
 		</table>
@@ -163,8 +162,8 @@
 				+ '<td><input type="text" id="' + cnt + '" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name=""></td>'
 				+ '<td><input type="text" id="' + cnt + '" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name=""></td>'
 				+ '<td><input type="text" id="outPrice' + cnt + '" class="outPrice" name="outPrice" style="width: 100%;" value=""><input type="hidden" name=""></td>'
-				+ '<td><input type="text" id="quantity' + cnt + '" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'
-				+ '<td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>'
+				+ '<td><input type="text" id="quantity' + cnt + '" class="quantity" name="quantity" style="width: 100%;" value=""></td>'
+				+ '<td><input type="text" id="amount" name="amount2" style="width: 100%;" value=""></td>'
 				+ '<td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>'
 			+ '</tr>'
 		);
@@ -203,12 +202,12 @@
 	// 총합계
 	$(document).on('change, keyup', '#prInput', function(){
 		let sum = Number(0);
-		let inputAmount = $('input[name="amount"]').get();
+		let inputAmount = $('input[name="amount2"]').get();
 		for(let i = 0; i < inputAmount.length; i++){
-			sum += Number($('input[name="amount"]').eq(i).val());
+			sum += Number($('input[name="amount2"]').eq(i).val());
 		}
 		
-		$('#totalAmount').val(sum);
+		$('#totalAmount2').val(sum);
 	})
 
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight) {

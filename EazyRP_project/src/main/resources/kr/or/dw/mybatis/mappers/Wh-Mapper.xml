@@ -51,4 +51,25 @@
 		<include refid="search"/>
 	</select>
 	
+	<insert id="insertWh" parameterType="wh">
+		INSERT INTO wh	
+		(
+			wh_no,
+			sys_regdate,
+			emp_no,
+			enabled,
+			files,
+			wo_no,
+			sys_up,
+			sys_updatedate,
+			sys_reg
+		)
+		VALUES
+		(
+			wh_no_seq.nextval,
+			sysdate,
+			#{emp_no}
+		)
+	</insert>
+	
 </mapper>
