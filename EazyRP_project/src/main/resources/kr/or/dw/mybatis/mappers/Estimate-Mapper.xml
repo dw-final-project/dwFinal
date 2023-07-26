@@ -70,6 +70,7 @@
 		  ,MAX(ed.regdate) regdate
 		  ,MAX((SELECT c_name FROM company WHERE c_no = ed.C_NO)) c_name
 		  ,MAX((SELECT e_name FROM emp WHERE emp_no = ed.EMP_NO)) e_name
+		  ,MAX(ed.emp_no) emp_no
 		  ,MAX((SELECT fc_name FROM fc WHERE fc_no = ed.fc_no)) fc_name
 		  ,MAX((SELECT pr_name FROM product WHERE pr_no = ed.pr_no)) p_name
 		  ,MAX((SELECT wh_name FROM WAREHOUSE WHERE wh_no = ed.wh_no)) wh_name
@@ -78,7 +79,7 @@
 		  ,count(ed.PR_NO) pr_no
 		  ,SUM(ed.amount) amount
 		  ,MAX(ed.PROGRESS) progress
-		  ,MAX(ed.FILES) files 
+		  ,MAX(ed.FILES) files
 	  FROM ESTIMATE e , ESTDETAIL ed
 	 WHERE 1=1
 	   AND e.EST_NO = ed.EST_NO
@@ -87,11 +88,15 @@
 </select>
 
 <select id="forEstimList" resultType="Map">
-	SELECT amount
+	SELECT ROWNUM
+		  ,amount
 	  	  ,ed.quantity
 	  	  ,p.pr_exprice
 	  	  ,p.pr_name p_name
 	  	  ,w.wh_name wh_name
+	  	  ,ed.estdetail_no
+	  	  ,w.wh_no
+	  	  ,p.pr_no
   	  FROM ESTDETAIL ed, product p, warehouse w
 	 where est_no = #{est_no}
 	   AND p.pr_no = ed.pr_no
@@ -229,5 +234,24 @@
 		(SELECT p.c_no FROM product p, company c WHERE p.c_no = c.c_no AND p.pr_no = #{pr_no})
 	)
 </insert>
+
+<select id="selectFile" resultType="str">
+	SELECT files
+	  FROM estdetail
+	 WHERE files = #{files}
+</select>
+
+<update id="modifyEstimate">
+	UPDATE estimate SET (sys_up, SYS_REGDATE) = (SELECT sys_up,SYS_REGDATE  
+ 	FROM ESTIMATE
+ 	WHERE EST_NO = #{EST_NO})  
+WHERE est_no = #{est_no}
+</update>
+
+<update id="modifyEstimateDetail" >
+	UPDATE estdetail SET emp_no = #{emp_no}, fc_no = #{fc_no}, files = #{files},
+						pr_no = #{pr_no}, wh_no = #{wh_no} ,est_no = #{est_no}
+	WHERE estdetail = #{estdetail}
+</update>
 
 </mapper>

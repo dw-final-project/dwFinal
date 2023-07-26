@@ -20,6 +20,7 @@ import kr.or.dw.service.MenuService;
 import kr.or.dw.service.ProcessService;
 import kr.or.dw.service.WhService;
 import kr.or.dw.vo.ProcessVO;
+import kr.or.dw.vo.WhVO;
 
 @Controller
 @RequestMapping("/erp4")
@@ -46,7 +47,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
-		System.out.println("맥북 깃허브 테스트");
+
 		return mnv;
 	}
 	
@@ -124,7 +125,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		out.println("</script>");
 	}
 	
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////// wh(생산입고)
 	
 	@RequestMapping("/wh")
 	public ModelAndView wh(String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
@@ -139,6 +140,14 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		mnv.setViewName(url);
 		
 		return mnv;
+	}
+	
+	@RequestMapping("/wh/registForm")
+	public String whRegistForm() {
+		
+		String url = "heesung/wh/registForm.open";
+		return url;
+		
 	}
 	
 }

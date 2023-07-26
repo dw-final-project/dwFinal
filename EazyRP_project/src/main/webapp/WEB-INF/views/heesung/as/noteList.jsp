@@ -99,4 +99,4 @@
 
 	
 </script>
-<%@ include file="../include/footer_js.jsp" %>
+<%@ include file="../../include/footer_js.jsp" %>
