@@ -84,8 +84,6 @@ public class CommonController {
 	public ModelAndView index(ModelAndView mnv, HttpSession session, HttpServletRequest req) throws SQLException{
 		String url = "/common/main.main";
 
-		if(session.getAttribute("c_no") == null) {
-
 		Map<String, List<String>> empMap = new HashMap<>();
 		List<String> e_nameList = new ArrayList<>();
 		List<Integer> emp_noList = new ArrayList<>();
