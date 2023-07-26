@@ -2,6 +2,7 @@ package kr.or.dw.controller;
 
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.dw.service.CalendarService;
 import kr.or.dw.service.MemberService;
 import kr.or.dw.service.MenuService;
+import kr.or.dw.vo.CalendarVO;
 import kr.or.dw.vo.MenuVO;
 
 @Controller
@@ -32,6 +35,9 @@ public class CommonController {
 	
 	@Autowired
 	private MenuService menuService;
+	
+	@Autowired
+	private CalendarService calendarService;
 
 	@GetMapping("/common/loginForm")
 	public String loginForm(HttpServletResponse res) throws Exception {
@@ -77,17 +83,41 @@ public class CommonController {
 	@RequestMapping("/common/main")
 	public ModelAndView index(ModelAndView mnv, HttpSession session, HttpServletRequest req) throws SQLException{
 		String url = "/common/main.main";
-		if(session.getAttribute("id") != null) {
-			System.out.println("저장된 아이디 : " + session.getAttribute("id"));
-		}
+
 		if(session.getAttribute("c_no") == null) {
+
+		Map<String, List<String>> empMap = new HashMap<>();
+		List<String> e_nameList = new ArrayList<>();
+		List<Integer> emp_noList = new ArrayList<>();
+		if(session.getAttribute("c_no") == null || session.getAttribute("c_no").equals("")) {
+
 			session.setAttribute("c_no", "");
 			session.setAttribute("emp_no", 0);
+			e_nameList.add(0, "업체를 선택해주세요.");
+			emp_noList.add(0, 0);
+			session.setAttribute("e_nameList", e_nameList);
+			session.setAttribute("emp_noList", emp_noList);
+			session.setAttribute("empMap", empMap);
 		}
 		List<MenuVO> menuList = menuService.selectMainMenuList();
 		Map<String, Object> dataMap = menuService.selectSubMenuList(menuList);
 		Map<String, List<MenuVO>> subMenuList = (Map<String, List<MenuVO>>) dataMap.get("subMenuList");
 		Map<String, List<MenuVO>> smallMenuList = (Map<String, List<MenuVO>>) dataMap.get("smallMenuList");
+		
+		// FullCalendar start ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+		List<CalendarVO> calendarList = null;
+		try {
+			calendarList = calendarService.getCalendar();
+			req.setAttribute("calendarList", calendarList);
+			mnv.addObject("calendarList", calendarList);
+			mnv.setViewName(url);
+			
+			System.out.println(calendarList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// FullCalendar end ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+		
 		
 		session.setAttribute("menuList", menuList);
 		session.setAttribute("subMenuList", subMenuList);
@@ -106,11 +136,74 @@ public class CommonController {
 	
 	@RequestMapping("/common/change")
 	public ModelAndView change(ModelAndView mnv, String mcode, HttpSession session,String selectedC_no, HttpServletRequest req) throws SQLException{
+		System.out.println("1");
 		String str = req.getRequestURI();
+		System.out.println("2");
 		String result = str.substring(0, str.indexOf("."));
+		System.out.println("왜이러냐");
 		System.out.println(result);
 		String url = "";
 		System.out.println(mcode);
+		List<String> e_nameList = new ArrayList<>();
+		List<String> emp_noList = new ArrayList<>();
+		Map<String, List<String>> empMap = new HashMap<>();
+		if(mcode == null || mcode.equals("")) {
+			url = "/common/main.do";
+		} else {
+			String getUrl = menuService.getUrl(mcode);
+			String getUrlResult = getUrl.substring(0, getUrl.indexOf("."));
+			String modMcode = mcode.substring(0, 3) + "0000";
+			System.out.println(modMcode);
+			url = getUrl + "?mcode=" + modMcode;
+		}
+		if(selectedC_no.equals("") || selectedC_no == null) {
+			session.setAttribute("c_no", "");
+			session.setAttribute("emp_no", 0);
+			session.setAttribute("c_name", "");
+			e_nameList.add(0, "업체를 선택해주세요.");
+			emp_noList.add(0, "0");
+			empMap.put("e_nameList", e_nameList);
+			empMap.put("emp_noList", emp_noList);
+			session.setAttribute("empMap", empMap);
+		} else {
+			e_nameList = menuService.getE_name(selectedC_no);
+			emp_noList = menuService.getEmp_no(selectedC_no);
+			empMap.put("e_nameList", e_nameList);
+			empMap.put("emp_noList", emp_noList);
+			session.setAttribute("empMap", empMap);
+		}
+		
+		System.out.println("url = " + url);
+		session.setAttribute("c_no", selectedC_no);
+		if(selectedC_no.equals("C000001")) {
+			session.setAttribute("c_name", "(주)지민식품");
+			session.setAttribute("emp_no", 0);
+		} else if(selectedC_no.equals("C000002")) {
+			session.setAttribute("c_name", "희성전자");
+			session.setAttribute("emp_no", 0);
+		} else if(selectedC_no.equals("C000003")) {
+			session.setAttribute("c_name", "석준물산");
+			session.setAttribute("emp_no", 0);
+		} else if(selectedC_no.equals("C000004")) {
+			session.setAttribute("c_name", "(주)소라전자");
+			session.setAttribute("emp_no", 0);
+		} else if(selectedC_no.equals("C000005")) {
+			session.setAttribute("c_name", "민준식품");
+			session.setAttribute("emp_no", 0);
+		} else if(selectedC_no.equals("C000006")) {
+			session.setAttribute("c_name", "지환물산");
+			session.setAttribute("emp_no", 0);
+		}
+		
+		mnv.setViewName("redirect:" + url);
+		
+		return mnv;
+		
+	}
+	
+	@RequestMapping("/common/empChange")
+	public ModelAndView empChange(ModelAndView mnv, String mcode, HttpSession session,String selectedEmp, HttpServletRequest req) throws SQLException{
+		String url = "";
 		if(mcode == null || mcode.equals("")) {
 			url = "/common/main.do";
 		} else {
@@ -121,28 +214,11 @@ public class CommonController {
 			url = getUrl + "?mcode=" + modMcode;
 		}
 		
-		System.out.println("url = " + url);
-		session.setAttribute("c_no", selectedC_no);
-		if(selectedC_no.equals("C000001")) {
-			session.setAttribute("emp_no", 1);
-		} else if(selectedC_no.equals("C000002")) {
-			session.setAttribute("emp_no", 2);
-		} else if(selectedC_no.equals("C000003")) {
-			session.setAttribute("emp_no", 3);
-		} else if(selectedC_no.equals("C000004")) {
-			session.setAttribute("emp_no", 4);
-		} else if(selectedC_no.equals("C000005")) {
-			session.setAttribute("emp_no", 5);
-		} else if(selectedC_no.equals("C000006")) {
-			session.setAttribute("emp_no", 6);
-		}
+		session.setAttribute("emp_no", selectedEmp);
+		System.out.println("emp번호다 : " + selectedEmp);
 		
-		System.out.println(session.getAttribute("emp_no"));
-		System.out.println(session.getAttribute("c_no"));
 		mnv.setViewName("redirect:" + url);
-		
 		return mnv;
-		
 	}
 	
 	

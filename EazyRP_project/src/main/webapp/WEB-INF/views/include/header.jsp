@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="selectedEmpNo" value="${sessionScope.emp_no}" />
 <!doctype html>
 <html lang="ko">
 <head>
@@ -19,7 +20,7 @@
 </head>
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <style>
-  html {
+html {
     height: 100%;
   }
 
@@ -90,42 +91,94 @@
   .table {
     color: #000;
   }
+   #selectOp{
+      font-size: 0.8em;
+      border: 2px red solid;
+      text-align: center;
+      width: 100px;
+      ${c_no ne "" && emp_no eq 0 ? "animation: ct2 0.7s infinite;" : ""}
+      
+   }
+   #selectOp2{
+      font-size: 0.8em;
+      border: 2px red solid;
+      text-align: center;
+      width: 100px;
+      ${c_no eq "" ? "animation: ct2 0.7s infinite;" : ""}
+      
+   }
+   @keyframes ct2 {
+        50% {border: 2px yellow solid;}
+   }
+   
+   #animation {
+     color: red;
+     ${c_no eq "" || emp_no eq 0 ? "animation: ct 0.7s infinite;" : ""}
+   }
+   
+   @keyframes ct {
+        50% {color: yellow;}
+   }
 
 </style>
 
-<body class="bg-light">
+<body class="bg-light" style="padding: 0px;">
 
     <nav class="navbar navbar-expand-lg bg-light">
-      <div class="container-fluid">
+    	<c:if test="${empty c_no || emp_no eq 0}">
+		    <div style="position: absolute; z-index: 2; right: 40px; top: 55px; font-weight: bold;" id="animation">
+		        체험하실 업체와 직원을 먼저 선택해주세요.
+		    </div>
+		</c:if>
+      <div class="container-fluid" style="position: relative;">
         <a class="navbar-brand" href="/common/main.do"><img src="<%=request.getContextPath() %>/resources/img/EazyRP.png" style="width: 100px;"></a>
-            <form class="d-flex" id="selectCompany" method="post" action="/common/change.do?mcode=${mcode }">
-             <select class="form-control" name="selectedC_no" style="font-size: 0.8em; border: 2px red solid; text-align: center;">
-				<option value="" style=" text-align: center;">업체 선택</option>
-				<option style=" text-align: center;" value="C000001" ${c_no eq 'C000001' ? 'selected' : '' }>(주)지민식품</option>
-				<option style=" text-align: center;" value="C000002" ${c_no eq 'C000002' ? 'selected' : '' }>희성전자</option>
-				<option style=" text-align: center;" value="C000003" ${c_no eq 'C000003' ? 'selected' : '' }>석준물산</option>
-				<option style=" text-align: center;" value="C000004" ${c_no eq 'C000004' ? 'selected' : '' }>(주)소라전자</option>
-				<option style=" text-align: center;" value="C000005" ${c_no eq 'C000005' ? 'selected' : '' }>민준식품</option>
-				<option style=" text-align: center;" value="C000006" ${c_no eq 'C000006' ? 'selected' : '' }>지환물산</option>
-			</select>
-			<input class="btn btn-warning" style="font-size: 0.8em;" id="submitBtn" type="submit" value="업체 변경">
-            </form>
-          </div>
+            <div style="display: flex;">
+            	<form>
+	             <select id="selectOp2" class="form-control" name="selectedC_no" style="margin-right: 20px;">
+					<option value="X" style=" text-align: center;">업체 선택</option>
+					<option style=" text-align: center;" value="C000001" ${c_no eq 'C000001' ? 'selected' : '' }>(주)지민식품</option>
+					<option style=" text-align: center;" value="C000002" ${c_no eq 'C000002' ? 'selected' : '' }>희성전자</option>
+					<option style=" text-align: center;" value="C000003" ${c_no eq 'C000003' ? 'selected' : '' }>석준물산</option>
+					<option style=" text-align: center;" value="C000004" ${c_no eq 'C000004' ? 'selected' : '' }>(주)소라전자</option>
+					<option style=" text-align: center;" value="C000005" ${c_no eq 'C000005' ? 'selected' : '' }>민준식품</option>
+					<option style=" text-align: center;" value="C000006" ${c_no eq 'C000006' ? 'selected' : '' }>지환물산</option>
+				</select>
+				</form>
+				<form>
+	             <select id="selectOp" class="form-control" name="selectedEmp" style="${c_no eq '' ? 'background-color: gray;' : ''}" ${c_no eq '' ? 'disabled' : ''} >
+					<option value="X" style=" text-align: center;" >직원 선택</option>
+						<c:forEach items="${empMap['e_nameList']}" var="eName" varStatus="loop">
+						    <c:set var="empNo" value="${empMap['emp_noList'][loop.index]}" />
+						    <option style="text-align: center;" value="${empNo}" ${empNo eq selectedEmpNo ? 'selected' : ''}>${eName}</option>
+						</c:forEach>
+				</select>
+				</form>
+           </div>
+         </div>
     </nav>
 
     <nav class="nav d-flex" style="padding: 0 16.66666667%; padding-top: 6px; background-color: #7bc4b2; justify-content:space-evenly;">
       <c:forEach items="${menuList}" var="menu">
          <li class="nav-scroller py-1 mb-2 dropdown">
-          <a class="p-2 a nav-link  bold fw-bold" href="javascript:goPage('${menu.murl}', '${menu.mcode}');" data-url="${menu.mcode }" aria-expanded="true" style="color: white; text-decoration-line: none;">${menu.mname }</a>
+          <a class="p-2 a nav-link  bold fw-bold" href="javascript:goPage('${menu.murl}', '${menu.mcode}', '${menu.mname }');" data-url="${menu.mcode }" aria-expanded="true" style="color: white; text-decoration-line: none;">${menu.mname }</a>
           
          </li>
          </c:forEach>
   </nav>
   <script>
-	$('#submitBtn').on('click', function(){
-		alert('설정이 완료되었습니다.');
-		location.reload(true);
-	})
+	console.log('${c_no}')
+  	$('#selectOp2').on('change', function(){
+  		if($(this).val() != 'X'){
+	  		location.href="/common/change.do?mcode=${mcode }&selectedC_no=" + $(this).val();
+  		}
+  	})
+  	$('#selectOp').on('change', function(){
+  		if($(this).val() != 'X'){
+	  		location.href="/common/empChange.do?mcode=${mcode }&selectedEmp=" + $(this).val()
+	  		alert('설정이 모두 완료되었습니다.');
+  		}
+  	})
+  	
 </script>
 <!--   <nav class="flex-column p-3 sideMenuList" style=" float:left ; width: 15%; height: 100%; display: none; background-color: #7bc4b2;"> -->
 

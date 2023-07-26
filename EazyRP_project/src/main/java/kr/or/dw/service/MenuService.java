@@ -15,5 +15,11 @@ public interface MenuService {
 
 	String getUrl(String mcode) throws SQLException;
 
+	List<String> getE_name(String selectedC_no) throws SQLException;
+
+	List<String> getEmp_no(String selectedC_no) throws SQLException;
+
+	String selectEname(String selectedEmp) throws SQLException;
+ 
 	
 }

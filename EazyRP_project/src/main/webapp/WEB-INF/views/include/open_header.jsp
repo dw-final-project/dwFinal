@@ -19,77 +19,77 @@
 </head>
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <style>
-  html {
-    height: 100%;
-  }
+/*   html { */
+/*     height: 100%; */
+/*   } */
 
-  body {
-    overflow-x: hidden;
-    height: 100%;
-  }
+/*   body { */
+/*     overflow-x: hidden; */
+/*     height: 100%; */
+/*   } */
 
-  .a:hover {
-    background-color: darkslategray;
-    transition-duration: 0.35s;
-  }
+/*   .a:hover { */
+/*     background-color: darkslategray; */
+/*     transition-duration: 0.35s; */
+/*   } */
 
-  .nav--link.show {
-    color: #fff !important;
-  }
+/*   .nav--link.show { */
+/*     color: #fff !important; */
+/*   } */
 
-  .dropdown-menu {
-    border: 1px solid #eee;
-    border-radius: 0;
-  }
+/*   .dropdown-menu { */
+/*     border: 1px solid #eee; */
+/*     border-radius: 0; */
+/*   } */
 
-  .card {
-    border: solid 6px #f8f9fa;
-    border-radius: 10px;
-  }
+/*   .card { */
+/*     border: solid 6px #f8f9fa; */
+/*     border-radius: 10px; */
+/*   } */
 
-  /* Custom styles */
-  .navbar {
-    background-color: #7bc4b2;
-  }
+/*   /* Custom styles */ */
+/*   .navbar { */
+/*     background-color: #7bc4b2; */
+/*   } */
 
-  .navbar-brand {
-    color: #fff;
-    font-weight: bold;
-  }
+/*   .navbar-brand { */
+/*     color: #fff; */
+/*     font-weight: bold; */
+/*   } */
 
-  .nav-link {
-    color: #fff;
-    text-decoration: none;
-  }
+/*   .nav-link { */
+/*     color: #fff; */
+/*     text-decoration: none; */
+/*   } */
 
-  .nav-link:hover {
-    color: #fff;
-    background-color: #6ea89d;
-    transition-duration: 0.35s;
-  }
+/*   .nav-link:hover { */
+/*     color: #fff; */
+/*     background-color: #6ea89d; */
+/*     transition-duration: 0.35s; */
+/*   } */
 
-  .dropdown-menu {
-    background-color: #7bc4b2;
-  }
+/*   .dropdown-menu { */
+/*     background-color: #7bc4b2; */
+/*   } */
 
-  .dropdown-item {
-    color: #fff;
-  }
+/*   .dropdown-item { */
+/*     color: #fff; */
+/*   } */
 
-  .dropdown-item:hover {
-    background-color: #6ea89d;
-    transition-duration: 0.35s;
-  }
+/*   .dropdown-item:hover { */
+/*     background-color: #6ea89d; */
+/*     transition-duration: 0.35s; */
+/*   } */
 
-  .card-header {
-    background-color: #f8f9fa;
-    color: #000;
-    font-weight: bold;
-  }
+/*   .card-header { */
+/*     background-color: #f8f9fa; */
+/*     color: #000; */
+/*     font-weight: bold; */
+/*   } */
 
-  .table {
-    color: #000;
-  }
+/*   .table { */
+/*     color: #000; */
+/*   } */
 
 </style>
 

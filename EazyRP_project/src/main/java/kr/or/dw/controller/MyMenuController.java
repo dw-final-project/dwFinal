@@ -45,13 +45,13 @@ import kr.or.dw.vo.NoteVO;
 @RequestMapping("/mymenu")
 public class MyMenuController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CommonController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MyMenuController.class);
 	
 	@Autowired
 	private MyMenuService mymenuService;
 	
 	@RequestMapping("/communication")
-	public ModelAndView loginForm(ModelAndView mnv) throws SQLException {
+	public ModelAndView loginForm(ModelAndView mnv, HttpSession session) throws SQLException {
 		String url = "/mymenu/communication";
 		
 		mnv.setViewName(url);
@@ -59,12 +59,12 @@ public class MyMenuController {
 	}
 	
 	@RequestMapping("/noteRegist")
-	public String noteRegist(HttpSession session, NoteVO note, String reply, HttpServletResponse res, MultipartFile file) throws SQLException, IOException{
+	public String noteRegist(HttpSession session, NoteVO note, String reply, HttpServletResponse res, MultipartFile file, String fileName) throws SQLException, IOException{
 		NoteVO noteVo = new NoteVO();
 		System.out.println(note.getReceiver());
 		System.out.println(note.getCon());
-		System.out.println(file);
-		if(file != null) {
+		System.out.println(fileName);
+		if(!fileName.trim().equals("")) {
 			UUID uuid = UUID.randomUUID();
 			String[] uuids = uuid.toString().split("-");
 			
@@ -73,7 +73,7 @@ public class MyMenuController {
 			String fileRealName = file.getOriginalFilename();
 			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
 			noteVo.setRealFileName(fileRealName);
-			String uploadFolder = "C:\\upload\\";
+			String uploadFolder = session.getServletContext().getRealPath("/resources/saveFiles/");
 			note.setFiles(uniqueName+fileExtension);
 			
 			
@@ -95,17 +95,11 @@ public class MyMenuController {
 			note.setFiles("");
 		}
 		
-		
 		int emp_no = note.getReceiver(); // 받는사람 emp_no
-		int writer = (int) session.getAttribute("emp_no");
+		int writer = Integer.parseInt((String) session.getAttribute("emp_no"));
 		EmpVO emp = mymenuService.selectEmp(emp_no); // 받는사람 정보
 		EmpVO emp2 = mymenuService.selectEmp(writer); // 보낸사람 정보
 		
-		if(emp.getDept_no() != null || emp.getDept_no() != "") {
-			noteVo.setR_dept(emp.getDept_no());
-		} else {
-			noteVo.setR_dept("");
-		}
 		noteVo.setCon(note.getCon());
 		noteVo.setTitle(note.getTitle());
 		if(note.getFiles() == null || note.getFiles() == "") {
@@ -113,11 +107,7 @@ public class MyMenuController {
 		} else {
 			noteVo.setFiles(note.getFiles());
 		}
-		if(emp2.getDept_no() != null) {
-			noteVo.setC_dept(emp2.getDept_no());
-		} else {
-			noteVo.setC_dept("");
-		}
+		
 		if(emp2.getC_no() != null) {
 			noteVo.setC_company(emp2.getC_no());
 		} else {
@@ -155,11 +145,11 @@ public class MyMenuController {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		Map<String, Object> note = new HashMap<String, Object>();
 		String c_no = (String) session.getAttribute("c_no");
-		
 		dataMap.put("c_no", c_no);
 		dataMap.put("cri", cri);
 		note = mymenuService.getNoteList(dataMap);
 		
+		System.out.println("mname = " + session.getAttribute("mname"));
 		mnv.setViewName(url);
 		mnv.addAllObjects(note);
 		mnv.addObject("mcode", mcode);
@@ -172,11 +162,10 @@ public class MyMenuController {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		Map<String, Object> note = new HashMap<String, Object>();
 		String c_no = (String) session.getAttribute("c_no");
-		System.out.println(c_no);
 		
 		dataMap.put("c_no", c_no);
 		dataMap.put("cri", cri);
-		note = mymenuService.getSendNoteList(dataMap, cri);
+		note = mymenuService.getSendNoteList(dataMap);
 		
 		mnv.addAllObjects(note);
     	
@@ -190,8 +179,8 @@ public class MyMenuController {
 	}
 	
 	@RequestMapping("/deleteNote")
-	public void deleteNote(int n_no, HttpServletResponse res, String files) throws SQLException, IOException {
-		String uploadFolder = "C:\\upload\\";
+	public void deleteNote(HttpSession session, int n_no, HttpServletResponse res, String files) throws SQLException, IOException {
+		String uploadFolder = session.getServletContext().getRealPath("/resources/saveFiles/");
 		File file = new File(uploadFolder + files);
 		file.delete();
 		mymenuService.deleteNote(n_no);
@@ -235,40 +224,41 @@ public class MyMenuController {
 	}
 	
 	@RequestMapping("/findPeople")
-	public ModelAndView findPeople(ModelAndView mnv, String name, String c_name) throws SQLException {
+	public ModelAndView findPeople(ModelAndView mnv, String searchType, String keyword) throws SQLException {
 		String url = "mymenu/findPeople";
-		if(name == "") {
-			name = null;
+		if(searchType == "") {
+			searchType = null;
 		}
-		if(c_name == "") {
-			c_name = null;
+		if(keyword == "") {
+			keyword = null;
 		}
 		List<EmpVO> emp = null;
-		if(c_name != null && name == null) {
-			emp = mymenuService.getSelectEmpListCno(c_name);
-		} else if (name != null && c_name == null) {
-			emp = mymenuService.getSelectEmpList(name);
-		} else if (name != null && c_name != null){
-			Map<String, String> map = new HashMap<>();
-			map.put("c_name", c_name);
-			map.put("name", name);
-			emp = mymenuService.getEmp(map);
+		Map<String, String> dataMap = new HashMap<>();
+		dataMap.put("searchType", searchType);
+		dataMap.put("keyword", keyword);
+		if(keyword != null){
+			emp = mymenuService.getEmp(dataMap);
 		} else {
 			emp = mymenuService.getEmpList();
 		}
+		
 		mnv.setViewName(url);
 		mnv.addObject("emp", emp);
+		mnv.addObject("searchType", searchType);
+		mnv.addObject("keyword", keyword);
 		
 		return mnv;
 	}
 
 	
 	@RequestMapping("/search")
-	public ModelAndView search(ModelAndView mnv, String mcode, String keyword, String searchType) throws SQLException {
+	public ModelAndView search(HttpSession session, ModelAndView mnv, String mcode, String keyword, String searchType) throws SQLException {
 		String url = "/mymenu/noteList.page";
+		String c_no = (String)session.getAttribute("c_no");
 		Map<String, String> valMap = new HashMap<>();
 		valMap.put("keyword", keyword);
 		valMap.put("searchType", searchType);
+		valMap.put("c_no", c_no);
 		List<NoteVO> note = null;
 		note = mymenuService.searchNote(valMap);
 		mnv.addObject("note", note);
@@ -283,9 +273,11 @@ public class MyMenuController {
 	@RequestMapping("/sendSearch")
 	public ModelAndView sendSearch(HttpSession session, ModelAndView mnv, String mcode, String keyword, String searchType) throws SQLException {
 		String url = "/mymenu/sendNoteList.page";
+		String c_no = (String)session.getAttribute("c_no");
 		Map<String, String> valMap = new HashMap<>();
 		valMap.put("keyword", keyword);
 		valMap.put("searchType", searchType);
+		valMap.put("c_no", c_no);
 		List<NoteVO> note = null;
 		note = mymenuService.searchNote(valMap);
 		mnv.addObject("note", note);
@@ -297,11 +289,11 @@ public class MyMenuController {
 		return mnv;
 	}
 	
-	private static final String FOLDER_PATH = "C:\\upload\\";
 
     @RequestMapping("/download")
-    public ResponseEntity<FileSystemResource> downloadFile(@RequestParam("files") String fileName, HttpServletResponse response) throws IOException {
-        String filePath = FOLDER_PATH + fileName;
+    public ResponseEntity<FileSystemResource> downloadFile(HttpSession session, @RequestParam("files") String fileName, HttpServletResponse response) throws IOException {
+    	String uploadFolder = session.getServletContext().getRealPath("/resources/saveFiles/");
+    	String filePath = uploadFolder + fileName;
         File file = new File(filePath);
 
         if (file.exists()) {

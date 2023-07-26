@@ -71,89 +71,140 @@
 
 <body>
     <h2>DW 견적서 등록</h2>
-	<div class="card-footer">
-	</div>
 	<!-- card footer End -->
-<form role="form">
-<input type="hidden" name="est_no" value="${est.EST_NO }">
+<form role="form" method="post" action="/erp4/insertEstimate.do" enctype="multipart/form-data">
 	<table>
         <tr>
-            <td width="40%" align="center"><b>견적서 코드</b></td>
-            <td width="100%"><input type="text" style="width: 100%;" value="${est.EST_NO }" ></td>
+            <td width="40%" align="center"><b>담당자</b></td>
+            
+            <td><input type="hidden" name="emp_no" id="receiver" value="${empno }">
+            <input type="text" style="width: 100%;" value="${ename }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)"></td>
         </tr>
         <tr>
-            <td align="center">등록일자</td>
-            <td><input type="text" style="width: 100%;" value="${est.REGDATE }"></td>
+            <td width="40%" align="center"><b>외화 명</b></td>
+            <td><select name="fc_no" id="fc-select">
+			    <option value="FC_001">달러</option>
+			    <option value="FC_002">한화</option>
+			    <option value="FC_003">위안화</option>
+			    <option value="FC_004">엔화</option>
+			    <option value="FC_005">페소</option>
+			    <option value="FC_006">동</option>
+				</select></td>
         </tr>
         <tr>
-            <td align="center">외화 명</td>
-            <td><input type="text" style="width: 100%;" value="${est.FC_NAME }"></td>
-        </tr>
-        <tr>
-            <td align="center">담당자</td>
-            <td><input type="text" style="width: 100%;" value="${est.E_NAME }"></td>
-        </tr>
-        <tr>
-            <td align="center">첨부파일</td>
-            <td><input type="file" style="width: 100%;" value="${est.FILES != null ? "${est.files }" : "파일이 존재하지 않습니다."}"></td>
+            <td align="center"><b>첨부파일</b></td>
+            <td><input type="file" style="width: 100%;"  name ="files" value="">
+            	<input type="hidden" id="fileName" name="fileName" value=""> 
+            </td>
         </tr>
     </table>
+    <button type="button" id="addPutBtn">제품추가</button>
     <table>
+    	<thead>
         <tr>
             <th align="center" style="width: 20%;">제품명</th>
-            <th align="center" style="width: 20%;">창고</th>           
+            <th align="center" style="width: 20%;">창고명</th>           
             <th align="center" style="width: 20%;">수량</th>
             <th align="center" style="width: 20%;">가격</th>
+            <th align="center" style="width: 15%;">비고</th>
+            
         </tr>
-       <c:forEach items="${estPr }" var="est">
+        </thead>
+        <tbody id="prInput">
+        <input type="hidden" value="" id="cnt">
+        
         <tr>
-            <td><input type="text" style="width: 100%;" style="width: 100%;" value="${est.P_NAME }"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;" value="${est.WH_NAME }"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;" value="${est.QUANTITY }"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;" value="${est.AMOUNT }"></td>
+            <td><input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>
+            <td><input type="text" id="wh_no0" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>
+            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>
+            <td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>
+            <td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>
         </tr>
-        </c:forEach>
+        </tbody>
         <tr class="total">
             <td colspan="3" align="center">총계</td>
-            <td colspan="2" align="center"><input type="text" style="width: 100%;" value="${est.AMOUNT }"></td>
+            <td colspan="2" align="center"><input type="text" id="totalAmount" style="width: 100%;" value=""></td>
         </tr>
     </table>
-            <button type="button" id="modifyBtn" class="btn btn-warning" style="text-align : center;">생성</button>
+            <input type="submit" class="btn btn-primary" style="text-align : center;" value="생성">
 </form>
 </body>
 
-
-	
-
 <script>
-window.onload = function(){
-
-	let formObj = $('form[role="form"]');
-
-	$('button#modifyBtn').on('click', function(){
-		formObj.attr({
-			'action' : 'modifyForm.do',
-			'method' : 'post' 
-		});
-		formObj.submit();
+	let cnt = 1;
+	// 파일 추가 버튼
+	$('#addPutBtn').on('click', function(){
+		cnt++;
+		$('#prInput').append('<tr>'+
+        '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
+        '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'+
+        '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
+        '<td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>'+
+        '<td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>'+
+    '</tr>');
+		
+// 		$('script').append(
+// 			'$("#quantity' + cnt + '").on("keyup", function(){'+
+// 				'alert($(this).val())'+
+// 				'$(this).parent().next().children().val($(this).val()*$(this).next().val())});'
+// 		)
 	});
 	
-	$('button#removeBtn').on('click', function(){
-		if(confirm("정말 삭제하시겠습니까?")){
-			formObj.attr({
-				'action' : 'remove',
-				'method' : 'post' 
-			});
-			formObj.submit();
-		};
+	// 제품코드 td 클릭 이벤트
+	$(document).on('click', '.pr_names', function(){
+		let idVal = $(this).attr('id');
+		$('#cnt').val(idVal);
+		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
+		
+// 		openWin.document.getElementById('cnt').value = cnt;
 	});
 	
-	$('button#listBtn').on('click', function(){
-		window.opener.location.reload(true);
-		window.close();
+	// 제품 삭제 버튼
+	$('#prInput').on('click', '#cancelBtn', function(){
+		$(this).parent('td').parent('tr').remove();
 	});
-}
-
+	
+	// 창고코드 이벤트
+	$(document).on('click', '.wh_names', function(){
+		let whVal = $(this).attr('id');
+		$('#cnt').val(whVal);
+		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
+	})
+	
+	// 수량 이벤트
+	$(document).on('keyup', '.quantity', function(){
+// 		let quantity = $(this).val();
+		$(this).parent().next().children().val($(this).val()*$(this).next().val());
+	})
+	
+	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
+		winleft = (screen.width - WinWidth) / 2;
+		wintop = (screen.height - WinHeight) / 2;
+		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
+								+ "height=" + WinHeight + ",top="+ wintop + ",left="
+								+ winleft + ",resizable=yes,status=yes");
+		win.focus();
+		return win;
+	};
+	
+	$(document).on('change, keyup', '#prInput', function(){
+		let sum = Number(0);
+		let inputAmount = $('input[name="amount"]').get();
+		for(let i = 0; i < inputAmount.length; i++){
+			sum += Number($('input[name="amount"]').eq(i).val());
+		}
+		
+		$('#totalAmount').val(sum);
+	})
+	
 </script>
 
+	
+
+<!-- <script> -->
+
+
+<!-- </script> -->
+
+<script	src="<%=request.getContextPath()%>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 </html>

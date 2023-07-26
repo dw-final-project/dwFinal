@@ -32,5 +32,15 @@ public class CalendarServiceImpl implements CalendarService {
 	public void registCalendar(CalendarVO calendar) throws SQLException {
 		calendarDAO.insertCalendar(calendar);
 	}
+
+	@Override
+	public void modify(CalendarVO calendar) throws SQLException {
+		calendarDAO.updateCalendar(calendar);
+	}
+
+	@Override
+	public void remove(CalendarVO calendar) throws SQLException {
+		calendarDAO.deleteCalendar(calendar);
+	}
 	
 }
