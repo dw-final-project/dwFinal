@@ -241,10 +241,17 @@
 	 WHERE files = #{files}
 </select>
 
+<update id="modifyEstimate">
+	UPDATE estimate SET (sys_up, SYS_REGDATE) = (SELECT sys_up,SYS_REGDATE  
+ 	FROM ESTIMATE
+ 	WHERE EST_NO = #{EST_NO})  
+WHERE est_no = #{est_no}
+</update>
+
 <update id="modifyEstimateDetail" >
 	UPDATE estdetail SET emp_no = #{emp_no}, fc_no = #{fc_no}, files = #{files},
-						pr_no = #{pr_no}, wh_no = #{wh_no} 
-	WHERE est_no = #{est_no}
+						pr_no = #{pr_no}, wh_no = #{wh_no} ,est_no = #{est_no}
+	WHERE estdetail = #{estdetail}
 </update>
 
 </mapper>

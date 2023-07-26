@@ -132,7 +132,17 @@ public class EstimateServiceImpl implements EstimateService {
 	@Override
 	public void modifyEstimate(List<EstimateVO> modify) throws SQLException {
 		
-		estimateDAO.modifyEstimateDetail(modify);
+		estimateDAO.modifyEstimate(modify.get(0));
+		String est_no = modify.get(0).getEst_no();
+		String files = modify.get(0).getFiles();
+		String c_no = modify.get(0).getC_no();
+		
+		for (EstimateVO est : modify) {
+			est.setEst_no(est_no);
+			est.setFiles(files);
+			est.setC_no(c_no);
+			estimateDAO.modifyEstimateDetail(est);
+		}
 		
 		
 	}
