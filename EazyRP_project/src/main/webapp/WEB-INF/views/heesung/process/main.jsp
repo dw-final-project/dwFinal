@@ -9,7 +9,6 @@
 <body>
 	
 	<div class="content-wrapper">
-		<h1>공정 관리 페이지</h1>
 		<section class="row">
 			<div class="col-1"></div>
 			<div class="card col-10" style="margin-top:3em;">
