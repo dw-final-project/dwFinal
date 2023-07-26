@@ -83,10 +83,14 @@ public class CommonController {
 	@RequestMapping("/common/main")
 	public ModelAndView index(ModelAndView mnv, HttpSession session, HttpServletRequest req) throws SQLException{
 		String url = "/common/main.main";
+
+		if(session.getAttribute("c_no") == null) {
+
 		Map<String, List<String>> empMap = new HashMap<>();
 		List<String> e_nameList = new ArrayList<>();
 		List<Integer> emp_noList = new ArrayList<>();
 		if(session.getAttribute("c_no") == null || session.getAttribute("c_no").equals("")) {
+
 			session.setAttribute("c_no", "");
 			session.setAttribute("emp_no", 0);
 			e_nameList.add(0, "업체를 선택해주세요.");
