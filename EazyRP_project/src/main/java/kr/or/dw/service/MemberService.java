@@ -20,6 +20,10 @@ public interface MemberService {
 
 	String modProfile(MemberVO member) throws SQLException;
 
+	void repwd(String pwd) throws SQLException;
+
+	void delete(String id) throws SQLException;
+
 
 
 }

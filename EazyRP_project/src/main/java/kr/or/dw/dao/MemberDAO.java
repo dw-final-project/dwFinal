@@ -24,6 +24,10 @@ public interface MemberDAO {
 
 	String modProfile(MemberVO member) throws SQLException;
 
+	void updateRepwd(@Param("pwd") String pwd)throws SQLException;
+
+	void deleteUser(String id)throws SQLException;
+
 
 
 }

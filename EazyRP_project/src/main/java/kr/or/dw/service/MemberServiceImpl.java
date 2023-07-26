@@ -40,7 +40,6 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void pwRenew(String pwd, String id) throws SQLException {
-		System.out.println("서비스 임플 진입");
 		 memberDAO.updatePwd(pwd, id);
 	}
 
@@ -48,6 +47,19 @@ public class MemberServiceImpl implements MemberService{
 	public String modProfile(MemberVO member) throws SQLException {
 		String mod = memberDAO.modProfile(member);
 		return mod;
+	}
+
+	@Override
+	public void repwd(String pwd) throws SQLException {
+		 memberDAO.updateRepwd(pwd);
+		 System.out.println("서비스 임플");
+		
+	}
+
+	@Override
+	public void delete(String id) throws SQLException {
+		memberDAO.deleteUser(id);
+		
 	}
 
 

@@ -77,6 +77,9 @@ public class CommonController {
 	@RequestMapping("/common/main")
 	public ModelAndView index(ModelAndView mnv, HttpSession session, HttpServletRequest req) throws SQLException{
 		String url = "/common/main.main";
+		if(session.getAttribute("id") != null) {
+			System.out.println("저장된 아이디 : " + session.getAttribute("id"));
+		}
 		if(session.getAttribute("c_no") == null) {
 			session.setAttribute("c_no", "");
 			session.setAttribute("emp_no", 0);
