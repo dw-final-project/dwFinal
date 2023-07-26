@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -292,10 +293,10 @@ public class BusinessController {
 	}
 	
 	@RequestMapping("modifyForm")
-	public void estimateModify(@RequestParam("files")MultipartFile multi, String est_no, int[] estdetail_no, int emp_no, String[] pr_no, String fc_no, String[] wh_no, int[] quantity, int[] amount,  HttpServletResponse res) throws Exception {
-		
+	public void estimateModify(@RequestParam("files")MultipartFile multi, String est_no, int[] estdetail_no, int emp_no, String[] pr_no, String fc_no, String[] wh_no, int[] quantity, int[] amount,  HttpServletResponse res, HttpSession session) throws Exception {
 		List<EstimateVO> modify = new ArrayList<EstimateVO>();
 		
+		String empno = session.getAttribute("emp_no").toString();
 		String filess = "";
 		
 		if(!multi.isEmpty()) {
@@ -306,7 +307,7 @@ public class BusinessController {
 			
 			String fileRealName = multi.getOriginalFilename();
 			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
-			String uploadFolder = "C:\\upload\\";
+			String uploadFolder = session.getServletContext().getRealPath("/resources/saveJihwan/");
 			
 			filess = uniqueName+fileExtension;
 			
@@ -325,7 +326,6 @@ public class BusinessController {
 				e.printStackTrace();
 			}
 		}
-		
 		for(int i= 0; i < pr_no.length; i++) {
 			EstimateVO est = new EstimateVO();
 			est.setEmp_no(emp_no);
@@ -336,6 +336,7 @@ public class BusinessController {
 			est.setQuantity(quantity[i]);
 			est.setEstdetail_no(estdetail_no[i]);
 			est.setEst_no(est_no);
+			System.out.println(est_no);
 			est.setFiles(filess);
 			
 			modify.add(est);	
@@ -343,17 +344,27 @@ public class BusinessController {
 		
 		System.out.println("모디파이입니다 : " + modify);
 		
-		estimateService.modifyEstimate(modify);
+		estimateService.modifyEstimate(modify, empno);
 		
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
 		out.println("<script>");
 		out.println("alert('성공적으로 수정되었습니다.')");
-//		out.println("window.opener.location.reload(true); window.close();");
+		out.println("window.opener.location.reload(true); window.close();");
 		out.println("</script>");
+				
+	}
+	
+	@RequestMapping("remove")
+	public void remove (String est_no, HttpServletRequest req, HttpServletResponse res) throws IOException {
 		
-		
-		
+		estimateService.deleteEstimate(est_no);
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("window.opener.location.reload();");
+		out.println("window.close()");
+		out.println("</script>");
 	}
 	
 }

@@ -14,8 +14,8 @@
 			<div class="card card-outline card-info">
 				<div class="card-header">
 					<h3 class="card-title p-1">견 적 서</h3>
-					<button type="button" class="btn btn-danger" id=""
-						onclick="javascript:OpenWindow('estimate_regist.do','견적서 등록', 600 ,800);">등록</button>
+<!-- 					<button type="button" class="btn btn-danger" id="" -->
+<!-- 						onclick="javascript:OpenWindow('estimate_regist.do','견적서 등록', 600 ,800);">등록</button> -->
 					<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm2" method="post" action="/erp4/estimate.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
@@ -60,7 +60,7 @@
 									<td>${estimate.P_AMOUNT_NAME }</td>
 									<td>${estimate.AMOUNT }</td>
 									<td>${estimate.PROGRESS == null ? "진행중" : "처리중" }</td>
-									<td>${estimate.FILES != null ? "y" : "n"}</td>
+									<td>${estimate.FILES != null ? "있음" : "없음"}</td>
 								</tr>
 							</c:forEach>
 						</table>
@@ -71,10 +71,9 @@
 				</div>
 			</div>
 			<div style="display: flex; align-items: end; justify-content: end;">
-				<button type="button" class="btn btn-primary" id="registBtn"
-					onclick="OpenWindow2('/mymenu/communication.do', '쪽지쓰기', 700, 1000)"
-					style="width: 100px; margin: 20px; align-self: center;">쪽지
-					쓰기</button>
+				<button type="button" class="btn btn-danger" id=""
+				onclick="javascript:OpenWindow('estimate_regist.do','견적서 등록', 600 ,800);"
+					style="width: 110px; heigth: 20px; margin: 10px; font-size: 0.8em; align-self: center;">견적서 등록</button>
 			</div>
 		</div>
 
