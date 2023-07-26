@@ -107,7 +107,8 @@ public class CommonController {
 			req.setAttribute("calendarList", calendarList);
 			mnv.addObject("calendarList", calendarList);
 			mnv.setViewName(url);
-			System.out.println("1" + calendarList);
+			
+			System.out.println(calendarList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -131,8 +132,11 @@ public class CommonController {
 	
 	@RequestMapping("/common/change")
 	public ModelAndView change(ModelAndView mnv, String mcode, HttpSession session,String selectedC_no, HttpServletRequest req) throws SQLException{
+		System.out.println("1");
 		String str = req.getRequestURI();
+		System.out.println("2");
 		String result = str.substring(0, str.indexOf("."));
+		System.out.println("왜이러냐");
 		System.out.println(result);
 		String url = "";
 		System.out.println(mcode);
