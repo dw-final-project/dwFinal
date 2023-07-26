@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" rel="stylesheet">
 
@@ -10,41 +11,44 @@
 			<div class="col-md-9" style="max-width: 600px;">
 				<div class="card card-outline card-info">
 					<div class="card-header">
-						<h3 class="card-title p-1">상품 등록</h3>
+						<h3 class="card-title p-1">상품 상세보기</h3>
 						<div class="card-tools">
-							<button type="button" class="btn btn-primary" id="registBtn">등 록</button>
+							<button type="button" class="btn btn-primary" id="modifyBtn">수 정</button>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<button type="button" class="btn btn-danger" id="deleteBtn">삭 제</button>
 							&nbsp;&nbsp;&nbsp;&nbsp;
 							<button type="button" class="btn btn-warning" id="cancelBtn">취 소</button>
 						</div>
 					</div>
 					<div class="card-body pad">
-						<form role="form" method="post" action="insertMerchandise.do" name="registForm">
+						<form role="form" method="post" action="modifyMerchandise.do" name="registForm">
 <!-- 							<div class="form-group col-sm-12 row"> -->
 <!-- 								<label for="sp_no" class="col-sm-3">상품 코드</label> -->
-<!-- 								<input type="text" id="sp_no" class="form-control col-sm-9" placeholder="상품코드는 자동등록 됩니다." readonly> -->
+<%-- 								<input type="text" id="sp_no" class="form-control col-sm-9" placeholder="상품코드는 자동등록 됩니다." name="sp_no" readonly value="${merchandise.SP_NO}"> --%>
 <!-- 							</div> -->
+							<input type="hidden" value="${merchandise.SP_NO }" name="sp_no" >
 							<div class="form-group col-sm-12 row">
-								<label for="s_name" class="col-sm-3">쇼핑몰 코드</label>
-								<input type="text" id="shname" name="s_name" class="form-control col-sm-9 s_name mch1" value="" placeholder="쇼핑몰코드를 입력하세요." readonly style="background-color: white;">
-								<input type="hidden" id="s_no_receiver" name="s_no" value="">
+								<label for="s_name" class="col-sm-3">쇼핑몰 이름</label>
+								<input type="text" id="shname" name="s_name" class="form-control col-sm-9 s_name mch1" value="${merchandise.S_NAME}" placeholder="쇼핑몰코드를 입력하세요." readonly style="background-color: white;">
+								<input type="hidden" id="s_no_receiver" name="s_no" value="${merchandise.S_NO}">
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="pr_name" class="col-sm-3">제품 이름</label>
-								<input type="text" id="name" name="pr_name" class="form-control col-sm-9 pr_no mch2" value="" placeholder="제품이름을 입력하세요." readonly style="background-color: white;">
-								<input type="hidden" id="pr_no_receiver" name="pr_no" value="">
+								<input type="text" id="name" name="pr_name" class="form-control col-sm-9 pr_no mch2" value="${merchandise.PR_NAME}" placeholder="제품이름을 입력하세요." readonly style="background-color: white;">
+								<input type="hidden" id="pr_no_receiver" name="pr_no" value="${merchandise.PR_NO}">
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="sp_q" class="col-sm-3">수량</label>
-								<input type="text" id="sp_q" name="sp_q" class="form-control col-sm-9 mch3" value="" placeholder="수량을 입력하세요.">
+								<input type="text" id="sp_q" name="sp_q" class="form-control col-sm-9 mch3" value="${merchandise.SP_Q}" placeholder="수량을 입력하세요.">
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="price" class="col-sm-3">가격</label>
-								<input type="text" id="price" name="price" class="form-control col-sm-9 mch4" value="" placeholder="가격을 입력하세요.">
+								<input type="text" id="price" name="price" class="form-control col-sm-9 mch4" value="${merchandise.PRICE}" placeholder="가격을 입력하세요.">
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="status" class="col-sm-3">판매상태</label>
 								<div class="col-sm" style="padding-left:0px; padding-right:0px;">
-									<select name="status" class="form-select mch5">
+									<select name="status" class="form-select mch5" id="status">
 										<option value="판매중">판매중</option>
 										<option value="판매중지">판매중지</option>
 									</select>
@@ -53,11 +57,17 @@
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="stperiod" class="col-sm-3">판매시작일</label>
-								<input type="date" id="stperiod" name="startperiod" class="form-control col-sm-9 mch6" value="" placeholder="판매시작일을 입력하세요.">
+								<c:set var="startperiod">
+									<fmt:formatDate value="${merchandise.STARTPERIOD }" pattern="yyyy-MM-dd"></fmt:formatDate>
+								</c:set>
+								<input type="date" id="stperiod" name="startperiod" class="form-control col-sm-9 mch6" value="${startperiod }" placeholder="판매시작일을 입력하세요.">
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="endperiod" class="col-sm-3">판매종료일</label>
-								<input type="date" id="endperiod" name="endperiod" class="form-control col-sm-9 mch7" value="" placeholder="판매종료일을 입력하세요.">
+								<c:set var="endperiod">
+									<fmt:formatDate value="${merchandise.ENDPERIOD }" pattern="yyyy-MM-dd"></fmt:formatDate>
+								</c:set>
+								<input type="date" id="endperiod" name="endperiod" class="form-control col-sm-9 mch7" value="${endperiod }" placeholder="판매종료일을 입력하세요.">
 							</div>
 						</form>
 					</div>
@@ -69,10 +79,14 @@
 <script>
 	window.onload = function(){
 		/* SmartEditor_summernote($('#content')); */
+
+		let form = $('form[role="form"]');
 		
-		// 등록버튼 클릭
-		$('#registBtn').on('click', function() {
-			let form = $('form[role="form"]');
+		let status = "${merchandise.STATUS}";
+		$('#status').val(status);
+		
+		// 수정버튼 클릭
+		$('#modifyBtn').on('click', function() {
 			
 			if($('.mch1').val() == "") {
 				alert("빈 항목이 있습니다.");
@@ -106,6 +120,18 @@
 			form.submit();
 		});
 		
+		// 삭제버튼 클릭
+		$('#deleteBtn').on('click', function(){
+			
+			if(confirm("삭제하시겠습니까?")){
+				form.attr({
+					'action' : 'deleteShop.do',
+					'method' : 'post'
+				});
+				form.submit();
+			}
+		});
+		
 		// 취소버튼 클릭
 		$('#cancelBtn').on('click', function() {
 			window.opener.location.reload(true);
@@ -125,13 +151,13 @@
 
 	$(document).on('click', '.pr_no', function(){
 		
-		let openWin = OpenWindow("/erp5/findProduct2.do", "제품 찾기", 800, 600);
+		let openWin = OpenWindow("/erp5/findProduct2.do", "제품 찾기", 500, 500);
 		
 	});
 	
 	$(document).on('click', '.s_name', function(){
 		
-		let openWin = OpenWindow("/erp5/findShop.do", "쇼핑몰 찾기", 800, 600);
+		let openWin = OpenWindow("/erp5/findShop.do", "쇼핑몰 찾기", 500, 500);
 		
 	});
 }

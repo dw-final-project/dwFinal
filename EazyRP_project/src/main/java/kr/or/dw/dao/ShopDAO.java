@@ -19,6 +19,18 @@ public interface ShopDAO {
 	List<ShopVO> getShop(Map<String, String> dataMap) throws SQLException;
 
 	List<ShopVO> getShopList() throws SQLException;
+	
+	List<Map<String, Object>> selectShopList(SearchCriteria cri, RowBounds rowBounds) throws SQLException;
+
+	int selectShopListCount(SearchCriteria cri) throws SQLException;
+
+	void insertShop(ShopVO shopVO) throws SQLException;
+
+	Map<String, Object> selectDetail(String s_no) throws SQLException;
+
+	void deleteShop(ShopVO shopVO) throws SQLException;
+
+	void modifyShop(ShopVO shopVO) throws SQLException;
 
 
 	

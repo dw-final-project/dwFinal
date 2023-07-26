@@ -17,6 +17,7 @@ import kr.or.dw.dao.MerchandiseDAO;
 import kr.or.dw.dao.ProcessDAO;
 import kr.or.dw.dao.ProductDAO;
 import kr.or.dw.dao.SiDAO;
+import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.MerchandiseVO;
 import kr.or.dw.vo.ProcessVO;
 import kr.or.dw.vo.ProductVO;
@@ -71,6 +72,38 @@ public class MerchandiseServiceImpl implements MerchandiseService {
 		List<ProductVO> product = null;
 		product = estimateDAO.getProductList();
 		return product;
+	}
+
+	@Override
+	public void insertMerchandise(MerchandiseVO mchVO) throws SQLException {
+		
+		merchandiseDAO.insertMerchandise(mchVO);
+		
+	}
+
+	@Override
+	public Map<String, Object> selectDetail(String sp_no) throws SQLException {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		Map<String, Object> merchandise = (Map<String, Object>) merchandiseDAO.selectDetail(sp_no);
+		
+		dataMap.put("merchandise", merchandise);
+		
+		return dataMap;
+	}
+
+	@Override
+	public void modifyMerchandise(MerchandiseVO mchVO) throws SQLException {
+		
+		merchandiseDAO.modifyMerchandise(mchVO);
+		
+	}
+
+	@Override
+	public void deleteMerchandise(MerchandiseVO mchVO) throws SQLException {
+
+		merchandiseDAO.deleteMerchandise(mchVO);
+		
 	}
 
 	

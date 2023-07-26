@@ -3,12 +3,14 @@ package kr.or.dw.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,7 @@ import kr.or.dw.service.ProcessService;
 import kr.or.dw.service.ProductService;
 import kr.or.dw.service.ShopService;
 import kr.or.dw.vo.MenuVO;
+import kr.or.dw.vo.MerchandiseVO;
 import kr.or.dw.vo.NoteVO;
 import kr.or.dw.vo.ProcessVO;
 import kr.or.dw.vo.ProductVO;
@@ -45,12 +48,16 @@ public class MinjunController {
 	@Autowired
 	private ShopService shopService;
 	
+	// Shop CRUD
+	
 	@RequestMapping("/shop")
-	public ModelAndView index(ModelAndView mnv, String mcode) throws SQLException{
+	public ModelAndView shopMain(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
 		String url = "/minjun/shop.page";
-		
+		Map<String, Object> dataMap = shopService.selectShopList(cri);
 		mnv.addObject("mcode", mcode);
+		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
+		
 		return mnv;
 	}
 
@@ -61,13 +68,70 @@ public class MinjunController {
 		return url;
 	}
 	
+	@RequestMapping("/insertShop")
+	public void insertShop (ShopVO shopVO, HttpServletResponse res, HttpSession session) throws Exception {
+			
+			int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
+			
+			shopVO.setSys_reg(emp_no + "");
+			shopVO.setSys_up(emp_no + "");
+			
+			shopService.insertShop(shopVO);
+			
+			res.setContentType("text/html; charset=utf-8");
+			PrintWriter out = res.getWriter();
+			out.println("<script>");
+			out.println("alert('성공적으로 등록되었습니다.')");
+			out.println("window.opener.location.reload(true); window.close();");
+			out.println("</script>");
+		}
+	
+	@RequestMapping("/shopDetail")
+	public ModelAndView shopDetail (ModelAndView mnv ,String s_no) throws SQLException {
+		Map<String, Object> dataMap = shopService.selectShop(s_no);
+		String url = "minjun/shop_detail.open";
+		mnv.addAllObjects(dataMap);
+		mnv.setViewName(url);
+		return mnv;
+	}
+	
+	@RequestMapping("/deleteShop.do")
+	public void deleteShop (ShopVO shopVO, HttpServletResponse res, String s_no) throws SQLException , Exception {
+		System.out.println("deleteShop 들어왔다.");
+		System.out.println("s_no : " + s_no );
+		shopVO.setS_no(s_no);
+		shopService.deleteShop(shopVO);
+		System.out.println("shopVO : " + shopVO);
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('삭제되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
+	
+	@RequestMapping("/modifyShop.do")
+	public void modifyShop(ShopVO shopVO, HttpServletResponse res, HttpSession session, String s_no) throws SQLException , Exception {
+		System.out.println("modifyShop 왔다");
+		shopVO.setS_no(s_no);
+		shopService.modifyShop(shopVO);
+		System.out.println("s_no : " + s_no);
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 수정되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
+	
+	// Merchandise CRUD 
+	
 	@RequestMapping("/merchandise")
 	public ModelAndView merchandiseMain(String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
 		String url = "minjun/merchandise.page";
 		
 		//상품 조회
 		Map<String, Object> dataMap = merchandiseService.selectMerchandiseList(cri);
-		System.out.println("상품 맵 리스트 : " + dataMap);
 		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
@@ -82,7 +146,7 @@ public class MinjunController {
 		valMap.put("keyword", keyword);
 		valMap.put("searchType", searchType);
 		List<NoteVO> note = null;
-//		note = mymenuService.searchNote(valMap);
+		
 		mnv.addObject("note", note);
 		mnv.addObject("keyword", keyword);
 		mnv.addObject("searchType", searchType);
@@ -98,7 +162,66 @@ public class MinjunController {
 		return url;
 	}
 	
+	@RequestMapping("/insertMerchandise")
+	public void insertMerchandise (MerchandiseVO mchVO, HttpServletResponse res, HttpSession session) throws Exception {
+		
+		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
+		
+		mchVO.setSys_reg(emp_no + "");
+		mchVO.setSys_up(emp_no + "");
+		
+		merchandiseService.insertMerchandise(mchVO);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 등록되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
+	
+	@RequestMapping("/merchandiseDetail")
+	public ModelAndView merchandiseDetail (ModelAndView mnv ,String sp_no, String s_no, String pr_no) throws SQLException {
+		Map<String, Object> dataMap = merchandiseService.selectDetail(sp_no);
+		String url = "minjun/merchandise_detail.open";
+		mnv.addAllObjects(dataMap);
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/modifyMerchandise.do")
+	public void modifyMerchandise (MerchandiseVO mchVO, HttpServletResponse res, HttpSession session, String sp_no, String s_no, String pr_no) throws SQLException , Exception {
 
+		mchVO.setSp_no(sp_no);
+		mchVO.setS_no(s_no);
+		mchVO.setPr_no(pr_no);
+		merchandiseService.modifyMerchandise(mchVO);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 수정되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
+	
+	@RequestMapping("/deleteMerchandise.do")
+	public void deleteMerchandise (MerchandiseVO mchVO, HttpServletResponse res, String sp_no) throws SQLException , Exception {
+		mchVO.setSp_no(sp_no);
+		
+		merchandiseService.deleteMerchandise(mchVO);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('삭제되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
+	
+	// ORDER CRUD
+	
 	@RequestMapping("/order.do")
 	public ModelAndView orderMain(String mcode, ModelAndView mnv) throws SQLException {
 		String url = "minjun/order";
@@ -171,15 +294,14 @@ public class MinjunController {
 		return mnv;
 	}
 	
-	@RequestMapping("/regist")
-	public void regist(ProcessVO processVo, HttpServletRequest req, HttpServletResponse res) throws SQLException, IOException {
-//		processService.registProcess(processVo);
-		res.setContentType("text/html; charset=utf-8");
-		PrintWriter out = res.getWriter();
-		out.println("<script>");
-		out.println("alert('성공적으로 등록되었습니다.')");
-		out.println("window.opener.location.reload(true); window.close();");
-		out.println("</script>");
-	}
+//	@RequestMapping("/regist")
+//	public void regist(ProcessVO processVo, HttpServletRequest req, HttpServletResponse res) throws SQLException, IOException {
+//		res.setContentType("text/html; charset=utf-8");
+//		PrintWriter out = res.getWriter();
+//		out.println("<script>");
+//		out.println("alert('민준컨트롤러 왔음.')");
+//		out.println("window.opener.location.reload(true); window.close();");
+//		out.println("</script>");
+//	}
 
 }
