@@ -169,7 +169,7 @@ html {
 	console.log('${c_no}')
   	$('#selectOp2').on('change', function(){
   		if($(this).val() != 'X'){
-	  		location.href="/common/change.do?mcode=${mcode }&selectedC_no=" + $(this).val();
+	  		location.href="/common/change.do?mcode=${mcode }&selectedC_no=" + $(this).val()
   		}
   	})
   	$('#selectOp').on('change', function(){

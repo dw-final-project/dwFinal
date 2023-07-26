@@ -46,7 +46,7 @@
 							</table>
 							<div class="form-group col-sm-12" style="margin-top: 20px;">
 								<label for="content">비 고</label>
-								<input type="text" class="form-control" id="comment1" name="comment" style="background-color: white;">
+								<input type="text" class="form-control" id="comment1" name="comment1" style="background-color: white;">
 							</div>
 						
 					</div>

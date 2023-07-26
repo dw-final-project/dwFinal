@@ -18,9 +18,13 @@
 		<typeAlias type="kr.or.dw.vo.DraftVO" alias="draft"/>
 		<typeAlias type="kr.or.dw.vo.PlVO" alias="pl"/>
 		<typeAlias type="kr.or.dw.vo.MerchandiseVO" alias="merchandise"/>
+		<typeAlias type="kr.or.dw.vo.DraftGbVO" alias="draftGb"/>
 		<typeAlias type="kr.or.dw.vo.ShopVO" alias="shop"/>
+
 		
-		<!-- 희성이꼬 -->
+		<!-- 희성이꼬 --><!-- 즐 -->
+		<typeAlias type="kr.or.dw.vo.BsheetVO" alias="bsheet"/>
+		<typeAlias type="kr.or.dw.vo.BuyDetailVO" alias="buyDetail"/>
 		<typeAlias type="kr.or.dw.vo.CalendarVO" alias="calendar"/>
 		<typeAlias type="kr.or.dw.vo.ProcessVO" alias="process"/>
 		<typeAlias type="kr.or.dw.vo.WhVO" alias="wh"/>

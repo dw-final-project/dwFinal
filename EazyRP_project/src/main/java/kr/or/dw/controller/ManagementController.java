@@ -39,6 +39,7 @@ import javax.imageio.ImageIO;
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.service.ManagementService;
 import kr.or.dw.service.MyMenuService;
+import kr.or.dw.vo.DraftGbVO;
 import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.PlVO;
@@ -146,23 +147,34 @@ public class ManagementController {
 	}
 	
 	@RequestMapping("/documentRegist")
-	public String documentRegist() {
-		return "/management/documentRegist";
+	public ModelAndView documentRegist(ModelAndView mnv, HttpSession session) throws SQLException {	
+		String url = "/management/documentRegist";
+		String c_no = (String) session.getAttribute("c_no");
+		List<PlVO> pl = managementService.getAllPl(c_no);
+		List<DraftGbVO> draft = managementService.getDraftGb();
+		
+		
+		mnv.addObject("draftgb", draft);
+		mnv.addObject("plList", pl);
+		mnv.setViewName(url);
+		return mnv;
 	}
 	
 	@RequestMapping("/documentDown")
 	public ResponseEntity<FileSystemResource> documentDown(HttpSession session, String document, HttpServletResponse res) throws IOException {
 	    String uploadPath = session.getServletContext().getRealPath("/resources/forms/");
-	    String fileName = "";
-	    if (document.equals("B")) {
-	        fileName = "휴가신청서.xlsx";
-	    } else if (document.equals("A")) {
-	        fileName = "출장보고서.xlsx";
-	    } else if (document.equals("C")) {
-	        fileName = "발주보고서.xlsx";
-	    } else if (document.equals("D")) {
-	        fileName = "지출결의서.xlsx";
+	    System.out.println(document);
+	    if(document.equals("D001")) {
+	    	document = "휴가신청서";
+	    } else if(document.equals("D002")) {
+	    	document = "출장보고서";
+	    } else if(document.equals("D003")) {
+	    	document = "발주보고서";
+	    } else if(document.equals("D004")) {
+	    	document = "지출결의서";
 	    }
+	    String fileName = document + ".xlsx";
+	    System.out.println(fileName);
 	    String filePath = uploadPath + fileName;
 
 	    File file = new File(filePath);

@@ -257,7 +257,7 @@
 		#{e_name2},
 		#{e_name3},
 		#{c_no},
-		#{comment}
+		#{comments}
 		)
 	</insert>
 	
@@ -277,5 +277,10 @@
 		comments = #{comments}
 		WHERE pl_no = #{pl_no}
 	</update>
-
+	
+	<select id="getDraftGb" resultType="draftGb">
+		SELECT dg_name, dg_no
+		  FROM draft_gb
+	</select>
+	
 </mapper>
