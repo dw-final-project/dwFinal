@@ -42,12 +42,12 @@
 									<c:forEach items="${whList}" var="wh" varStatus="loop">
 									<tr>
 										<td style="text-align: center;">${wh.wh_no}</td>
-										<td style="text-align: center;">${wh.sys_regdate}</td>
-										<td style="text-align: center;">${wh.wh_no2}</td>
-										<td style="text-align: center;">${wh.pr_no }</td>
-										<td style="text-align: center;">${wh.quantity }</td>
-										<td style="text-align: center;">${wh.file }</td>
-										<td style="text-align: center;">${wh.file }</td>
+										<td style="text-align: center;"></td>
+										<td style="text-align: center;"></td>
+										<td style="text-align: center;"></td>
+										<td style="text-align: center;"></td>
+										<td style="text-align: center;"></td>
+										<td style="text-align: center;"></td>
 									</tr>
 									</c:forEach>
 							</table>
