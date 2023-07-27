@@ -19,24 +19,10 @@ public class SiVO {
 	private String fc_no;
 	private String sys_up;
 	private Date sys_updatedate;
+	private String e_name;
+	private String fc_name;
+	private String wh_name;
 	
-	
-	public SiVO(String si_no, Date sys_regdate, int emp_no, Date shipdate, String progress, String enabled,
-			String wh_no, int quantity, String files, String fc_no, String sys_up, Date sys_updatedate) {
-		super();
-		this.si_no = si_no;
-		this.sys_regdate = sys_regdate;
-		this.emp_no = emp_no;
-		this.shipdate = shipdate;
-		this.progress = progress;
-		this.enabled = enabled;
-		this.wh_no = wh_no;
-		this.quantity = quantity;
-		this.files = files;
-		this.fc_no = fc_no;
-		this.sys_up = sys_up;
-		this.sys_updatedate = sys_updatedate;
-	}
 	
 	
 }

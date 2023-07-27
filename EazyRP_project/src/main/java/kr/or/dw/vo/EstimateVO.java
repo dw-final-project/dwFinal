@@ -25,7 +25,7 @@ public class EstimateVO {
 	private Date regdate;
 	private String c_no;
 	private String realfilename;
-	
+	private String pr_delete;
 	
 	
 }   
