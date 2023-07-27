@@ -42,7 +42,7 @@
 									<c:forEach items="${whList}" var="wh" varStatus="loop">
 									<tr>
 										<td style="text-align: center;">${wh.wh_no}</td>
-										<td style="text-align: center;"></td>
+										<td style="text-align: center;"><fmt:formatDate value="${wh.sys_regdate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 										<td style="text-align: center;"></td>
 										<td style="text-align: center;"></td>
 										<td style="text-align: center;"></td>
