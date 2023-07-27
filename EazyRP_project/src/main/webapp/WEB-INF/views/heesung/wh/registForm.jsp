@@ -138,7 +138,7 @@
 				</td>
 			</tr>
 		</table>
-		<input type="button" id="submitBtn" class="btn btn-primary" style="text-align: center;" value="생성">
+		<input type="submit" id="submitBtn" class="btn btn-primary" style="text-align: center;" value="생성">
 	</form>
 </body>
 
@@ -162,9 +162,7 @@
 		);
 	
 	});
-	$('#submitBtn').on('click', function(){
-		$('form[role="form"]').submit();
-	})
+	
 	// 제품코드 td 클릭 이벤트
 	$(document).on('click', '.pr_names', function() {
 		let idVal = $(this).attr('id');
