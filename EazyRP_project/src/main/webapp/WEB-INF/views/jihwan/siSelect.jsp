@@ -1,113 +1,116 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>출하지시서</title>
-    <style>
-        html {
-        	text-size : 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            width: 65%;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            text-decoration: underline;
-            margin-bottom: 30px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        tr:hover {
-            background-color: #e6e6e6;
-        }
-        .close-button {
-            text-align: center;
-            margin-top: 30px;
-        }
-        .close-button button {
-            padding: 10px 20px;
-            background-color: #333;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-        .close-button button:hover {
-            background-color: #555;
-        }
-    </style>
-</head>
-<body>
-    <h1>출하지시서</h1>
-    <table>
-        <tr>
-            <th>지시서 코드</th>
-            <th>등록일자</th>
-            <th>사원번호</th>
-            <th>출하예정일</th>
-            <th>진행 상태</th>
-            <th>사용 구분</th>
-            <th>제품 업체 코드</th>
-            <th>출고량</th>
-            <th>첨부 파일</th>
-            <th>외화 코드</th>
-            <th>수정자</th>
-            <th>수정일</th>
-        </tr>
-        <c:forEach items="${siList }" var="si">
-        <tr>
-            <td>${si.si_no }</td>
-            <td>
-            <fmt:formatDate value="${si.sys_regdate }" pattern="yyyy-MM-dd"></fmt:formatDate>
-            </td>
-            <td>${si.emp_no}</td>
-            <td>
-            <fmt:formatDate value="${si.shipdate }" pattern="yyyy-MM-dd"></fmt:formatDate>
-            </td>
-            <td>${si.progress }</td>
-            <td>${si.enabled }</td>
-            <td>${si.wh_no }</td>
-            <td>${si.quantity }</td>
-            <td>${si.files }</td>
-            <td>${si.fc_no }</td>
-            <td>${si.sys_up }</td>
-            <td>
-            <fmt:formatDate value="${si.sys_updatedate }" pattern="yyyy-MM-dd"></fmt:formatDate>
-            </td>
-        </tr>     
-        </c:forEach>
-        <!-- 다른 주문 정보도 추가할 수 있습니다. -->
-    </table>
-    <div class="close-button">
-        <button onclick="closeWindow()">닫기</button>
-    </div>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-    <script>
-        function closeWindow() {
-            window.close();
-        }
-    </script>
-</body>
-</html>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="cri" value="${pageMaker.cri }" />
+<div style="height: 40px"></div>
+<section class="content container-fluid">
+	<div class="row justify-content-center">
+		<div class="col-md-10" style="max-width: 1100px;">
+			<div class="card card-outline card-info">
+				<div class="card-header">
+					<h3 class="card-title p-1">출 하 지 시 서</h3>
+<!-- 					<button type="button" class="btn btn-danger" id="" -->
+<!-- 						onclick="javascript:OpenWindow('estimate_regist.do','견적서 등록', 600 ,800);">등록</button> -->
+					<div class="input-group row" style="width: 90%; margin-left: 50%;">
+						<form id="searchForm2" method="post" action="/erp4/siSelect.do?mcode=${mcode }" style="display: contents;">
+							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
+								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
+								<option value="d" ${searchType eq 'd' ? 'selected' : '' }>사원명</option>
+								<option value="t" ${searchType eq 't' ? 'selected' : '' }>창고명</option>
+								<option value="p" ${searchType eq 'p' ? 'selected' : '' }>진행상태</option>
+							</select>
+							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
+							<span class="input-group-append col-md-3" style=" padding: 0px;">
+								<button class="btn btn-primary" type="button" id="searchBtn">
+									<i class="fa fa-fw fa-search" style="font-size: 0.8em; padding: 0px;"></i>
+								</button>
+							</span>
+						</form>
+					</div>
+				</div>
+				<div class="card-body pad" style="padding-top: 0px;">
+					<div>
+						<table style="font-size: 0.8em; " class="table table-borderd text-center">
+							<tr>
+								<th style="text-align: center;">지시서 코드</th>
+								<th style="text-align: center;">등록일자</th>
+								<th style="text-align: center;">사원번호</th>
+								<th style="text-align: center;">출하예정일</th>
+								<th style="text-align: center;">진행 상태</th>
+								<th style="text-align: center;">사용 구분</th>
+								<th style="text-align: center;">업체 코드</th>
+								<th style="text-align: center;">출고량</th>
+								<th style="text-align: center;">첨부 파일</th>
+								<th style="text-align: center;">외화 코드</th>
+								<th style="text-align: center;">수정자</th>
+								<th style="text-align: center;">수정일</th>
+							</tr>
+							<c:forEach items="${siList }" var="si">
+								<tr style="font-size: 1em; text-align : center;">
+
+									<td><a
+										href="javascript:OpenWindow('siDetail.do?si_no=${si.SI_NO }','출하지시서 조회', 700 ,700);">${si.SI_NO }</a></td>
+									<td><fmt:formatDate value="${si.SYS_REGDATE }"
+											pattern="yyyy-MM-dd"></fmt:formatDate></td>
+									<td>${si.E_NAME}</td>
+									<td><fmt:formatDate value="${si.SHIPDATE }"
+											pattern="yyyy-MM-dd"></fmt:formatDate></td>
+									<td>${si.PROGRESS }</td>
+									<td>${si.ENABLED }</td>
+									<td>${si.WH_NAME }</td>
+									<td>${si.QUANTITY }</td>
+									<td>${si.FILES != null ?  "있음" : "없음" }</td>
+									
+									<td>${si.FC_NAME }</td>
+									<td>${si.SYS_UP }</td>
+									<td><fmt:formatDate value="${si.SYS_UPDATEDATE }"
+											pattern="yyyy-MM-dd"></fmt:formatDate></td>
+								</tr>
+							</c:forEach>
+						</table>
+						<div class="card-footer">
+							<%@ include file="/WEB-INF/views/common/pagination.jsp"%>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="display: flex; align-items: end; justify-content: end;">
+<!-- 				<button type="button" class="btn btn-danger" id="" -->
+<!-- 				onclick="javascript:OpenWindow('estimate_regist.do','견적서 등록', 600 ,800);" -->
+<!-- 					style="width: 110px; heigth: 20px; margin: 10px; font-size: 0.8em; align-self: center;">견적서 등록</button> -->
+			</div>
+		</div>
+
+	</div>
+</section>
+
+
+<script>
+	src="<%=request.getContextPath()%>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
+
+
+
+<script>
+	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
+		winleft = (screen.width - WinWidth) / 2;
+		wintop = (screen.height - WinHeight) / 2;
+		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
+								+ "height=" + WinHeight + ",top="+ wintop + ",left="
+								+ winleft + ",resizable=yes,status=yes");
+	}
+</script>
+
+
+<!-- jQuery -->
+<script
+	src="<%=request.getContextPath()%>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<%@ include file="../include/footer_js.jsp"%>

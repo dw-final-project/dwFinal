@@ -34,6 +34,7 @@
 		  ,MAX((SELECT c_name FROM company WHERE c_no = ed.C_NO)) c_name
 		  ,MAX((SELECT e_name FROM emp WHERE emp_no = ed.EMP_NO)) e_name
 		  ,MAX((SELECT pr_name FROM product WHERE pr_no = ed.pr_no)) p_name
+		  ,MAX(e.enabled) enabled
 		  ,count(ed.PR_NO) pr_no
 		  ,CASE WHEN count(ed.PR_NO) <![CDATA[ > ]]> 1
 		  		THEN MAX((SELECT pr_name FROM product WHERE pr_no = ed.pr_no)) || ' 외 ' || (count(ed.PR_NO)-1)  || '건'
@@ -73,6 +74,7 @@
 		  ,MAX(ed.emp_no) emp_no
 		  ,MAX((SELECT fc_name FROM fc WHERE fc_no = ed.fc_no)) fc_name
 		  ,MAX(ed.fc_no) fc_no
+		  ,MAX(e.enabled) enabled
 		  ,MAX((SELECT pr_name FROM product WHERE pr_no = ed.pr_no)) p_name
 		  ,MAX((SELECT wh_name FROM WAREHOUSE WHERE wh_no = ed.wh_no)) wh_name
 		  ,MAX((SELECT pr_exprice FROM product p WHERE p.pr_no = ed.pr_no)) pr_exprice
@@ -302,5 +304,16 @@ WHEN NOT MATCHED THEN
 		(SELECT p.c_no FROM product p, company c WHERE p.c_no = c.c_no AND p.pr_no = #{pr_no})		
 	)
 </update>
+
+<delete id="deleteEstimateDetail">
+	DELETE FROM estdetail 
+	WHERE estdetail_no = #{estdetail_no}
+</delete>
+
+
+<delete id="deleteEstimate" parameterType="str">
+	DELETE FROM estdetail
+		WHERE est_no = #{est_no}
+</delete>
 
 </mapper>

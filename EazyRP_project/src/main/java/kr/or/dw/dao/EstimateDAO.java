@@ -45,6 +45,10 @@ public interface EstimateDAO {
 
 	void modifyEstimate(Map<String, String> modifyMap) throws SQLException;
 
+	void deleteEstimate(String est_no) throws SQLException;
+
+	void deleteEstimateDetail(EstimateVO est) throws SQLException;
+
 
 
 	

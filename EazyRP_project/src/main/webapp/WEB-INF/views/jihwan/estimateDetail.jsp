@@ -126,11 +126,14 @@
     	<tbody id="prInput">
         <input type="hidden" value="" id="cnt">
        <c:forEach items="${estPr }" var="est" varStatus="loop">
-        <tr>    	
-       <input type="hidden" class="rownum" value="${est.ROWNUM }">
-       <input type="hidden" name="estdetail_no" id="dtail_no" value="${est.ESTDETAIL_NO }">
+        <tr id="trChk" >    	
+	       <input type="hidden" class="rownum" value="${est.ROWNUM }">
+	       <input type="hidden" name="estdetail_no" id="dtail_no" value="${est.ESTDETAIL_NO }">
+	       <input type="hidden" name="enabled" id="estenabled" value="${est.ENABLED }">
+	       <input type="hidden" name="pr_delete" value="">
         	<td>
-        	<input type="text" id="${est.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${est.P_NAME }"><input type="hidden" name="pr_no" value="${est.PR_NO }"></td>
+        		<input type="text" id="${est.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${est.P_NAME }"><input type="hidden" name="pr_no" value="${est.PR_NO }">
+        	</td>
             <td><input type="text" id="wh_no${est.ROWNUM }" class="wh_names" name="wh_name" style="width: 100%;" value="${est.WH_NAME }"><input type="hidden" name="wh_no" value="${est.WH_NO }"></td>
             <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${est.QUANTITY }"><input type="hidden" id="cost" value="${est.PR_EXPRICE }"></td>
             <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${est.AMOUNT }" readonly ></td>
@@ -166,8 +169,31 @@ window.onload = function(){
 // 			'enctype' : 'multipart/form-data'
 		});
 		console.log($('form[role="form"]').serializeArray());
+		
+		alert($('tr[id="trChk"]').get().length);
+		
+		let trCnt = 0;
+		for(let i = 0; i < $('tr[id="trChk"]').get().length; i++){
+			if($('tr[id="trChk"]').eq(i).css("display") != "none") {
+				for(let j = 0; j < $('tr[id="trChk"]').eq(i).find('input[type="text"]').get().length; j++) {
+					if($('tr[id="trChk"]').eq(i).find('input[type="text"]').eq(j).val() == "" || $('tr[id="trChk"]').eq(i).find('input[type="text"]').eq(j).val() == null) {
+						alert("값을 입력해 주세요.");
+						return;
+					}
+				}				
+			} else {
+				trCnt += 1;
+			}
+		}
+		
+		if($('tr[id="trChk"]').get().length == trCnt) {
+			alert("제품 추가하쇼");
+			return;
+		}
+		
 		formObj.submit();
 	});
+	
 	
 	$('button#removeBtn').on('click', function(){
 		if(confirm("정말 삭제하시겠습니까?")){
@@ -183,6 +209,9 @@ window.onload = function(){
 		window.opener.location.reload(true);
 		window.close();
 	});
+	
+	
+	
 }
 
 </script>
@@ -192,10 +221,11 @@ let rownumList = $('.rownum');
 let cnt = rownumList.length; 
 console.log(cnt);
 let dtail_no = $('#dtail_no').val();
+
 // 제품 추가 버튼
 $('#addPutBtn').on('click', function(){
 	cnt++;
-	$('#prInput').append('<tr><input type="hidden" class="rownum" value="'+ cnt + '">' +
+	$('#prInput').append('<tr id="trChk"><input type="hidden" class="rownum" value="'+ cnt + '">' +
 	'<input type="hidden" name="estdetail_no" value="0">'+
     '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
     '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'+
@@ -241,7 +271,8 @@ $('tr').on('click', function(){
 	
 	//제품 삭제 버튼
 	$('#prInput').on('click', '#cancelBtn', function(){
-		$(this).parent('td').parent('tr').remove();
+		$(this).parents('tr').css('display', 'none');
+		$(this).parents('tr').find("input[name='pr_delete']").val("d")
 	});
 	
 	//창고코드 이벤트
