@@ -25,6 +25,7 @@
 	<bean id="shopService" class="kr.or.dw.service.ShopServiceImpl"/>
 
 	<bean id="whService" class="kr.or.dw.service.WhServiceImpl"/>
+	<bean id="factoryService" class="kr.or.dw.service.FactoryServiceImpl"/>
 	
 	<!-- 풀캘린더 API -->
 	<bean id="calendarService" class="kr.or.dw.service.CalendarServiceImpl"/>
