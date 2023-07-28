@@ -31,23 +31,23 @@
 						<div>
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
-									<th>생산입고코드</th>
-									<th>등록일</th>
-									<th>창고명</th>
-									<th>제품명</th>
-									<th>수량</th>
-									<th>작업지시서</th>
-									<th>상태</th>
+									<th width="20%" style="text-align: center;">등록일자</th>
+									<th width="20%" style="text-align: center;">생산입고코드</th>
+									<th width="20%" style="text-align: center;">제품명</th>
+									<th width="20%" style="text-align: center;">작업지시서</th>
+									<th width="20%" style="text-align: center;">상태</th>
 								</tr>
 									<c:forEach items="${whList}" var="wh" varStatus="loop">
 									<tr>
-										<td style="text-align: center;">${wh.wh_no}</td>
 										<td style="text-align: center;"><fmt:formatDate value="${wh.sys_regdate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
-										<td style="text-align: center;"></td>
-										<td style="text-align: center;"></td>
-										<td style="text-align: center;"></td>
-										<td style="text-align: center;"></td>
-										<td style="text-align: center;"></td>
+										<td style="text-align: center;">
+											<a id="whDetailBtn" href="#" onclick="detailOpenWindow('erp4/wh/detail.do'), '생산입고 상세정보', 700, 1000)">
+												${wh.wh_no}
+											</a>
+										</td>
+										<td style="text-align: center;">${wh.pr_name}</td>
+										<td style="text-align: center;">아직안됨ㅋ</td>
+										<td style="text-align: center;">${wh.progress}</td>
 									</tr>
 									</c:forEach>
 							</table>
@@ -58,7 +58,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('/erp4/wh/registForm.do', '생산입고 등록', 700, 1000)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="registOpenWindow('/erp4/wh/registForm.do', '생산입고 등록', 700, 1000)"
 					style="width: 100px; margin: 20px; align-self: center;">등록</button>
 				</div>
 			</div>
@@ -72,7 +72,7 @@
 		$('#searchForm').submit();
 	})
 	
-	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
+	function detailOpenWindow(UrlStr, WinTitle, WinWidth, WinHeight, index){
 		winleft = (screen.width - WinWidth) / 2;
 		wintop = (screen.height - WinHeight) / 2;
 		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
@@ -80,7 +80,16 @@
 								+ winleft + ",resizable=yes,status=yes");
 		win.focus();
 	};
-
+	
+	function registOpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
+		winleft = (screen.width - WinWidth) / 2;
+		wintop = (screen.height - WinHeight) / 2;
+		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
+								+ "height=" + WinHeight + ",top="+ wintop + ",left="
+								+ winleft + ",resizable=yes,status=yes");
+		win.focus();
+	};
+	
 </script>
 
 <%@ include file="../../include/footer_js.jsp" %>

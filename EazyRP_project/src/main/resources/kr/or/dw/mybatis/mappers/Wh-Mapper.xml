@@ -80,4 +80,11 @@
 		)
 	</insert>
 	
+	<select id="selectProductName" resultType="str">
+		SELECT 	pd.pr_name
+		FROM 	WHDETAIL wd, product pd
+		WHERE 	wd.pr_no = pd.pr_no
+		AND		wd.wh_no = #{getWh_no}
+	</select>
+	
 </mapper>

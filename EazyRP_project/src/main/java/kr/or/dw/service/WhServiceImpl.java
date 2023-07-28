@@ -43,12 +43,30 @@ public class WhServiceImpl implements WhService{
 		dataMap.put("whList", whList);
 		dataMap.put("pageMaker", pageMaker);
 		
+		
+		// 제품의 이름을 담을 객체를 선언한다.
+		// 현재 해당하는 생산입고 게시글에서 창고번호를 조회하고 매퍼에서 가져온 창고명을 넣어준다.
+		for(int i = 0; i < whList.size(); i++) {
+			String getWh_no = whList.get(i).getWh_no();
+			List<String> productName = whDAO.selectProductName(getWh_no); // 해당 pr_no 의 pr_name 값을 가져온다.
+			String pr_name = "";
+			if (productName.size() == 1) {
+				pr_name = productName.get(0);
+			} else {
+				pr_name = productName.get(0) + " 외 " + (productName.size() - 1) + "건";
+			}
+			
+			whList.get(i).setPr_name(pr_name);
+		}
+
 		return dataMap;
+	
 	}
 
 	@Override
-	public void registWh(WhVO whVo) throws SQLException {
-		whDAO.insertWh(whVo);
+	public void registWh(WhVO whVo, List<WhVO> whList) throws SQLException {
+		whDAO.insertWh(null); // 게시글을 만들기 위한 다오
+								//	상세게시글을 만들기 위한 다오
 	}
 
 }

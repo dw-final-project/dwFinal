@@ -161,7 +161,6 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		
 		// 공정관리 목록 조회
 		Map<String, Object> dataMap = whService.selectWhList(cri);
-				
 		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
@@ -178,54 +177,40 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	}
 	
 	@RequestMapping("/wh/regist")
-	public void whRegist(int emp_no, @RequestParam("files")MultipartFile multi, String pr_no, String fac_no, String wh_no2, 
-						 int[] amount, HttpServletResponse res) throws SQLException, IOException {
+	public void whRegist(HttpServletResponse res, int emp_no, int wo_no, String[] pr_no, String fac_no[], String wh_no2[], 
+							String[] outprice, int[] quantity, String[] total_outprice, String wh_total) throws SQLException, IOException {
 		
 		System.out.println("erp4/wh/regist 컨트롤러 진입");
 		
-		List<WhVO> whVo = new ArrayList<WhVO>();
+		List<WhVO> whDetailList = new ArrayList<WhVO>();	// 상세 정보들을 만들기 위한 객체
 		
-		String filess = "";
+		WhVO whVo = null;	// 게시글을 만들기 위한 객체
 		
-		if(!multi.isEmpty()) {
-			UUID uuid = UUID.randomUUID();
-			String[] uuids = uuid.toString().split("-");
+		whVo.setEmp_no(emp_no);
+		whVo.setWo_no(wo_no);
+		whVo.setWh_total(wh_total);
+		
+		for(int i = 0; i < pr_no.length; i++) {
 			
-			String uniqueName = uuids[0];
+			WhVO whDetailVo = new WhVO();
+
 			
-			String fileRealName = multi.getOriginalFilename();
-			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
-			String uploadFolder = "C:\\upload\\";
+			whDetailVo.setPr_no(pr_no[i]);
+			whDetailVo.setFac_no(fac_no[i]);
+			whDetailVo.setWh_no2(wh_no2[i]);
+			whDetailVo.setOutprice(outprice[i]);
+			whDetailVo.setQuantity(quantity[i]);
+			whDetailVo.setTotal_outprice(total_outprice[i]);
 			
-			filess = uniqueName+fileExtension;
+			whDetailList.add(whDetailVo);
 			
-			
-			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
-			
-			if(!saveFile.exists()) {
-				saveFile.mkdirs();
-			}
-			
-			try {
-				multi.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		}
+
+		System.out.println("등록 전 whList : " + whDetailList);
 		
-//		for(int i = 0; i < pr_no.length; i++) {
-//			WhVO whVo = new WhVO();
-//			whVo.setEmp_no(emp_no);
-//			whVo.setPr_no(pr_no[i]);
-//			
-//			
-//		}
+		whService.registWh(whVo, whDetailList);
 		
-		
-		
-//		whService.registWh(whVo);
+		System.out.println("등록 후 whList : " + whDetailList);
 		
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
