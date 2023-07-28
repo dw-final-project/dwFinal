@@ -1,5 +1,6 @@
 package kr.or.dw.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -42,8 +43,12 @@ public class MemberController {
 	private MailSendService mailService;
 	
 	@RequestMapping("/mypage")
-	public ModelAndView index(ModelAndView mnv, String mcode) throws SQLException{
+	public ModelAndView index(ModelAndView mnv, String mcode, HttpSession session) throws SQLException{
 		String url = "/common/userProfile.page";
+		
+		MemberVO member = (MemberVO) session.getAttribute("loginUser");		
+		System.out.println(member);
+		mnv.addObject("member", member);
 		
 		mnv.addObject("mcode", mcode);
 		mnv.setViewName(url);
@@ -169,9 +174,25 @@ public class MemberController {
 		return url;
 	}
 	
-	@RequestMapping("/userProfile")
-	public String userProfile(HttpServletResponse res) throws SQLException {
-		return "/common/userProfile";
+
+	@RequestMapping("/repwdForm")
+	public String repwdForm(HttpServletResponse res) throws SQLException {
+		return "/common/repwdForm.page";
 	}
 	
+	
+	@RequestMapping("/repwd")
+	public String Repwd(String pwd, HttpSession session) throws Exception {
+		String url = "";
+		memberService.repwd(pwd);
+		url = "/common/repwdForm";		
+		return url;
+	}
+	
+	@RequestMapping("/delete")
+	public String delete(String id)throws Exception {
+		
+		memberService.delete(id);
+		return "/common/loginForm";
+	}
 }

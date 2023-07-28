@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import kr.or.dw.command.PageMaker;
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.dao.ManagementDAO;
+import kr.or.dw.vo.DraftGbVO;
 import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.PlVO;
@@ -177,6 +178,11 @@ public class ManagementServiceImpl implements ManagementService{
 	@Override
 	public void modifyPayLine(PlVO pl) throws SQLException {
 		managementDAO.modifyPayLine(pl);
+	}
+
+	@Override
+	public List<DraftGbVO> getDraftGb() throws SQLException {
+		return managementDAO.getDraftGb();
 	}
 
 }

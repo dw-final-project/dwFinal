@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.dw.vo.DraftGbVO;
 import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.PlVO;
@@ -45,6 +46,8 @@ public interface ManagementService {
 	void deletePayLine(String pl_no) throws SQLException;
 
 	void modifyPayLine(PlVO pl) throws SQLException;
+
+	List<DraftGbVO> getDraftGb() throws SQLException;
 
 
 }

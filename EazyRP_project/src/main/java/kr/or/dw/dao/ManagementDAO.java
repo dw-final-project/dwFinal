@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
+import kr.or.dw.vo.DraftGbVO;
 import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.PlVO;
@@ -55,6 +56,8 @@ public interface ManagementDAO {
 	void deletePayLine(String pl_no) throws SQLException;
 
 	void modifyPayLine(PlVO pl) throws SQLException;
+
+	List<DraftGbVO> getDraftGb() throws SQLException;
 
 
 }

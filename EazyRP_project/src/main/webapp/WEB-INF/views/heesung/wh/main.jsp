@@ -31,21 +31,23 @@
 						<div>
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
-									<th>입고코드</th>
+									<th>생산입고코드</th>
 									<th>등록일</th>
 									<th>창고명</th>
 									<th>제품명</th>
 									<th>수량</th>
 									<th>작업지시서</th>
+									<th>상태</th>
 								</tr>
 									<c:forEach items="${whList}" var="wh" varStatus="loop">
 									<tr>
 										<td style="text-align: center;">${wh.wh_no}</td>
-										<td style="text-align: center;">${wh.sys_regdate}</td>
-										<td style="text-align: center;">${wh.wh_no2}</td>
-										<td style="text-align: center;">${wh.pr_no }</td>
-										<td style="text-align: center;">${wh.quantity }</td>
-										<td style="text-align: center;">${wh.file }</td>
+										<td style="text-align: center;"><fmt:formatDate value="${wh.sys_regdate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
+										<td style="text-align: center;"></td>
+										<td style="text-align: center;"></td>
+										<td style="text-align: center;"></td>
+										<td style="text-align: center;"></td>
+										<td style="text-align: center;"></td>
 									</tr>
 									</c:forEach>
 							</table>

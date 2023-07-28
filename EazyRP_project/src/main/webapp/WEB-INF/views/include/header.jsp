@@ -166,17 +166,16 @@ html {
          </c:forEach>
   </nav>
   <script>
+	console.log('${c_no}')
   	$('#selectOp2').on('change', function(){
   		if($(this).val() != 'X'){
 	  		location.href="/common/change.do?mcode=${mcode }&selectedC_no=" + $(this).val()
-			location.reload(true);
   		}
   	})
   	$('#selectOp').on('change', function(){
   		if($(this).val() != 'X'){
 	  		location.href="/common/empChange.do?mcode=${mcode }&selectedEmp=" + $(this).val()
 	  		alert('설정이 모두 완료되었습니다.');
-			location.reload(true);
   		}
   	})
   	

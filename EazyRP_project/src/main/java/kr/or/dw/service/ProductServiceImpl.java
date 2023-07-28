@@ -15,6 +15,7 @@ import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.dao.ProcessDAO;
 import kr.or.dw.dao.ProductDAO;
 import kr.or.dw.dao.SiDAO;
+import kr.or.dw.vo.BsheetVO;
 import kr.or.dw.vo.ProcessVO;
 import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.SiVO;
@@ -52,6 +53,11 @@ public class ProductServiceImpl implements ProductService {
 		
 		return dataMap;
 				
+	}
+
+	@Override
+	public List<BsheetVO> getB_sheet() throws SQLException {
+		return productDAO.getB_sheet();
 	} 
 	
 	

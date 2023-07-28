@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" rel="stylesheet">
 
@@ -28,19 +30,17 @@
 							<form id="downloadForm" method="post" action="/management/documentDown.do">
 								<label for="writer">기안문 구분&nbsp;&nbsp;&nbsp;&nbsp;</label>
 								<select class="form-control col-md-2" name="document" id="document" style="font-size: 0.8em; width: 30%; display: inline;">
-									<option value="B">휴가신청서</option>
-									<option value="A">출장보고서</option>
-									<option value="C">발주보고서</option>
-									<option value="D">지출결의서</option>
+									<c:forEach items="${draftgb}" var="dr" varStatus="loop">
+										<option value="${dr.dg_no }" class="dg" id="${dr.dg_name }">${dr.dg_name }</option>
+									</c:forEach>
 								</select>
 								<input type="submit" id="downloadBtn" class="btn btn-primary"style="margin-left: 5px" value="양식 다운로드">
 							</form>
 								<label for="writer">결재라인&nbsp;&nbsp;&nbsp;&nbsp;</label>
 								<select class="form-control col-md-2" name="pl_no" id="pl_no" style="font-size: 0.8em; width: 30%; display: inline;">
-									<option value="P0001">휴가신청결재라인</option>
-									<option value="P0002">출장보고결재라인</option>
-									<option value="P0003">발주보고결재라인</option>
-									<option value="P0004">지출결의결재라인</option>
+									<c:forEach items="${plList}" var="pl" varStatus="loop">
+										<option value="${pl.pl_no }" class="pl" id="${pl.pl_name }">${pl.pl_name }</option>
+									</c:forEach>
 								</select>
 							</div>
 							<form id="registForm2" method="post" action="/management/regist.do" enctype="multipart/form-data">
@@ -66,7 +66,10 @@
 	</section>
 	
 <script>
-
+	$('#document').on('change', function(){
+		$('#dg_no').val($(this).val());
+		$('#gb').val($('#document option:selected').attr('id'));
+	})
 	$('#registBtn').on('click', function(){
 		if($('#title').val() == ""){
 			alert('제목을 입력해주세요.');
@@ -77,22 +80,9 @@
 			return;
 		}
 		$('#fileName').val($('#file').val());
-		if($('#document').val() == 'B'){
-			$('#dg_no').val('D001')
-			$('#gb').val('휴가신청서')
-		} else if($('#document').val() == 'A'){
-			$('#dg_no').val('D002')
-			$('#gb').val('출장보고서')
-		} else if($('#document').val() == 'C'){
-			$('#dg_no').val('D003')
-			$('#gb').val('발주보고서')
-		} else if($('#document').val() == 'D'){
-			$('#dg_no').val('D004')
-			$('#gb').val('지출결의서')
-		}
 		$('#pl_noHidden').val($('#pl_no').val());
 		$('#titleHidden').val($('#title').val());
-		$('#registForm2').submit();
+		$('#registForm2').submit()
 	})
 	
 	$('#cancelBtn').on('click', function(){

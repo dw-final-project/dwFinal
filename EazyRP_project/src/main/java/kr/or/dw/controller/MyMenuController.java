@@ -145,11 +145,11 @@ public class MyMenuController {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		Map<String, Object> note = new HashMap<String, Object>();
 		String c_no = (String) session.getAttribute("c_no");
+		
 		dataMap.put("c_no", c_no);
 		dataMap.put("cri", cri);
 		note = mymenuService.getNoteList(dataMap);
 		
-		System.out.println("mname = " + session.getAttribute("mname"));
 		mnv.setViewName(url);
 		mnv.addAllObjects(note);
 		mnv.addObject("mcode", mcode);
@@ -159,19 +159,16 @@ public class MyMenuController {
     
     @RequestMapping("/sendNoteList")
     public ModelAndView sendNoteList(HttpSession session, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+    	String url="mymenu/sendNoteList.page";
+    	Map<String, Object> dataMap = new HashMap<String, Object>();
 		Map<String, Object> note = new HashMap<String, Object>();
 		String c_no = (String) session.getAttribute("c_no");
 		
 		dataMap.put("c_no", c_no);
 		dataMap.put("cri", cri);
-		note = mymenuService.getSendNoteList(dataMap);
+		note = mymenuService.getNoteList(dataMap);
 		
 		mnv.addAllObjects(note);
-    	
-    	String url="mymenu/sendNoteList.page";
-		
-		
 		mnv.setViewName(url);
 		mnv.addObject("mcode", mcode);
 		

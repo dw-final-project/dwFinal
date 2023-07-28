@@ -42,10 +42,29 @@
 		 WHERE  id = #{id}
 	</update>
 	
-	<update id="modProfile">
+	<update id="updateRepwd">
 		UPDATE member
 		  SET pwd = #{pwd}
-		WHERE email = #{email}
+		WHERE id = #{id}
 	</update>
+
+	<delete id="deleteUser" parameterType="str">
+		DELETE FROM member
+		WHERE id = #{id}	
+	</delete>
+
+	<update id="updateMember" parameterType="member">
+		UPDATE member
+		SET
+			pwd 		= #{pwd}
+		   ,email 		= #{email}
+		   ,tel 		= #{tel}
+		   ,name 		= #{name}
+		   ,addr 		= #{addr}
+		WHERE id = #{id}
+	</update>
+
+
+
 
 </mapper>

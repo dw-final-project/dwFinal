@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
 import kr.or.dw.command.SearchCriteria;
+import kr.or.dw.vo.BsheetVO;
 import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.SiVO;
 
@@ -16,6 +17,8 @@ public interface ProductDAO {
 	List<ProductVO> selectSearchProductList(SearchCriteria cri, RowBounds rowBounds) throws SQLException;
 
 	int selectSearchProductListCount(SearchCriteria cri) throws SQLException;
+
+	List<BsheetVO> getB_sheet() throws SQLException;
 
 
 

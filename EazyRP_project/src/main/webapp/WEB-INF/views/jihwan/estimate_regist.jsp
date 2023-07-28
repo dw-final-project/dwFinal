@@ -118,7 +118,7 @@
             <td><input type="text" id="wh_no0" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>
             <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>
             <td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>
-            <td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>
+            <td style="text-align : center;"></td>
         </tr>
         </tbody>
         <tr class="total">
@@ -126,7 +126,7 @@
             <td colspan="2" align="center"><input type="text" id="totalAmount" style="width: 100%;" value=""></td>
         </tr>
     </table>
-            <input type="submit" class="btn btn-primary" style="text-align : center;" value="생성">
+            <input type="button" id="registBtn" class="btn btn-primary" style="text-align : center;" value="생성">
 </form>
 </body>
 
@@ -154,7 +154,7 @@
 	$(document).on('click', '.pr_names', function(){
 		let idVal = $(this).attr('id');
 		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 800, 600);
+		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
 		
 // 		openWin.document.getElementById('cnt').value = cnt;
 	});
@@ -168,7 +168,7 @@
 	$(document).on('click', '.wh_names', function(){
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 800,600);
+		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
 	})
 	
 	// 수량 이벤트
@@ -195,6 +195,19 @@
 		}
 		
 		$('#totalAmount').val(sum);
+	})
+	
+	$('#registBtn').on('click', function () {
+		
+		for(let i = 0; i < $('input[type="text"]').get().length; i++){
+			if($('input[type="text"]').eq(i).val() == "" || $('input[type="text"]').eq(i).val() == null) {
+				alert("값을 입력해 주세요.");
+				return;
+			}
+		}
+				
+		$('form[role="form"]').submit();
+		
 	})
 	
 </script>

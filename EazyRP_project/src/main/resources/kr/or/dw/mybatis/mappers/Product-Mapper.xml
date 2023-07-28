@@ -38,5 +38,12 @@
 		 WHERE 1=1
 		 <include refid="search"/>
 	</select>
+	
+	<select id="getB_sheet" resultType="bsheet">
+		SELECT b.*, e.e_name e_name, c.c_name con_c_name 
+		 FROM B_SHEET b, emp e, company c
+		WHERE b.emp_no = e.emp_no
+		  AND b.con_c_no = c.c_no
+	</select>
 
 </mapper>

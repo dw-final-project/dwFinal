@@ -83,10 +83,12 @@ public class CommonController {
 	@RequestMapping("/common/main")
 	public ModelAndView index(ModelAndView mnv, HttpSession session, HttpServletRequest req) throws SQLException{
 		String url = "/common/main.main";
+
 		Map<String, List<String>> empMap = new HashMap<>();
 		List<String> e_nameList = new ArrayList<>();
 		List<Integer> emp_noList = new ArrayList<>();
 		if(session.getAttribute("c_no") == null || session.getAttribute("c_no").equals("")) {
+
 			session.setAttribute("c_no", "");
 			session.setAttribute("emp_no", 0);
 			e_nameList.add(0, "업체를 선택해주세요.");
@@ -107,7 +109,8 @@ public class CommonController {
 			req.setAttribute("calendarList", calendarList);
 			mnv.addObject("calendarList", calendarList);
 			mnv.setViewName(url);
-			System.out.println("1" + calendarList);
+			
+			System.out.println(calendarList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -131,8 +134,11 @@ public class CommonController {
 	
 	@RequestMapping("/common/change")
 	public ModelAndView change(ModelAndView mnv, String mcode, HttpSession session,String selectedC_no, HttpServletRequest req) throws SQLException{
+		System.out.println("1");
 		String str = req.getRequestURI();
+		System.out.println("2");
 		String result = str.substring(0, str.indexOf("."));
+		System.out.println("왜이러냐");
 		System.out.println(result);
 		String url = "";
 		System.out.println(mcode);

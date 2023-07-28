@@ -46,4 +46,9 @@ public class WhServiceImpl implements WhService{
 		return dataMap;
 	}
 
+	@Override
+	public void registWh(WhVO whVo) throws SQLException {
+		whDAO.insertWh(whVo);
+	}
+
 }

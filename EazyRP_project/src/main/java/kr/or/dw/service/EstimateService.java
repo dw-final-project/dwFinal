@@ -31,7 +31,9 @@ public interface EstimateService {
 
 	String selectFile(String files) throws SQLException;
 
-	void modifyEstimate(List<EstimateVO> modify) throws SQLException;
+	void modifyEstimate(List<EstimateVO> modify ,String empno) throws SQLException;
+
+	void deleteEstimate(String est_no) throws SQLException;
 	
 	
 

@@ -119,19 +119,43 @@
               <div class="col-sm-8">
                 <input type="emailstaticadd" readonly class="form-control-plaintext" id="Email" name="email" value="${member.email }" readonly>
               </div>
-            </div>
             </div><!-- /.form-group -->
           </form><!-- /form -->
  
             <div class="btn" style="border:0">
-              <button type="submit" class="btn btn-primary " disabled>비밀번호 변경</button>
-              <button type="submit" class="btn btn-primary" disabled>정보 변경</button>
-              <button type="submit" class="btn btn-primary" disabled>회원탈퇴</button>
+              <button type="submit" id="repwdBtn" class="btn btn-primary " >비밀번호 변경</button>
+              <button type="submit" id="modifyBtn" class="btn btn-primary" >정보변경</button>
+              <button type="submit" id="deleteBtn" class="btn btn-primary" >회원탈퇴</button>
             </div>
         </div><!-- /.card-body -->
       </div><!-- /.card -->
     </div>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
   </html>
+  
+  <script>
+$(function(){
+
+	$('#repwdBtn').on('click', function(){
+		location.href = "/member/repwdForm"; 
+	});
+	
+	$('#modifyBtn').on('click', function(){
+		location.href = "/member/modProfile"; 
+	});
+	
+	$('#deleteBtn').on('click', function(){
+		if(confirm("정말 삭제하시겠습니까")){
+		location.href="delete.do?id=${member.id}"			
+		}
+	});
+	
+// 	$('#deleteBtn').on('click', function(){
+// 		location.href = "/member/PWfindForm.do"; 
+// 	});
+	
+})
+</script>
+  
 <%@ include file="../include/footer_js.jsp"%>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
