@@ -142,18 +142,14 @@ $(function(){
 	});
 	
 	$('#modifyBtn').on('click', function(){
-		location.href = "/member/modProfile"; 
+		location.href = "/member/modProfileForm"; 
 	});
 	
 	$('#deleteBtn').on('click', function(){
-		if(confirm("정말 삭제하시겠습니까")){
+		if(confirm("정말 탈퇴하시겠습니까")){
 		location.href="delete.do?id=${member.id}"			
 		}
-	});
-	
-// 	$('#deleteBtn').on('click', function(){
-// 		location.href = "/member/PWfindForm.do"; 
-// 	});
+	});	
 	
 })
 </script>

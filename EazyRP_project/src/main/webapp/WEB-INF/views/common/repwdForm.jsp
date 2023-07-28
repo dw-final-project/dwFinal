@@ -156,7 +156,7 @@ body {
 				<h4 class="modal-title">비밀번호 변경</h4>
 			</div>
 			<div class="modal-body">
-				<form id="repwdForm" action="/member/repwdForm.do" method="post">
+				<form id="repwdForm" action="/member/repwd.do" method="post">
 					<input type="hidden" name="id" value="${id }">
 					<div class="form-group d-flex">
 						<div class="input-group inputText">
@@ -190,6 +190,8 @@ body {
 					</div>
 					<div class="form-group findbtn">
 						<button type="submit" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;" onclick="submit_go();">비밀번호 재설정</button>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<button class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px; color:#fff;" id="cancelBtn">취 소</button>					
 					</div>
 				</form>
 			</div>

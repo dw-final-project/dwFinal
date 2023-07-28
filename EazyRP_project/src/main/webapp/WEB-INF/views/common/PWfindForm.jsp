@@ -149,7 +149,7 @@ body {
 <body>
 <!-- Modal HTML -->
 	<div class="modal-dialog modal-login ">
-		<div class="modal-content " style="padding-left: 45px; padding-right: 5px;">
+		<div class="modal-content ">
 			<div class="modal-header">				
 				<h4 class="modal-title">비밀번호 찾기</h4>
 			</div>
@@ -163,11 +163,11 @@ body {
 					</div>
 					<div class="form-group d-flex">
 						<div class="input-group inputText">
-							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+							<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
 							<input type="text" class="form-control" name="email" id="email" placeholder="이메일" required="required">
 						</div>
 						<div>
-							<input type="button" class="chkbtn" name="emailauth" id="emailauth" required="required" value="인증번호 전송">							
+							<input type="button" class="chkbtn" name="emailauth" id="emailauth" style="margin-left: 10px;" required="required" value="인증번호 전송">							
 						</div>
 					</div>
 					<div class="form-group d-flex">
@@ -176,12 +176,14 @@ body {
 							<input type="text" class="form-control mail-check-input" name="password" placeholder="인증번호" required="required">
 						</div>
 						<div>
-							<input type="button" class="chkbtn" id="emailchk" name="emailchk" required="required" value="인증번호 확인">			
+							<input type="button" class="chkbtn" id="emailchk" name="emailchk" style="margin-left: 10px;" required="required" value="인증번호 확인">			
 						</div>
 					</div>
 				</form>
 					<div class="form-group findbtn">
 						<button type="button" class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px;" id="pwrenew" onclick="submit_go();">비밀번호 재설정</button>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<button class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px; color:#fff;" id="cancelBtn">취 소</button>
 					</div>
 			</div>
 			
