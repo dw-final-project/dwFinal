@@ -177,40 +177,37 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	}
 	
 	@RequestMapping("/wh/regist")
-	public void whRegist(HttpServletResponse res, int emp_no, int wo_no, String[] pr_no, String fac_no[], String wh_no2[], 
+	public void whRegist(WhVO whVo, HttpServletResponse res, int emp_no, Integer wo_no, String[] pr_no, String fac_no[], String wh_no2[], 
 							String[] outprice, int[] quantity, String[] total_outprice, String wh_total) throws SQLException, IOException {
 		
 		System.out.println("erp4/wh/regist 컨트롤러 진입");
 		
-//		WhVO whVo = null;	// 게시글을 만들기 위한 객체
-//		List<WhVO> whDetailVoList = new ArrayList<WhVO>();	// 상세 정보들을 만들기 위한 객체
-//		
-//		
-//		whVo.setEmp_no(emp_no);
-//		whVo.setWo_no(wo_no);
-//		whVo.setWh_total(wh_total);
-//		
-//		for(int i = 0; i < pr_no.length; i++) {
-//			
-//			WhVO whDetailVo = new WhVO();
-//
-//			
-//			whDetailVo.setPr_no(pr_no[i]);
-//			whDetailVo.setFac_no(fac_no[i]);
-//			whDetailVo.setWh_no2(wh_no2[i]);
-//			whDetailVo.setOutprice(outprice[i]);
-//			whDetailVo.setQuantity(quantity[i]);
-//			whDetailVo.setTotal_outprice(total_outprice[i]);
-//			
-//			whDetailVoList.add(whDetailVo);
-//			
-//		}
-//
-//		System.out.println("등록 전 whVo : " + whVo);
-//		System.out.println("등록 전 whDetailVoList : " + whDetailVoList);
-//		whService.registWh(whVo, whDetailVoList);
-//		System.out.println("등록 후 whVo : " + whVo);
-//		System.out.println("등록 후 whDetailVoList : " + whDetailVoList);
+		List<WhVO> whDetailVoList = new ArrayList<WhVO>();	// 상세 정보들을 만들기 위한 객체
+		
+		whVo.setEmp_no(emp_no);
+		whVo.setWo_no(wo_no);
+		whVo.setWh_total(wh_total);
+		
+		for(int i = 0; i < pr_no.length; i++) {
+			
+			WhVO whDetailVo = new WhVO();
+			
+			whDetailVo.setPr_no(pr_no[i]);
+			whDetailVo.setFac_no(fac_no[i]);
+			whDetailVo.setWh_no2(wh_no2[i]);
+			whDetailVo.setOutprice(outprice[i]);
+			whDetailVo.setQuantity(quantity[i]);
+			whDetailVo.setTotal_outprice(total_outprice[i]);
+			
+			whDetailVoList.add(whDetailVo);
+			
+		}
+
+		System.out.println("등록 전 whVo : " + whVo);
+		System.out.println("등록 전 whDetailVoList : " + whDetailVoList);
+		whService.registWh(whVo, whDetailVoList);
+		System.out.println("등록 후 whVo : " + whVo);
+		System.out.println("등록 후 whDetailVoList : " + whDetailVoList);
 		
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
