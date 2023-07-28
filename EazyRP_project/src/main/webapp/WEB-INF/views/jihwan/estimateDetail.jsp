@@ -114,7 +114,7 @@
 			</td> 
         </tr>
     </table>
-    <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-dark">제품추가</button>
+    <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">제품추가</button>
     <table>
         <tr>
             <th align="center" style="width: 20%;">제품명</th>
@@ -130,14 +130,14 @@
 	       <input type="hidden" class="rownum" value="${est.ROWNUM }">
 	       <input type="hidden" name="estdetail_no" id="dtail_no" value="${est.ESTDETAIL_NO }">
 	       <input type="hidden" name="enabled" id="estenabled" value="${est.ENABLED }">
-	       <input type="hidden" name="pr_delete" value="">
+	       <input type="hidden" name="pr_delete" value="n">
         	<td>
         		<input type="text" id="${est.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${est.P_NAME }"><input type="hidden" name="pr_no" value="${est.PR_NO }">
         	</td>
             <td><input type="text" id="wh_no${est.ROWNUM }" class="wh_names" name="wh_name" style="width: 100%;" value="${est.WH_NAME }"><input type="hidden" name="wh_no" value="${est.WH_NO }"></td>
             <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${est.QUANTITY }"><input type="hidden" id="cost" value="${est.PR_EXPRICE }"></td>
             <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${est.AMOUNT }" readonly ></td>
-            <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-secondary">삭제</button></td>
+            <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>
         </tr>
         </c:forEach>
         </tbody>
@@ -227,11 +227,12 @@ $('#addPutBtn').on('click', function(){
 	cnt++;
 	$('#prInput').append('<tr id="trChk"><input type="hidden" class="rownum" value="'+ cnt + '">' +
 	'<input type="hidden" name="estdetail_no" value="0">'+
+	'<input type="hidden" name="pr_delete" value="n">'+
     '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
     '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'+
     '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
     '<td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>'+
-    '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-secondary">삭제</button></td>'+
+    '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'+
 '</tr>');
 	
 	

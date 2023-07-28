@@ -77,13 +77,10 @@ $('#searchBtn').on('click',function(){
 			console.log(parentInputId);
 			
 			$('tr').on('click', function(){
-				console.log("click");
 				let wh_noName = $(this).find('#wh_name').text();
-				console.log("2");
 				let price = $(this).find('.cost').val();
-				console.log("3");
 				let parentEl = $("#" + parentInputId, opener.document);
-				console.log("4");
+				
 // 				parentEl.val(wh_noName);
 				parentEl.parents('tr').find('input.wh_names').val(wh_noName);
 				parentEl.parents('tr').find('input[name="wh_no"]').val($(this).find('#wh_no').val());
