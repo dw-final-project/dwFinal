@@ -2,6 +2,7 @@ package kr.or.dw.service;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -64,9 +65,14 @@ public class WhServiceImpl implements WhService{
 	}
 
 	@Override
-	public void registWh(WhVO whVo, List<WhVO> whList) throws SQLException {
-		whDAO.insertWh(null); // 게시글을 만들기 위한 다오
-								//	상세게시글을 만들기 위한 다오
+	public void registWh(WhVO whVo, List<WhVO> whDetailVoList) throws SQLException {
+		whDAO.insertWh(whVo); 	// 게시글을 만들기 위한 다오
+		System.out.println("WhServiceImpl - whDetailVoList : " + whDetailVoList);
+		
+//		for (int i = 0; i < whDetailVoList.size(); i++) {
+//			whDAO.insertWhDetail(); // 상세게시글을 만들기 위한 다오
+//		}
+								
 	}
 
 }

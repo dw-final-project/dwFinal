@@ -71,7 +71,7 @@
 <body>
 	<h2>생산입고 등록</h2>
 	<!-- card footer End -->
-	<form role="form" method="post" action="/erp4/wh/regist.do" enctype="multipart/form-data">
+	<form role="form" method="post" action="/erp4/wh/regist.do">
 		<table>
 			<tr>
 				<td width="40%" align="center"><b>담당자</b></td>
@@ -84,11 +84,13 @@
 			<tr>
 				<td align="center"><b>작업지시서</b></td>
 				<td>
-					<select class="form-control col-md-2" name="document" id="document" style="font-size: 0.8em; width: 30%; display: inline;">
-						<c:forEach items="${draftgb}" var="dr" varStatus="loop">
+					<select class="form-control col-md-2" name="workorder" id="workorder" style="font-size: 0.8em; width: 30%; display: inline;">
+						<option value="">선택</option>
+						<c:forEach items="${woList}" var="wo" varStatus="loop">
 							<option value="${dr.dg_no }" class="dg" id="${dr.dg_name }">${dr.dg_name }</option>
 						</c:forEach>
 					</select>
+					<input type="button" id="documentInsertBtn" class="btn btn-primary" style="margin-left: 5px;"value="첨부">
 				</td>
 			</tr>
 		</table>
