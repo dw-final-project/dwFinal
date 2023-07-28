@@ -74,6 +74,9 @@
 		}
 	});	
 
+	$('#cancelBtn').on('click', function(){
+		history.go(-1);
+	});
 	
 	function submit_go(){
 		

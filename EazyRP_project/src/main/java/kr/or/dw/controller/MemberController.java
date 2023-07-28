@@ -54,6 +54,15 @@ public class MemberController {
 		mnv.setViewName(url);
 		return mnv;
 	}
+	@RequestMapping("/qna")
+	public ModelAndView qna (ModelAndView mnv, String mcode, HttpSession session) {
+		String url = "/common/inquiryForm.page";
+		
+		mnv.addObject("mcode", mcode);
+		mnv.setViewName(url);
+		return mnv;
+		
+	}
 	
 	// 아이디 중복확인
 	@RequestMapping("/idCheck") 
@@ -159,36 +168,57 @@ public class MemberController {
 	
 	@RequestMapping("/modProfileForm")
 	public String modProfile(){		
-		return "/common/modProfile";
+		return "/common/modProfile.page";
 	}	
 
 	@RequestMapping("/modProfile")
-	public String Profile(MemberVO member, HttpServletResponse res) throws Exception {
-		String Profile = memberService.modProfile(member);
-		String url = "";
-		if(Profile == null || Profile.equals("")) {
-			  url = "/common/modProfile";
-		}else {
-			url="/common/userProfile";
-		}
+	public ModelAndView Profile(MemberVO member, HttpSession session, ModelAndView mnv) throws Exception {
+		String url = "/common/userProfile.page";
+	
+		MemberVO mem = (MemberVO) session.getAttribute("loginUser");
+		String id = mem.getId();
+		member.setId(id);
+		mem.setAddr(member.getAddr());
+		mem.setEmail(member.getEmail());
+		mem.setTel(member.getTel());
+		
+		memberService.modProfile(member);
+		
+		mnv.addObject("member", mem);
+		mnv.setViewName(url);
+		session.removeAttribute("loginUser");
+		session.setAttribute("loginUser", mem);
+		
+		return mnv;
+	}
+	
+	// 회원정보 수정에서 비밀번호 변경
+	@RequestMapping("/repwdForm")
+	public String repwdForm() {
+		String url = "/common/repwdForm.page";
+
 		return url;
 	}
-	
 
-	@RequestMapping("/repwdForm")
-	public String repwdForm(HttpServletResponse res) throws SQLException {
-		return "/common/repwdForm.page";
-	}
-	
 	
 	@RequestMapping("/repwd")
-	public String Repwd(String pwd, HttpSession session) throws Exception {
-		String url = "";
-		memberService.repwd(pwd);
-		url = "/common/repwdForm";		
-		return url;
+	public ModelAndView repwd (ModelAndView mnv, String pwd, HttpSession session) throws Exception{
+		String url = "/common/userProfile.page";		
+				
+		MemberVO member = (MemberVO) session.getAttribute("loginUser");
+		String id = member.getId(); 
+		
+		memberService.pwRenew(pwd, id);		
+		
+		
+		mnv.addObject("member", member);
+		mnv.setViewName(url);
+		
+		return mnv;
 	}
 	
+	
+	//회원탈퇴 
 	@RequestMapping("/delete")
 	public String delete(String id)throws Exception {
 		

@@ -44,16 +44,8 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public String modProfile(MemberVO member) throws SQLException {
-		String mod = memberDAO.modProfile(member);
-		return mod;
-	}
-
-	@Override
-	public void repwd(String pwd) throws SQLException {
-		 memberDAO.updateRepwd(pwd);
-		 System.out.println("서비스 임플");
-		
+	public void modProfile(MemberVO member) throws SQLException {
+		memberDAO.modProfile(member);
 	}
 
 	@Override
@@ -61,6 +53,8 @@ public class MemberServiceImpl implements MemberService{
 		memberDAO.deleteUser(id);
 		
 	}
+
+
 
 
 

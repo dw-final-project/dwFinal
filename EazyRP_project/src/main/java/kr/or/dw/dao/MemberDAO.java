@@ -22,11 +22,11 @@ public interface MemberDAO {
 
 	void updatePwd(@Param("pwd") String pwd, @Param("id") String id) throws SQLException;
 
-	String modProfile(MemberVO member) throws SQLException;
-
-	void updateRepwd(@Param("pwd") String pwd)throws SQLException;
+	void modProfile(MemberVO member) throws SQLException;
 
 	void deleteUser(String id)throws SQLException;
+
+
 
 
 
