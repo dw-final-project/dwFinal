@@ -18,7 +18,9 @@ import kr.or.dw.dao.SiDAO;
 import kr.or.dw.vo.BsheetVO;
 import kr.or.dw.vo.BuyDetailVO;
 import kr.or.dw.vo.CompanyVO;
+import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.NoteVO;
+import kr.or.dw.vo.O_DetailVO;
 import kr.or.dw.vo.OrderVO;
 import kr.or.dw.vo.ProcessVO;
 import kr.or.dw.vo.ProductVO;
@@ -120,10 +122,20 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<OrderVO> allOrderList(SearchCriteria cri, String c_no) throws SQLException {
+	public Map<String, Object> allOrderList(Map<String, Object> dataMap) throws SQLException {
 		List<OrderVO> list = null;
 		System.out.println("1");
-		list = productDAO.allOrderList(cri, c_no);
+		SearchCriteria cri = (SearchCriteria) dataMap.get("cri");
+		String c_no = (String) dataMap.get("c_no");
+		
+		int offset = cri.getPageStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		
+		list = productDAO.allOrderList(dataMap, rowBounds);
+
+		
 		System.out.println("2");
 		if(cri.getSearchType().equals("p") || cri.getSearchType().equals("pcw")) {
 			List<String> pr_no = productDAO.getPr_no(cri);
@@ -134,8 +146,37 @@ public class ProductServiceImpl implements ProductService {
 				list.add(insert);
 			}
 		}
+
+		int totalCount = list.size();
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("pageMaker", pageMaker);
+		
 		System.out.println("3");
-		return list;
+		return map;
+	}
+
+	@Override
+	public List<O_DetailVO> getOrderDetail(String o_no) throws SQLException {
+		return productDAO.getOrderDetail(o_no);
+	}
+
+	@Override
+	public OrderVO selectOrder(String o_no) throws SQLException {
+		return productDAO.selectOrder(o_no);
+	}
+
+	@Override
+	public List<DraftVO> getOrderDraft(String c_no) throws SQLException {
+		return productDAO.getOrderDraft(c_no);
+	}
+
+	@Override
+	public String getFileName(String dr_no) throws SQLException {
+		return productDAO.getFileName(dr_no);
 	} 
 	
 	

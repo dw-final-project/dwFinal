@@ -140,7 +140,8 @@
 		#{c_no},
 		#{realFileName},
 		'',
-		(SELECT emp_no1 FROM pl WHERE pl_no = #{pl_no})
+		(SELECT emp_no1 FROM pl WHERE pl_no = #{pl_no}),
+		'N'
 		)
 		
 	</insert>

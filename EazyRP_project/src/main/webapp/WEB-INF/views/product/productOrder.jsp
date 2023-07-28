@@ -31,17 +31,19 @@
 						<div>
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
-									<th width="25%" style="text-align: center;">요청한 제품</th>
-									<th width="25%" style="text-align: center;">요청한 사람</th>
-									<th width="25%" style="text-align: center;">요청 날짜</th>
-									<th width="25%" style="text-align: center;">진핸상황</th>
+									<th width="20%" style="text-align: center;">요청한 제품</th>
+									<th width="20%" style="text-align: center;">요청 날짜</th>
+									<th width="20%" style="text-align: center;">요청한 사람</th>
+									<th width="20%" style="text-align: center;">진행상황</th>
+									<th width="20%" style="text-align: center;">발주보고서 조회</th>
 								</tr>
-									<c:forEach items="${order}" var="order" varStatus="loop">
+									<c:forEach items="${list}" var="order" varStatus="loop">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/product/orderDetail.do?o_no=${order.o_no }', '발주 내역', 700, 1000)">${order.o_name }</a></td>
-										<td style="text-align: center;">${order.sys_reg }</td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/product/orderDetail.do?o_no=${order.o_no }', '발주 내역', 700, 700)">${order.o_name }</a></td>
 										<td style="text-align: center;">${order.sys_regdate }</td>
+										<td style="text-align: center;">${order.sys_reg }</td>
 										<td style="text-align: center;">${order.progress }</td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/management/detail.do?dr_no=${order.dr_no}', '기안문', 700, 700)">${order.title }</a></td>
 									</tr>
 									</c:forEach>
 							</table>
@@ -52,8 +54,8 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/product/orderRegist.do', '발주 요청', 700, 1000)"
-					style="width: 100px; margin: 20px; align-self: center;">쪽지 쓰기</button>
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/product/orderRegist.do', '발주 요청', 700, 700)"
+					style="width: 100px; margin: 20px; align-self: center;">발주 요청</button>
 				</div>
 			</div>
 			

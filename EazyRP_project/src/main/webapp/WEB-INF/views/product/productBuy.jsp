@@ -41,7 +41,7 @@
 									<tr>
 										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/product/buyDetail.do?sheet_no=${note.sheet_no}', '구매내역 상세조회', 600, 600)">${note.pr_name }</a></td>
 										<td style="text-align: center;">${note.sys_regdate }</td>
-										<td style="text-align: center;">${note.con_c_name }</td>
+										<td style="text-align: center;">${note.e_name }</td>
 										<td style="text-align: center;">${note.price } 원</td>
 									</tr>
 									</c:forEach>

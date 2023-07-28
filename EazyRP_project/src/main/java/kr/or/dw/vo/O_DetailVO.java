@@ -12,5 +12,8 @@ public class O_DetailVO {
 	private String buy_price;
 	private String unit_price;
 	private String pr_name;
+	private String wh_no;
+	private String wh_name;
+	private String c_name;
 	
 }

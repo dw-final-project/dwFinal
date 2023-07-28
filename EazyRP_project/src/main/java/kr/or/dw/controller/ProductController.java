@@ -18,11 +18,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.aspose.cells.Cell;
+import com.aspose.cells.Cells;
+import com.aspose.cells.LoadOptions;
+import com.aspose.cells.Workbook;
+import com.aspose.cells.Worksheet;
+
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.service.ProductService;
 import kr.or.dw.vo.BsheetVO;
 import kr.or.dw.vo.BuyDetailVO;
 import kr.or.dw.vo.CompanyVO;
+import kr.or.dw.vo.DraftVO;
+import kr.or.dw.vo.O_DetailVO;
 import kr.or.dw.vo.OrderVO;
 
 @Controller
@@ -121,13 +129,111 @@ public class ProductController {
 	@RequestMapping("/productOrder")
 	public ModelAndView productOrder(ModelAndView mnv, String mcode, SearchCriteria cri, HttpSession session) throws SQLException {
 		String url = "/product/productOrder.page";
+		System.out.println(cri.getSearchType());
+		System.out.println(cri.getKeyword());
 		String c_no = (String) session.getAttribute("c_no");
-		List<OrderVO> orderList = productService.allOrderList(cri, c_no);
+		Map<String, Object> dataMap = new HashMap<>();
+		dataMap.put("cri", cri);
+		dataMap.put("c_no", c_no);
+		Map<String, Object> map = new HashMap<>();
+		map = productService.allOrderList(dataMap);
 		
-		mnv.addObject("cri", cri);
-		mnv.addObject("order", orderList);
 		mnv.addObject("mcode", mcode);
+		mnv.addAllObjects(map);
 		mnv.setViewName(url);
+		return mnv;
+	}
+	
+	@RequestMapping("/orderDetail")
+	public ModelAndView orderDetail(ModelAndView mnv, String o_no) throws SQLException {
+		List<O_DetailVO> detail = productService.getOrderDetail(o_no);
+		OrderVO order = productService.selectOrder(o_no);
+		
+		mnv.addObject("order", order);
+		mnv.addObject("detail", detail);
+		mnv.setViewName("/product/orderDetail");
+		return mnv;
+	}
+	
+	@RequestMapping("/orderRegist")
+	public ModelAndView orderRegist(ModelAndView mnv, HttpSession session) throws SQLException {
+		String c_no = (String) session.getAttribute("c_no");
+		List<DraftVO> draft = productService.getOrderDraft(c_no);
+		String e_name = (String) session.getAttribute("e_name");
+		
+		mnv.addObject("e_name", e_name);
+		mnv.addObject("draft", draft);
+		mnv.setViewName("/product/orderRegist");
+		return mnv;
+	}
+	
+	@RequestMapping("/document")
+	public ModelAndView document(ModelAndView mnv, String dr_no, HttpSession session) throws SQLException {
+		String fileName = productService.getFileName(dr_no);
+		
+		String uploadPath = session.getServletContext().getRealPath("/resources/documents/"); // 파일 경로
+				
+		String saveFile = (uploadPath+fileName); // 파일경로 + 파일이름
+        List<String> data = new ArrayList<>();
+		try {
+            // 엑셀 파일 로드
+            LoadOptions loadOptions = new LoadOptions();
+            Workbook workbook = new Workbook(saveFile, loadOptions);
+
+            // 첫 번째 시트 가져오기
+            Worksheet worksheet = workbook.getWorksheets().get(0);
+
+            // 모든 행을 반복하여 데이터를 2차원 List에 저장
+            Cells cells = worksheet.getCells();
+            int maxRow = cells.getMaxDataRow() + 1;
+            int maxColumn = cells.getMaxDataColumn() + 1;
+            for (int row = 0; row < maxRow; row++) {
+                for (int column = 0; column < maxColumn; column++) {
+                    // 각 셀의 데이터를 문자열로 변환하여 2차원 리스트에 추가
+                    Cell cell = cells.get(row, column);
+                    if(cell.getStringValue().equals("") || cell.getStringValue() == null) {
+                    } else {
+                    	data.add((String)cell.getStringValue());
+                    }
+                }
+            }
+            // 데이터 확인
+                for (int i = 0; i < data.size(); i++) {
+                    System.out.println(i + "번쨰 = " + data.get(i));
+                    System.out.println(i + "번쨰 타입 = "+ data.get(i).getClass());
+                }
+
+            // Clean up resources
+            workbook.dispose();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		Map<String, List<String>> data2 = new HashMap<>();
+		List<String> name = new ArrayList<>();
+		List<String> quantity = new ArrayList<>();
+		int a = 1;
+		for(int i = 15; i < data.size(); i++) {
+			if(data.get(i).trim().equals("금액 총 합계  :")) {
+				break;
+			}
+			if(i % 2 == 1 && a % 2 == 1) {
+				name.add(data.get(i));
+				a++;
+			} else if (i % 2 == 1 && a % 2 == 0) {
+				quantity.add(data.get(i));
+				a++;
+			}
+		}
+		data2.put("name", name);
+		data2.put("quantity", quantity);
+		mnv.addObject("quantity", quantity);
+		mnv.addObject("name", name);
+		System.out.println(name);
+		System.out.println(quantity);
+		System.out.println(data2.get("quantity"));
+		System.out.println(data2.get("name"));
+		mnv.addAllObjects(data2);
+		mnv.setViewName("/product/orderRegist");
 		return mnv;
 	}
 	

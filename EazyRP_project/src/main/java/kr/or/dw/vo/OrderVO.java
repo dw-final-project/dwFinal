@@ -18,5 +18,8 @@ public class OrderVO {
 	private int unit_price;
 	private String buy_c_no;
 	private String con_c_no;
+	private String con_c_name;
+	private String dr_no;
+	private String title;
 
 }

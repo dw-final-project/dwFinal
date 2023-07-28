@@ -150,7 +150,10 @@
 	</insert>
 	
 	<select id="allOrderList" resultType="order">
-		SELECT * FROM ordermanage WHERE buy_c_no = #{c_no}
+		SELECT o.*, d.title title
+		FROM ordermanage o, draft d
+		WHERE o.buy_c_no = #{c_no}
+		 AND o.dr_no = d.dr_no
 		<if test="searchType == 'w'.toString()">
 			AND sys_reg LIKE '%' || #{keyword} || '%'
 		</if>
@@ -185,6 +188,35 @@
 	
 	<select id="insertOrderList" resultType="order">
 		SELECT * FROM ordermanage WHERE o_no = #{sheet} AND buy_c_no = #{c_no}
+	</select>
+	
+	<select id="orderCount" resultType="int">
+		SELECT COUNT(*) FROM ordermanage WHERE buy_c_no = #{c_no}
+	</select>
+	
+	<select id="getOrderDetail" resultType="o_detail">
+		SELECT o.*, w.wh_name wh_name, p.pr_name pr_name, c.c_name c_name
+		FROM orderdetail o, warehouse w, product p, company c
+		WHERE o.o_no = #{o_no}
+		  AND o.wh_no = w.wh_no
+		  AND o.pr_no = p.pr_no
+		  AND w.c_no = c.c_no
+	</select>
+	
+	<select id="selectOrder" resultType="order">
+		SELECT o.*, c.c_name con_c_name, d.dr_no dr_no, d.title title
+		 FROM ordermanage o, company c, draft d
+		WHERE o.o_no = #{o_no}
+		  AND o.con_c_no = c.c_no
+		  AND d.dr_no = o.dr_no
+	</select>
+	
+	<select id="getOrderDraft" resultType="draft">
+		SELECT * FROM draft WHERE dg_no = 'D003' AND pl_progress = '3' AND ORDER_GB = 'N' AND c_no = #{c_no}
+	</select>
+	
+	<select id="getFileName" resultType="str">
+		SELECT files FROM draft WHERE dr_no = #{dr_no}
 	</select>
 	
 </mapper>
