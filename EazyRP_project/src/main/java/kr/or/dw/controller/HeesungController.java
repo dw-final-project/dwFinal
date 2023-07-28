@@ -215,17 +215,17 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 			}
 		}
 		
-		for(int i = 0; i < pr_no.length; i++) {
-			WhVO whVo = new WhVO();
-			whVo.setEmp_no(emp_no);
-			whVo.setPr_no(pr_no[i]);
-			
-			
-		}
+//		for(int i = 0; i < pr_no.length; i++) {
+//			WhVO whVo = new WhVO();
+//			whVo.setEmp_no(emp_no);
+//			whVo.setPr_no(pr_no[i]);
+//			
+//			
+//		}
 		
 		
 		
-		whService.registWh(whVo);
+//		whService.registWh(whVo);
 		
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
