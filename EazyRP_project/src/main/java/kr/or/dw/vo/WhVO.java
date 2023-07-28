@@ -8,6 +8,7 @@ import lombok.Data;
 
 @Data
 public class WhVO {
+	
 	private String wh_no;			// 생산입고코드
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date sys_regdate;		// 등록일자

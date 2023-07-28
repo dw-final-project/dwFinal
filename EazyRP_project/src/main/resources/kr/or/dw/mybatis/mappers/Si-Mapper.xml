@@ -2,9 +2,56 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.dw.dao.SiDAO">
 
-<select id="selectSiList" resultType="si">
-	SELECT *
-	FROM si
+<sql id="search">
+		<if test="searchType == 'd'.toString()">
+			AND e_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 't'.toString()">
+			AND wh_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'p'.toString()">
+			AND progress LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'all'.toString()">
+			AND (
+			e_name LIKE '%' || #{keyword} || '%'
+			OR
+			wh_name LIKE '%' || #{keyword} || '%'
+			OR
+			progress LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+	</sql>
+
+
+<select id="selectSiList" resultType="Map">
+	SELECT s.si_no
+	  ,s.sys_regdate 
+	  ,e.e_name e_name
+	  ,s.shipdate 
+	  ,s.progress 
+	  ,s.enabled 
+	  ,w.wh_name wh_name
+	  ,s.quantity 
+	  ,s.files 
+	  ,f.fc_name fc_name
+	  ,s.sys_up 
+	  ,s.sys_updatedate 
+  FROM si s, emp e, warehouse w, fc f
+ WHERE s.emp_no = e.emp_no
+   AND s.wh_no = w.wh_no
+   AND s.fc_no = f.fc_no
+    <include refid="search"/>
 </select>
+	
+<select id="selectSearchSiListCount" resultType="int">
+	SELECT COUNT(*)
+	FROM si s, emp e, warehouse w, fc f
+	 WHERE 1=1 
+   AND s.emp_no = e.emp_no
+   AND s.wh_no = w.wh_no
+   AND s.fc_no = f.fc_no
+	<include refid="search"/>
+</select>	
 	
 </mapper>

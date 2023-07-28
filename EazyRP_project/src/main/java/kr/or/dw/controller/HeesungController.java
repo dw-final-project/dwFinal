@@ -3,6 +3,8 @@ package kr.or.dw.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.dw.command.SearchCriteria;
+import kr.or.dw.service.FactoryService;
 import kr.or.dw.service.MenuService;
 import kr.or.dw.service.ProcessService;
 import kr.or.dw.service.WhService;
@@ -34,6 +37,21 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	private ProcessService processService;
 	@Autowired
 	private WhService whService;
+	@Autowired
+	private FactoryService factoryService;
+	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////// 목록 열기
+	
+	@RequestMapping("/findFactory")
+	public ModelAndView findFactory(ModelAndView mnv, SearchCriteria cri) throws SQLException {
+		String url = "heesung/findFactory.open";
+		
+		Map<String, Object> dataMap = factoryService.selectFactoryList(cri);
+		
+		mnv.setViewName(url);
+		mnv.addAllObjects(dataMap);
+		return mnv;
+	}
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////// process
 	
@@ -150,11 +168,19 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 
 	}
 	
-	@RequestMapping
-	public void whRegist(WhVO whVo, HttpServletResponse res) throws SQLException {
+	@RequestMapping("/wh/regist")
+	public void whRegist(WhVO whVo, HttpServletResponse res) throws SQLException, IOException {
 		
+		System.out.println("erp4/wh/regist 컨트롤러 진입");
 		
 		whService.registWh(whVo);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 등록되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
 		
 	}
 	

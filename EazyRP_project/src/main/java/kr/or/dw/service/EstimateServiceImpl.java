@@ -146,8 +146,11 @@ public class EstimateServiceImpl implements EstimateService {
 		int a = 4;
 		for (EstimateVO est : modify) {
 			System.out.println(a);
-			a++;
-			estimateDAO.modifyEstimateDetail(est);
+			if(est.getPr_delete() != null && est.getPr_delete().equals("d")) {
+				estimateDAO.deleteEstimateDetail(est);
+			}else {
+				estimateDAO.modifyEstimateDetail(est);
+			}
 		}
 		
 		
@@ -156,9 +159,7 @@ public class EstimateServiceImpl implements EstimateService {
 	@Override
 	public void deleteEstimate(String est_no) throws SQLException {
 		
-		if(est_no == est) {
-			
-		}
+		estimateDAO.deleteEstimate(est_no);
 		
 	}
 	

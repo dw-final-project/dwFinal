@@ -62,13 +62,21 @@
 			wo_no,
 			sys_up,
 			sys_updatedate,
-			sys_reg
+			sys_reg,
+			wh_total
 		)
 		VALUES
 		(
 			wh_no_seq.nextval,
 			sysdate,
-			#{emp_no}
+			#{emp_no},
+			1,
+			#{files},
+			#{wo_no},
+			#{sys_up},
+			#{updatedate},
+			#{sys_reg},
+			#{wh_total}
 		)
 	</insert>
 	

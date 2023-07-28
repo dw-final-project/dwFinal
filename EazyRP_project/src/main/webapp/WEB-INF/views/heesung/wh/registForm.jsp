@@ -1,20 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css"
-	rel="stylesheet">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<script
-	src="<%=request.getContextPath()%>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <!DOCTYPE html>
 <html>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" rel="stylesheet">
 <head>
 <meta charset="UTF-8">
-<title>견적서</title>
+<title>생산입고</title>
 
 <style>
 	input {
@@ -83,7 +77,8 @@
 				<td width="40%" align="center"><b>담당자</b></td>
 				<td>
 					<input type="hidden" name="emp_no" id="receiver"
-							value="${empno }"> <input type="text" style="width: 100%;"
+							value="${empno }"> 
+							<input type="text" style="width: 100%;"
 							value="${ename }" id="name" name="name" readonly
 							onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
 				</td>
@@ -95,7 +90,7 @@
 					name="fileName" value=""></td>
 			</tr>
 		</table>
-		<button type="button" id="addPutBtn">제품추가</button>
+		<button type="button" id="addPutBtn">추가</button>
 		<table>
 			<thead>
 				<tr>
@@ -111,15 +106,14 @@
 			<tbody id="prInput">
 				<input type="hidden" value="" id="cnt">
 				<tr>
-					<td><input type="text" id="0" class="pr_names" name="pr_name"
-						style="width: 100%;" value=""><input type="hidden"
-						name="pr_no">
+					<td>
+						<input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no">
 					</td>
 					<td>
-						<input type="text" class="wh_names" style="width: 100%;" value="">
+						<input type="text" id="0" class="fac_names" style="width: 100%;" value="">
 					</td>
 					<td>
-						<input type="text" class="wh_names" style="width: 100%;" value="">
+						<input type="text" id="0" class="wh_names" style="width: 100%;" value="">
 					</td>
 					<td>
 						<input type="text" id="outPrice" class="outPrice" name="outPrice" style="width: 100%;" value="">
@@ -144,8 +138,7 @@
 				</td>
 			</tr>
 		</table>
-		<input type="submit" class="btn btn-primary"
-			style="text-align: center;" value="생성">
+		<input type="submit" id="submitBtn" class="btn btn-primary" style="text-align: center;" value="생성">
 	</form>
 </body>
 
@@ -159,7 +152,7 @@
 		$('#prInput').append(
 			'<tr>'
 				+ '<td><input type="text" id="' + cnt + '" class="pr_names" name="" style="width: 100%;" value=""><input type="hidden" name=""></td>'
-				+ '<td><input type="text" id="' + cnt + '" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name=""></td>'
+				+ '<td><input type="text" id="' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name=""></td>'
 				+ '<td><input type="text" id="' + cnt + '" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name=""></td>'
 				+ '<td><input type="text" id="outPrice' + cnt + '" class="outPrice" name="outPrice" style="width: 100%;" value=""><input type="hidden" name=""></td>'
 				+ '<td><input type="text" id="quantity' + cnt + '" class="quantity" name="quantity" style="width: 100%;" value=""></td>'
@@ -182,12 +175,20 @@
 		$(this).parent('td').parent('tr').remove();
 	});
 
+	// 공장 클릭시 목록 열기 이벤트
+	$(document).on('click', '.fac_names', function() {
+		let whVal = $(this).attr('id');
+		$('#cnt').val(whVal);
+		let openWin = OpenWindow("/erp4/findFactory.do", "공장 찾기", 800, 600);
+	})
+
 	// 창고코드 이벤트
 	$(document).on('click', '.wh_names', function() {
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
 		let openWin = OpenWindow("/erp4/findWareHouse.do", "창고 찾기", 800, 600);
 	})
+
 
 	// 가격 * 수량 = 합계
 	$(document).on('keyup', '.quantity', function() {
@@ -222,5 +223,6 @@
 	
 </script>
 
+<script src="<%=request.getContextPath()%>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 
 </html>

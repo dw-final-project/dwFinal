@@ -99,20 +99,7 @@ public class BusinessController {
 		return mnv;
 	}
 	
-	@RequestMapping("/siSelect")
-	public ModelAndView siSel(ModelAndView mnv) throws SQLException {
-		String url = "jihwan/siSelect";
-		List<SiVO> siList = siService.selectSiList();
-		mnv.setViewName(url);
-		mnv.addObject("siList", siList);
-		return mnv;
-	}
 	
-	@RequestMapping("/s_Sheet")
-	public String sSheet() {
-		String url = "jihwan/s_Sheet";
-		return url;
-	}
 
 	
 	@RequestMapping("/findPeople")
@@ -293,7 +280,7 @@ public class BusinessController {
 	}
 	
 	@RequestMapping("modifyForm")
-	public void estimateModify(@RequestParam("files")MultipartFile multi, String est_no, int[] estdetail_no, int emp_no, String[] pr_no, String fc_no, String[] wh_no, int[] quantity, int[] amount,  HttpServletResponse res, HttpSession session) throws Exception {
+	public void estimateModify(@RequestParam("files")MultipartFile multi, String[] pr_delete, String est_no, int[] estdetail_no, int emp_no, String[] pr_no, String fc_no, String[] wh_no, int[] quantity, int[] amount,  HttpServletResponse res, HttpSession session) throws Exception {
 		List<EstimateVO> modify = new ArrayList<EstimateVO>();
 		
 		String empno = session.getAttribute("emp_no").toString();
@@ -326,6 +313,8 @@ public class BusinessController {
 				e.printStackTrace();
 			}
 		}
+		
+		
 		for(int i= 0; i < pr_no.length; i++) {
 			EstimateVO est = new EstimateVO();
 			est.setEmp_no(emp_no);
@@ -338,9 +327,12 @@ public class BusinessController {
 			est.setEst_no(est_no);
 			System.out.println(est_no);
 			est.setFiles(filess);
+			est.setPr_delete(pr_delete[i]);
 			
 			modify.add(est);	
 		}
+		
+		
 		
 		System.out.println("모디파이입니다 : " + modify);
 		
@@ -356,15 +348,40 @@ public class BusinessController {
 	}
 	
 	@RequestMapping("remove")
-	public void remove (String est_no, HttpServletRequest req, HttpServletResponse res) throws IOException {
+	public void remove (String est_no, HttpServletRequest req, HttpServletResponse res) throws IOException, SQLException {
 		
 		estimateService.deleteEstimate(est_no);
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
 		out.println("<script>");
-		out.println("window.opener.location.reload();");
-		out.println("window.close()");
+		out.println("alert('삭제되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
 		out.println("</script>");
 	}
+	
+	
+//	----------------------------------------------------------------------------------------
+	
+	@RequestMapping("/siSelect")
+	public ModelAndView siSel(ModelAndView mnv ,String mcode, SearchCriteria cri) throws SQLException {
+		String url = "jihwan/siSelect.page";
+		Map<String, Object> dataMap = siService.selectSiList(cri);
+		mnv.setViewName(url);
+		mnv.addObject("mcode",mcode);
+		mnv.addAllObjects(dataMap);
+		return mnv;
+	}
+	
+//	@RequestMapping("/siDetail")
+//	public String 
+//	
+	
+	@RequestMapping("/s_Sheet")
+	public String sSheet() {
+		String url = "jihwan/s_Sheet";
+		return url;
+	}
+	
+	
 	
 }

@@ -34,9 +34,9 @@
 						</form>
 					</div>
 				</div>
-				<div class="card-body pad">
+				<div class="card-body pad" style="padding-top: 0px;">
 					<div>
-						<table style="font-size: 0.8em; display: table; width: 100%">
+						<table style="font-size: 0.8em; " class="table table-borderd text-center">
 							<tr>
 								<th style="text-align: center;">견적서코드</th>
 								<th style="text-align: center;">등록일자</th>
@@ -47,12 +47,11 @@
 								<th style="text-align: center;">진행상태</th>
 								<th style="text-align: center;">첨부파일여부</th>
 							</tr>
-							<tr style="height: 20px;"></tr>
 							<c:forEach items="${estimList }" var="estimate">
 								<%-- 						<c:set var="est_no">${estimate.EST_NO }</c:set> --%>
 								<tr style="font-size: 1em; text-align : center;">
 									<td><a
-										href="javascript:OpenWindow('estimateDetail.do?est_no=${estimate.EST_NO }','견적서 조회', 800 ,800);">${estimate.EST_NO }</a></td>
+										href="javascript:OpenWindow('estimateDetail.do?est_no=${estimate.EST_NO }','견적서 조회', 700 ,700);">${estimate.EST_NO }</a></td>
 									<td><fmt:formatDate value="${estimate.REGDATE }"
 											pattern="yyyy-MM-dd"></fmt:formatDate></td>
 									<td>${estimate.C_NAME }</td>
@@ -71,7 +70,7 @@
 				</div>
 			</div>
 			<div style="display: flex; align-items: end; justify-content: end;">
-				<button type="button" class="btn btn-danger" id=""
+				<button type="button" class="btn btn-primary" id=""
 				onclick="javascript:OpenWindow('estimate_regist.do','견적서 등록', 600 ,800);"
 					style="width: 110px; heigth: 20px; margin: 10px; font-size: 0.8em; align-self: center;">견적서 등록</button>
 			</div>
@@ -80,6 +79,7 @@
 	</div>
 </section>
 
+<
 <script
 	src="<%=request.getContextPath()%>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 
