@@ -211,7 +211,8 @@ public class CommonController {
 			System.out.println(modMcode);
 			url = getUrl + "?mcode=" + modMcode;
 		}
-		
+		String e_name = menuService.selectEname(selectedEmp);
+		session.setAttribute("e_name", e_name);
 		session.setAttribute("emp_no", selectedEmp);
 		System.out.println("emp번호다 : " + selectedEmp);
 		
