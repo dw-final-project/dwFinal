@@ -12,6 +12,8 @@ import kr.or.dw.vo.SiVO;
 public interface SiService {
 
 	Map<String, Object> selectSiList(SearchCriteria cri) throws SQLException;
+
+	Map<String, Object> selectSiDetail(String si_no) throws SQLException;
 	
 	
 }

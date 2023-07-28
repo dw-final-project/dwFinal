@@ -34,6 +34,8 @@ public interface EstimateService {
 	void modifyEstimate(List<EstimateVO> modify ,String empno) throws SQLException;
 
 	void deleteEstimate(String est_no) throws SQLException;
+
+	
 	
 	
 

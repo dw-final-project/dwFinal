@@ -14,20 +14,26 @@
 			<div class="card card-outline card-info">
 				<div class="card-header">
 					<h3 class="card-title p-1">출 하 지 시 서</h3>
-<!-- 					<button type="button" class="btn btn-danger" id="" -->
-<!-- 						onclick="javascript:OpenWindow('estimate_regist.do','견적서 등록', 600 ,800);">등록</button> -->
+					<!-- 					<button type="button" class="btn btn-danger" id="" -->
+					<!-- 						onclick="javascript:OpenWindow('estimate_regist.do','견적서 등록', 600 ,800);">등록</button> -->
 					<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/erp4/siSelect.do?mcode=${mcode }" style="display: contents;">
-							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
+						<form id="searchForm2" method="post"
+							action="/erp4/siSelect.do?mcode=${mcode }"
+							style="display: contents;">
+							<select class="form-control col-md-2" name="searchType"
+								id="searchType" style="font-size: 0.8em;">
+								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전
+									체</option>
 								<option value="d" ${searchType eq 'd' ? 'selected' : '' }>사원명</option>
 								<option value="t" ${searchType eq 't' ? 'selected' : '' }>창고명</option>
 								<option value="p" ${searchType eq 'p' ? 'selected' : '' }>진행상태</option>
-							</select>
-							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
-							<span class="input-group-append col-md-3" style=" padding: 0px;">
+							</select> <input class="form-control col-md-4" type="text" name="keyword"
+								style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요."
+								value="${keyword}"> <span
+								class="input-group-append col-md-3" style="padding: 0px;">
 								<button class="btn btn-primary" type="button" id="searchBtn">
-									<i class="fa fa-fw fa-search" style="font-size: 0.8em; padding: 0px;"></i>
+									<i class="fa fa-fw fa-search"
+										style="font-size: 0.8em; padding: 0px;"></i>
 								</button>
 							</span>
 						</form>
@@ -35,41 +41,26 @@
 				</div>
 				<div class="card-body pad" style="padding-top: 0px;">
 					<div>
-						<table style="font-size: 0.8em; " class="table table-borderd text-center">
+						<table style="font-size: 0.8em;"
+							class="table table-borderd text-center">
 							<tr>
 								<th style="text-align: center;">지시서 코드</th>
+								<th style="text-align: center;">창고명</th>
 								<th style="text-align: center;">등록일자</th>
-								<th style="text-align: center;">사원번호</th>
-								<th style="text-align: center;">출하예정일</th>
+								<th style="text-align: center;">사원이름</th>
+								<th style="text-align: center;">품목명</th>
 								<th style="text-align: center;">진행 상태</th>
-								<th style="text-align: center;">사용 구분</th>
-								<th style="text-align: center;">업체 코드</th>
-								<th style="text-align: center;">출고량</th>
-								<th style="text-align: center;">첨부 파일</th>
-								<th style="text-align: center;">외화 코드</th>
-								<th style="text-align: center;">수정자</th>
-								<th style="text-align: center;">수정일</th>
 							</tr>
 							<c:forEach items="${siList }" var="si">
-								<tr style="font-size: 1em; text-align : center;">
-
+								<tr style="font-size: 1em; text-align: center;">
 									<td><a
 										href="javascript:OpenWindow('siDetail.do?si_no=${si.SI_NO }','출하지시서 조회', 700 ,700);">${si.SI_NO }</a></td>
+									<td>${si.WH_NAME }</td>
 									<td><fmt:formatDate value="${si.SYS_REGDATE }"
 											pattern="yyyy-MM-dd"></fmt:formatDate></td>
 									<td>${si.E_NAME}</td>
-									<td><fmt:formatDate value="${si.SHIPDATE }"
-											pattern="yyyy-MM-dd"></fmt:formatDate></td>
+									<td>${si.PR_NAME }</td>
 									<td>${si.PROGRESS }</td>
-									<td>${si.ENABLED }</td>
-									<td>${si.WH_NAME }</td>
-									<td>${si.QUANTITY }</td>
-									<td>${si.FILES != null ?  "있음" : "없음" }</td>
-									
-									<td>${si.FC_NAME }</td>
-									<td>${si.SYS_UP }</td>
-									<td><fmt:formatDate value="${si.SYS_UPDATEDATE }"
-											pattern="yyyy-MM-dd"></fmt:formatDate></td>
 								</tr>
 							</c:forEach>
 						</table>
@@ -80,17 +71,13 @@
 				</div>
 			</div>
 			<div style="display: flex; align-items: end; justify-content: end;">
-<!-- 				<button type="button" class="btn btn-danger" id="" -->
-<!-- 				onclick="javascript:OpenWindow('estimate_regist.do','견적서 등록', 600 ,800);" -->
-<!-- 					style="width: 110px; heigth: 20px; margin: 10px; font-size: 0.8em; align-self: center;">견적서 등록</button> -->
 			</div>
 		</div>
-
 	</div>
 </section>
 
 
-<script>
+<script
 	src="<%=request.getContextPath()%>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 
 
@@ -114,3 +101,4 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <%@ include file="../include/footer_js.jsp"%>
+

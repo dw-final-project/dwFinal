@@ -49,6 +49,8 @@ public interface EstimateDAO {
 
 	void deleteEstimateDetail(EstimateVO est) throws SQLException;
 
+	
+
 
 
 	
