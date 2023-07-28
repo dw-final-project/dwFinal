@@ -31,7 +31,7 @@ public interface MyMenuService {
 
 	List<NoteVO> searchNote(Map<String, String> valMap) throws SQLException;
 
-	Map<String, Object> getSendNoteList(Map<String, Object> dataMap, SearchCriteria cri) throws SQLException;
+	Map<String, Object> getSendNoteList(Map<String, Object> dataMap) throws SQLException;
 
 
 }

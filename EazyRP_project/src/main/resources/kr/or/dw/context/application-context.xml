@@ -14,11 +14,17 @@
 	<bean id="mymenuService" class="kr.or.dw.service.MyMenuServiceImpl"/>
 	<bean id="estimateService" class="kr.or.dw.service.EstimateServiceImpl"/>
 	<bean id="siService" class="kr.or.dw.service.SiServiceImpl"/>
+	<bean id="managementService" class="kr.or.dw.service.ManagementServiceImpl"/>
 	
 	<bean id="memberService" class="kr.or.dw.service.MemberServiceImpl"/>
 	<bean id="mailService" class="kr.or.dw.service.MailSendServiceImpl"/>
 	
 	<bean id="productService" class="kr.or.dw.service.ProductServiceImpl"/>
+	
+	<bean id="merchandiseService" class="kr.or.dw.service.MerchandiseServiceImpl"/>
+	<bean id="shopService" class="kr.or.dw.service.ShopServiceImpl"/>
+
+	<bean id="whService" class="kr.or.dw.service.WhServiceImpl"/>
 	
 	<!-- 풀캘린더 API -->
 	<bean id="calendarService" class="kr.or.dw.service.CalendarServiceImpl"/>

@@ -8,15 +8,23 @@
 		<typeAlias type="java.lang.String" alias="str"/>
 		<typeAlias type="java.lang.Integer" alias="int"/>
 		<typeAlias type="kr.or.dw.vo.MenuVO" alias="menu"/>
-		<typeAlias type="kr.or.dw.vo.ProcessVO" alias="process"/>
 		<typeAlias type="kr.or.dw.vo.EmpVO" alias="emp"/>
 		<typeAlias type="kr.or.dw.vo.NoteVO" alias="note"/>
 		<typeAlias type="kr.or.dw.vo.EstimateVO" alias="estimate"/>
-		<typeAlias type="kr.or.dw.vo.EstDetailVO" alias="estdetail"/>
 		<typeAlias type="kr.or.dw.vo.SiVO" alias="si"/>
 		<typeAlias type="kr.or.dw.vo.MemberVO" alias="member"/>
-		<typeAlias type="kr.or.dw.vo.CalendarVO" alias="calendar"/>
 		<typeAlias type="kr.or.dw.vo.ProductVO" alias="product"/>
+		<typeAlias type="kr.or.dw.vo.WareHouseVO" alias="warehouse"/>
+		<typeAlias type="kr.or.dw.vo.DraftVO" alias="draft"/>
+		<typeAlias type="kr.or.dw.vo.PlVO" alias="pl"/>
+		<typeAlias type="kr.or.dw.vo.MerchandiseVO" alias="merchandise"/>
+		<typeAlias type="kr.or.dw.vo.ShopVO" alias="shop"/>
+		
+		<!-- 희성이꼬 -->
+		<typeAlias type="kr.or.dw.vo.CalendarVO" alias="calendar"/>
+		<typeAlias type="kr.or.dw.vo.ProcessVO" alias="process"/>
+		<typeAlias type="kr.or.dw.vo.WhVO" alias="wh"/>
+		
 	</typeAliases>
 
 </configuration>

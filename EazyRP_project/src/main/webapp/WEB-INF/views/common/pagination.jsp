@@ -23,7 +23,7 @@
 		</li>
 		<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="pageNum">
 			<li class="page-item ${pageMaker.cri.page == pageNum ? 'active' : '' }">
-				<a class="page-link" href="javascript:searchList_go(${pageNum })">${pageNum }</a>
+				<a class="page-link" href="javascript:searchList_go(${pageNum })">${pageNum eq 0 ? '1' : pageNum}</a>
 			</li>
 		</c:forEach>
 		<li class="page-item">

@@ -77,7 +77,7 @@
 		<button type="button" id="listBtn" class="btn btn-primary">닫기</button>
 	</div>
 	<!-- card footer End -->
-<form role="form">
+<form role="form" method="post" enctype="multipart/form-data">
 <input type="hidden" name="est_no" value="${est.EST_NO }">
 	<table>
         <tr>
@@ -86,39 +86,61 @@
         </tr>
         <tr>
             <td align="center">등록일자</td>
-            <td><input type="text" style="width: 100%;" value="${est.REGDATE }"></td>
+            <td><fmt:formatDate value="${est.REGDATE }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
         </tr>
         <tr>
             <td align="center">외화 명</td>
-            <td><input type="text" style="width: 100%;" value="${est.FC_NAME }"></td>
+            <td><select name="fc_no" id="fc-select">
+			    <option value="FC_001">달러</option>
+			    <option value="FC_002">한화</option>
+			    <option value="FC_003">위안화</option>
+			    <option value="FC_004">엔화</option>
+			    <option value="FC_005">페소</option>
+			    <option value="FC_006">동</option>
+				</select></td>
         </tr>
         <tr>
             <td align="center">담당자</td>
-            <td><input type="text" style="width: 100%;" value="${est.E_NAME }"></td>
+            <td><input type="hidden" name="emp_no" id="receiver" value="${est.EMP_NO }">
+            <input type="text" style="width: 100%;" value="${est.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 500, 500)"></td>
         </tr>
         <tr>
             <td align="center">첨부파일</td>
-            <td><input type="file" style="width: 100%;" value="${est.FILES != null ? "${est.files }" : "파일이 존재하지 않습니다."}"></td>
+            <td>
+            <input type="file" name="files" style="width: 100%;" value="">
+            <c:if test="${!empty est.FILES }">
+			<div><button type="button" onclick="location.href='<%=request.getContextPath()%>/erp4/getFile.do?files=${est.FILES }';">파일 다운</button>&nbsp;&nbsp;${est.FILES }</div>
+			</c:if>
+			</td> 
         </tr>
     </table>
+    <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-dark">제품추가</button>
     <table>
         <tr>
             <th align="center" style="width: 20%;">제품명</th>
             <th align="center" style="width: 20%;">창고</th>           
             <th align="center" style="width: 20%;">수량</th>
             <th align="center" style="width: 20%;">가격</th>
+            <th align="center" style="width: 20%;">비고</th>
         </tr>
-       <c:forEach items="${estPr }" var="est">
-        <tr>
-            <td><input type="text" style="width: 100%;" style="width: 100%;" value="${est.P_NAME }"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;" value="${est.WH_NAME }"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;" value="${est.QUANTITY }"></td>
-            <td><input type="text" style="width: 100%;" style="width: 100%;" value="${est.AMOUNT }"></td>
+    	<tbody id="prInput">
+        <input type="hidden" value="" id="cnt">
+       <c:forEach items="${estPr }" var="est" varStatus="loop">
+        <tr>    	
+       <input type="hidden" class="rownum" value="${est.ROWNUM }">
+       <input type="hidden" name="estdetail_no" id="dtail_no" value="${est.ESTDETAIL_NO }">
+        	<td>
+        	<input type="text" id="${est.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${est.P_NAME }"><input type="hidden" name="pr_no" value="${est.PR_NO }"></td>
+            <td><input type="text" id="wh_no${est.ROWNUM }" class="wh_names" name="wh_name" style="width: 100%;" value="${est.WH_NAME }"><input type="hidden" name="wh_no" value="${est.WH_NO }"></td>
+            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${est.QUANTITY }"><input type="hidden" id="cost" value="${est.PR_EXPRICE }"></td>
+            <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${est.AMOUNT }" readonly ></td>
+            <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-secondary">삭제</button></td>
         </tr>
         </c:forEach>
+        </tbody>
         <tr class="total">
             <td colspan="3" align="center">총계</td>
-            <td colspan="2" align="center"><input type="text" style="width: 100%;" value="${est.AMOUNT }"></td>
+            <td colspan="2" align="center"><input type="text" id="totalAmount" style="width: 100%;" value="${est.AMOUNT }" readonly></td>
         </tr>
     </table>
 </form>
@@ -129,14 +151,21 @@
 
 <script>
 window.onload = function(){
-
+	
+	let fc_no = "${est.FC_NO}";
+	$('#fc-select').val(fc_no);
+	$('select#fc-select').find('option[value="' + fc_no + '"]').attr('selected', 'selected');
+	console.log(fc_no);
+	
 	let formObj = $('form[role="form"]');
 
 	$('button#modifyBtn').on('click', function(){
 		formObj.attr({
 			'action' : 'modifyForm.do',
-			'method' : 'post' 
+			'method' : 'post'
+// 			'enctype' : 'multipart/form-data'
 		});
+		console.log($('form[role="form"]').serializeArray());
 		formObj.submit();
 	});
 	
@@ -157,5 +186,89 @@ window.onload = function(){
 }
 
 </script>
+
+<script>
+let rownumList = $('.rownum');
+let cnt = rownumList.length; 
+console.log(cnt);
+let dtail_no = $('#dtail_no').val();
+// 제품 추가 버튼
+$('#addPutBtn').on('click', function(){
+	cnt++;
+	$('#prInput').append('<tr><input type="hidden" class="rownum" value="'+ cnt + '">' +
+	'<input type="hidden" name="estdetail_no" value="0">'+
+    '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
+    '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'+
+    '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
+    '<td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>'+
+    '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-secondary">삭제</button></td>'+
+'</tr>');
+	
+	
+	
+//		$('script').append(
+//			'$("#quantity' + cnt + '").on("keyup", function(){'+
+//				'alert($(this).val())'+
+//				'$(this).parent().next().children().val($(this).val()*$(this).next().val())});'
+//		)
+});
+
+
+function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
+	winleft = (screen.width - WinWidth) / 2;
+	wintop = (screen.height - WinHeight) / 2;
+	var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
+							+ "height=" + WinHeight + ",top="+ wintop + ",left="
+							+ winleft + ",resizable=yes,status=yes");
+	win.focus();
+	return win;
+};
+
+$('tr').on('click', function(){
+	$('#name', opener.document).val($(this).find('#c_name').text() + " / " + $(this).find('#name').text());
+	$('#receiver', opener.document).val($(this).find("#emp_no").val());
+	
+})
+
+	// 제품코드 td 클릭 이벤트
+	$(document).on('click', '.pr_names', function(){
+		let idVal = $(this).parents("tr").find(".rownum").val();
+		console.log(idVal);
+		$('#cnt').val(idVal);
+		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
+		
+	});
+	
+	//제품 삭제 버튼
+	$('#prInput').on('click', '#cancelBtn', function(){
+		$(this).parent('td').parent('tr').remove();
+	});
+	
+	//창고코드 이벤트
+	$(document).on('click', '.wh_names', function(){
+		let whVal = $(this).attr('id');
+		$('#cnt').val(whVal);
+		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
+	})
+	
+	// 수량 이벤트
+	$(document).on('keyup', '.quantity', function(){
+// 		let quantity = $(this).val();
+		$(this).parent().next().children().val($(this).val()*$(this).next().val());
+	})
+
+	
+	$(document).on('change, keyup', '#prInput', function(){
+		let sum = Number(0);
+		let inputAmount = $('input[name="amount"]').get();
+		for(let i = 0; i < inputAmount.length; i++){
+			sum += Number($('input[name="amount"]').eq(i).val());
+		}
+		
+		$('#totalAmount').val(sum);
+	})
+	
+</script>
+
 
 </html>

@@ -10,5 +10,9 @@ public interface CalendarService {
 	List<CalendarVO> getCalendar() throws SQLException;
 
 	void registCalendar(CalendarVO calendar) throws SQLException;
+
+	void modify(CalendarVO calendar) throws SQLException;
+
+	void remove(CalendarVO calendar) throws SQLException;
 	
 }
