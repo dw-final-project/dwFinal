@@ -25,4 +25,6 @@ public class WhVO {
 	private String sys_reg;			// 최초등록자
 	private String wh_total;		// 총합계
 	
+	private String pr_no;			// 제품번호
+	
 }

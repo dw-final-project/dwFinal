@@ -76,18 +76,17 @@
 			<tr>
 				<td width="40%" align="center"><b>담당자</b></td>
 				<td>
-					<input type="hidden" name="emp_no" id="receiver"
-							value="${empno }"> 
-							<input type="text" style="width: 100%;"
-							value="${ename }" id="name" name="name" readonly
-							onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
+					<input type="hidden" name="emp_no" id="receiver" value="${empno }"> 
+					<input type="text" style="width: 100%;" value="${ename }" id="name" name="name" 
+							readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
 				</td>
 			</tr>
 			<tr>
 				<td align="center"><b>작업지시서</b></td>
-				<td><input type="file" style="width: 100%;" name="files"
-					value=""> <input type="hidden" id="fileName"
-					name="fileName" value=""></td>
+				<td>
+					<input type="file" style="width: 100%;" name="files" value="">
+					<input type="hidden" id="fileName" name="fileName" value="">
+				</td>
 			</tr>
 		</table>
 		<button type="button" id="addPutBtn">추가</button>
