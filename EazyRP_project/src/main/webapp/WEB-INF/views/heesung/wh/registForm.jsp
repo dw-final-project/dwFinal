@@ -84,8 +84,11 @@
 			<tr>
 				<td align="center"><b>작업지시서</b></td>
 				<td>
-					<input type="file" style="width: 100%;" name="files" value="">
-					<input type="hidden" id="fileName" name="fileName" value="">
+					<select class="form-control col-md-2" name="document" id="document" style="font-size: 0.8em; width: 30%; display: inline;">
+						<c:forEach items="${draftgb}" var="dr" varStatus="loop">
+							<option value="${dr.dg_no }" class="dg" id="${dr.dg_name }">${dr.dg_name }</option>
+						</c:forEach>
+					</select>
 				</td>
 			</tr>
 		</table>
@@ -109,19 +112,19 @@
 						<input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no">
 					</td>
 					<td>
-						<input type="text" id="0" class="fac_names" style="width: 100%;" value="">
+						<input type="text" id="0" class="fac_names" name="fac_name" style="width: 100%;" value="">
 					</td>
 					<td>
-						<input type="text" id="0" class="wh_names" style="width: 100%;" value="">
+						<input type="text" id="0" class="wh_names" name="wh_no2" style="width: 100%;" value="">
 					</td>
 					<td>
-						<input type="text" id="outPrice" class="outPrice" name="outPrice" style="width: 100%;" value="">
+						<input type="text" id="outprice" class="outprice" name="outprice" style="width: 100%;" value="">
 					</td>
 					<td>
 						<input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="">
 					</td>
 					<td>
-						<input type="text" id="amount2" name="amount2" style="width: 100%;" value="">
+						<input type="text" id="total_outprice" name="total_outprice" style="width: 100%;" value="">
 					</td>
 					<td style="text-align: center;">
 						<button type="button" id="cancelBtn">삭제</button>
@@ -133,11 +136,11 @@
 					총계
 				</td>
 				<td colspan="2" align="center">
-					<input type="text" style="width: 100%;" id="totalAmount2" value="">
+					<input type="text" style="width: 100%;" id="wh_total" name="wh_total" value="">
 				</td>
 			</tr>
 		</table>
-		<input type="submit" id="submitBtn" class="btn btn-primary" style="text-align: center;" value="생성">
+		<input type="submit" id="submitBtn" class="btn btn-primary" style="text-align: center;" value="등록">
 	</form>
 </body>
 
@@ -153,9 +156,9 @@
 				+ '<td><input type="text" id="' + cnt + '" class="pr_names" name="" style="width: 100%;" value=""><input type="hidden" name=""></td>'
 				+ '<td><input type="text" id="' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name=""></td>'
 				+ '<td><input type="text" id="' + cnt + '" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name=""></td>'
-				+ '<td><input type="text" id="outPrice' + cnt + '" class="outPrice" name="outPrice" style="width: 100%;" value=""><input type="hidden" name=""></td>'
+				+ '<td><input type="text" id="outprice' + cnt + '" class="outprice" name="outprice" style="width: 100%;" value=""><input type="hidden" name=""></td>'
 				+ '<td><input type="text" id="quantity' + cnt + '" class="quantity" name="quantity" style="width: 100%;" value=""></td>'
-				+ '<td><input type="text" id="amount" name="amount2" style="width: 100%;" value=""></td>'
+				+ '<td><input type="text" id="amount" name="total_outprice" style="width: 100%;" value=""></td>'
 				+ '<td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>'
 			+ '</tr>'
 		);
@@ -191,7 +194,7 @@
 
 	// 가격 * 수량 = 합계
 	$(document).on('keyup', '.quantity', function() {
-		let quantity = $(this).parents("tr").find(".outPrice").val()
+		let quantity = $(this).parents("tr").find(".outprice").val()
 		let unitPrice = $(this).val();
 
 		let totalPrice = unitPrice * quantity;
@@ -202,12 +205,12 @@
 	// 총합계
 	$(document).on('change, keyup', '#prInput', function(){
 		let sum = Number(0);
-		let inputAmount = $('input[name="amount2"]').get();
+		let inputAmount = $('input[name="total_outprice"]').get();
 		for(let i = 0; i < inputAmount.length; i++){
-			sum += Number($('input[name="amount2"]').eq(i).val());
+			sum += Number($('input[name="total_outprice"]').eq(i).val());
 		}
 		
-		$('#totalAmount2').val(sum);
+		$('#wh_total').val(sum);
 	})
 
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight) {

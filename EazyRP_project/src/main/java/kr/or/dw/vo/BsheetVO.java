@@ -20,6 +20,7 @@ public class BsheetVO {
 	private String sys_updatedate;
 	private String buy_c_no;
 	private String con_c_no;
+	
 	private String pr_name;
 	private String con_c_name;
 	private String e_name;
