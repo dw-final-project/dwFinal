@@ -197,11 +197,9 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		System.out.println("erp4/wh/regist 컨트롤러 진입");
 		
 		List<WhVO> whDetailVoList = new ArrayList<WhVO>();	// 상세 정보들을 만들기 위한 객체
-		
+		System.out.println(pr_no.length);
 		for(int i = 0; i < pr_no.length; i++) {
-			
 			WhVO whDetailVo = new WhVO();
-			
 			whDetailVo.setPr_no(pr_no[i]);
 			whDetailVo.setFac_no(fac_no[i]);
 			whDetailVo.setWh_no2(wh_no2[i]);
@@ -210,7 +208,6 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 			whDetailVo.setTotal_outprice(total_outprice[i]);
 			
 			whDetailVoList.add(whDetailVo);
-			
 		}
 
 		whService.registWh(whDetailVoList);
