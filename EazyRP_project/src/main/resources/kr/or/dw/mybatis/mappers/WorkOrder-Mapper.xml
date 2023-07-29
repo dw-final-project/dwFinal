@@ -38,4 +38,10 @@
 		<include refid="search"></include>
 	</select>
 	
+	<select id="selectEName" resultType="str">
+		SELECT	e.e_name
+		FROM	workorder wo, emp e
+		WHERE	wo.emp_no = e.emp_no
+	</select>
+	
 </mapper>

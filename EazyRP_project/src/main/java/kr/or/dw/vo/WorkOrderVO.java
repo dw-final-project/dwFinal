@@ -19,4 +19,6 @@ public class WorkOrderVO {
 	private Date sys_updatedate;
 	private String sys_reg;
 	private String supplier;
+	
+	private String e_name;
 }

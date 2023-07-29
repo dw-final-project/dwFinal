@@ -80,6 +80,29 @@
 		)
 	</insert>
 	
+	<insert id="insertWhDetail" parameterType="wh">
+		INSERT INTO whdetail (
+			detail_no,
+			wh_no,
+			pr_no,
+			quantity,
+			outprice,
+			wh_no2,
+			fac_no,
+			total_outprice,
+		)
+		VALUES(
+			detail_no_seq.nextval,
+			#{wh_no},
+			#{pr_no},
+			#{quantity},
+			#{outprice},
+			#{wh_no2},
+			#{fac_no},
+			#{total_outprice}
+		)
+	</insert>
+	
 	<select id="selectProductName" resultType="str">
 		SELECT 	pd.pr_name
 		FROM 	WHDETAIL wd, product pd

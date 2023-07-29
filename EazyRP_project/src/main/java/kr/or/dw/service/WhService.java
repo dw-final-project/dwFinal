@@ -11,6 +11,6 @@ public interface WhService {
 	
 	Map<String, Object> selectWhList(SearchCriteria cri) throws SQLException;
 
-	void registWh(WhVO whVo, List<WhVO> whDetailVoList) throws SQLException;
+	void registWh(List<WhVO> whDetailVoList) throws SQLException;
 
 }

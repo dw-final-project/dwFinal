@@ -30,5 +30,6 @@ public class WhVO {
 	private String pr_name;			// 제품명
 	private String fac_no;			// 공장번호
 	private String total_outprice;	// 외주비합계
+	private int dtail_no;			// 상세번호
 	
 }

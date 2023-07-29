@@ -18,7 +18,10 @@ public interface WhDAO {
 
 	void insertWh(WhVO whVo) throws SQLException;
 	
+	void insertWhDetail(WhVO whVo) throws SQLException;
+
 	// 제품명 가져오기
 	List<String> selectProductName(String getWh_no) throws SQLException;
+
 
 }

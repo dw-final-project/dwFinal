@@ -84,8 +84,8 @@
 			<tr>
 				<td width="40%" align="center"><b>작업지시서</b></td>
 				<td>
-					<input type="hidden" name="wo_no" id="woBtn" value="${empno }"> 
-					<input type="text" style="width: 100%;" value="${ename }" id="name" name="name" 
+					<input type="hidden" name="wo_no" id="wo_no" class="wo_no" value="${empno }"> 
+					<input type="text" style="width: 100%;" value="${ename }" id="wo" name="wo" 
 							readonly onclick="OpenWindow('/erp4/findWorkOrder.do', '작업지시서 찾기', 400, 600)">
 				</td>
 			</tr>
@@ -107,10 +107,10 @@
 				<input type="hidden" value="" id="cnt">
 				<tr>
 					<td>
-						<input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no">
+						<input type="text" id="0" class="pr_names" name="pr_no" style="width: 100%;" value=""><input type="hidden" name="pr_no">
 					</td>
 					<td>
-						<input type="text" id="0" class="fac_names" name="fac_name" style="width: 100%;" value="">
+						<input type="text" id="0" class="fac_names" name="fac_no" style="width: 100%;" value="">
 					</td>
 					<td>
 						<input type="text" id="0" class="wh_names" name="wh_no2" style="width: 100%;" value="">

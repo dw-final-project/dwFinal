@@ -32,8 +32,8 @@
 		<div>	
 			<table id = "tab" style="font-size: 0.8em;" class="table table-borderd text-center">
 				<tr>
-					<th width="100px" style="text-align: center;">공장 코드</th>
-					<th width="100px" style="text-align: center;">공장 이름</th>
+					<th width="100px" style="text-align: center;">작업지시서 코드</th>
+					<th width="100px" style="text-align: center;">담당자</th>
 				</tr>
 				<c:forEach items="${factoryList }" var="factory">
 					<tr class="trHover">

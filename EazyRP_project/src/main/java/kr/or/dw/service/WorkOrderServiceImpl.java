@@ -44,6 +44,17 @@ public class WorkOrderServiceImpl implements WorkOrderService{
 		dataMap.put("woList", woList);
 		dataMap.put("pageMaker", pageMaker);
 		
+		// 제품의 이름을 담을 객체를 선언한다.
+		// 현재 해당하는 생산입고 게시글에서 창고번호를 조회하고 매퍼에서 가져온 창고명을 넣어준다.
+		for(int i = 0; i < woList.size(); i++) {
+			
+			int getEmp_no = woList.get(i).getEmp_no();
+			List<String> eName = workOrderDAO.selectEName(getEmp_no);
+			
+			woList.get(i).setE_name(eName.get(i));
+		
+		}
+		
 		return dataMap;
 	}
 

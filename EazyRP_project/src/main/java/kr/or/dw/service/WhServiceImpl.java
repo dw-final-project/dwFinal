@@ -65,9 +65,11 @@ public class WhServiceImpl implements WhService{
 	}
 
 	@Override
-	public void registWh(WhVO whVo, List<WhVO> whDetailVoList) throws SQLException {
+	public void registWh(List<WhVO> whDetailVoList) throws SQLException {
 		
 		System.out.println("WhServiceImpl -> registWh 진입");
+		
+		WhVO whVo = null;
 		
 		whDAO.insertWh(whVo); 	// 게시글을 만들기 위한 다오
 		
