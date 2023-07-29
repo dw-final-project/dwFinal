@@ -29,6 +29,7 @@ import kr.or.dw.service.FactoryService;
 import kr.or.dw.service.MenuService;
 import kr.or.dw.service.ProcessService;
 import kr.or.dw.service.WhService;
+import kr.or.dw.service.WorkOrderService;
 import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.ProcessVO;
 import kr.or.dw.vo.ProductVO;
@@ -48,6 +49,8 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	private WhService whService;
 	@Autowired
 	private FactoryService factoryService;
+	@Autowired
+	private WorkOrderService workOrderService;
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 목록 열기
 	
@@ -56,6 +59,17 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		String url = "heesung/findFactory.open";
 		
 		Map<String, Object> dataMap = factoryService.selectFactoryList(cri);
+		
+		mnv.setViewName(url);
+		mnv.addAllObjects(dataMap);
+		return mnv;
+	}
+	
+	@RequestMapping("/findWorkOrder")
+	public ModelAndView findWorkOrder(ModelAndView mnv, SearchCriteria cri) throws SQLException {
+		String url = "heesung/findWorkOrder.open";
+		
+		Map<String, Object> dataMap = workOrderService.selectWorkOrderList(cri);
 		
 		mnv.setViewName(url);
 		mnv.addAllObjects(dataMap);

@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공장 목록</title>
+<title>작업지시서 목록</title>
 </head>
 <body>
 	<div class="card-body pad">

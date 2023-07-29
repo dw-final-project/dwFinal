@@ -82,15 +82,11 @@
 				</td>
 			</tr>
 			<tr>
-				<td align="center"><b>작업지시서</b></td>
-				<td>null
-<!-- 					<select class="form-control col-md-2" name="workorder" id="workorder" style="font-size: 0.8em; width: 30%; display: inline;"> -->
-<!-- 						<option value="">선택</option> -->
-<%-- 						<c:forEach items="${woList}" var="wo" varStatus="loop"> --%>
-<%-- 							<option value="${dr.dg_no }" class="dg" id="${dr.dg_name }">${dr.dg_name }</option> --%>
-<%-- 						</c:forEach> --%>
-<!-- 					</select> -->
-<!-- 					<input type="button" id="documentInsertBtn" class="btn btn-primary" style="margin-left: 5px;"value="첨부"> -->
+				<td width="40%" align="center"><b>작업지시서</b></td>
+				<td>
+					<input type="hidden" name="wo_no" id="woBtn" value="${empno }"> 
+					<input type="text" style="width: 100%;" value="${ename }" id="name" name="name" 
+							readonly onclick="OpenWindow('/erp4/findWorkOrder.do', '작업지시서 찾기', 400, 600)">
 				</td>
 			</tr>
 		</table>

@@ -31,7 +31,8 @@
 		<typeAlias type="kr.or.dw.vo.CalendarVO" alias="calendar"/>
 		<typeAlias type="kr.or.dw.vo.ProcessVO" alias="process"/>
 		<typeAlias type="kr.or.dw.vo.WhVO" alias="wh"/>
-		<typeAlias type="kr.or.dw.vo.FactoryVO" alias="Factory"/>
+		<typeAlias type="kr.or.dw.vo.FactoryVO" alias="factory"/>
+		<typeAlias type="kr.or.dw.vo.WorkOrderVO" alias="workOrder"/>
 		
 	</typeAliases>
 
