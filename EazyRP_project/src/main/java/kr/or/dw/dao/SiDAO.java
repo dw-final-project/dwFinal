@@ -21,6 +21,8 @@ public interface SiDAO {
 
 	List<Map<String, Object>> forSiList(String si_no) throws SQLException;
 
+	String ename(int empno) throws SQLException;
+
 
 	
 	

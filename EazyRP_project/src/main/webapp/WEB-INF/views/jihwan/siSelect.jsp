@@ -72,6 +72,9 @@
 				</div>
 			</div>
 			<div style="display: flex; align-items: end; justify-content: end;">
+				<button type="button" class="btn btn-primary" id=""
+				onclick="javascript:OpenWindow('si_regist.do','출하지시서 등록', 600 ,800);"
+					style="width: 110px; heigth: 20px; margin: 10px; font-size: 0.8em; align-self: center;">출하지시서 등록</button>
 			</div>
 		</div>
 	</div>

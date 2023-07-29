@@ -58,6 +58,12 @@ public class SiServiceImpl implements SiService {
 		dataMap.put("siList", siList);
 		
 		return dataMap;
+	}
+
+	@Override
+	public String ename(int empno) throws SQLException {
+		String ename = siDAO.ename(empno);
+		return ename;
 	} 
 	
 	
