@@ -26,7 +26,8 @@ public class SiVO {
 	private String e_name;
 	private String fc_name;
 	private String wh_name;
-	
+	private String pr_name;
+	private String pr_no;
 	
 	
 }
