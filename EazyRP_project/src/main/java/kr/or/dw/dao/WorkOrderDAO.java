@@ -15,5 +15,8 @@ public interface WorkOrderDAO {
 	List<WorkOrderVO> selectSearchWorkOrderList(SearchCriteria cri, RowBounds rowBounds) throws SQLException;
 	
 	int selectSearchWorkOrderListCount(SearchCriteria cri) throws SQLException;
+	
+	// 담당자 이름 가져오기
+	List<String> selectEName(int getEmp_no) throws SQLException;
 
 }
