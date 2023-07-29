@@ -154,7 +154,7 @@
 		$('#prInput').append(
 			'<tr>'
 																	// 아래 태그 name이 원래 없었는데 pr_name으로 변경            아래 태그도 마찬가지로 name이 없었는데 pr_no로 변경
- 				+ '<td><input type="text" id="' + cnt + '" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name=""></td>'
+ 				+ '<td><input type="text" id="' + cnt + '" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'
  																															// 아래 태그에 name이 없었는데 fac_no로 변경
 				+ '<td><input type="text" id="' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no"></td>'
 																															// 아래 태그에 name이 없었는데 wh_no2로 변경

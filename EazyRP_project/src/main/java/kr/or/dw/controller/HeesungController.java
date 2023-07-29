@@ -191,15 +191,22 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	}
 	
 	@RequestMapping("/wh/regist")
-	public void whRegist(HttpServletResponse res, String[] pr_no, String[] fac_no, String wh_no2[], 
+	public void whRegist(HttpServletResponse res, int emp_no, int wo_no, String wh_total, String[] pr_no, String[] fac_no, String wh_no2[], 
 		String[] outprice, int[] quantity, String[] total_outprice) throws SQLException, IOException {
 		
 		System.out.println("erp4/wh/regist 컨트롤러 진입");
 		
+		System.out.println("emp_no : " + emp_no);
+		System.out.println("wo_no : " + wo_no);
+		System.out.println("wh_total : " + wh_total);
+
 		List<WhVO> whDetailVoList = new ArrayList<WhVO>();	// 상세 정보들을 만들기 위한 객체
-		System.out.println(pr_no.length);
+		
 		for(int i = 0; i < pr_no.length; i++) {
 			WhVO whDetailVo = new WhVO();
+			whDetailVo.setEmp_no(emp_no);
+			whDetailVo.setWo_no(wo_no);
+			whDetailVo.setWh_total(wh_total);
 			whDetailVo.setPr_no(pr_no[i]);
 			whDetailVo.setFac_no(fac_no[i]);
 			whDetailVo.setWh_no2(wh_no2[i]);

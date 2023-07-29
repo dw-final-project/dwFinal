@@ -37,9 +37,9 @@
 				</tr>
 				<c:forEach items="${woList }" var="wo">
 					<tr class="trHover">
+						<input type="hidden" name="wo_no" value="${wo.wo_no }">
 						<td style="text-align: center;" id="wo_no">${wo.wo_no }</td>
 						<td style="text-align: center;" id="e_name">${wo.e_name }</td>
-<%-- 					<input type="hidden" id="wh_no" value="${wh.wh_no }"> --%>
 					</tr>
 				</c:forEach>
 			</table>
