@@ -382,6 +382,17 @@ public class BusinessController {
 		return mnv;
 	}
 	
+	@RequestMapping("/si_regist")
+	public ModelAndView siRegist(ModelAndView mnv,  HttpSession session) throws SQLException {
+		int empno = Integer.parseInt(session.getAttribute("emp_no").toString());
+		String ename = siService.ename(empno);
+		String url = "jihwan/si_regist.open";
+		mnv.setViewName(url);
+		mnv.addObject("empno",empno);
+		mnv.addObject("ename",ename);
+		return mnv;
+	}
+	
 	
 	
 	@RequestMapping("/s_Sheet")

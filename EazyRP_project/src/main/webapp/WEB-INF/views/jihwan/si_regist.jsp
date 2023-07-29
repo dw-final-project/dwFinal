@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>출하지시서 상세</title>
+    <title>출하지시서</title>
     
     <style>
     	input {
@@ -77,17 +77,9 @@
 		<button type="button" id="listBtn" class="btn btn-primary">닫기</button>
 	</div>
 	<!-- card footer End -->
-<form role="form" method="post" enctype="multipart/form-data">
+<form role="form" method="post" action="/erp4/insertSi.do"enctype="multipart/form-data">
 <input type="hidden" name="si_no" value="${si.SI_NO }">
 	<table>
-        <tr>
-            <td width="40%" align="center"><b>출하지시서 코드</b></td>
-            <td width="100%"><input type="text" style="width: 100%;" value="${si.SI_NO }" readonly></td>
-        </tr>
-        <tr>
-            <td align="center">등록 일자</td>
-            <td><fmt:formatDate value="${si.SYS_REGDATE }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
-        </tr>
         <tr>
             <td align="center">사원 명</td>
             <td><input type="hidden" name="emp_no" id="receiver" value="${si.EMP_NO }">
@@ -106,7 +98,7 @@
     <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">버튼 추가</button>
     <table>
         <tr>
-            <th align="center" style="width: 20%;">제품코드</th>
+            <th align="center" style="width: 20%;">제품 코드</th>
             <th align="center" style="width: 20%;">제품 명</th>           
             <th align="center" style="width: 20%;">수량</th>
            	<th align="center" style="width: 20%;">내용</th>
@@ -120,8 +112,10 @@
 	       <input type="hidden" name="sidetail_no" id="sidtail_no" value="${si.SIDETAIL_NO }">
 	       <input type="hidden" name="enabled" id="estenabled" value="${si.ENABLED }">
 	       <input type="hidden" name="pr_delete" value="n">
-        	<td><input type="text" id="${si.ROWNUM }" class="pr_nos" name="pr_no" value="${si.PR_NO }" readonly><input type="hidden" name="pr_no" value="${si.PR_NO }"></td>
-        	<td><input type="text" id="pr_name${si.ROWNUM }" class="pr_names2" name="pr_name" style="width: 100%;" value="${si.PR_NAME }"></td>
+        	<td><input type="text" id="${si.ROWNUM }" class="pr_nos" name='pr_no' value="${si.PR_NO }" readonly><input type="hidden" name="pr_no" value="${si.PR_NO }"></td>
+        	<td>
+        		<input type="text" id="${si.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${si.PR_NAME }">
+        	</td>
             <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${si.QUANTITY }">
             <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${si.AMOUNT }" readonly ></td>
             <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>
@@ -136,92 +130,62 @@
     </table>
 </form>
 </body>
-</script>
-
 <script>
-let rownumList = $('.rownum');
-let cnt = rownumList.length; 
-console.log(cnt);
-let dtail_no = $('#dtail_no').val();
-
-// 제품 추가 버튼
-$('#addPutBtn').on('click', function(){
-	cnt++;
-	$('#prInput').append('<tr id="trChk"><input type="hidden" class="rownum" value="'+ cnt + '">' +
-	'<input type="hidden" name="sidetail_no" value="0">'+
-	'<input type="hidden" name="pr_delete" value="n">'+
-	'<td><input type="text" id="' + cnt + '" class="pr_nos" name="pr_no" value="${si.PR_NO }" readonly><input type="hidden" name="pr_no" value="${si.PR_NO }"></td>' + 
-	'<td><input type="text" id="pr_name' + cnt + '" class="pr_names2" name="pr_name" style="width: 100%;" value="${si.PR_NAME }"></td>' +
-    '<td><input type="text" id="quantity'+ cnt +'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
-    '<td><input type="text" id="sys_up' + cnt +'"class="sys_up" name="sys_up" style="width: 100%;" value="" ></td>' +
-    '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'+
-'</tr>');
-});
-
-
-function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
-	winleft = (screen.width - WinWidth) / 2;
-	wintop = (screen.height - WinHeight) / 2;
-	var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
-							+ "height=" + WinHeight + ",top="+ wintop + ",left="
-							+ winleft + ",resizable=yes,status=yes");
-	win.focus();
-	return win;
-};
-
-$('tr').on('click', function(){
-	$('#name', opener.document).val($(this).find('#c_name').text() + " / " + $(this).find('#name').text());
-	$('#receiver', opener.document).val($(this).find("#emp_no").val());
-	
-})
-
-	
-	//제품 삭제 버튼
-	$('#prInput').on('click', '#cancelBtn', function(){
-		$(this).parents('tr').css('display', 'none');
-		$(this).parents('tr').find("input[name='pr_delete']").val("d")
+	let cnt = 1;
+	// 파일 추가 버튼
+	$('#addPutBtn').on('click', function(){
+		cnt++;
+		$('#prInput').append('<tr>'+
+        '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
+        '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'+
+        '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
+        '<td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>'+
+        '<td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>'+
+    '</tr>');
+		
+// 		$('script').append(
+// 			'$("#quantity' + cnt + '").on("keyup", function(){'+
+// 				'alert($(this).val())'+
+// 				'$(this).parent().next().children().val($(this).val()*$(this).next().val())});'
+// 		)
 	});
 	
-	//창고코드 이벤트
+	// 제품코드 td 클릭 이벤트
+	$(document).on('click', '.pr_names', function(){
+		let idVal = $(this).attr('id');
+		$('#cnt').val(idVal);
+		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
+		
+// 		openWin.document.getElementById('cnt').value = cnt;
+	});
+	
+	// 제품 삭제 버튼
+	$('#prInput').on('click', '#cancelBtn', function(){
+		$(this).parent('td').parent('tr').remove();
+	});
+	
+	// 창고코드 이벤트
 	$(document).on('click', '.wh_names', function(){
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
 		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
 	})
 	
-	// 수량 체인지
-	$(document).on('change keyup', '.quantity', function(){
-    let totalQuantity = 0;
-    $('.quantity').each(function(){
-        totalQuantity += parseInt($(this).val()) || 0;
-    });
-    $('#totalQuantity').val(totalQuantity);
-	});
-
+	// 수량 이벤트
+	$(document).on('keyup', '.quantity', function(){
+// 		let quantity = $(this).val();
+		$(this).parent().next().children().val($(this).val()*$(this).next().val());
+	})
 	
-	$(document).on('change', '.pr_names', function(){   
-			let selectedValue = $(this).val();
-		    $(this).siblings('.pr_nos').val(selectedValue);
-		});
-	
-// 	// 제품코드 td 클릭 이벤트
-// 	$(document).on('click', '.pr_names2', function(){
-// 		let idVal = $(this).parents("tr").find(".rownum").val();
-// 		$('#cnt').val(idVal);
-// 		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
-		
-// 	});
-	
-	
-
-	<!-- 제품 코드 클릭 이벤트 -->
-	$(document).on('click', '.pr_names2', function() {
-	    let idVal = $(this).parents("tr").find(".rownum").val();
-	    $('#cnt').val(idVal);
-	    let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
-	});
-
-
+	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
+		winleft = (screen.width - WinWidth) / 2;
+		wintop = (screen.height - WinHeight) / 2;
+		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
+								+ "height=" + WinHeight + ",top="+ wintop + ",left="
+								+ winleft + ",resizable=yes,status=yes");
+		win.focus();
+		return win;
+	};
 	
 	$(document).on('change, keyup', '#prInput', function(){
 		let sum = Number(0);
@@ -233,13 +197,27 @@ $('tr').on('click', function(){
 		$('#totalAmount').val(sum);
 	})
 	
+	$('#registBtn').on('click', function () {
+		
+		for(let i = 0; i < $('input[type="text"]').get().length; i++){
+			if($('input[type="text"]').eq(i).val() == "" || $('input[type="text"]').eq(i).val() == null) {
+				alert("값을 입력해 주세요.");
+				return;
+			}
+		}
+				
+		$('form[role="form"]').submit();
+		
+	})
 	
-	let fc_no = "${si.FC_NO}";
-	$('#fc-select').val(fc_no);
-	$('select#fc-select').find('option[value="' + fc_no + '"]').attr('selected', 'selected');
 </script>
 
+	
+
+<!-- <script> -->
 
 
+<!-- </script> -->
+
+<script	src="<%=request.getContextPath()%>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 </html>
-    
