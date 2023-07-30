@@ -228,4 +228,29 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		
 	}
 	
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////workorder(작업지시서)
+	
+	@RequestMapping("/workorder")
+	public ModelAndView workorder(ModelAndView mnv, SearchCriteria cri, String mcode) throws SQLException {
+		
+		System.out.println("HeesungController - erp4/workorder 진입");
+		
+		// 페이지 정보와 작업지시서의 정보를 가지고 url에 반환할것이다 url에서는 게시판 형태로 사용자에게 보여준다.
+		String url = "heesung/workorder/main.page";
+		
+		Map<String, Object> dataMap = workOrderService.selectWorkOrderList(cri);
+		
+		mnv.setViewName(url);
+		mnv.addObject("mcode", mcode);
+		mnv.addAllObjects(dataMap);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/workorder/registForm")
+	public String workorderRegistForm() {
+		String url = "heesung/workorder/registForm.open";
+		return url;
+	}
+	
 }
