@@ -14,6 +14,7 @@
     	input {
     		border: none;
     		text-size : 100%;
+    		width: 100%;
     	}
     	html {
     		display: flex;
@@ -72,23 +73,35 @@
 <body>
     <h2>작업지시서 등록</h2>
 	<!-- card footer End -->
-<form role="form" method="post" action="/erp4/insertEstimate.do" enctype="multipart/form-data">
+<form role="form" method="post" action="/erp4/workorder/regist.do" enctype="multipart/form-data">
 	<table>
         <tr>
-            <td width="40%" align="center"><b>담당자</b></td>
-            
-            <td><input type="hidden" name="emp_no" id="receiver" value="${empno }">
-            <input type="text" style="width: 100%;" value="${ename }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)"></td>
+        	<td width="40%" align="center"><b>제목</b></td>
+            <td><input type="text" name="emp_no" id="receiver" value=""></td>
         </tr>
         <tr>
-            <td width="40%" align="center"><b>외화 명</b></td>
-            <td><select name="fc_no" id="fc-select">
-			    <option value="FC_001">달러</option>
-			    <option value="FC_002">한화</option>
-			    <option value="FC_003">위안화</option>
-			    <option value="FC_004">엔화</option>
-			    <option value="FC_005">페소</option>
-			    <option value="FC_006">동</option>
+        	<td width="40%" align="center"><b>생산 공장</b></td>
+            <td><input type="text" name="emp_no" id="receiver" value=""></td>
+        </tr>
+        <tr>
+            <td width="40%" align="center"><b>담당자</b></td>
+            <td>
+	            <input type="hidden" name="emp_no" id="receiver" value="${empno }">
+	            <input type="text" style="width: 100%;" value="${ename }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
+            </td>
+        </tr>
+        <tr>
+        	<td width="40%" align="center"><b>납기일</b></td>
+        	<td width="40%" align="center">
+				<input type="date" id="endperiod" name="endperiod" class="form-control col-sm-9 mch7" value="" placeholder="판매종료일을 입력하세요.">
+        	</td>
+        </tr>
+        <tr>
+            <td width="40%" align="center"><b>상태</b></td>
+            <td><select name="progress" id="fc-select">
+			    <option value="0">대기중</option>
+			    <option value="1">진행중</option>
+			    <option value="2">완료</option>
 				</select></td>
         </tr>
         <tr>
@@ -98,14 +111,13 @@
             </td>
         </tr>
     </table>
-    <button type="button" id="addPutBtn">제품추가</button>
+    <button type="button" id="addPutBtn">추가</button>
     <table>
     	<thead>
         <tr>
-            <th align="center" style="width: 20%;">제품명</th>
-            <th align="center" style="width: 20%;">창고명</th>           
+            <th align="center" style="width: 20%;">품목코드</th>
+            <th align="center" style="width: 20%;">품목명</th>           
             <th align="center" style="width: 20%;">수량</th>
-            <th align="center" style="width: 20%;">가격</th>
             <th align="center" style="width: 15%;">비고</th>
             
         </tr>
@@ -115,7 +127,6 @@
         
         <tr>
             <td><input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>
-            <td><input type="text" id="wh_no0" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>
             <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>
             <td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>
             <td style="text-align : center;"></td>
@@ -126,7 +137,7 @@
             <td colspan="2" align="center"><input type="text" id="totalAmount" style="width: 100%;" value=""></td>
         </tr>
     </table>
-            <input type="button" id="registBtn" class="btn btn-primary" style="text-align : center;" value="생성">
+            <input type="button" id="registBtn" class="btn btn-primary" style="text-align : center;" value="등록">
 </form>
 </body>
 
