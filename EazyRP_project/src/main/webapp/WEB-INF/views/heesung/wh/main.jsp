@@ -47,7 +47,7 @@
 										</td>
 										<td style="text-align: center;">${wh.pr_name}</td>
 										<td style="text-align: center;">아직안됨ㅋ</td>
-										<td style="text-align: center;">${wh.progress}</td>
+										<td style="text-align: center;">${wh.progress == '0' ? '대기중' : (wh.progress == '1' ? '진행중' : '완료')}</td>
 									</tr>
 									</c:forEach>
 							</table>
