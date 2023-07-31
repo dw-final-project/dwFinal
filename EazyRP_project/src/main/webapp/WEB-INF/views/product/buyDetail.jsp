@@ -14,6 +14,7 @@
     	input {
     		border: none;
     		text-size : 100%;
+    		text-align: center;
     	}
     	html {
     		display: flex;
@@ -51,10 +52,13 @@
         th {
             background-color: #f2f2f2;
             text-align: center;
+            font-size: 0.7em;
         }
 
         td {
             vertical-align: middle;
+            font-size: 0.7em;
+            text-align: center;
         }
 
         .total,
@@ -70,80 +74,47 @@
 	
 
 <body>
-    <h2>DW 견적서 상세</h2>
+    <h2>구매 상세 내역</h2>
 	<div class="card-footer">
-		<button type="button" id="modifyBtn" class="btn btn-warning">수정</button>
 		<button type="button" id="removeBtn" class="btn btn-danger">삭제</button>
 		<button type="button" id="listBtn" class="btn btn-primary">닫기</button>
 	</div>
 	<!-- card footer End -->
 <form role="form" method="post" enctype="multipart/form-data">
-<input type="hidden" name="est_no" value="${est.EST_NO }">
+<input type="hidden" name="sheet_no" value="${sheet.sheet_no }">
 	<table>
-        <tr>
-            <td width="40%" align="center"><b>견적서 코드</b></td>
-            <td width="100%"><input type="text" style="width: 100%;" value="${est.EST_NO }" readonly></td>
+		<tr>
+            <td align="center">작성자</td>
+            <td><input type="hidden" name="emp_no" id="receiver" value="${sheet.e_name }">
+            <input type="text" style="" value="${sheet.e_name}" id="name" name="name" readonly></td>
         </tr>
         <tr>
             <td align="center">등록일자</td>
-            <td><fmt:formatDate value="${est.REGDATE }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
+            <td><input type="text" name="sys_regdate" value="${sheet.sys_regdate }" readonly></td>
         </tr>
         <tr>
             <td align="center">외화 명</td>
-            <td><select name="fc_no" id="fc-select">
-			    <option value="FC_001">달러</option>
-			    <option value="FC_002">한화</option>
-			    <option value="FC_003">위안화</option>
-			    <option value="FC_004">엔화</option>
-			    <option value="FC_005">페소</option>
-			    <option value="FC_006">동</option>
-				</select></td>
-        </tr>
-        <tr>
-            <td align="center">담당자</td>
-            <td><input type="hidden" name="emp_no" id="receiver" value="${est.EMP_NO }">
-            <input type="text" style="width: 100%;" value="${est.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 500, 500)"></td>
-        </tr>
-        <tr>
-            <td align="center">첨부파일</td>
-            <td>
-            <input type="file" name="files" style="width: 100%;" value="">
-            <c:if test="${!empty est.FILES }">
-			<div><button type="button" onclick="location.href='<%=request.getContextPath()%>/erp4/getFile.do?files=${est.FILES }';">파일 다운</button>&nbsp;&nbsp;${est.FILES }</div>
-			</c:if>
-			</td> 
+            <td>${sheet.fc_no }</td>
         </tr>
     </table>
-    <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">제품추가</button>
     <table>
         <tr>
-            <th align="center" style="width: 20%;">제품명</th>
-            <th align="center" style="width: 20%;">창고</th>           
-            <th align="center" style="width: 20%;">수량</th>
-            <th align="center" style="width: 20%;">가격</th>
-            <th align="center" style="width: 20%;">비고</th>
+            <th align="center" style="width: 33%;">제품명</th>
+            <th align="center" style="width: 33%;">수량</th>
+            <th align="center" style="width: 33%;">가격</th>
         </tr>
     	<tbody id="prInput">
-        <input type="hidden" value="" id="cnt">
-       <c:forEach items="${estPr }" var="est" varStatus="loop">
-        <tr id="trChk" >    	
-	       <input type="hidden" class="rownum" value="${est.ROWNUM }">
-	       <input type="hidden" name="estdetail_no" id="dtail_no" value="${est.ESTDETAIL_NO }">
-	       <input type="hidden" name="enabled" id="estenabled" value="${est.ENABLED }">
-	       <input type="hidden" name="pr_delete" value="n">
-        	<td>
-        		<input type="text" id="${est.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${est.P_NAME }"><input type="hidden" name="pr_no" value="${est.PR_NO }">
-        	</td>
-            <td><input type="text" id="wh_no${est.ROWNUM }" class="wh_names" name="wh_name" style="width: 100%;" value="${est.WH_NAME }"><input type="hidden" name="wh_no" value="${est.WH_NO }"></td>
-            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${est.QUANTITY }"><input type="hidden" id="cost" value="${est.PR_EXPRICE }"></td>
-            <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${est.AMOUNT }" readonly ></td>
-            <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>
+       <c:forEach items="${detail }" var="detail" varStatus="loop">
+        <tr>    	
+            <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${detail.pr_name}" readonly ></td>
+            <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${detail.quantity}" readonly ></td>
+            <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${detail.amount} 원" readonly ></td>
         </tr>
         </c:forEach>
         </tbody>
         <tr class="total">
-            <td colspan="3" align="center">총계</td>
-            <td colspan="2" align="center"><input type="text" id="totalAmount" style="width: 100%;" value="${est.AMOUNT }" readonly></td>
+            <td colspan="1" align="center">총계</td>
+            <td colspan="2" align="center"><input type="text" id="totalAmount" style="width: 100%;" value="${sheet.price } 원" readonly></td>
         </tr>
     </table>
 </form>
@@ -169,31 +140,8 @@ window.onload = function(){
 // 			'enctype' : 'multipart/form-data'
 		});
 		console.log($('form[role="form"]').serializeArray());
-		
-		alert($('tr[id="trChk"]').get().length);
-		
-		let trCnt = 0;
-		for(let i = 0; i < $('tr[id="trChk"]').get().length; i++){
-			if($('tr[id="trChk"]').eq(i).css("display") != "none") {
-				for(let j = 0; j < $('tr[id="trChk"]').eq(i).find('input[type="text"]').get().length; j++) {
-					if($('tr[id="trChk"]').eq(i).find('input[type="text"]').eq(j).val() == "" || $('tr[id="trChk"]').eq(i).find('input[type="text"]').eq(j).val() == null) {
-						alert("값을 입력해 주세요.");
-						return;
-					}
-				}				
-			} else {
-				trCnt += 1;
-			}
-		}
-		
-		if($('tr[id="trChk"]').get().length == trCnt) {
-			alert("제품 추가하쇼");
-			return;
-		}
-		
 		formObj.submit();
 	});
-	
 	
 	$('button#removeBtn').on('click', function(){
 		if(confirm("정말 삭제하시겠습니까?")){
@@ -209,9 +157,6 @@ window.onload = function(){
 		window.opener.location.reload(true);
 		window.close();
 	});
-	
-	
-	
 }
 
 </script>
@@ -221,18 +166,16 @@ let rownumList = $('.rownum');
 let cnt = rownumList.length; 
 console.log(cnt);
 let dtail_no = $('#dtail_no').val();
-
 // 제품 추가 버튼
 $('#addPutBtn').on('click', function(){
 	cnt++;
-	$('#prInput').append('<tr id="trChk"><input type="hidden" class="rownum" value="'+ cnt + '">' +
+	$('#prInput').append('<tr><input type="hidden" class="rownum" value="'+ cnt + '">' +
 	'<input type="hidden" name="estdetail_no" value="0">'+
-	'<input type="hidden" name="pr_delete" value="n">'+
     '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
     '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'+
     '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
     '<td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>'+
-    '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'+
+    '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-secondary">삭제</button></td>'+
 '</tr>');
 	
 	
@@ -272,8 +215,7 @@ $('tr').on('click', function(){
 	
 	//제품 삭제 버튼
 	$('#prInput').on('click', '#cancelBtn', function(){
-		$(this).parents('tr').css('display', 'none');
-		$(this).parents('tr').find("input[name='pr_delete']").val("d")
+		$(this).parent('td').parent('tr').remove();
 	});
 	
 	//창고코드 이벤트

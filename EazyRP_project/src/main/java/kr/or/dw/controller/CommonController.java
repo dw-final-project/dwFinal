@@ -62,7 +62,7 @@ public class CommonController {
 		
 		out.println("<script>");
 		out.println("alert('세션이 만료되었습니다.\\n다시 로그인하세요!')");
-		out.println("location.href='/';");
+		out.println("location.href='/common/loginForm'");
 		out.println("</script>");
 		out.close();
 	}
@@ -211,7 +211,8 @@ public class CommonController {
 			System.out.println(modMcode);
 			url = getUrl + "?mcode=" + modMcode;
 		}
-		
+		String e_name = menuService.selectEname(selectedEmp);
+		session.setAttribute("e_name", e_name);
 		session.setAttribute("emp_no", selectedEmp);
 		System.out.println("emp번호다 : " + selectedEmp);
 		

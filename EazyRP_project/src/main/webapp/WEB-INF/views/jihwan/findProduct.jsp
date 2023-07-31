@@ -70,6 +70,8 @@
 			let pr_noName = $(this).find('#pr_no').val();
 			let productName = $(this).find('.pr_name').text();
 			let companyName = $(this).find('.c_name').text();
+			let siProductName = $(this).find('.pr_names2').text();
+			
 			let price = $(this).find('.cost').val();
 			let parentEl = $("#" + parentInputId, opener.document);
 			console.log(parentEl.parents('tr').find('input#cost'))
@@ -78,7 +80,7 @@
 			parentEl.parents('tr').find('input#cost').val(price);
 			$('#pr_no', opener.document).val(pr_noName);
 			parentEl.parents('tr').find('input[name="pr_no"]').val(pr_noName);
-			
+			$('#pr_name').parents('tr').find('input[name="pr_name"]').val(siProductName);
 			let quantity = parentEl.parents('tr').find('input[name="quantity"]').val();
 			parentEl.parents('tr').find('input[name="amount"]').val(quantity * price);
 			

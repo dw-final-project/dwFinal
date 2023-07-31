@@ -44,6 +44,26 @@ public class SiServiceImpl implements SiService {
 
 		return dataMap;
 		
+	}
+
+	@Override
+	public Map<String, Object> selectSiDetail(String si_no) throws SQLException {
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> si = (Map<String, Object>) siDAO.selectSiDetail(si_no);
+		
+		List<Map<String, Object>> siList = siDAO.forSiList(si_no);
+		
+		dataMap.put("si", si);
+		dataMap.put("siList", siList);
+		
+		return dataMap;
+	}
+
+	@Override
+	public String ename(int empno) throws SQLException {
+		String ename = siDAO.ename(empno);
+		return ename;
 	} 
 	
 	

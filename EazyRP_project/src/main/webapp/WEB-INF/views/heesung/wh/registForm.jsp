@@ -71,23 +71,23 @@
 <body>
 	<h2>생산입고 등록</h2>
 	<!-- card footer End -->
-	<form role="form" method="post" action="/erp4/wh/regist.do" enctype="multipart/form-data">
+	<form role="form" method="post" action="/erp4/wh/regist.do">
 		<table>
 			<tr>
 				<td width="40%" align="center"><b>담당자</b></td>
 				<td>
-					<input type="hidden" name="emp_no" id="receiver"
-							value="${empno }"> 
-							<input type="text" style="width: 100%;"
-							value="${ename }" id="name" name="name" readonly
-							onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
+					<input type="hidden" name="emp_no" id="receiver" value="${empno }"> 
+					<input type="text" style="width: 100%;" value="${ename }" id="name" name="name" 
+							readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
 				</td>
 			</tr>
 			<tr>
-				<td align="center"><b>작업지시서</b></td>
-				<td><input type="file" style="width: 100%;" name="files"
-					value=""> <input type="hidden" id="fileName"
-					name="fileName" value=""></td>
+				<td width="40%" align="center"><b>작업지시서</b></td>
+				<td>
+					<input type="hidden" name="wo_no" id="wo_no" class="wo_no" value="${empno }"> 
+					<input type="text" style="width: 100%;" value="${ename }" id="wo" name="wo" 
+							readonly onclick="OpenWindow('/erp4/findWorkOrder.do', '작업지시서 찾기', 400, 600)">
+				</td>
 			</tr>
 		</table>
 		<button type="button" id="addPutBtn">추가</button>
@@ -106,23 +106,25 @@
 			<tbody id="prInput">
 				<input type="hidden" value="" id="cnt">
 				<tr>
-					<td>
+					<td>								<!-- 아래 태그 name을 pr_no에서 pr_name으로 변경 -->
 						<input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no">
 					</td>
-					<td>
-						<input type="text" id="0" class="fac_names" style="width: 100%;" value="">
+					<td>		<!-- 공장 번호를 가져간다면 hidden 태그 새로 만들어 그 태그에 value값 넣기, 
+								아래 태그는 공장 이름을 표시하는거기 때문에 name을 fac_no에서 fac_name으로 변경함-->
+						<input type="text" id="0" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no">
+					</td>
+					<td>		<!-- 위와 마찬가지로 창고 번호를 가져간다면 hidden 태그 새로 만들어 그 태그에 value값 넣기, 
+								아래 태그는 창고 이름을 표시하는거기 때문에 name을 wh_no2에서 wh_name으로 변경함 -->
+						<input type="text" id="0" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no2">
 					</td>
 					<td>
-						<input type="text" id="0" class="wh_names" style="width: 100%;" value="">
-					</td>
-					<td>
-						<input type="text" id="outPrice" class="outPrice" name="outPrice" style="width: 100%;" value="">
+						<input type="text" id="outprice" class="outprice" name="outprice" style="width: 100%;" value="">
 					</td>
 					<td>
 						<input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="">
 					</td>
 					<td>
-						<input type="text" id="amount2" name="amount2" style="width: 100%;" value="">
+						<input type="text" id="total_outprice" name="total_outprice" style="width: 100%;" value="">
 					</td>
 					<td style="text-align: center;">
 						<button type="button" id="cancelBtn">삭제</button>
@@ -134,11 +136,11 @@
 					총계
 				</td>
 				<td colspan="2" align="center">
-					<input type="text" style="width: 100%;" id="totalAmount2" value="">
+					<input type="text" style="width: 100%;" id="wh_total" name="wh_total" value="">
 				</td>
 			</tr>
 		</table>
-		<input type="submit" id="submitBtn" class="btn btn-primary" style="text-align: center;" value="생성">
+		<input type="submit" id="submitBtn" class="btn btn-primary" style="text-align: center;" value="등록">
 	</form>
 </body>
 
@@ -151,12 +153,16 @@
 		
 		$('#prInput').append(
 			'<tr>'
-				+ '<td><input type="text" id="' + cnt + '" class="pr_names" name="" style="width: 100%;" value=""><input type="hidden" name=""></td>'
-				+ '<td><input type="text" id="' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name=""></td>'
-				+ '<td><input type="text" id="' + cnt + '" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name=""></td>'
-				+ '<td><input type="text" id="outPrice' + cnt + '" class="outPrice" name="outPrice" style="width: 100%;" value=""><input type="hidden" name=""></td>'
+																	// 아래 태그 name이 원래 없었는데 pr_name으로 변경            아래 태그도 마찬가지로 name이 없었는데 pr_no로 변경
+ 				+ '<td><input type="text" id="' + cnt + '" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'
+ 																															// 아래 태그에 name이 없었는데 fac_no로 변경
+				+ '<td><input type="text" id="' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no"></td>'
+																															// 아래 태그에 name이 없었는데 wh_no2로 변경
+				+ '<td><input type="text" id="' + cnt + '" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no2"></td>'
+																															//아래에 있던 input hidden태그 필요 없어 삭제
+				+ '<td><input type="text" id="outprice' + cnt + '" class="outprice" name="outprice" style="width: 100%;" value=""></td>'
 				+ '<td><input type="text" id="quantity' + cnt + '" class="quantity" name="quantity" style="width: 100%;" value=""></td>'
-				+ '<td><input type="text" id="amount" name="amount2" style="width: 100%;" value=""></td>'
+				+ '<td><input type="text" id="amount" name="total_outprice" style="width: 100%;" value=""></td>'
 				+ '<td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>'
 			+ '</tr>'
 		);
@@ -192,7 +198,7 @@
 
 	// 가격 * 수량 = 합계
 	$(document).on('keyup', '.quantity', function() {
-		let quantity = $(this).parents("tr").find(".outPrice").val()
+		let quantity = $(this).parents("tr").find(".outprice").val()
 		let unitPrice = $(this).val();
 
 		let totalPrice = unitPrice * quantity;
@@ -203,12 +209,12 @@
 	// 총합계
 	$(document).on('change, keyup', '#prInput', function(){
 		let sum = Number(0);
-		let inputAmount = $('input[name="amount2"]').get();
+		let inputAmount = $('input[name="total_outprice"]').get();
 		for(let i = 0; i < inputAmount.length; i++){
-			sum += Number($('input[name="amount2"]').eq(i).val());
+			sum += Number($('input[name="total_outprice"]').eq(i).val());
 		}
 		
-		$('#totalAmount2').val(sum);
+		$('#wh_total').val(sum);
 	})
 
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight) {

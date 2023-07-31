@@ -17,13 +17,11 @@
 		<td width="300px" style="text-align: center;">${data.get(17) }</td>
 	</tr>
 	<tr height="30px">
-		<td colspan="6" style="text-align: center;">${data.get(18) }</td>
+		<td colspan="2" style="text-align: center;">${data.get(18) }</td>
+		<td colspan="4" style="text-align: center;">${data.get(20) }</td>
 	</tr>
 	<tr height="30px">
-		<td colspan="2" style="text-align: center;">${data.get(24) }</td>
-		<td style="text-align: center;">${data.get(26) }</td>
-		<td style="text-align: center;">${data.get(27) }</td>
-		<td colspan="2" style="text-align: center;">${data.get(28) }</td>
+		<td colspan="6" style="text-align: center;">${data.get(24) }</td>
 	</tr>
 	<tr height="30px">
 		<td colspan="2" style="text-align: center;">${data.get(30) }</td>
@@ -104,8 +102,14 @@
 		<td colspan="2" style="text-align: center;">${data.get(106) }</td>
 	</tr>
 	<tr height="30px">
-		<td colspan="4" style="text-align: end;">${data.get(108) }&nbsp;&nbsp;</td>
+		<td colspan="2" style="text-align: center;">${data.get(108) }</td>
+		<td style="text-align: center;">${data.get(110) }</td>
+		<td style="text-align: center;">${data.get(111) }</td>
 		<td colspan="2" style="text-align: center;">${data.get(112) }</td>
+	</tr>
+	<tr height="30px">
+		<td colspan="4" style="text-align: end;">${data.get(114) }&nbsp;&nbsp;</td>
+		<td colspan="2" style="text-align: center;">${data.get(116) }</td>
 	</tr>
 </table>
 </div>

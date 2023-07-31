@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공장 목록</title>
+<title>작업지시서 목록</title>
 </head>
 <body>
 	<div class="card-body pad">
@@ -32,14 +32,14 @@
 		<div>	
 			<table id = "tab" style="font-size: 0.8em;" class="table table-borderd text-center">
 				<tr>
-					<th width="100px" style="text-align: center;">공장 코드</th>
-					<th width="100px" style="text-align: center;">공장 이름</th>
+					<th width="100px" style="text-align: center;">작업지시서 코드</th>
+					<th width="100px" style="text-align: center;">담당자 이름</th>
 				</tr>
-				<c:forEach items="${factoryList }" var="factory">
+				<c:forEach items="${woList }" var="wo">
 					<tr class="trHover">
-						<td style="text-align: center;" id="fac_no">${factory.fac_no }</td>
-						<td style="text-align: center;" id="fac_name">${factory.fac_name }</td>
-					<input type="hidden" id="wh_no" value="${wh.wh_no }">
+						<input type="hidden" name="wo_no" value="${wo.wo_no }">
+						<td style="text-align: center;" id="wo_no">${wo.wo_no }</td>
+						<td style="text-align: center;" id="e_name">${wo.e_name }</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -58,19 +58,15 @@
 		
 	$(document).ready(function() {
 		
-		let parentInputId = opener.$("#cnt").val();
-		
 		$('tr').on('click', function(){
-			let fac_noName = $(this).find('#fac_name').text();
-// 			let price = $(this).find('.cost').val();
-			let parentEl = $("#" + parentInputId, opener.document);
-// 			parentEl.val(fac_noName);
-			parentEl.parents('tr').find('input.fac_names').val(fac_noName);
-// 			parentEl.parents('tr').find('input[name="wh_no"]').val($(this).find('#wh_no').val());
+			
+			let wo_no = $(this).find('#wo_no').text();		// 클릭한 작업지시서의 번호
+			let e_name = $(this).find('#e_name').text();	// 클릭한 작업지시서의 담당자
+			let parentEl = $("#wo_no", opener.document);	// 번호가 입력 될 부모창의 태그
+			
+			parentEl.parents('tr').find('input#wo').val(wo_no + ' / ' + e_name);
 			window.close();
 			
-// 			$('#wh_no', opener.document).val($(this).find('#wh_name').text() + " / " + $(this).find('#addr').text());
-// 			window.close();
 		})
 		
 	})

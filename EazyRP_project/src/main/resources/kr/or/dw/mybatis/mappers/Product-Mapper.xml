@@ -44,6 +44,179 @@
 		 FROM B_SHEET b, emp e, company c
 		WHERE b.emp_no = e.emp_no
 		  AND b.con_c_no = c.c_no
+		  AND b.buy_c_no = #{c_no}
+	  	<if test="searchType == 't'.toString()">
+			AND e.e_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'w'.toString()">
+			AND b.process LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'p'.toString()">
+			AND b.pr_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND b.con_c_no LIKE '%' || #{keyword} || '%'
+			
+		</if>
+		<if test="searchType == 'tcw'.toString()">
+			AND (e.e_name LIKE '%' || #{keyword} || '%'
+			OR b.process LIKE '%' || #{keyword} || '%'
+			OR b.pr_name LIKE '%' || #{keyword} || '%'
+			OR b.con_c_no LIKE '%' || #{keyword} || '%')
+		</if>
+		ORDER BY b.sheet_no desc
 	</select>
-
+	
+	<select id="selectSearchNoteListCount" resultType="int">
+		SELECT COUNT(*) 
+			 FROM B_SHEET b, emp e, company c
+			WHERE b.emp_no = e.emp_no
+			  AND b.con_c_no = c.c_no
+			  AND b.buy_c_no = #{c_no}
+		  	<if test="searchType == 't'.toString()">
+				AND e.e_name LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'w'.toString()">
+				AND b.process LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'p'.toString()">
+				AND b.pr_name LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'c'.toString()">
+				AND b.con_c_no LIKE '%' || #{keyword} || '%'
+				
+			</if>
+			<if test="searchType == 'tcw'.toString()">
+				AND (e.e_name LIKE '%' || #{keyword} || '%'
+				OR b.process LIKE '%' || #{keyword} || '%'
+				OR b.pr_name LIKE '%' || #{keyword} || '%'
+				OR b.con_c_no LIKE '%' || #{keyword} || '%')
+			</if>
+			ORDER BY b.sheet_no desc
+	</select>
+	
+	<select id="getBuyDetail" resultType="buyDetail">
+		SELECT d.*, p.pr_name
+		  FROM buy_detail d, product p
+		 WHERE sheet_no = #{sheet_no}
+		   AND d.pr_no = p.pr_no
+	</select>
+	
+	<select id="getSheet" resultType="bsheet">
+		SELECT b.*, e.e_name e_name, c.c_name con_c_name 
+		 FROM B_SHEET b, emp e, company c
+		WHERE b.emp_no = e.emp_no
+		  AND b.con_c_no = c.c_no
+		  AND sheet_no = #{sheet_no}
+	</select>
+	
+	<select id="getCompanyList" resultType="company">
+		SELECT * FROM company WHERE 1 = 1
+		AND c_name LIKE '%' || #{keyword} || '%'
+	</select>
+	
+	<insert id="insertProductBuy">
+		INSERT INTO b_sheet VALUES(
+			sheet_no_seq.nextval,
+			sysdate,
+			#{emp_no},
+			#{fc_no},
+			#{price},
+			'진행대기',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'',
+			#{buy_c_no},
+			#{con_c_no},
+			#{pr_name}
+		)
+	</insert>
+	<select id="insertSheetNo" resultType="int">
+		SELECT sheet_no_seq.CURRVAL sheet_no FROM dual
+	</select>
+	
+	<insert id="insertProductDetail">
+		INSERT INTO BUY_DETAIL VALUES(
+			b_no_seq.nextval,
+			#{sheet_no},
+			#{pr_no},
+			#{quantity},
+			#{amount}
+		)
+	</insert>
+	
+	<select id="allOrderList" resultType="order">
+		SELECT o.*, d.title title
+		FROM ordermanage o, draft d
+		WHERE o.buy_c_no = #{c_no}
+		 AND o.dr_no = d.dr_no
+		<if test="searchType == 'w'.toString()">
+			AND sys_reg LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND con_c_no LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'pcw'.toString()">
+			AND (sys_reg LIKE '%' || #{keyword} || '%'
+			OR con_c_no LIKE '%' || #{keyword} || '%')
+		</if>
+	</select>
+	
+	<select id="getSheet_no" resultType="str">
+		SELECT sheet_no FROM orderDETAIL
+		 WHERE 1 = 1
+		  AND #{pr_no1}
+		<foreach collection="pr_no" item="pr_no" open="(" close=")" separator="or">
+		   pr_no = #{pr_no}
+    	</foreach>
+		 UNION
+		SELECT SHEET_NO FROM orderDETAIL
+		 WHERE 1 = 1
+		 AND #{pr_no1}
+		<foreach collection="pr_no" item="pr_no" open="(" close=")" separator="or">
+		   pr_no = #{pr_no}
+    	</foreach>
+	</select>
+	
+	<select id="getProduct_name" resultType="str">
+		SELECT pr_no FROM product WHERE pr_name LIKE '%' || #{keyword} || '%'
+	</select>
+	
+	<select id="insertOrderList" resultType="order">
+		SELECT * FROM ordermanage WHERE o_no = #{sheet} AND buy_c_no = #{c_no}
+	</select>
+	
+	<select id="orderCount" resultType="int">
+		SELECT COUNT(*) FROM ordermanage WHERE buy_c_no = #{c_no}
+	</select>
+	
+	<select id="getOrderDetail" resultType="o_detail">
+		SELECT o.*, w.wh_name wh_name, p.pr_name pr_name, c.c_name c_name
+		FROM orderdetail o, warehouse w, product p, company c
+		WHERE o.o_no = #{o_no}
+		  AND o.wh_no = w.wh_no
+		  AND o.pr_no = p.pr_no
+		  AND w.c_no = c.c_no
+	</select>
+	
+	<select id="selectOrder" resultType="order">
+		SELECT o.*, c.c_name con_c_name, d.dr_no dr_no, d.title title
+		 FROM ordermanage o, company c, draft d
+		WHERE o.o_no = #{o_no}
+		  AND o.con_c_no = c.c_no
+		  AND d.dr_no = o.dr_no
+	</select>
+	
+	<select id="getOrderDraft" resultType="draft">
+		SELECT * FROM draft WHERE dg_no = 'D003' AND pl_progress = '3' AND ORDER_GB = 'N' AND c_no = #{c_no}
+	</select>
+	
+	<select id="getFileName" resultType="str">
+		SELECT files FROM draft WHERE dr_no = #{dr_no}
+	</select>
+	
 </mapper>

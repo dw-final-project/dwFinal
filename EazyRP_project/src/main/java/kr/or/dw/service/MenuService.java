@@ -20,6 +20,5 @@ public interface MenuService {
 	List<String> getEmp_no(String selectedC_no) throws SQLException;
 
 	String selectEname(String selectedEmp) throws SQLException;
- 
-	
+
 }

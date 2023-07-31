@@ -18,11 +18,13 @@ public interface MemberService {
 
 	void pwRenew(String pwd, String id) throws SQLException;
 
-	String modProfile(MemberVO member) throws SQLException;
-
-	void repwd(String pwd) throws SQLException;
+	void modProfile(MemberVO member) throws SQLException;
 
 	void delete(String id) throws SQLException;
+
+
+
+
 
 
 

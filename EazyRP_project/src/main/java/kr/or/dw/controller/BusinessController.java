@@ -372,9 +372,28 @@ public class BusinessController {
 		return mnv;
 	}
 	
-//	@RequestMapping("/siDetail")
-//	public String 
-//	
+	@RequestMapping("/siDetail")
+	public ModelAndView siDetail (ModelAndView mnv ,String si_no) throws SQLException {
+		
+		Map<String, Object> dataMap = siService.selectSiDetail(si_no);
+		String url = "jihwan/siDetail.open";
+		mnv.addAllObjects(dataMap);
+		mnv.setViewName(url);
+		return mnv;
+	}
+	
+	@RequestMapping("/si_regist")
+	public ModelAndView siRegist(ModelAndView mnv,  HttpSession session) throws SQLException {
+		int empno = Integer.parseInt(session.getAttribute("emp_no").toString());
+		String ename = siService.ename(empno);
+		String url = "jihwan/si_regist.open";
+		mnv.setViewName(url);
+		mnv.addObject("empno",empno);
+		mnv.addObject("ename",ename);
+		return mnv;
+	}
+	
+	
 	
 	@RequestMapping("/s_Sheet")
 	public String sSheet() {

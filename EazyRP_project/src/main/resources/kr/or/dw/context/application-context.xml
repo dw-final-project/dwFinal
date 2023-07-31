@@ -26,6 +26,7 @@
 
 	<bean id="whService" class="kr.or.dw.service.WhServiceImpl"/>
 	<bean id="factoryService" class="kr.or.dw.service.FactoryServiceImpl"/>
+	<bean id="workOrderService" class="kr.or.dw.service.WorkOrderServiceImpl"/>
 	
 	<bean id="contactService" class="kr.or.dw.service.ContactServiceImpl"/>
 	

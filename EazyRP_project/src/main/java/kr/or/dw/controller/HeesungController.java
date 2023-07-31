@@ -1,11 +1,15 @@
 package kr.or.dw.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +18,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.dw.command.SearchCriteria;
@@ -22,7 +29,10 @@ import kr.or.dw.service.FactoryService;
 import kr.or.dw.service.MenuService;
 import kr.or.dw.service.ProcessService;
 import kr.or.dw.service.WhService;
+import kr.or.dw.service.WorkOrderService;
+import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.ProcessVO;
+import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.WhVO;
 
 @Controller
@@ -39,6 +49,8 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	private WhService whService;
 	@Autowired
 	private FactoryService factoryService;
+	@Autowired
+	private WorkOrderService workOrderService;
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 목록 열기
 	
@@ -47,6 +59,17 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		String url = "heesung/findFactory.open";
 		
 		Map<String, Object> dataMap = factoryService.selectFactoryList(cri);
+		
+		mnv.setViewName(url);
+		mnv.addAllObjects(dataMap);
+		return mnv;
+	}
+	
+	@RequestMapping("/findWorkOrder")
+	public ModelAndView findWorkOrder(ModelAndView mnv, SearchCriteria cri) throws SQLException {
+		String url = "heesung/findWorkOrder.open";
+		
+		Map<String, Object> dataMap = workOrderService.selectWorkOrderList(cri);
 		
 		mnv.setViewName(url);
 		mnv.addAllObjects(dataMap);
@@ -152,7 +175,6 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		
 		// 공정관리 목록 조회
 		Map<String, Object> dataMap = whService.selectWhList(cri);
-				
 		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
@@ -169,11 +191,33 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	}
 	
 	@RequestMapping("/wh/regist")
-	public void whRegist(WhVO whVo, HttpServletResponse res) throws SQLException, IOException {
+	public void whRegist(HttpServletResponse res, int emp_no, int wo_no, String wh_total, String[] pr_no, String[] fac_no, String wh_no2[], 
+		String[] outprice, int[] quantity, String[] total_outprice) throws SQLException, IOException {
 		
 		System.out.println("erp4/wh/regist 컨트롤러 진입");
 		
-		whService.registWh(whVo);
+		System.out.println("emp_no : " + emp_no);
+		System.out.println("wo_no : " + wo_no);
+		System.out.println("wh_total : " + wh_total);
+
+		List<WhVO> whDetailVoList = new ArrayList<WhVO>();	// 상세 정보들을 만들기 위한 객체
+		
+		for(int i = 0; i < pr_no.length; i++) {
+			WhVO whDetailVo = new WhVO();
+			whDetailVo.setEmp_no(emp_no);
+			whDetailVo.setWo_no(wo_no);
+			whDetailVo.setWh_total(wh_total);
+			whDetailVo.setPr_no(pr_no[i]);
+			whDetailVo.setFac_no(fac_no[i]);
+			whDetailVo.setWh_no2(wh_no2[i]);
+			whDetailVo.setOutprice(outprice[i]);
+			whDetailVo.setQuantity(quantity[i]);
+			whDetailVo.setTotal_outprice(total_outprice[i]);
+			
+			whDetailVoList.add(whDetailVo);
+		}
+
+		whService.registWh(whDetailVoList);
 		
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
@@ -182,6 +226,31 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		out.println("window.opener.location.reload(true); window.close();");
 		out.println("</script>");
 		
+	}
+	
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////workorder(작업지시서)
+	
+	@RequestMapping("/workorder")
+	public ModelAndView workorder(ModelAndView mnv, SearchCriteria cri, String mcode) throws SQLException {
+		
+		System.out.println("HeesungController - erp4/workorder 진입");
+		
+		// 페이지 정보와 작업지시서의 정보를 가지고 url에 반환할것이다 url에서는 게시판 형태로 사용자에게 보여준다.
+		String url = "heesung/workorder/main.page";
+		
+		Map<String, Object> dataMap = workOrderService.selectWorkOrderList(cri);
+		
+		mnv.setViewName(url);
+		mnv.addObject("mcode", mcode);
+		mnv.addAllObjects(dataMap);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/workorder/registForm")
+	public String workorderRegistForm() {
+		String url = "heesung/workorder/registForm.open";
+		return url;
 	}
 	
 }

@@ -11,12 +11,12 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">제품 구매 내역</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/mymenu/noteList.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/product/productBuy.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="tcw" ${searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
 								<option value="t" ${searchType eq 't' ? 'selected' : '' }>구매요청자</option>
 								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>진행상황</option>
-								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>구매제품명</option>
+								<option value="p" ${searchType eq 'p' ? 'selected' : '' }>구매제품명</option>
 								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>요청업체</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
@@ -32,19 +32,17 @@
 						<div>
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
-									<th width="200px" style="text-align: center;">구매제품명</th>
-									<th width="200px" style="text-align: center;">요청날짜</th>
-									<th width="200px" style="text-align: center;">요청업체</th>
-									<th width="100px" style="text-align: center;">구매요청자</th>
-									<th width="100px" style="text-align: center;">진행상황</th>
+									<th width="25%" style="text-align: center;">구매제품명</th>
+									<th width="25%" style="text-align: center;">요청날짜</th>
+									<th width="25%" style="text-align: center;">작성자</th>
+									<th width="25%" style="text-align: center;">발생금액</th>
 								</tr>
-									<c:forEach items="${sheet}" var="sheet">
+									<c:forEach items="${note}" var="note">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/product/detail.do?n_no=${sheet.sheet_no}', '구매내역 상세조회', 700, 1000)">${sheet.pr_name }</a></td>
-										<td style="text-align: center;">${sheet.sys_regdate }</td>
-										<td style="text-align: center;">${sheet.con_c_name }</td>
-										<td style="text-align: center;">${sheet.e_name }</td>
-										<td style="text-align: center;">${sheet.progress }</td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/product/buyDetail.do?sheet_no=${note.sheet_no}', '구매내역 상세조회', 600, 600)">${note.pr_name }</a></td>
+										<td style="text-align: center;">${note.sys_regdate }</td>
+										<td style="text-align: center;">${note.e_name }</td>
+										<td style="text-align: center;">${note.price } 원</td>
 									</tr>
 									</c:forEach>
 							</table>
@@ -55,8 +53,8 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/mymenu/communication.do', '쪽지쓰기', 700, 1000)"
-					style="width: 100px; margin: 20px; align-self: center;">쪽지 쓰기</button>
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/product/productBuyRegist.do', '구매 내역 추가', 600, 700)"
+					style="width: 100px; margin: 20px; align-self: center; font-size: 0.7em;">구매 내역 추가</button>
 				</div>
 			</div>
 			
@@ -72,11 +70,6 @@
 	})
 	
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight, index){
-		var selectedElement = document.getElementById("read_"+index);
-		  if (selectedElement) {
-		    selectedElement.style.color = "blue";
-		    selectedElement.innerHTML = "읽음";
-		  }
 		winleft = (screen.width - WinWidth) / 2;
 		wintop = (screen.height - WinHeight) / 2;
 		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "

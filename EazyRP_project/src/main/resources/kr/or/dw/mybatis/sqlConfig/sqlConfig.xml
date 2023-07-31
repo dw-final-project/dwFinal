@@ -20,7 +20,9 @@
 		<typeAlias type="kr.or.dw.vo.MerchandiseVO" alias="merchandise"/>
 		<typeAlias type="kr.or.dw.vo.DraftGbVO" alias="draftGb"/>
 		<typeAlias type="kr.or.dw.vo.ShopVO" alias="shop"/>
-		<typeAlias type="kr.or.dw.vo.CompanyVO" alias="co"/>
+		<typeAlias type="kr.or.dw.vo.CompanyVO" alias="company"/>
+		<typeAlias type="kr.or.dw.vo.OrderVO" alias="order"/>
+		<typeAlias type="kr.or.dw.vo.O_DetailVO" alias="o_detail"/>
 
 		
 		<!-- 희성이꼬 --><!-- 즐, 똥, 엿-->
@@ -29,7 +31,8 @@
 		<typeAlias type="kr.or.dw.vo.CalendarVO" alias="calendar"/>
 		<typeAlias type="kr.or.dw.vo.ProcessVO" alias="process"/>
 		<typeAlias type="kr.or.dw.vo.WhVO" alias="wh"/>
-		<typeAlias type="kr.or.dw.vo.FactoryVO" alias="Factory"/>
+		<typeAlias type="kr.or.dw.vo.FactoryVO" alias="factory"/>
+		<typeAlias type="kr.or.dw.vo.WorkOrderVO" alias="workOrder"/>
 		
 	</typeAliases>
 

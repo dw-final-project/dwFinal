@@ -80,7 +80,6 @@ public class MyMenuServiceImpl implements MyMenuService{
 		dataMap2.put("searchType", cri.getSearchType());
 		dataMap2.put("cri", cri);
 		dataMap2.put("c_no", c_no);
-//		dataMap2.put("rowbounds", rowBounds);
 		List<NoteVO> note = mymenuDAO.getNoteList(dataMap2, rowBounds);
 		
 		int totalCount = mymenuDAO.selectSearchNoteListCount(dataMap2);

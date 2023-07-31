@@ -16,6 +16,12 @@ import kr.or.dw.dao.ProcessDAO;
 import kr.or.dw.dao.ProductDAO;
 import kr.or.dw.dao.SiDAO;
 import kr.or.dw.vo.BsheetVO;
+import kr.or.dw.vo.BuyDetailVO;
+import kr.or.dw.vo.CompanyVO;
+import kr.or.dw.vo.DraftVO;
+import kr.or.dw.vo.NoteVO;
+import kr.or.dw.vo.O_DetailVO;
+import kr.or.dw.vo.OrderVO;
 import kr.or.dw.vo.ProcessVO;
 import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.SiVO;
@@ -56,8 +62,121 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<BsheetVO> getB_sheet() throws SQLException {
-		return productDAO.getB_sheet();
+	public Map<String, Object> getB_sheet(Map<String, Object> dataMap) throws SQLException {
+		SearchCriteria cri = (SearchCriteria) dataMap.get("cri");
+		String c_no = (String) dataMap.get("c_no");
+		int offset = cri.getPageStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		Map<String, Object> dataMap2 = new HashMap<String, Object>();
+		
+		dataMap2.put("keyword", cri.getKeyword());
+		dataMap2.put("searchType", cri.getSearchType());
+		dataMap2.put("cri", cri);
+		dataMap2.put("c_no", c_no);
+		List<BsheetVO> note = productDAO.getB_sheet(dataMap2, rowBounds);
+		
+		int totalCount = productDAO.selectSearchNoteListCount(dataMap2);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("note", note);
+		map.put("pageMaker", pageMaker);
+		
+		return map;
+	}
+
+	@Override
+	public BsheetVO getSheet(String sheet_no) throws SQLException {
+		return productDAO.getSheet(sheet_no);
+	}
+
+	@Override
+	public List<BuyDetailVO> getBuyDetail(String sheet_no) throws SQLException {
+		return productDAO.getBuyDetail(sheet_no);
+	}
+
+	@Override
+	public List<CompanyVO> getCompanyList(SearchCriteria cri) throws SQLException {
+		return productDAO.getCompanyList(cri);
+	}
+
+	@Override
+	public int insertProductBuy(BsheetVO sheet) throws SQLException {
+		productDAO.insertProductBuy(sheet);
+		
+		int sheet_no = productDAO.insertSheetNo();
+		
+		return sheet_no;
+	}
+
+	@Override
+	public void insertProductDetail(List<BuyDetailVO> detail) throws SQLException {
+		for(BuyDetailVO vo : detail) {
+			productDAO.insertProductDetail(vo);
+		}
+		
+	}
+
+	@Override
+	public Map<String, Object> allOrderList(Map<String, Object> dataMap) throws SQLException {
+		List<OrderVO> list = null;
+		System.out.println("1");
+		SearchCriteria cri = (SearchCriteria) dataMap.get("cri");
+		String c_no = (String) dataMap.get("c_no");
+		
+		int offset = cri.getPageStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		
+		list = productDAO.allOrderList(dataMap, rowBounds);
+
+		
+		System.out.println("2");
+		if(cri.getSearchType().equals("p") || cri.getSearchType().equals("pcw")) {
+			List<String> pr_no = productDAO.getPr_no(cri);
+			String pr_no1 = pr_no.get(0);
+			List<String> sno = productDAO.getSheet_no(pr_no1, pr_no);
+			for(String sheet : sno) {
+				OrderVO insert = productDAO.insertOrderList(sheet, c_no);
+				list.add(insert);
+			}
+		}
+
+		int totalCount = list.size();
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("pageMaker", pageMaker);
+		
+		System.out.println("3");
+		return map;
+	}
+
+	@Override
+	public List<O_DetailVO> getOrderDetail(String o_no) throws SQLException {
+		return productDAO.getOrderDetail(o_no);
+	}
+
+	@Override
+	public OrderVO selectOrder(String o_no) throws SQLException {
+		return productDAO.selectOrder(o_no);
+	}
+
+	@Override
+	public List<DraftVO> getOrderDraft(String c_no) throws SQLException {
+		return productDAO.getOrderDraft(c_no);
+	}
+
+	@Override
+	public String getFileName(String dr_no) throws SQLException {
+		return productDAO.getFileName(dr_no);
 	} 
 	
 	

@@ -24,5 +24,12 @@ public class WhVO {
 	private Date sys_updatedate;	// 수정일
 	private String sys_reg;			// 최초등록자
 	private String wh_total;		// 총합계
+	private String progress;		// 진행상황
+
+	private String pr_no;			// 제품번호
+	private String pr_name;			// 제품명
+	private String fac_no;			// 공장번호
+	private String total_outprice;	// 외주비합계
+	private int dtail_no;			// 상세번호
 	
 }

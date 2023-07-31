@@ -155,20 +155,20 @@ body {
 <body>
 <!-- Modal HTML -->
 	<div class="modal-dialog modal-login ">
-		<div class="modal-content " style="padding-left: 45px; padding-right: 5px;">
+		<div class="modal-content ">
 			<div class="modal-header">				
 				<h4 class="modal-title">회원가입</h4>
 			</div>
 			<div class="modal-body">
 				
-				<form id="registForm" action="/member/register.do" method="post">
+				<form id="registForm" action="/member/register.do" style="margin-left: 20px;" method="post">
 					<div class="form-group d-flex">
 						<div class="input-group inputText">
 							<span class="fa"><i class="fa fa-user"></i></span><span style="width: 15px;"></span>
 							<input type="text" class="form-control" id="id" name="id" placeholder="ID"  required="required">
 						</div>
 						<div>
-							<input type="button" class="chkbtn" name="idchk" required="required" onclick="idCheck_go();" value="중복확인">							
+							<input type="button" class="chkbtn" name="idchk" style="margin-left: 30px;" required="required" onclick="idCheck_go();" value="중복확인">							
 						</div>
 					</div>
 					<div class="form-group">
@@ -192,11 +192,8 @@ body {
 					<div class="form-group d-flex">
 						<div class="input-group">
 							<span class="fa"><i class="fa fa-calendar"></i></span><span style="width: 15px;"></span>
-							<input class="form-control" id="birth" name="birth" type="text" placeholder="생년월일" name="birthday">
-						</div>
-						<div class="input-group"></div>
-						<div class="input-group">
-							<select class="form-select form-select-sm" aria-label="Default select example" id="gen" name="gen" style="border-radius: 7px; margin-left: 10px;">
+							<input class="form-control" id="birth" name="birth" type="text" style="width: 242px;" placeholder="생년월일" name="birthday">
+							<select class="form-select form-select-sm" aria-label="Default select example" id="gen" name="gen" style="border-radius: 7px; margin-left: 50px;">
 								<option disabled="disabled" selected="selected">성별</option>
 								<option value="남성">남성</option>
 								<option value="여성">여성</option>
@@ -210,9 +207,9 @@ body {
 									<span class="fa"><i class="fa fa-envelope"></i></span><span style="width: 15px;"></span>
 									<input type="text" class="form-control" value="" placeholder="이메일" name="email" id="email" required="required"/> 
 								</div>
-									<div class="input-group" style="width: 190px; align-items: center;"  >
+									<div class="input-group" style="width: 50%;align-items: center;margin-right: 20px; margin-left: 10px;" >
 										@
-										<select name="domainselect" id="domainselect" class="form-select form-select-sm" style="align-items: baseline">
+										<select name="domainselect" id="domainselect" class="form-select form-select-sm" style="align-items: baseline;margin-left: 10px;border-radius: 3px;">
 											<option disabled="disabled" selected="selected">선택</option>
 											<option value="@naver.com">naver.com</option>
 											<option value="@gmail.com">gmail.com</option>
@@ -229,10 +226,10 @@ body {
 					<div class="form-group d-flex">
 						<div class="input-group">
 							<span class="fa"><i class="fa fa-envelope"></i></span><span style="width: 15px;"></span>
-							<input type="text" class="form-control mail-check-input" name="password" placeholder="인증번호" required="required">
+							<input type="text" class="form-control mail-check-input" name="password" style="margin-right: 30px;" placeholder="인증번호" required="required">
 						</div>
 						<div>
-							<input type="button" class="chkbtn" id="emailauthchk" name="emailauthchk"  value="인증번호 확인">			
+							<input type="button" class="chkbtn" id="emailauthchk" name="emailauthchk" value="인증번호 확인">			
 						</div>
 					</div>
 					<!-- 이메일 끝 -->
@@ -252,7 +249,7 @@ body {
 					<div class="form-group findbtn">
 						<button class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px; color:#fff;" id="registBtn" onclick="submit_go();">회원가입</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;
-						<button class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px; color:#fff;" id="cencle">취 소</button>
+						<button class="btn btn-info btn-block btn-sm" style="width: 60%; margin-top: 30px; color:#fff;" id="cancelBtn">취 소</button>
 					</div>
 
 			</div>
@@ -279,7 +276,7 @@ $(function(){
 	}); */
 	let gen = $('#gen').val();
 	
-	$('#cencle').on('click', function(){
+	$('#cancelBtn').on('click', function(){
 		location.href = "/common/loginForm"; 
 	});
 })

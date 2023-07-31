@@ -17,6 +17,13 @@ public interface SiDAO {
 
 	int selectSearchSiListCount(SearchCriteria cri) throws SQLException;
 
+	Map<String, Object> selectSiDetail(String si_no) throws SQLException;
+
+	List<Map<String, Object>> forSiList(String si_no) throws SQLException;
+
+	String ename(int empno) throws SQLException;
+
+
 	
 	
 }
