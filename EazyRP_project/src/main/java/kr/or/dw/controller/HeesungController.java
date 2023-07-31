@@ -177,8 +177,6 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		
 		String url = "heesung/wh/main.page";
 		
-//		String ename = whService.getEname();
-		
 		// 공정관리 목록 조회
 		Map<String, Object> dataMap = whService.selectWhList(cri);
 		mnv.addObject("mcode", mcode);
