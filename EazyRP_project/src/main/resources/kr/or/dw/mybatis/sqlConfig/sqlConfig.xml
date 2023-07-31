@@ -25,7 +25,7 @@
 		<typeAlias type="kr.or.dw.vo.O_DetailVO" alias="o_detail"/>
 
 		
-		<!-- 희성이꼬 --><!-- 즐 -->
+		<!-- 희성이꼬 --><!-- 즐, 똥, 엿-->
 		<typeAlias type="kr.or.dw.vo.BsheetVO" alias="bsheet"/>
 		<typeAlias type="kr.or.dw.vo.BuyDetailVO" alias="buyDetail"/>
 		<typeAlias type="kr.or.dw.vo.CalendarVO" alias="calendar"/>
