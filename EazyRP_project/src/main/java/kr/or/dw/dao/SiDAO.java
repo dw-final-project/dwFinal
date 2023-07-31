@@ -23,6 +23,11 @@ public interface SiDAO {
 
 	String ename(int empno) throws SQLException;
 
+	void insertSi(SiVO siVO) throws SQLException;
+
+	int insertSiDetail(SiVO si) throws SQLException;
+	
+
 
 	
 	

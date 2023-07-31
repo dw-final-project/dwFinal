@@ -51,24 +51,22 @@ SELECT s2.SI_NO,
 		  		ELSE MAX((SELECT pr_name FROM product WHERE pr_no = s2.pr_no))
 	END pr_name
 	,MAX(s2.PROGRESS) progress
-  FROM si s, emp e, warehouse w, fc f ,product p ,SIDETAIL s2 
+  FROM si s, emp e, warehouse w,product p ,SIDETAIL s2 
  WHERE s2.emp_no = e.emp_no
   AND s2.wh_no = w.wh_no
-  AND s2.fc_no = f.fc_no
   AND s2.pr_no = p.pr_no
   AND s.SI_NO = s2.SI_NO
     <include refid="search"/>
   GROUP BY s2.SI_NO
-  ORDER BY s2.SI_NO desc
+  ORDER BY 1 desc
 </select>
 	
 <select id="selectSearchSiListCount" resultType="int">
 	SELECT COUNT(*)
-	FROM si s, emp e, warehouse w, fc f, product p, sidetail s2
+	FROM si s, emp e, warehouse w, product p, sidetail s2
 	 WHERE 1=1 
    AND s2.emp_no = e.emp_no
    AND s2.wh_no = w.wh_no
-   AND s2.fc_no = f.fc_no
    AND s2.pr_no = p.pr_no
    AND s2.si_no = s.si_no
 	<include refid="search"/>
@@ -76,48 +74,101 @@ SELECT s2.SI_NO,
 	
 
 <select id="selectSiDetail" resultType="Map">
-	SELECT s2.si_no
-	  ,s.sys_regdate 
-	  ,e.e_name e_name
-	  ,s2.shipdate 
-	  ,s2.progress 
-	  ,s2.enabled 
-	  ,w.wh_name wh_name
-	  ,s2.quantity 
-	  ,s2.files 
-	  ,f.fc_name fc_name
-	  ,s.sys_up 
-	  ,s.sys_updatedate 
-	  ,p.pr_name pr_name
-	  ,e.emp_no
-	  ,f.fc_no
-	  ,p.pr_no 
-  FROM si s, emp e, warehouse w, fc f ,product p ,SIDETAIL s2 
- WHERE s2.emp_no = e.emp_no
-   AND s2.wh_no = w.wh_no
-   AND s2.fc_no = f.fc_no
-   AND s2.pr_no = p.pr_no
-   AND s.SI_NO = s2.SI_NO
-   AND s2.SI_NO = #{SI_NO}
+	SELECT *
+  FROM si
+ WHERE SI_NO = #{SI_NO}
 </select>	
 	
 	
 <select id="forSiList" resultType="Map">
- SELECT ROWNUM,s2.SI_NO ,w.WH_NAME, e.E_NAME ,s.SYS_REGDATE ,s2.SHIPDATE 
-   ,s2.QUANTITY ,s.SYS_UP ,p.PR_NO ,p.PR_NAME,s2.SIDETAIL_NO
-   FROM SI s , WAREHOUSE w ,EMP e,SIDETAIL s2 , product p  
-   WHERE s2.WH_NO = w.WH_NO 
-   AND s2.EMP_NO = e.EMP_NO 
-   AND s.SI_NO = s2.SI_NO 
+SELECT s2.si_no
+  	  ,s2.SIDETAIL_NO 
+	  ,e.e_name e_name
+	  ,s2.shipdate 
+	  ,s2.progress 
+	  ,s2.enabled 
+	  ,s2.content
+	  ,w.wh_name wh_name
+	  ,s2.quantity 
+	  ,s2.files 
+	  ,p.pr_name pr_name
+	  ,e.emp_no
+	  ,p.pr_no 
+  FROM emp e, warehouse w,product p ,SIDETAIL s2 
+ WHERE s2.emp_no = e.emp_no
+   AND s2.wh_no = w.wh_no
    AND s2.pr_no = p.pr_no
-   AND s2.SI_NO = #{SI_NO}
+   AND s2.SI_NO = #{si_no}
  </select>
 	
 <select id="ename" resultType="str">
 	SELECT e_name
 	FROM emp
 	WHERE emp_no = #{empno}
-</select>	
+</select>
 	
+<sql id="makeSiSeq">
+	SELECT ('SI_') || CASE 
+						WHEN LENGTH(si_seq.nextval) = 1
+						THEN '00' || si_seq.nextval
+						WHEN LENGTH(si_seq.nextval) = 2
+						THEN '0' || si_seq.nextval
+						ELSE '' || si_seq.nextval
+			   	      END SI_NO
+	  FROM dual
+</sql>
+
+
+
+<insert id="insertSi" parameterType="si">
+	
+	<selectKey keyProperty="si_no" order="BEFORE" resultType="java.lang.String">
+		<include refid="makeSiSeq"></include>
+	</selectKey>
+	INSERT INTO si(
+		si_no,
+		sys_regdate,
+		sys_updatedate,
+		enabled,
+		sys_up
+	)
+	VALUES(
+		#{si_no},
+		sysdate,
+		sysdate,
+		'Y',
+		#{emp_no}
+	)
+</insert>
+	
+<sql id="makeSiDetailSeq">
+	SELECT sidetail_seq.nextval
+	  FROM dual
+</sql>	
+	
+<insert id="insertSiDetail" parameterType="si">
+	INSERT INTO sidetail (
+		sidetail_no,
+		si_no,
+		emp_no,
+		shipdate,
+		progress,
+		wh_no,
+		pr_no,
+		quantity,
+		content
+	)
+	values(
+		sidetail_seq.nextval,
+		#{si_no},
+		#{emp_no},
+		#{shipdate},
+		'진행중',
+		#{wh_no},
+		#{pr_no},
+		#{quantity},
+		#{content}	
+	)
+</insert>
 	
 </mapper>
