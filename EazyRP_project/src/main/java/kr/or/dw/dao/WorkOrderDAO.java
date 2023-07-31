@@ -19,4 +19,8 @@ public interface WorkOrderDAO {
 	// 담당자 이름 가져오기
 	List<String> selectEName(int getEmp_no) throws SQLException;
 
+	int selectWono(int wono) throws SQLException;
+
+	int wo_no(int wono);
+
 }

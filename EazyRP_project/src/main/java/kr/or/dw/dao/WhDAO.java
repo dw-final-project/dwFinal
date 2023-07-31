@@ -23,5 +23,4 @@ public interface WhDAO {
 	// 제품명 가져오기
 	List<String> selectProductName(String getWh_no) throws SQLException;
 
-
 }

@@ -71,24 +71,31 @@
 <body>
 	<h2>생산입고 등록</h2>
 	<!-- card footer End -->
-	<form role="form" method="post" action="/erp4/wh/regist.do">
+	<form role="form" method="post" action="/erp4/wh/regist.do" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td width="40%" align="center"><b>담당자</b></td>
 				<td>
 					<input type="hidden" name="emp_no" id="receiver" value="${empno }"> 
-					<input type="text" style="width: 100%;" value="${ename }" id="name" name="name" 
+					<input type="text" style="width: 100%;" value="${c_name } / ${ename }" id="name" name="name" 
 							readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
 				</td>
 			</tr>
 			<tr>
 				<td width="40%" align="center"><b>작업지시서</b></td>
 				<td>
-					<input type="hidden" name="wo_no" id="wo_no" class="wo_no" value="${empno }"> 
-					<input type="text" style="width: 100%;" value="${ename }" id="wo" name="wo" 
+					<input type="hidden" name="wo_no" id="wo_no" class="wo_no" value=""> 
+					<input type="text" style="width: 100%;" value="" id="wo_name" name="wo_name"
 							readonly onclick="OpenWindow('/erp4/findWorkOrder.do', '작업지시서 찾기', 400, 600)">
 				</td>
 			</tr>
+			<tr>
+	            <td align="center"><b>첨부파일</b></td>
+	            <td>
+	            	<input type="file" style="width: 100%;"  name ="files" value="">
+	            	<input type="hidden" id="fileName" name="fileName" value=""> 
+	            </td>
+        	</tr>
 		</table>
 		<button type="button" id="addPutBtn">추가</button>
 		<table>
@@ -115,7 +122,7 @@
 					</td>
 					<td>		<!-- 위와 마찬가지로 창고 번호를 가져간다면 hidden 태그 새로 만들어 그 태그에 value값 넣기, 
 								아래 태그는 창고 이름을 표시하는거기 때문에 name을 wh_no2에서 wh_name으로 변경함 -->
-						<input type="text" id="0" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no2">
+						<input type="text" id="0" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no">
 					</td>
 					<td>
 						<input type="text" id="outprice" class="outprice" name="outprice" style="width: 100%;" value="">
