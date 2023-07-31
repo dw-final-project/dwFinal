@@ -40,7 +40,7 @@
 		  		THEN MAX((SELECT pr_name FROM product WHERE pr_no = ed.pr_no)) || ' 외 ' || (count(ed.PR_NO)-1)  || '건'
 		  		ELSE MAX((SELECT pr_name FROM product WHERE pr_no = ed.pr_no))
 		    END p_amount_name
-		  ,SUM(ed.amount) amount
+		  ,TO_CHAR(SUM(ed.amount), '999,999,999,999,999') || '원' amount
 		  ,MAX(ed.PROGRESS) progress
 		  ,MAX(ed.FILES) files 
 	  FROM ESTIMATE e , ESTDETAIL ed, company c, emp em, product p
@@ -77,10 +77,10 @@
 		  ,MAX(e.enabled) enabled
 		  ,MAX((SELECT pr_name FROM product WHERE pr_no = ed.pr_no)) p_name
 		  ,MAX((SELECT wh_name FROM WAREHOUSE WHERE wh_no = ed.wh_no)) wh_name
-		  ,MAX((SELECT pr_exprice FROM product p WHERE p.pr_no = ed.pr_no)) pr_exprice
+		  ,MAX((SELECT pr_exprice FROM product p WHERE p.pr_no = ed.pr_no)) || ' 원' pr_exprice
 		  ,MAX(ed.QUANTITY) QUANTITY
 		  ,count(ed.PR_NO) pr_no
-		  ,SUM(ed.amount) amount
+		  ,TO_CHAR(SUM(ed.amount), '999,999,999,999,999') || ' 원' amount
 		  ,MAX(ed.PROGRESS) progress
 		  ,MAX(ed.FILES) files
 	  FROM ESTIMATE e , ESTDETAIL ed
@@ -94,7 +94,7 @@
 	SELECT ROWNUM
 		  ,amount
 	  	  ,ed.quantity
-	  	  ,p.pr_exprice
+	  	  ,p.pr_exprice || ' 원' pr_exprice
 	  	  ,p.pr_name p_name
 	  	  ,w.wh_name wh_name
 	  	  ,ed.estdetail_no
