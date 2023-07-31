@@ -112,7 +112,10 @@
             <td><input type="text" id="wh_name" name="wh_name" style="width: 100%;" value="${detail.wh_name}" readonly></td>
             <td><input type="text" id="con_c_name" name="con_c_name" style="width: 100%;" value="${detail.c_name}" readonly></td>
             <td><input type="text" id="pr_name" name="pr_name" style="width: 100%;" value="${detail.pr_name}" readonly></td>
-            <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${detail.quantity}" ></td>
+            <td><input type="text" id="amount" name="amount" style="width: 100%;${detail.lack eq 'Y' ? 'color: red;' : '' }"  value="${detail.quantity}" >
+            <c:if test="${detail.lack eq 'Y'}"><p style="position: absolute; z-index: 2; font-size: 0.5em; color: red; right: 25%;">해당 창고에 재고가 부족합니다.</p>
+            </c:if>
+            </td>
             <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${detail.buy_price} 원" readonly ></td>
         </tr>
         </c:forEach>
@@ -124,7 +127,12 @@
     </table>
     <div class="card-footer">
 		<button type="button" id="listBtn" class="btn btn-primary">닫기</button>
-		<button type="button" id="cancelBtn" class="btn btn-danger" style="float: right;" ${order.progress ne '접수중' ? 'disabled' : '' }>요청 취소</button>
+		<c:forEach items="${detail }" var="detail">
+			<c:if test="${detail.lack eq 'Y'}">
+	            <button type="button" class="btn btn-warning" style="float: right;">작업지시서 작성</button>
+	        </c:if>
+        </c:forEach>
+        <button type="button" id="listBtn" class="btn btn-primary">배송</button>
 	</div>
 </form>
 </body>
@@ -133,6 +141,7 @@
 	
 
 <script>
+for(let i = 0; i < ${detail})
 window.onload = function(){
 	
 	let fc_no = "${est.FC_NO}";

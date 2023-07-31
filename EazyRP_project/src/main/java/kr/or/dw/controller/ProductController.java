@@ -32,6 +32,9 @@ import kr.or.dw.vo.CompanyVO;
 import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.O_DetailVO;
 import kr.or.dw.vo.OrderVO;
+import kr.or.dw.vo.Pro_whVO;
+import kr.or.dw.vo.ProductVO;
+import kr.or.dw.vo.WareHouseVO;
 
 @Controller
 @RequestMapping("/product")
@@ -135,6 +138,7 @@ public class ProductController {
 		Map<String, Object> dataMap = new HashMap<>();
 		dataMap.put("cri", cri);
 		dataMap.put("c_no", c_no);
+		dataMap.put("order", "N");
 		Map<String, Object> map = new HashMap<>();
 		map = productService.allOrderList(dataMap);
 		
@@ -145,13 +149,17 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/orderDetail")
-	public ModelAndView orderDetail(ModelAndView mnv, String o_no) throws SQLException {
+	public ModelAndView orderDetail(ModelAndView mnv, String o_no, String orders) throws SQLException {
 		List<O_DetailVO> detail = productService.getOrderDetail(o_no);
 		OrderVO order = productService.selectOrder(o_no);
 		
 		mnv.addObject("order", order);
 		mnv.addObject("detail", detail);
+		if(orders.equals("Y")) {
 		mnv.setViewName("/product/orderDetail");
+		} else if(orders.equals("N")) {
+			mnv.setViewName("/product/orderDetail2");
+		}
 		return mnv;
 	}
 	
@@ -224,18 +232,121 @@ public class ProductController {
 				a++;
 			}
 		}
+		List<ProductVO> product = new ArrayList<>();
+		System.out.println(data.get(9));
+		String c_no = productService.getC_no(data.get(9));
+		System.out.println(c_no);
+		product = productService.getContents(name, c_no);
+		String c_no2 = (String) session.getAttribute("c_no");
+		List<DraftVO> draft = productService.getOrderDraft(c_no2);
 		data2.put("name", name);
 		data2.put("quantity", quantity);
+		int totalBuy = 0;
+		int totalUnit = 0;
+		for(int i = 0; i < product.size(); i++){
+			int buy = product.get(i).getPr_exprice();
+			product.get(i).setPr_exprice(buy * Integer.parseInt(quantity.get(i)));
+			totalBuy += product.get(i).getPr_exprice();
+			int unit = product.get(i).getPr_inprice();
+			product.get(i).setPr_inprice(unit * Integer.parseInt(quantity.get(i)));
+			totalUnit += product.get(i).getPr_inprice();
+		}
+		mnv.addObject("draft", draft);
+		mnv.addObject("dr_no", dr_no);
+		mnv.addObject("c_no", c_no);
+		mnv.addObject("product", product);
 		mnv.addObject("quantity", quantity);
+		mnv.addObject("totalBuy", totalBuy);
+		mnv.addObject("totalUnit", totalUnit);
 		mnv.addObject("name", name);
-		System.out.println(name);
-		System.out.println(quantity);
-		System.out.println(data2.get("quantity"));
-		System.out.println(data2.get("name"));
+		mnv.addObject("data", data);
 		mnv.addAllObjects(data2);
 		mnv.setViewName("/product/orderRegist");
 		return mnv;
 	}
+	
+	@RequestMapping("/findWareHouse")
+	public ModelAndView findWareHouse(ModelAndView mnv, String pr_name, int quantity) throws SQLException {
+		List<Pro_whVO> whList = new ArrayList<>();
+		whList = productService.getWhList(pr_name);
+		
+		mnv.addObject("whList", whList);
+		mnv.addObject("quantity", quantity);
+		mnv.setViewName("/product/findWareHouse");
+		return mnv;
+	}
+	
+	@RequestMapping("/orderRegistForm")
+	public void orderRegistForm(HttpServletResponse res, HttpSession session, OrderVO order, String[] pr_no, int[] quantity, int[] buy_price2, int[] unit_price2, String[] pr_name, String[] wh_no) throws SQLException, IOException {
+		String c_no = (String) session.getAttribute("c_no");
+		String e_name = (String) session.getAttribute("e_name");
+		order.setBuy_c_no(c_no);
+		order.setSys_reg(e_name);
+		if(pr_name.length > 1) {
+			order.setO_name(pr_name[0] + " 외 " + (pr_name.length - 1) + '건');
+		} else {
+			order.setO_name(pr_name[0]);
+		}
+		
+		int o_no = productService.orderRegist(order);
+		
+		List<O_DetailVO> detail = new ArrayList<>();
+		for(int i = 0; i < pr_no.length; i++) {
+			O_DetailVO vo = new O_DetailVO();
+			
+			vo.setO_no(o_no);
+			vo.setPr_no(pr_no[i]);
+			vo.setQuantity(quantity[i]);
+			vo.setBuy_price(buy_price2[i]);
+			vo.setUnit_price(unit_price2[i]);
+			vo.setWh_no(wh_no[i]);
+			
+			detail.add(vo);
+			System.out.println(vo);
+		}
+		
+		productService.insertOrderDetail(detail);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('발주 요청이 완료되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+		
+		
+	}
+	
+	@RequestMapping("/orderCancel")
+	public void orderCancel(HttpServletResponse res, int o_no, String dr_no) throws SQLException, IOException {
+		productService.orderCancel(o_no, dr_no);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('발주 요청이 취소되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
+	
+	@RequestMapping("/orderList")
+	public ModelAndView orderList(ModelAndView mnv, String mcode, HttpSession session, SearchCriteria cri) throws SQLException {
+		System.out.println(cri.getSearchType());
+		System.out.println(cri.getKeyword());
+		String c_no = (String) session.getAttribute("c_no");
+		Map<String, Object> dataMap = new HashMap<>();
+		dataMap.put("cri", cri);
+		dataMap.put("c_no", c_no);
+		dataMap.put("order", "Y");
+		Map<String, Object> map = new HashMap<>();
+		map = productService.allOrderList(dataMap);
+		
+		mnv.addAllObjects(map);
+		mnv.addObject("mcode", mcode);
+		mnv.setViewName("/product/orderList.page");
+		return mnv;
+	}
+	
 	
 	
 }

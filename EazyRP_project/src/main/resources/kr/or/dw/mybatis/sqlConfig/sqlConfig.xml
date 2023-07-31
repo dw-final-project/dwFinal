@@ -23,6 +23,7 @@
 		<typeAlias type="kr.or.dw.vo.CompanyVO" alias="company"/>
 		<typeAlias type="kr.or.dw.vo.OrderVO" alias="order"/>
 		<typeAlias type="kr.or.dw.vo.O_DetailVO" alias="o_detail"/>
+		<typeAlias type="kr.or.dw.vo.Pro_whVO" alias="pro_wh"/>
 
 		
 		<!-- 희성이꼬 --><!-- 즐, 똥, 엿-->

@@ -22,9 +22,11 @@ import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.NoteVO;
 import kr.or.dw.vo.O_DetailVO;
 import kr.or.dw.vo.OrderVO;
+import kr.or.dw.vo.Pro_whVO;
 import kr.or.dw.vo.ProcessVO;
 import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.SiVO;
+import kr.or.dw.vo.WareHouseVO;
 
 
 @Service
@@ -124,7 +126,6 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Map<String, Object> allOrderList(Map<String, Object> dataMap) throws SQLException {
 		List<OrderVO> list = null;
-		System.out.println("1");
 		SearchCriteria cri = (SearchCriteria) dataMap.get("cri");
 		String c_no = (String) dataMap.get("c_no");
 		
@@ -134,9 +135,8 @@ public class ProductServiceImpl implements ProductService {
 		
 		
 		list = productDAO.allOrderList(dataMap, rowBounds);
-
+		String order = (String) dataMap.get("order");
 		
-		System.out.println("2");
 		if(cri.getSearchType().equals("p") || cri.getSearchType().equals("pcw")) {
 			List<String> pr_no = productDAO.getPr_no(cri);
 			String pr_no1 = pr_no.get(0);
@@ -155,7 +155,6 @@ public class ProductServiceImpl implements ProductService {
 		map.put("list", list);
 		map.put("pageMaker", pageMaker);
 		
-		System.out.println("3");
 		return map;
 	}
 
@@ -177,6 +176,61 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public String getFileName(String dr_no) throws SQLException {
 		return productDAO.getFileName(dr_no);
+	}
+
+	@Override
+	public List<ProductVO> getContents(List<String> name, String c_no) throws SQLException {
+		List<ProductVO> list = new ArrayList<>();
+		Map<String, String> map = new HashMap<>();
+		map.put("c_no", c_no);
+		System.out.println("name.size() = " + name.size());
+		System.out.println(name);
+		for(int i = 0; i < name.size(); i++) {
+			map.put("name", name.get(i));
+			ProductVO product = productDAO.getContent(map);
+			map.remove("name");
+			
+			list.add(product);
+		}
+		return list;
+	}
+
+	@Override
+	public String getC_no(String c_name) throws SQLException {
+		return productDAO.getC_no(c_name);
+	}
+
+	@Override
+	public List<Pro_whVO> getWhList(String pr_name) throws SQLException {
+		return productDAO.getWhList(pr_name);
+	}
+
+	@Override
+	public int orderRegist(OrderVO order) throws SQLException {
+		System.out.println("기안문업데이트한다");
+		productDAO.draftUpdate(order.getDr_no());
+		System.out.println("발주요청사항등록한다");
+		productDAO.orderRegist(order);
+		System.out.println("번호갖고온다");
+		int o_no = productDAO.getO_no();
+		System.out.println("갖고온 번호다 : " + o_no);
+		return o_no;
+	}
+
+	@Override
+	public void insertOrderDetail(List<O_DetailVO> detail) throws SQLException {
+		System.out.println("디테일사항 for문 돌린다");
+		for(int i = 0; i < detail.size(); i++) {
+			System.out.println("디테일사항 등록한다");
+			productDAO.insertOrderDetail(detail.get(i));
+		}
+	}
+
+	@Override
+	public void orderCancel(int o_no, String dr_no) throws SQLException {
+		productDAO.removeDetail(o_no);
+		productDAO.removeOrder(o_no);
+		productDAO.draftOrder(dr_no);
 	} 
 	
 	
