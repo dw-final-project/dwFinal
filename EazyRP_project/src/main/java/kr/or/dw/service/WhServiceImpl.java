@@ -49,10 +49,6 @@ public class WhServiceImpl implements WhService{
 			
 			String getWh_no = whList.get(i).getWh_no();
 			
-//			List<String> eName = whDAO.selectEName(getWh_no);
-//			System.out.println(eName.get(i));
-//			whList.get(i).setE_name(eName.get(i));
-			
 			List<String> productName = whDAO.selectProductName(getWh_no); // 해당 pr_no 의 pr_name 값을 가져온다.
 			String pr_name = "";
 			if (productName.size() == 1) {
