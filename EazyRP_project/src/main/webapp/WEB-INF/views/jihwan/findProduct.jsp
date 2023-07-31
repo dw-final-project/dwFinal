@@ -65,7 +65,6 @@
 	$(document).ready(function() {
 		let parentInputId = opener.$("#cnt").val();
 		
-		
 		$('#tab').on('click', 'tr', function() {
 			let pr_noName = $(this).find('#pr_no').val();
 			let productName = $(this).find('.pr_name').text();
@@ -75,6 +74,7 @@
 			let price = $(this).find('.cost').val();
 			let parentEl = $("#" + parentInputId, opener.document);
 			console.log(parentEl.parents('tr').find('input#cost'))
+			console.log(parentEl)
 			parentEl.val(productName);
 			$('#c_name', opener.document).val(companyName);
 			parentEl.parents('tr').find('input#cost').val(price);
@@ -89,7 +89,7 @@
 			for(let i = 0; i < inputAmount.length; i++){
 				sum += Number(opener.$('input[name="amount"]').eq(i).val());
 			}
-			
+			debugger;
 			opener.$('#totalAmount').val(sum);
 			
 			window.close();

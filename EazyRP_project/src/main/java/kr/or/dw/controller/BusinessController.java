@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -386,6 +388,7 @@ public class BusinessController {
 	public ModelAndView siRegist(ModelAndView mnv,  HttpSession session) throws SQLException {
 		int empno = Integer.parseInt(session.getAttribute("emp_no").toString());
 		String ename = siService.ename(empno);
+		System.out.println(ename);
 		String url = "jihwan/si_regist.open";
 		mnv.setViewName(url);
 		mnv.addObject("empno",empno);
@@ -393,14 +396,41 @@ public class BusinessController {
 		return mnv;
 	}
 	
-	
-	
-	@RequestMapping("/s_Sheet")
-	public String sSheet() {
-		String url = "jihwan/s_Sheet";
-		return url;
+	@RequestMapping("/insertSi")
+	public void insertSi(int emp_no, String[] pr_no, String[] pr_name, int[] quantity, String wh_no, String[] content, @DateTimeFormat(pattern="yyyy-MM-dd") Date shipdate, HttpServletResponse res) throws IOException, SQLException {
+		
+		List<SiVO> siVO = new ArrayList<SiVO>();
+		
+		System.out.println(emp_no);
+		for(int i= 0; i < pr_no.length; i++) {
+			SiVO si = new SiVO();
+			si.setEmp_no(emp_no);
+			si.setPr_no(pr_no[i]);
+			si.setWh_no(wh_no);
+			si.setQuantity(quantity[i]);
+			si.setContent(content[i]);
+			si.setShipdate(shipdate);
+			siVO.add(si);	
+		}
+		
+		siService.insertSi(siVO);
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 등록되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
 	}
 	
+	
+	
+	
+//	@RequestMapping("/s_Sheet")
+//	public String sSheet() {
+//		String url = "jihwan/s_Sheet";
+//		return url;
+//	}
+//	
 	
 	
 }

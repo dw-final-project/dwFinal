@@ -16,6 +16,8 @@ public interface SiService {
 	Map<String, Object> selectSiDetail(String si_no) throws SQLException;
 
 	String ename(int empno) throws SQLException;
+
+	void insertSi(List<SiVO> siVO) throws SQLException;
 	
 	
 }
