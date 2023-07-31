@@ -52,6 +52,10 @@
 	</select>
 	
 	<insert id="insertWh" parameterType="wh">
+	
+		<selectKey keyProperty="wh_no" order="BEFORE" resultType="java.lang.String">
+			<include refid="makeWhNoSeq"></include>
+		</selectKey>
 		INSERT INTO wh	
 		(
 			wh_no,
@@ -67,18 +71,29 @@
 		)
 		VALUES
 		(
-			wh_no_seq.nextval,
+			#{wh_no},
 			sysdate,
 			#{emp_no},
 			1,
 			#{files},
 			#{wo_no},
-			#{sys_up},
-			#{updatedate},
-			#{sys_reg},
+			#{emp_no},
+			sysdate,
+			#{emp_no},
 			#{wh_total}
 		)
 	</insert>
+	
+	<sql id="makeWhNoSeq">
+	SELECT ('WH_') || CASE 
+						WHEN LENGTH(wh_no_seq.nextval) = 1
+						THEN '00' || wh_no_seq.nextval
+						WHEN LENGTH(wh_no_seq.nextval) = 2
+						THEN '0' || wh_no_seq.nextval
+						ELSE '' || wh_no_seq.nextval
+			   	      END WH_NO
+	  FROM dual
+</sql>
 	
 	<insert id="insertWhDetail" parameterType="wh">
 		INSERT INTO whdetail (
@@ -89,7 +104,7 @@
 			outprice,
 			wh_no2,
 			fac_no,
-			total_outprice,
+			total_outprice
 		)
 		VALUES(
 			detail_no_seq.nextval,

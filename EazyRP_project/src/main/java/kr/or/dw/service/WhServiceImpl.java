@@ -41,14 +41,18 @@ public class WhServiceImpl implements WhService{
 		pageMaker.setTotalCount(totalCount);
 		
 		Map<String, Object> dataMap = new HashMap<String, Object>();
-		dataMap.put("whList", whList);
-		dataMap.put("pageMaker", pageMaker);
 		
 		
 		// 제품의 이름을 담을 객체를 선언한다.
 		// 현재 해당하는 생산입고 게시글에서 창고번호를 조회하고 매퍼에서 가져온 창고명을 넣어준다.
 		for(int i = 0; i < whList.size(); i++) {
+			
 			String getWh_no = whList.get(i).getWh_no();
+			
+//			List<String> eName = whDAO.selectEName(getWh_no);
+//			System.out.println(eName.get(i));
+//			whList.get(i).setE_name(eName.get(i));
+			
 			List<String> productName = whDAO.selectProductName(getWh_no); // 해당 pr_no 의 pr_name 값을 가져온다.
 			String pr_name = "";
 			if (productName.size() == 1) {
@@ -56,8 +60,8 @@ public class WhServiceImpl implements WhService{
 			} else {
 				pr_name = productName.get(0) + " 외 " + (productName.size() - 1) + "건";
 			}
-			
 			whList.get(i).setPr_name(pr_name);
+			
 		}
 
 		return dataMap;

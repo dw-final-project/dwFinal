@@ -40,15 +40,20 @@
 								</tr>
 									<c:forEach items="${woList}" var="wo" varStatus="">
 									<tr>
-										<td width="15%" style="text-align: center;">${wo.sys_regdate}</td>
+										<td width="15%" style="text-align: center;">
+											<fmt:formatDate value="${wo.sys_regdate}" pattern="yyyy-MM-dd"></fmt:formatDate>
+										</td>
 										<td width="30%" style="text-align: center;">
 											<a id="aTag" href="#" onclick="OpenWindow('/erp4/workorder/detail.do?wo_no=${wo.wo_no }&send=N', '작업지시서 보기', 700, 1000)">
 												${wo.wo_name }
 											</a>
 										</td>
 										<td width="10%" style="text-align: center;">${wo.e_name }</td>
-										<td width="15%" style="text-align: center;">${wo.deliverydate }</td>
-										<td width="10%" style="text-align: center;">${note.senddate }</td>
+										<td width="15%" style="text-align: center;">
+											<fmt:formatDate value="${wo.deliverydate }" pattern="yyyy-MM-dd"></fmt:formatDate>
+										</td>
+										<td width="10%" style="text-align: center;"><fmt:formatDate value="${estimate.REGDATE }"
+											pattern="yyyy-MM-dd"></fmt:formatDate>${note.senddate }</td>
 										<td width="15%" style="text-align: center;">${wo.progress == '0' ? '대기중' : (wo.progress == '1' ? '진행중' : '완료')}</td>
 									</tr>
 									</c:forEach>

@@ -13,6 +13,13 @@
 <head>
 <meta charset="UTF-8">
 <title>공장 목록</title>
+<style>
+	.trHover:hover{
+			background-color: #dfdfdf;
+			transition-propety: background-color;
+			transition-duration: 1s;
+	}
+</style>
 </head>
 <body>
 	<div class="card-body pad">
@@ -59,6 +66,7 @@
 	$(document).ready(function() {
 		
 		let parentInputId = opener.$("#cnt").val();
+		let parentInputId2 = opener.$("#find_fac").val();
 		
 		$('tr').on('click', function(){
 			let fac_noName = $(this).find('#fac_name').text();
@@ -66,7 +74,7 @@
 			let parentEl = $("#" + parentInputId, opener.document);
 // 			parentEl.val(fac_noName);
 			parentEl.parents('tr').find('input.fac_names').val(fac_noName);
-// 			parentEl.parents('tr').find('input[name="wh_no"]').val($(this).find('#wh_no').val());
+			parentEl.parents('tr').find('input[name="fac_no"]').val($(this).find('#fac_no').text());
 			window.close();
 			
 // 			$('#wh_no', opener.document).val($(this).find('#wh_name').text() + " / " + $(this).find('#addr').text());

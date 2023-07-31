@@ -18,7 +18,7 @@
 								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>보낸사람</option>
 								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>업  체</option>
 							</select>
-							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
+							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${cri.keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
 								<button class="btn btn-primary" type="button" id="searchBtn">
 									<i class="fa fa-fw fa-search" style="font-size: 0.8em; padding: 0px;"></i>
@@ -31,11 +31,13 @@
 						<div>
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
-									<th width="20%" style="text-align: center;">등록일자</th>
-									<th width="20%" style="text-align: center;">생산입고코드</th>
-									<th width="20%" style="text-align: center;">제품명</th>
-									<th width="20%" style="text-align: center;">작업지시서</th>
-									<th width="20%" style="text-align: center;">상태</th>
+									<th style="text-align: center;">등록일자</th>
+									<th style="text-align: center;">생산입고 코드</th>
+									<th style="text-align: center;">받는 창고</th>
+									<th style="text-align: center;">담당자</th>
+									<th style="text-align: center;">제품명</th>
+									<th style="text-align: center;">작업지시서</th>
+									<th style="text-align: center;">상태</th>
 								</tr>
 									<c:forEach items="${whList}" var="wh" varStatus="loop">
 									<tr>
@@ -45,8 +47,10 @@
 												${wh.wh_no}
 											</a>
 										</td>
+										<td style="text-align: center;">11111</td>
+										<td style="text-align: center;">${wh.e_name}</td>
 										<td style="text-align: center;">${wh.pr_name}</td>
-										<td style="text-align: center;">아직안됨ㅋ</td>
+										<td style="text-align: center;">${wh.wo_no }</td>
 										<td style="text-align: center;">${wh.progress == '0' ? '대기중' : (wh.progress == '1' ? '진행중' : '완료')}</td>
 									</tr>
 									</c:forEach>
