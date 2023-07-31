@@ -10,11 +10,11 @@
 
 <script>
 
-	function goPage(murl, mcode, mname){
+	function goPage(murl, mcode, micon){
 
 		sessionStorage.setItem("mcode", mcode);
 		sessionStorage.setItem("murl", murl);
-		sessionStorage.setItem("mname", mname);
+		sessionStorage.setItem("micon", micon);
 		
 		let modMcode = mcode.substring(0,3) + "0000";
 

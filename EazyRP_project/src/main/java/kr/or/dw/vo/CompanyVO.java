@@ -16,6 +16,6 @@ public class CompanyVO {
 	private String addr;
 	private String sp_no;
 	private String sys_up;
-	private String sys_regdate;
+	private String sys_reg;
 	
 }
