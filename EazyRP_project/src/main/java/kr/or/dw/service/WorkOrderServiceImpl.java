@@ -56,6 +56,25 @@ public class WorkOrderServiceImpl implements WorkOrderService{
 		}
 		
 		return dataMap;
+		
+	}
+	
+	@Override
+	public void registWorkOrder(List<WorkOrderVO> woList) throws SQLException {
+		
+		workOrderDAO.insertWorkOrder(woList.get(0));	// woList의 get 0번째는 wo_no 이다. (wo_no_seq로 시퀀서 등록되어있음)
+		
+		System.out.println("insertWorkOrder 완료");
+
+		int wo_no = woList.get(0).getWo_no();
+		
+		for (WorkOrderVO wo : woList) {
+			wo.setWo_no(wo_no);
+			workOrderDAO.insertWorkOrderDetail(wo);
+		}
+		
+		System.out.println("insertWorkOrderDetail 완료");
+		
 	}
 
 }
