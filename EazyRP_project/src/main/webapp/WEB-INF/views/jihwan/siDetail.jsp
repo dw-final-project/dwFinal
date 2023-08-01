@@ -144,6 +144,15 @@ let cnt = rownumList.length;
 console.log(cnt);
 let dtail_no = $('#dtail_no').val();
 
+
+
+$('button#modifyBtn').on('click', function(){
+	formObj.attr({
+		'action' : 'modifyForm.do',
+		'method' : 'post'
+//			'enctype' : 'multipart/form-data'
+	});
+
 // 제품 추가 버튼
 $('#addPutBtn').on('click', function(){
 	cnt++;
