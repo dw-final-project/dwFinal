@@ -81,7 +81,7 @@
         </tr>
         <tr>
         	<td width="40%" align="center"><b>생산 공장</b></td>
-            <td><input type="text" name="emp_no" id="receiver" value=""></td>
+            <td><input type="text" name="emp_no" id="find_fac" class="fac_names" value="" name="fac_name" readonly onclick="OpenWindow('/erp4/findFactory.do', '공장찾기', 400, 600)"></td>
         </tr>
         <tr>
             <td width="40%" align="center"><b>담당자</b></td>

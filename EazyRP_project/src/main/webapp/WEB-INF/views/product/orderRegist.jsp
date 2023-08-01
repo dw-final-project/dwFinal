@@ -12,7 +12,7 @@
     
     <style>
     	input {
-    		text-size : 100%;
+    		width: 80%;
     	}
     	html {
     		display: flex;
@@ -68,6 +68,7 @@
         }
         .readonly{
         	border: none;
+        	width: 80%;
         }
     </style>
 </head>
@@ -76,7 +77,7 @@
 <body>
     <h2>발주 요청 추가</h2>
 	<!-- card footer End -->
-<form role="form" method="post" action="/product/productBuyRegistFrom.do" enctype="multipart/form-data">
+<form id="submitForm" method="post" action="/product/orderRegistForm.do">
 	<table>
         <tr>
             <td width="40%" align="center"><b>작성자</b></td>
@@ -85,76 +86,76 @@
         <tr>
             <td width="40%" align="center"><b>발주 보고서 첨부</b></td>
             <td>
-            	<select name="dr_no" id="documentSel" style="width: 50%; height: 20px;">
+            	<input type="hidden" name="dr_no" id="dr_no">
+            	<select name="dr_no2" id="documentSel" style="width: 50%; height: 20px;" ${not empty name ? 'disabled' : ''}>
             			<option value="">보고서 선택</option>
             		<c:forEach items="${draft}" var="draft">
-            			<option value="${draft.dr_no }">${draft.title }</option>
+            			<option value="${draft.dr_no }" ${dr_no eq draft.dr_no ? 'selected' : '' }>${draft.title }</option>
             		</c:forEach>
 				</select>
-				<input type="button" id="documentInsertBtn" class="btn btn-primary" style="margin-left: 5px;"value="첨부">
+				<button type="button" id="documentInsertBtn" class="btn btn-primary" style="margin-left: 5px;">첨부</button>
 			</td>
         </tr>
         <tr>
             <td align="center"><b>발주 요청 업체</b></td>
-            <td></td>
+            <td><input type="text" value="${data.get(9) }" readonly class="readonly"><input type="hidden" name="con_c_no" value="${c_no }"></td>
         </tr>
     </table>
     <table>
     	<thead>
         <tr>
-            <th align="center" style="width: 25%;">창고명</th>
             <th align="center" style="width: 25%;">제품명</th>
+            <th align="center" style="width: 25%;">창고명</th>
             <th align="center" style="width: 25%;">수량</th>
-            <th align="center" style="width: 25%;">가격</th>
+            <th align="center" style="width: 25%;">발생 금액</th>
         </tr>
         </thead>
         <tbody id="prInput">
+        <input type="hidden" id="cnt" value="">
         <c:if test="${not empty name}">
          	<c:forEach var="nameItem" items="${name}" varStatus="loop">
                 <tr>
-                    <td>${quantity.get(loop.index) }</td>
-                    <td>${name.get(loop.index) }</td>
-                    <td></td>
-                    <td></td>
+                    <td><input class="readonly" name="pr_name" type="text" value="${name.get(loop.index) }" readonly><input type="hidden" name="pr_no" value="${product.get(loop.index).pr_no }"></td>
+                    <td><input type="text" name="wh_name" id="${loop.index }" placeholder="창고 선택" onclick="OpenWindow('/product/findWareHouse.do?pr_name=${product.get(loop.index).pr_name }&quantity=${quantity.get(loop.index) }','창고 찾기', 500,500);" readonly><input type="hidden" name="wh_no" id="no${loop.index }"><input type="hidden" name="lack" id="lack${loop.index }"></td>
+                    <td><input class="readonly" type="text" name="quantity" value=${quantity.get(loop.index) } readonly></td>
+                    <td><input class="readonly" type="text" name="buy_price2" value="${product.get(loop.index).pr_exprice }" readonly><input type="hidden" name="unit_price2" value="${product.get(loop.index).pr_inprice }"></td>
                 </tr>
             </c:forEach>
 		</c:if>
         </tbody>
         <tr class="total">
             <td colspan="2" align="center">총계</td>
-            <td colspan="2" align="center"></td>
+            <td colspan="2" align="center" id="total"><input class="readonly" type="text" id="buy_price" name="buy_price" value="${totalBuy }" readonly><input type="hidden" id="unit_price" value="${totalUnit }" name="unit_price"></td>
         </tr>
     </table>
-            <input type="submit" class="btn btn-primary" style="text-align : center;" value="요청">
-            <input type="button" id="calcelBtn" class="btn btn-warning" style="text-align : center;" value="닫기">
+    <button class="btn btn-primary" id="submitBtn" style="text-align : center;" value="">요청</button>
+    <button id="calcelBtn" class="btn btn-warning" style="text-align : center;" value="">닫기</button>
 </form>
 </body>
 
 <form id="documentForm" action="/product/document.do" method="post">
 	<input type="hidden" id="documentName" name="dr_no" value="">
 </form>
+
 <script>
-	$('#documentSel').on('change', function(){
+	$('#dr_no').val($('#documentSel').val());
+	
+	$('select[name="dr_no2"]').on('change', function(){
 		$('#documentName').val($('#documentSel').val());
 	})
-	
+
 	$('#documentInsertBtn').on('click', function(){
 		$('#documentForm').submit();
 	})
 	
-	// 창고코드 이벤트
-	$(document).on('click', '.wh_names', function(){
+	$('#submitBtn').on('click', function(){
+		$('#submitForm').submit();
+	})
+	
+	$('input[name="wh_name"]').on('click', function(){
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
 	})
-	
-	// 수량 이벤트
-	$(document).on('keyup', '.quantity', function(){
-// 		let quantity = $(this).val();
-		$(this).parent().next().children().val($(this).val()*$(this).next().val());
-	})
-	
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 		winleft = (screen.width - WinWidth) / 2;
 		wintop = (screen.height - WinHeight) / 2;
@@ -162,27 +163,8 @@
 								+ "height=" + WinHeight + ",top="+ wintop + ",left="
 								+ winleft + ",resizable=yes,status=yes");
 		win.focus();
-		return win;
-	};
-	
-	$(document).on('change, keyup', '#prInput', function(){
-		let sum = Number(0);
-		let inputAmount = $('input[name="amount"]').get();
-		for(let i = 0; i < inputAmount.length; i++){
-			sum += Number($('input[name="amount"]').eq(i).val());
-		}
-		
-		$('#price').val(sum);
-	})
-	
+		return win;}
 </script>
-
-	
-
-<!-- <script> -->
-
-
-<!-- </script> -->
 
 <script	src="<%=request.getContextPath()%>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 </html>

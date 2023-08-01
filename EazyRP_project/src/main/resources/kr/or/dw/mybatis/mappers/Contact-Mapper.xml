@@ -24,7 +24,9 @@
 		</if>
 	</sql>
 	
+
 	<!-- contact -->
+
 	<select id="selectContactList" resultType="company">
 		SELECT c.c_no
 			  ,c_name

@@ -152,8 +152,7 @@
 	<select id="allOrderList" resultType="order">
 		SELECT o.*, d.title title
 		FROM ordermanage o, draft d
-		WHERE o.buy_c_no = #{c_no}
-		 AND o.dr_no = d.dr_no
+		WHERE o.dr_no = d.dr_no
 		<if test="searchType == 'w'.toString()">
 			AND sys_reg LIKE '%' || #{keyword} || '%'
 		</if>
@@ -164,6 +163,13 @@
 			AND (sys_reg LIKE '%' || #{keyword} || '%'
 			OR con_c_no LIKE '%' || #{keyword} || '%')
 		</if>
+		<if test="order == 'N'.toString()">
+			AND o.buy_c_no = #{c_no}
+		</if>
+		<if test="order == 'Y'.toString()">
+			AND o.con_c_no = #{c_no}
+		</if>
+		ORDER BY o.sys_regdate desc
 	</select>
 	
 	<select id="getSheet_no" resultType="str">
@@ -187,7 +193,9 @@
 	</select>
 	
 	<select id="insertOrderList" resultType="order">
-		SELECT * FROM ordermanage WHERE o_no = #{sheet} AND buy_c_no = #{c_no}
+		SELECT * FROM ordermanage 
+		WHERE o_no = #{sheet} 
+			AND buy_c_no = #{c_no}
 	</select>
 	
 	<select id="orderCount" resultType="int">
@@ -218,5 +226,70 @@
 	<select id="getFileName" resultType="str">
 		SELECT files FROM draft WHERE dr_no = #{dr_no}
 	</select>
+	
+	<select id="getC_no" resultType="str">
+		SELECT c_no FROM company WHERE c_name = #{c_name}
+	</select>
+	
+	<select id="getContent" resultType="product">
+		SELECT * FROM product WHERE pr_name = #{name} AND rownum = 1
+	</select>
+	
+	<select id="getWhList" resultType="pro_wh">
+		SELECT w.*, p.pr_no, p.pr_name, p.PR_INPRICE, p.PR_EXPRICE, p.QUANTITY FROM warehouse w, product p WHERE p.wh_no = w.wh_no AND p.pr_name = #{pr_name}
+	</select>
+	
+	<insert id="orderRegist">
+		INSERT INTO ordermanage VALUES(
+				o_no_seq.nextval,
+				#{o_name},
+				'',
+				sysdate,
+				'',
+				'',
+				'접수중',
+				'',
+				'',
+				#{sys_reg},
+				#{buy_price},
+				#{unit_price},
+				#{buy_c_no},
+				#{con_c_no},
+				#{dr_no}
+		)
+	</insert>
+	
+	<update id="draftUpdate">
+		UPDATE draft SET order_gb = 'Y' WHERE dr_no = #{dr_no}
+	</update>
+	
+	<select id="getO_no" resultType="int">
+		SELECT o_no_seq.currval o_no FROM dual
+	</select>
+	
+	<insert id="insertOrderDetail">
+		INSERT INTO orderdetail VALUES(
+			od_no_seq.nextval,
+			#{o_no},
+			#{pr_no},
+			#{quantity},
+			#{buy_price},
+			#{unit_price},
+			#{wh_no},
+			#{lack}
+		)
+	</insert>
+	
+	<delete id="removeDetail">
+		DELETE orderdetail WHERE o_no = #{o_no}
+	</delete>
+	
+	<delete id="removeOrder">
+		DELETE ordermanage WHERE o_no = #{o_no}
+	</delete>
+	
+	<update id="draftOrder">
+		UPDATE draft SET order_gb = 'N'
+	</update>
 	
 </mapper>

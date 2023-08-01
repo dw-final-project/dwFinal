@@ -15,8 +15,10 @@ import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.NoteVO;
 import kr.or.dw.vo.O_DetailVO;
 import kr.or.dw.vo.OrderVO;
+import kr.or.dw.vo.Pro_whVO;
 import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.SiVO;
+import kr.or.dw.vo.WareHouseVO;
 
 @Mapper
 public interface ProductDAO {
@@ -58,6 +60,26 @@ public interface ProductDAO {
 	List<DraftVO> getOrderDraft(String c_no) throws SQLException;
 
 	String getFileName(String dr_no) throws SQLException;
+
+	ProductVO getContent(Map<String, String> map) throws SQLException;
+
+	String getC_no(String c_name) throws SQLException;
+
+	List<Pro_whVO> getWhList(String pr_name) throws SQLException;
+
+	void orderRegist(OrderVO order) throws SQLException;
+
+	int getO_no() throws SQLException;
+
+	void insertOrderDetail(O_DetailVO detail) throws SQLException;
+
+	void draftUpdate(String dr_no) throws SQLException;
+
+	void removeDetail(int o_no) throws SQLException;
+
+	void removeOrder(int o_no) throws SQLException;
+
+	void draftOrder(String dr_no) throws SQLException;
 
 
 	

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.dw.command.PageMaker;
 import kr.or.dw.command.SearchCriteria;
@@ -64,6 +65,19 @@ public class SiServiceImpl implements SiService {
 	public String ename(int empno) throws SQLException {
 		String ename = siDAO.ename(empno);
 		return ename;
+	}
+
+	@Transactional
+	@Override
+	public void insertSi(List<SiVO> siVO) throws SQLException {
+		siDAO.insertSi(siVO.get(0));
+		String si_no = siVO.get(0).getSi_no();
+		
+		for (SiVO si : siVO) {
+			si.setSi_no(si_no);
+			int result = siDAO.insertSiDetail(si);
+			if(result < 0) break;
+		}
 	} 
 	
 	

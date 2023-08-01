@@ -13,6 +13,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.dw.command.SearchCriteria;
+import kr.or.dw.service.EstimateService;
 import kr.or.dw.service.FactoryService;
 import kr.or.dw.service.MenuService;
 import kr.or.dw.service.ProcessService;
@@ -51,6 +53,8 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	private FactoryService factoryService;
 	@Autowired
 	private WorkOrderService workOrderService;
+	@Autowired
+	private EstimateService estimateService;
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 목록 열기
 	
@@ -183,16 +187,29 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	}
 	
 	@RequestMapping("/wh/registForm")
-	public String whRegistForm() {
+	public ModelAndView whRegistForm(ModelAndView mnv, HttpSession session) throws SQLException {
+		
+		int empno = Integer.parseInt(session.getAttribute("emp_no").toString());
+		String ename = estimateService.ename(empno);
+		
+		String c_no = session.getAttribute("c_no").toString();
+		String c_name = session.getAttribute("c_name").toString();
 		
 		String url = "heesung/wh/registForm.open";
-		return url;
+		
+		mnv.setViewName(url);
+		mnv.addObject("empno", empno);	// 사원번호
+		mnv.addObject("ename", ename);	// 사원이름
+		mnv.addObject("c_no", c_no);	// 회사이름
+		mnv.addObject("c_name", c_name);	// 회사번호
+		
+		return mnv;
 
 	}
 	
 	@RequestMapping("/wh/regist")
-	public void whRegist(HttpServletResponse res, int emp_no, int wo_no, String wh_total, String[] pr_no, String[] fac_no, String wh_no2[], 
-		String[] outprice, int[] quantity, String[] total_outprice) throws SQLException, IOException {
+	public void whRegist(HttpServletResponse res, int emp_no,  int wo_no, int wh_total, String[] pr_no, String[] fac_no, String wh_no[], 
+		int[] outprice, int[] quantity, int[] total_outprice, @RequestParam("files")MultipartFile multi) throws SQLException, IOException {
 		
 		System.out.println("erp4/wh/regist 컨트롤러 진입");
 		
@@ -202,17 +219,59 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 
 		List<WhVO> whDetailVoList = new ArrayList<WhVO>();	// 상세 정보들을 만들기 위한 객체
 		
+		String filess = "";
+		
+		if(!multi.isEmpty()) {
+			UUID uuid = UUID.randomUUID();
+			String[] uuids = uuid.toString().split("-");
+			
+			String uniqueName = uuids[0];
+			
+			String fileRealName = multi.getOriginalFilename();
+			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
+			String uploadFolder = "C:\\upload\\";
+			
+			filess = uniqueName+fileExtension;
+			
+			
+			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
+			
+			if(!saveFile.exists()) {
+				saveFile.mkdirs();
+			}
+			
+			try {
+				multi.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		for(int i = 0; i < pr_no.length; i++) {
+			
+			System.out.println("pr_no.length : " + pr_no.length);
+			System.out.println("pr_no : " + pr_no[i]);
+			System.out.println("fac_no: " + fac_no[i]);
+			System.out.println("wh_no2: " + wh_no[i]);
+			System.out.println("outprice: " + outprice[i]);
+			System.out.println("quantity: " + quantity[i]);
+			System.out.println("total_outprice: " + total_outprice[i]);
+			System.out.println("files : " + total_outprice[i]);
+			
 			WhVO whDetailVo = new WhVO();
+			
 			whDetailVo.setEmp_no(emp_no);
 			whDetailVo.setWo_no(wo_no);
 			whDetailVo.setWh_total(wh_total);
 			whDetailVo.setPr_no(pr_no[i]);
 			whDetailVo.setFac_no(fac_no[i]);
-			whDetailVo.setWh_no2(wh_no2[i]);
+			whDetailVo.setWh_no2(wh_no[i]);
 			whDetailVo.setOutprice(outprice[i]);
 			whDetailVo.setQuantity(quantity[i]);
 			whDetailVo.setTotal_outprice(total_outprice[i]);
+			whDetailVo.setFiles(filess);
 			
 			whDetailVoList.add(whDetailVo);
 		}

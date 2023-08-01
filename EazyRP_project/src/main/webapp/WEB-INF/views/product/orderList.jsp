@@ -39,7 +39,7 @@
 								</tr>
 									<c:forEach items="${list}" var="order" varStatus="loop">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/product/orderDetail.do?o_no=${order.o_no }&orders=Y', '발주 내역', 700, 700)">${order.o_name }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/product/orderDetail.do?o_no=${order.o_no }&orders=N', '발주 내역', 700, 700)">${order.o_name }</a></td>
 										<td style="text-align: center;">${order.sys_regdate }</td>
 										<td style="text-align: center;">${order.sys_reg }</td>
 										<td style="text-align: center;">${order.progress }</td>
@@ -54,8 +54,6 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/product/orderRegist.do', '발주 요청', 700, 700)"
-					style="width: 100px; margin: 20px; align-self: center;">발주 요청</button>
 				</div>
 			</div>
 			
