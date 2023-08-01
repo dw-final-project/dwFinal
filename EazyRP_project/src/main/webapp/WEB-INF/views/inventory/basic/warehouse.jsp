@@ -9,14 +9,14 @@
 			<div class="col-md-10" style="max-width: 1100px;">
 				<div class="card card-outline card-info">
 					<div class="card-header" style="border-bottom: none;">
-						<h2 class="card-title p-1">거래처관리</h2>
+						<h2 class="card-title p-1">창고관리</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/erp4/contact.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/erp4/warehouse.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
-								<option value="d" ${searchType eq 'c' ? 'selected' : '' }>업체명</option>
-								<option value="t" ${searchType eq 'r' ? 'selected' : '' }>대표자명</option>
-								<option value="w" ${searchType eq 'p' ? 'selected' : '' }>취급품목</option>
+								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>창고명</option>
+								<option value="a" ${searchType eq 'a' ? 'selected' : '' }>주소</option>
+								<option value="g" ${searchType eq 'g' ? 'selected' : '' }>가동여부</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${cri.keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
@@ -31,25 +31,17 @@
 						<div>
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
-									<th width="150px" style="text-align: center;">거래처 코드</th>
-									<th width="150px" style="text-align: center;">거래처 명</th>
-									<th width="150px" style="text-align: center;">대표자 명</th>
-									<th width="200px" style="text-align: center;">전화번호</th>
-									<th width="200px" style="text-align: center;">핸드폰 번호</th>
-									<th width="150px" style="text-align: center;">취급품목</th>
-									<th width="300px" style="text-align: center;">계좌</th>
-									<th width="300px" style="text-align: center;">주소</th>
+									<th width="150px" style="text-align: center;">창고명</th>
+									<th width="200px" style="text-align: center;">주소</th>
+									<th width="100px" style="text-align: center;">가동여부</th>
+									<th width="150px" style="text-align: center;">소유회사</th>
 								</tr>
-									<c:forEach items="${contactList}" var="contact">
+									<c:forEach items="${warehouseList}" var="warehouse">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('contactDetail.do?c_no=${contact.c_no }','거래처 조회', 800 , 600);">${contact.c_no }</a></td>
-										<td style="text-align: center;">${contact.c_name }</td>
-										<td style="text-align: center;">${contact.c_rname }</td>
-										<td style="text-align: center;">${contact.c_tel }</td>
-										<td style="text-align: center;">${contact.c_phone }</td>
-										<td style="text-align: center;">${contact.keyword }</td>
-										<td style="text-align: center;">${contact.account }</td>
-										<td style="text-align: center;">${contact.addr }</td>
+										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('warehouseDetail.do?wh_no=${warehouse.wh_no }','창고 수정/삭제', 800 , 600);">${warehouse.wh_name }</a></td>
+										<td style="text-align: center;">${warehouse.addr }</td>
+										<td style="text-align: center;">${warehouse.wh_gb }</td>
+										<td style="text-align: center;">${warehouse.c_no }</td>
 									</tr>
 									</c:forEach>
 							</table>
@@ -60,8 +52,8 @@
 					</div>
 					</div>
 						<div style="display: flex; align-items: end; justify-content: end;">
-								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('contactRegistForm.do', '거래처 등록', 700, 700)"
-								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">거래처 등록</button>
+								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('warehouseRegistForm.do', '창고 등록', 700, 700)"
+								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">창고 등록</button>
 						</div>
 			</div>
 		</div>
