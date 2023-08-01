@@ -6,5 +6,5 @@ import java.util.Map;
 import kr.or.dw.command.SearchCriteria;
 
 public interface WorkOrderService {
-	Map<String, Object> selectWorkOrderList(SearchCriteria cri) throws SQLException;
+	Map<String, Object> selectWorkOrderList(Map<String, Object> map) throws SQLException;
 }
