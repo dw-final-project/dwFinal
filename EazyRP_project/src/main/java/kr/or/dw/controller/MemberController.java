@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.Random;
 
 import javax.mail.MessagingException;
@@ -27,8 +28,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.service.MailSendService;
 import kr.or.dw.service.MemberService;
+import kr.or.dw.service.QnaService;
 import kr.or.dw.vo.MemberVO;
 
 @Component
@@ -39,6 +42,9 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
+	@Autowired
+	private QnaService qnaService;
+	
 	@Autowired
 	private MailSendService mailService;
 	
@@ -55,11 +61,13 @@ public class MemberController {
 		return mnv;
 	}
 	@RequestMapping("/qna")
-	public ModelAndView qna (ModelAndView mnv, String mcode, HttpSession session) {
+	public ModelAndView qna (SearchCriteria cri, ModelAndView mnv, String mcode, HttpSession session) throws Exception {
 		String url = "/common/inquiryForm.page";
-		
+		Map<String, Object> dataMap = qnaService.selectQnaList(cri);
 		mnv.addObject("mcode", mcode);
+		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
+		
 		return mnv;
 		
 	}

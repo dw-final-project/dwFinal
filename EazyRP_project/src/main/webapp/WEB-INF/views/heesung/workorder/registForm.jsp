@@ -77,32 +77,38 @@
 	<table>
         <tr>
         	<td width="40%" align="center"><b>제목</b></td>
-            <td><input type="text" name="emp_no" id="receiver" value=""></td>
+            <td><input type="text" name="wo_name"></td>
         </tr>
         <tr>
-        	<td width="40%" align="center"><b>생산 공장</b></td>
-            <td><input type="text" name="emp_no" id="find_fac" class="fac_names" value="" name="fac_name" readonly onclick="OpenWindow('/erp4/findFactory.do', '공장찾기', 400, 600)"></td>
+        	<td width="40%" align="center" id="workorder"><b id="factory">생산 공장</b></td>
+            <td>
+            	<input type="hidden" name="fac_no" value="">
+            	<input type="text" id="find_fac" class="fac_names" value="" name="fac_name" readonly onclick="OpenWindow('/erp4/findFactory.do', '공장찾기', 400, 600)"></td>
         </tr>
         <tr>
             <td width="40%" align="center"><b>담당자</b></td>
             <td>
 	            <input type="hidden" name="emp_no" id="receiver" value="${empno }">
-	            <input type="text" style="width: 100%;" value="${ename }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
+	            <input type="text" style="width: 100%;" value="${c_name } / ${ename }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
             </td>
         </tr>
         <tr>
         	<td width="40%" align="center"><b>납기일</b></td>
         	<td width="40%" align="center">
-				<input type="date" id="endperiod" name="endperiod" class="form-control col-sm-9 mch7" value="" placeholder="판매종료일을 입력하세요.">
+				<input type="date" id="endperiod" name="deliverydate" class="form-control mch7" value="" placeholder="납기일을 입력하세요.">
         	</td>
         </tr>
         <tr>
-            <td width="40%" align="center"><b>상태</b></td>
-            <td><select name="progress" id="fc-select">
-			    <option value="0">대기중</option>
-			    <option value="1">진행중</option>
-			    <option value="2">완료</option>
-				</select></td>
+            <td width="40%" align="center">
+            	<b>상태</b>
+            </td>
+            <td>
+            	<select name="progress" id="fc-select">
+				    <option value="0">대기중</option>
+				    <option value="1">진행중</option>
+				    <option value="2">완료</option>
+				</select>
+			</td>
         </tr>
         <tr>
             <td align="center"><b>첨부파일</b></td>
@@ -115,8 +121,7 @@
     <table>
     	<thead>
         <tr>
-            <th align="center" style="width: 20%;">품목코드</th>
-            <th align="center" style="width: 20%;">품목명</th>           
+            <th align="center" style="width: 20%;">품목명</th>
             <th align="center" style="width: 20%;">수량</th>
             <th align="center" style="width: 15%;">비고</th>
             
@@ -128,13 +133,12 @@
         <tr>
             <td><input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>
             <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>
-            <td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>
             <td style="text-align : center;"></td>
         </tr>
         </tbody>
         <tr class="total">
-            <td colspan="3" align="center">총계</td>
-            <td colspan="2" align="center"><input type="text" id="totalAmount" style="width: 100%;" value=""></td>
+            <td colspan="2" align="center">총량</td>
+            <td colspan="1" align="center"><input type="text" id="woTotal" style="width: 100%;" value=""></td>
         </tr>
     </table>
             <input type="button" id="registBtn" class="btn btn-primary" style="text-align : center;" value="등록">
@@ -148,9 +152,7 @@
 		cnt++;
 		$('#prInput').append('<tr>'+
         '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
-        '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'+
         '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
-        '<td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>'+
         '<td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>'+
     '</tr>');
 		
@@ -177,6 +179,7 @@
 	
 	// 창고코드 이벤트
 	$(document).on('click', '.wh_names', function(){
+		
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
 		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
@@ -200,12 +203,12 @@
 	
 	$(document).on('change, keyup', '#prInput', function(){
 		let sum = Number(0);
-		let inputAmount = $('input[name="amount"]').get();
+		let inputAmount = $('input[name="quantity"]').get();
 		for(let i = 0; i < inputAmount.length; i++){
-			sum += Number($('input[name="amount"]').eq(i).val());
+			sum += Number($('input[name="quantity"]').eq(i).val());
 		}
 		
-		$('#totalAmount').val(sum);
+		$('#woTotal').val(sum);
 	})
 	
 	$('#registBtn').on('click', function () {

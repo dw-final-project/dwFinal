@@ -1,118 +1,68 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!doctype html>
-<html lang="ko">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="cri" value="${pageMaker.cri }"/>
+<div style="height: 40px"></div>
+<section class="content container-fluid">
+		<div class="row justify-content-center">
+			<div class="col-md-10" style="max-width: 1100px;">
+				<div class="card card-outline card-info">
+					<div class="card-header" style="border-bottom: none;">
+						<h2 class="card-title p-1">문의사항</h2>
+						<div class="input-group row" style="width: 90%; margin-left: 50%;">
+						<form id="searchForm2" method="post" action="/member/qna.do?mcode=${mcode }" style="display: contents;">
+							</form>
+						</div>
+					</div>
+					
+					<div class="card-body pad">
+					<div>
+							<table class="table accordion text-center">
+								<thead>
+									<tr>
+										<th scope="col" width="300px" style="text-align: center;">내 용</th>
+										<th scope="col" width="100px" style="text-align: center;">날 짜</th>
+										<th scope="col" width="100px" style="text-align: center;">답변여부</th>
+									</tr>
+								</thead>
+								<c:forEach items="${qnaList}" var="qna">
+									<tbody>
+										<tr id ="r2" data-bs-toggle="collapse" data-bs-target="#r1">
+											<td style="text-align: center;">${qna.INQ_TITLE }</td>
+											<td style="text-align: center;">${qna.REGDATE }</td>
+											<td style="text-align: center;">${empty qna.ANS_CON ? 'N' : 'Y' }</td>
+										</tr>
+										<tr class="collapse accordion-collapse" style="position: absolute; z-index : 3; display: contents;" id="r1"
+											data-bs-parent=".table">
+											<td colspan="3" >${qna.ANS_CON }</td>
+										</tr>
+								</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
+							<div class="card-footer">
+								<%@ include file="/WEB-INF/views/common/pagination.jsp"%>
+							</div>
+						</div>
+						<div style="display: flex; align-items: end; justify-content: end;">
+								<button type="button" class="btn btn-primary" id="registBtn" action="/common/inqurty.do"
+								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">문의 하기</button>
+						</div>
+					</div>
+				</div>
 
-<head>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>문의답변확인</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" rel="stylesheet">
+	</section>
+	
+<script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="<%=request.getContextPath() %>/resources/bootstrap/dist/js/adminlte.min.js"></script>
+	
+<script>
+	
 
-
-  <style>
-    html, body{
-      width: 100%;
-      height: 100%;
-    }
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-
-    .b-example-divider {
-      height: 3rem;
-      background-color: rgba(0, 0, 0, .1);
-      border: solid rgba(0, 0, 0, .15);
-      border-width: 1px 0;
-      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .05);
-    }
-
-    .b-example-vr {
-      flex-shrink: 0;
-      width: 1.5rem;
-      height: 100vh;
-    }
-
-    .bi {
-      vertical-align: -.125em;
-      fill: currentColor;
-    }
-
-    .p-2 {
-      color: whitesmoke;
-    }
-
-    .nav d-flex {
-      justify-content: space-evenly;
-    }
-
-  </style>
-  <!-- Custom styles for this template -->
-</head>
-
-<body class="bg-light">
-
-  
-  <!--1234512512124-->
-  <div class="h-60 col-lg-10 container text-center;">
-    <!-- .card -->
-    <div class="card card-fluid" style="width: 80%;">
-      <div class="card-body" style="text-align: center;">
-        <!-- form -->
-        <div class="d-flex align-items-center pb-3 mb-3 text-center link-dark text-decoration-none border-bottom">
-          <span class="fs-5 fw-semibold "> 문의사항 </span>
-        </div>  
-        <div class="row">
-          <div class="col-12 table-responsive">
-          <table class="table table-striped">
-          <thead>
-          <tr>
-          <th class="mb-6 text-center">내 용</th>
-          <th class="mb-3 text-center">날 짜</thv>
-          <th class="mb-3 text-center">답변여부</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-          <td class="mb-6">문의내용ㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
-          <td class="mb-3">2023.05.10</td>
-          <td class="mb-3"> O </td>
-          </tr>
-          <tr >
-          <td class=" text-center align-middle"colspan="3" style=" height: 200px;">문의 답변 내용 ddddddddddddddㅇㅇㅇㅇㅇㅇ</td>
-          </tr>
-
-
-          </tbody>
-          </table>
-          </div>
-          
-          </div>
-
-
-
-        </div>
-      </div>
-</div>
-
-  <!-- footer -->
-  
-
-
-</body>
-
-</html>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+</script>
+<%@ include file="../include/footer_js.jsp"%>

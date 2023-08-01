@@ -50,6 +50,7 @@
 								<th style="text-align: center;">등록일자</th>
 								<th style="text-align: center;">사원이름</th>
 								<th style="text-align: center;">품목명</th>
+								<th style="text-align: center;">총 수량</th>
 								<th style="text-align: center;">진행 상태</th>
 							</tr>
 							<c:forEach items="${siList }" var="si">
@@ -61,6 +62,7 @@
 											pattern="yyyy-MM-dd"></fmt:formatDate></td>
 									<td>${si.E_NAME}</td>
 									<td>${si.PR_NAME }</td>
+									<td>${si.QUANTITY }</td>
 									<td>${si.PROGRESS }</td>
 								</tr>
 							</c:forEach>

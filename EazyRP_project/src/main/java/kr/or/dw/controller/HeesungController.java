@@ -70,10 +70,14 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	}
 	
 	@RequestMapping("/findWorkOrder")
-	public ModelAndView findWorkOrder(ModelAndView mnv, SearchCriteria cri) throws SQLException {
+	public ModelAndView findWorkOrder(ModelAndView mnv, SearchCriteria cri, HttpSession session) throws SQLException {
 		String url = "heesung/findWorkOrder.open";
 		
-		Map<String, Object> dataMap = workOrderService.selectWorkOrderList(cri);
+		String c_no = session.getAttribute("c_no").toString();
+		Map<String, Object> map = new HashMap<>();
+		map.put("cri", cri);
+		map.put("c_no", c_no);
+		Map<String, Object> dataMap = workOrderService.selectWorkOrderList(map);
 		
 		mnv.setViewName(url);
 		mnv.addAllObjects(dataMap);
@@ -290,14 +294,18 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////workorder(작업지시서)
 	
 	@RequestMapping("/workorder")
-	public ModelAndView workorder(ModelAndView mnv, SearchCriteria cri, String mcode) throws SQLException {
+	public ModelAndView workorder(ModelAndView mnv, SearchCriteria cri, String mcode, HttpSession session) throws SQLException {
 		
 		System.out.println("HeesungController - erp4/workorder 진입");
 		
 		// 페이지 정보와 작업지시서의 정보를 가지고 url에 반환할것이다 url에서는 게시판 형태로 사용자에게 보여준다.
 		String url = "heesung/workorder/main.page";
 		
-		Map<String, Object> dataMap = workOrderService.selectWorkOrderList(cri);
+		String c_no = session.getAttribute("c_no").toString();
+		Map<String, Object> map = new HashMap<>();
+		map.put("cri", cri);
+		map.put("c_no", c_no);
+		Map<String, Object> dataMap = workOrderService.selectWorkOrderList(map);
 		
 		mnv.setViewName(url);
 		mnv.addObject("mcode", mcode);
@@ -307,9 +315,26 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	}
 	
 	@RequestMapping("/workorder/registForm")
-	public String workorderRegistForm() {
+	public ModelAndView workorderRegistForm(ModelAndView mnv, HttpSession session) throws SQLException {
+		
+		int empno = Integer.parseInt(session.getAttribute("emp_no").toString());
+		String ename = estimateService.ename(empno);
+		
+		String c_no = session.getAttribute("c_no").toString();
+		String c_name = session.getAttribute("c_name").toString();
+		
 		String url = "heesung/workorder/registForm.open";
-		return url;
+		
+		mnv.setViewName(url);
+		mnv.addObject("empno", empno);		// 사원번호
+		mnv.addObject("ename", ename);		// 사원이름
+		mnv.addObject("c_no", c_no);		// 회사번호
+		mnv.addObject("c_name", c_name);	// 회사이름
+		
+		return mnv;
 	}
+	
+//	@RequestMapping("/workorder/regist")
+//	public
 	
 }

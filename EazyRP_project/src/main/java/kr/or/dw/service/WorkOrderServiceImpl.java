@@ -21,19 +21,19 @@ public class WorkOrderServiceImpl implements WorkOrderService{
 	private WorkOrderDAO workOrderDAO;
 	
 	@Override
-	public Map<String, Object> selectWorkOrderList(SearchCriteria cri) throws SQLException {
+	public Map<String, Object> selectWorkOrderList(Map<String, Object> map) throws SQLException {
 		
 		List<WorkOrderVO> woList = null;
-		
+		SearchCriteria cri = (SearchCriteria) map.get("cri");
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		// 현재 page 번호에 맞는 리스트를 perPageNum 개수 만큼 가져오기
-		woList = workOrderDAO.selectSearchWorkOrderList(cri, rowBounds);
+		woList = workOrderDAO.selectSearchWorkOrderList(rowBounds, map);
 		
 		// 전체 board 개수
-		int totalCount = workOrderDAO.selectSearchWorkOrderListCount(cri);
+		int totalCount = workOrderDAO.selectSearchWorkOrderListCount(map);
 		
 		// PageMaker 생성
 		PageMaker pageMaker = new PageMaker();

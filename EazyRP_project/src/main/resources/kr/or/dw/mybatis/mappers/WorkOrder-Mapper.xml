@@ -27,6 +27,7 @@
 		SELECT	*
 		FROM	workorder
 		WHERE	1=1
+		AND		c_no = #{c_no}
 		<include refid="search"></include>
 		ORDER BY wo_no desc
 	</select>
@@ -35,6 +36,7 @@
 		SELECT	COUNT(*)
 		FROM	workorder
 		WHERE	1=1
+		AND		c_no = #{c_no}
 		<include refid="search"></include>
 	</select>
 	

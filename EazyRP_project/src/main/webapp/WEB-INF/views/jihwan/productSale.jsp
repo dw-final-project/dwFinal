@@ -9,13 +9,14 @@
 			<div class="col-md-10" style="max-width: 1100px;">
 				<div class="card card-outline card-info">
 					<div class="card-header" style="border-bottom: none;">
-						<h2 class="card-title p-1">제품 발주</h2>
+						<h2 class="card-title p-1">제품 구매 내역</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/product/productOrder.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/erp4/productSale.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="tcw" ${searchType eq 'pcw' ? 'selected' : '' }>전  체</option>
-								<option value="t" ${searchType eq 'p' ? 'selected' : '' }>요청제품</option>
-								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>요청한사람</option>
+								<option value="tcw" ${searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
+								<option value="t" ${searchType eq 't' ? 'selected' : '' }>판매요청자</option>
+								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>진행상황</option>
+								<option value="p" ${searchType eq 'p' ? 'selected' : '' }>판매제품명</option>
 								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>요청업체</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
@@ -31,19 +32,17 @@
 						<div>
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
-									<th width="20%" style="text-align: center;">요청한 제품</th>
-									<th width="20%" style="text-align: center;">요청 날짜</th>
-									<th width="20%" style="text-align: center;">요청한 업체</th>
-									<th width="20%" style="text-align: center;">진행상황</th>
-									<th width="20%" style="text-align: center;">발주보고서 조회</th>
+									<th width="25%" style="text-align: center;">구매제품명</th>
+									<th width="25%" style="text-align: center;">요청날짜</th>
+									<th width="25%" style="text-align: center;">작성자</th>
+									<th width="25%" style="text-align: center;">발생금액</th>
 								</tr>
-									<c:forEach items="${list}" var="order" varStatus="loop">
+									<c:forEach items="${note}" var="note">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/product/orderDetail.do?o_no=${order.o_no }&orders=N', '발주 내역', 700, 700)">${order.o_name }</a></td>
-										<td style="text-align: center;">${order.sys_regdate }</td>
-										<td style="text-align: center;">${c_name.get(loop.index) }</td>
-										<td style="text-align: center;">${order.progress }</td>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/management/detail.do?dr_no=${order.dr_no}', '기안문', 700, 700)">${order.title }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick=""></a></td>
+										<td style="text-align: center;"></td>
+										<td style="text-align: center;"></td>
+										<td style="text-align: center;"></td>
 									</tr>
 									</c:forEach>
 							</table>
@@ -54,6 +53,8 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
+					<button type="button" class="btn btn-primary" id="registBtn" onclick=""
+					style="width: 100px; margin: 20px; align-self: center; font-size: 0.7em;">구매 내역 추가</button>
 				</div>
 			</div>
 			

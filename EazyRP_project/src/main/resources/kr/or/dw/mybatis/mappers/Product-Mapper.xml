@@ -292,4 +292,20 @@
 		UPDATE draft SET order_gb = 'N'
 	</update>
 	
+	<select id="getC_name" resultType="str">
+		SELECT c_name FROM company WHERE c_no = #{c_no2}
+	</select>
+	
+	<update id="receipt">
+		UPDATE ordermanage SET progress = '접수완료' WHERE o_no = #{o_no}
+	</update>
+	
+	<update id="delivery">
+		UPDATE ordermanage SET progress = '배송중', deliverydate = sysdate WHERE o_no = #{o_no}
+	</update>
+	
+	<update id="receive">
+		UPDATE ordermanage SET progress = '입고 완료', receivedate = sysdate WHERE o_no = #{o_no}
+	</update>
+	
 </mapper>

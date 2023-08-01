@@ -14,10 +14,12 @@
 	<bean id="mymenuService" class="kr.or.dw.service.MyMenuServiceImpl"/>
 	<bean id="estimateService" class="kr.or.dw.service.EstimateServiceImpl"/>
 	<bean id="siService" class="kr.or.dw.service.SiServiceImpl"/>
+	<bean id="orderSaleService" class="kr.or.dw.service.OrderSaleServiceImpl"/>
 	<bean id="managementService" class="kr.or.dw.service.ManagementServiceImpl"/>
 	
 	<bean id="memberService" class="kr.or.dw.service.MemberServiceImpl"/>
 	<bean id="mailService" class="kr.or.dw.service.MailSendServiceImpl"/>
+	<bean id="qnaService" class="kr.or.dw.service.QnaServiceImpl"/>
 	
 	<bean id="productService" class="kr.or.dw.service.ProductServiceImpl"/>
 	

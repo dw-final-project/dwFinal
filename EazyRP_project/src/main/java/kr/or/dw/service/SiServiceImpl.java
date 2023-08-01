@@ -78,6 +78,35 @@ public class SiServiceImpl implements SiService {
 			int result = siDAO.insertSiDetail(si);
 			if(result < 0) break;
 		}
+	}
+
+	@Override
+	public void modifySi(List<SiVO> modify, String empno) throws SQLException {
+		
+		String si_no = modify.get(0).getSi_no();
+		
+		Map<String, String> modifyMap = new HashMap<>();
+		modifyMap.put("emp_no", empno);
+		modifyMap.put("si_no", si_no);
+		
+		siDAO.modifySi(modifyMap);
+		
+		 
+		
+		for (SiVO si : modify) {
+			if(si.getPr_delete() != null && si.getPr_delete().equals("y")) {
+				siDAO.deleteSiDetail(si);
+			}else {
+				siDAO.modifySiDetail(si);
+			}
+		}
+		
+	}
+
+	@Override
+	public void siRemove(String si_no) throws SQLException {
+		siDAO.siRemove(si_no);
+		
 	} 
 	
 	

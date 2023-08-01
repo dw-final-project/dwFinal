@@ -73,7 +73,7 @@
 
   
   <!-- main -->
-  <div class="main" style="height: 80%; display: flex;">
+  <div class="main">
 
      <!-- 11111 -->
      <div class="h-60 col-lg-8 container text-center;" style="align-items: center; display: flex; justify-content: center;">
