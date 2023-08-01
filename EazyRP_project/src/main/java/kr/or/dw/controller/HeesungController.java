@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -36,6 +37,7 @@ import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.ProcessVO;
 import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.WhVO;
+import kr.or.dw.vo.WorkOrderVO;
 
 @Controller
 @RequestMapping("/erp4")
@@ -334,7 +336,72 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		return mnv;
 	}
 	
-//	@RequestMapping("/workorder/regist")
-//	public
+	@RequestMapping("/workorder/regist")
+	public void registWorkOrder (HttpServletResponse res, @RequestParam("files")MultipartFile multi, String wo_name, 
+		String fac_no, Date deliverydate, String progress, String[] pr_no, int[] quantity, String c_no, int emp_no) throws SQLException {
+		
+		System.out.println("희성 컨트롤러 erp4/workorder/regist 진입");
+		
+		String filess = "";
+		
+		if(!multi.isEmpty()) {
+			UUID uuid = UUID.randomUUID();
+			String[] uuids = uuid.toString().split("-");
+			
+			String uniqueName = uuids[0];
+			
+			String fileRealName = multi.getOriginalFilename();
+			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
+			String uploadFolder = "C:\\upload\\";
+			
+			filess = uniqueName+fileExtension;
+			
+			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
+			
+			if(!saveFile.exists()) {
+				saveFile.mkdirs();
+			}
+			
+			try {
+				multi.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		List<WorkOrderVO> woList = new ArrayList<WorkOrderVO>();
+		
+		System.out.println("pr_no.length : " + pr_no);
+		
+		for(int i = 0; i < pr_no.length; i++) {
+			
+			WorkOrderVO wo = new WorkOrderVO();
+
+			// workorder 테이블
+			wo.setC_no(c_no);
+			wo.setWo_name(wo_name);
+			wo.setFac_no(fac_no);
+			wo.setEmp_no(emp_no);
+			wo.setDeliverydate(deliverydate);
+			wo.setProgress(progress);
+			wo.setFiles(filess);
+			
+			// workorderdetail 테이블
+			wo.setPr_no(pr_no[i]);
+			wo.setQuantity(quantity[i]);
+			
+			woList.add(wo);
+			
+		}
+		
+		System.out.println("workOrder registService 진입 전");
+		
+		workOrderService.registWorkOrder(woList);
+		
+		System.out.println("workOrder registService 진입 후");
+		
+	}
 	
 }

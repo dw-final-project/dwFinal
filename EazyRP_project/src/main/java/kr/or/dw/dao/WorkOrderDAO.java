@@ -22,6 +22,8 @@ public interface WorkOrderDAO {
 
 	int selectWono(int wono) throws SQLException;
 
-	int wo_no(int wono);
+	void insertWorkOrder(WorkOrderVO woList) throws SQLException;
+
+	void insertWorkOrderDetail(WorkOrderVO wo) throws SQLException;
 
 }
