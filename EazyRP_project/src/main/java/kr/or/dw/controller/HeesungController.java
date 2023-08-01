@@ -307,9 +307,26 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	}
 	
 	@RequestMapping("/workorder/registForm")
-	public String workorderRegistForm() {
+	public ModelAndView workorderRegistForm(ModelAndView mnv, HttpSession session) throws SQLException {
+		
+		int empno = Integer.parseInt(session.getAttribute("emp_no").toString());
+		String ename = estimateService.ename(empno);
+		
+		String c_no = session.getAttribute("c_no").toString();
+		String c_name = session.getAttribute("c_name").toString();
+		
 		String url = "heesung/workorder/registForm.open";
-		return url;
+		
+		mnv.setViewName(url);
+		mnv.addObject("empno", empno);		// 사원번호
+		mnv.addObject("ename", ename);		// 사원이름
+		mnv.addObject("c_no", c_no);		// 회사번호
+		mnv.addObject("c_name", c_name);	// 회사이름
+		
+		return mnv;
 	}
+	
+//	@RequestMapping("/workorder/regist")
+//	public
 	
 }
