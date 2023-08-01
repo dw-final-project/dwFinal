@@ -18,6 +18,10 @@ public interface SiService {
 	String ename(int empno) throws SQLException;
 
 	void insertSi(List<SiVO> siVO) throws SQLException;
+
+	void modifySi(List<SiVO> modify, String empno) throws SQLException;
+
+	void siRemove(String si_no) throws SQLException;
 	
 	
 }
