@@ -124,6 +124,9 @@
     </table>
     <div class="card-footer">
 		<button type="button" id="listBtn" class="btn btn-primary">닫기</button>
+		<c:if test="${order.progress eq '접수중'}">
+	    	<button type="button" id="receiveBtn" class="btn btn-primary">입고 확인</button>
+	    </c:if>
 		<button type="button" id="cancelBtn" class="btn btn-danger" style="float: right;" ${order.progress ne '접수중' ? 'disabled' : '' }>요청 취소</button>
 	</div>
 </form>
@@ -144,6 +147,13 @@ window.onload = function(){
 	$('#cancelBtn').on('click', function(){
 		if(confirm('정말로 취소하시겠습니까?')){
 			$('form[role="form"]').submit();
+		}
+	})
+	
+	$('#receiveBtn').on('click', function(){
+		if(confirm('입고 확정 처리하시겠습니까?')){
+			alert("입고가 확정되었습니다.");
+			location.href="/product/receive.do?o_no=${order.o_no }";
 		}
 	})
 	

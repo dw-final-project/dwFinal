@@ -9,8 +9,8 @@ public class OrderVO {
 	private String o_name;
 	private String o_gb;
 	private String sys_regdate;
-	private String enddate;
-	private String realenddate;
+	private String deliverydate;
+	private String receivedate;
 	private String progress;
 	private int quantity;
 	private String sys_reg;
