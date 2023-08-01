@@ -12,10 +12,11 @@
 
 
   <style>
-    html, body{
+	  html, body{
       width: 100%;
       height: 100%;
     }
+    
     .bd-placeholder-img {
       font-size: 1.125rem;
       text-anchor: middle;
@@ -65,7 +66,7 @@
 
   
   <!--1234512512124-->
-  <div class="h-60 col-lg-10 container text-center;">
+  <div class="h-60 col-lg-10 container text-center;" style="height: 80%;">
     <!-- .card -->
     <div class="card card-fluid" style="width: 80%;">
       <div class="card-body" style="text-align: center;">

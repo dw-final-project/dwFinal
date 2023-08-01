@@ -81,7 +81,7 @@ public class CommonController {
 	}
 	
 	@RequestMapping("/common/main")
-	public ModelAndView index(ModelAndView mnv, HttpSession session, HttpServletRequest req) throws SQLException{
+	public ModelAndView index (ModelAndView mnv, HttpSession session, HttpServletRequest req) throws SQLException{
 		String url = "/common/main.main";
 
 		if(session.getAttribute("c_no") == null) {
@@ -99,12 +99,12 @@ public class CommonController {
 			session.setAttribute("emp_noList", emp_noList);
 			session.setAttribute("empMap", empMap);
 		}
+		
 		List<MenuVO> menuList = menuService.selectMainMenuList();
 		Map<String, Object> dataMap = menuService.selectSubMenuList(menuList);
 		Map<String, List<MenuVO>> subMenuList = (Map<String, List<MenuVO>>) dataMap.get("subMenuList");
-		Map<String, List<MenuVO>> smallMenuList = (Map<String, List<MenuVO>>) dataMap.get("smallMenuList");
-		
-		// FullCalendar start ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+		Map<String, List<MenuVO>> smallMenuList = (Map<String, List<MenuVO>>) dataMap.get("smallMenuList");		
+
 		List<CalendarVO> calendarList = null;
 		try {
 			calendarList = calendarService.getCalendar();
@@ -116,9 +116,7 @@ public class CommonController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// FullCalendar end ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-		
-		
+	
 		session.setAttribute("menuList", menuList);
 		session.setAttribute("subMenuList", subMenuList);
 		session.setAttribute("smallMenuList", smallMenuList);
@@ -127,6 +125,7 @@ public class CommonController {
 		
 		return mnv;
 	}
+
 
 	@RequestMapping("/common/registerForm")
 	public String registerForm(HttpServletResponse res) throws Exception {
