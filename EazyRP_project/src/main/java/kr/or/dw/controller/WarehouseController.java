@@ -45,13 +45,7 @@ public class WarehouseController {
 	private static final Logger logger = LoggerFactory.getLogger(WarehouseController.class);
 	
 	@Autowired
-	private MenuService menuService;
-	
-	@Autowired
 	private WarehouseService warehouseService;
-	
-	@Autowired
-	private ContactService contactService;
 	
 	@RequestMapping("/warehouse")
 	public ModelAndView warehouseMain(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{

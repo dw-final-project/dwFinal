@@ -13,10 +13,10 @@
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm2" method="post" action="/erp4/warehouse.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
-								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>창고명</option>
-								<option value="a" ${searchType eq 'a' ? 'selected' : '' }>주소</option>
-								<option value="g" ${searchType eq 'g' ? 'selected' : '' }>가동여부</option>
+								<option value="all" ${cri.searchType eq 'all' ? 'selected' : '' }>전  체</option>
+								<option value="w" ${cri.searchType eq 'w' ? 'selected' : '' }>창고명</option>
+								<option value="a" ${cri.searchType eq 'a' ? 'selected' : '' }>주소</option>
+								<option value="g" ${cri.searchType eq 'g' ? 'selected' : '' }>가동여부</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${cri.keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
@@ -40,7 +40,7 @@
 									<tr>
 										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('warehouseDetail.do?wh_no=${warehouse.wh_no }','창고 수정/삭제', 800 , 600);">${warehouse.wh_name }</a></td>
 										<td style="text-align: center;">${warehouse.addr }</td>
-										<td style="text-align: center;">${warehouse.wh_gb }</td>
+										<td style="text-align: center;">${warehouse.wh_gb eq 'Y' ? '가동 중' : '사용중지' }</td>
 										<td style="text-align: center;">${warehouse.c_no }</td>
 									</tr>
 									</c:forEach>
@@ -52,7 +52,7 @@
 					</div>
 					</div>
 						<div style="display: flex; align-items: end; justify-content: end;">
-								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('warehouseRegistForm.do', '창고 등록', 700, 700)"
+								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('warehouseRegistForm.do', '창고 등록', 700, 400)"
 								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">창고 등록</button>
 						</div>
 			</div>

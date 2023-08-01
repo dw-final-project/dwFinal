@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dw.dao.ItemDAO">
+	
+	<!-- 셀렉트바 검색 -->
+	<sql id="search">
+		<if test="searchType == 'p'.toString()">
+			AND pr_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'g'.toString()">
+			AND pr_gr LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 's'.toString()">
+			AND pr_st LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND pr_class LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'all'.toString()">
+			AND (
+			pr_name LIKE '%' || #{keyword} || '%'
+			OR
+			pr_gr LIKE '%' || #{keyword} || '%'
+			OR
+			pr_st LIKE '%' || #{keyword} || '%'
+			OR
+			pr_class LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+	</sql>
+	
+	<!-- contact -->
+	<select id="selectItemList" resultType="product">
+		SELECT pr_no
+			  ,pr_name
+			  ,c.c_name c_no
+			  ,pr_gr
+			  ,pr_st
+			  ,pr_inprice
+			  ,pr_exprice
+			  ,pr_class
+			  ,p.exdate
+			  ,p.img
+			  ,p.sp_no
+			  ,p.quantity
+			  ,w.wh_name wh_no
+		  FROM product p, company c, warehouse w
+		 WHERE p.c_no = c.c_no
+		   AND p.wh_no = w.wh_no
+		   <include refid="search"/>
+		   ORDER BY pr_no
+	</select>
+
+	
+	<select id="selectItemListCount" resultType="int">
+		SELECT COUNT(*)
+		  FROM product
+		 WHERE 1 = 1
+		   <include refid="search"/>
+	</select>
+	
+	
+	<select id="selectFindSearchWarehouseList" resultType="Map">
+		SELECT wh_no
+			  ,wh_name
+			  ,wh_gb
+			  ,w.addr
+			  ,c.c_name
+			  ,w.c_no
+		  FROM warehouse w, company c
+		 WHERE w.c_no = c.c_no
+		   AND w.enabled = 'Y'
+		 <if test="searchType == 'w'.toString()">
+			AND wh_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'a'.toString()">
+			AND w.addr LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'g'.toString()">
+			AND wh_gb LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'all'.toString()">
+			AND (wh_name LIKE '%' || #{keyword} || '%'
+			OR w.addr LIKE '%' || #{keyword} || '%'
+			OR wh_gb LIKE '%' || #{keyword} || '%')
+		</if>
+		ORDER BY wh_name
+	</select>
+	
+	<select id="selectFindWarehouseList" resultType="Map">
+		SELECT wh_no
+			  ,wh_name
+			  ,wh_gb
+			  ,w.addr
+			  ,c.c_name
+			  ,w.c_no
+		  FROM warehouse w, company c
+		 WHERE w.c_no = c.c_no
+		   AND w.enabled = 'Y'
+		 ORDER BY wh_name
+	</select>
+	
+	
+</mapper>
