@@ -26,6 +26,14 @@ public interface SiDAO {
 	void insertSi(SiVO siVO) throws SQLException;
 
 	int insertSiDetail(SiVO si) throws SQLException;
+
+	void modifySi(Map<String, String> modifyMap) throws SQLException;
+
+	void deleteSiDetail(SiVO si) throws SQLException;
+
+	void modifySiDetail(SiVO si) throws SQLException;
+
+	void siRemove(String si_no) throws SQLException;
 	
 
 

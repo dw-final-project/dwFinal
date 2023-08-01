@@ -422,20 +422,56 @@ public class BusinessController {
 		out.println("</script>");
 	}
 	
-//	@RequestMapping("/modifyForm")
-//	public void siModify( ) {
-//		
-//	}
-//	
+	@RequestMapping("/simodifyForm")
+	public void siModify(String[] pr_delete,String si_no, String[] sidetail_no, int emp_no, String[] pr_no, String wh_no, int[] quantity, @DateTimeFormat(pattern="yyyy-MM-dd") Date shipdate, String[] content, HttpServletResponse res, HttpSession session) throws SQLException, IOException {
+		
+		List<SiVO> modify = new ArrayList<SiVO>();
+		String empno = session.getAttribute("emp_no").toString();
+		
+		
+		for(int i= 0; i < pr_no.length; i++) {
+			SiVO si = new SiVO();
+			System.out.println("첫번째" + si_no);
+			si.setSi_no(si_no);
+			System.out.println("두번째" + sidetail_no[i]);
+			si.setSidetail_no(sidetail_no[i]);
+			si.setPr_no(pr_no[i]);
+			si.setEmp_no(emp_no);
+			si.setWh_no(wh_no);
+			si.setQuantity(quantity[i]);
+			si.setShipdate(shipdate);
+			si.setPr_delete(pr_delete[i]);
+			si.setContent(content[i]);
+			
+			modify.add(si);
+		}
+		
+		siService.modifySi(modify, empno); 
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 수정되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+		
+	}
 	
 	
+	@RequestMapping("/siremove")
+	public void siRemove (String si_no, HttpServletRequest req, HttpServletResponse res) throws IOException, SQLException {
+		
+		siService.siRemove(si_no);
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('삭제되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
 	
-//	@RequestMapping("/s_Sheet")
-//	public String sSheet() {
-//		String url = "jihwan/s_Sheet";
-//		return url;
-//	}
-//	
+// -----------------------------------------------------------------------------------------------------------
+	
+	
 	
 	
 }
