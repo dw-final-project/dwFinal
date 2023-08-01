@@ -1,0 +1,30 @@
+package kr.or.dw.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
+
+import kr.or.dw.command.SearchCriteria;
+import kr.or.dw.vo.CompanyVO;
+import kr.or.dw.vo.MerchandiseVO;
+import kr.or.dw.vo.ProductVO;
+import kr.or.dw.vo.ShopVO;
+import kr.or.dw.vo.SiVO;
+import kr.or.dw.vo.WareHouseVO;
+
+@Mapper
+public interface ItemDAO {
+
+	List<Map<String, Object>> selectItemList(SearchCriteria cri, RowBounds rowBounds) throws SQLException;
+
+	int selectItemListCount(SearchCriteria cri) throws SQLException;
+
+	List<Map<String, Object>> selectFindSearchWarehouseList(Map<String, String> dataMap) throws SQLException;
+
+	List<Map<String, Object>> selectFindWarehouseList() throws SQLException;
+	
+	
+}
