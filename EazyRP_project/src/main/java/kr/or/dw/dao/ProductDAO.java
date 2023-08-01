@@ -81,6 +81,14 @@ public interface ProductDAO {
 
 	void draftOrder(String dr_no) throws SQLException;
 
+	String getC_name(String c_no2) throws SQLException;
+
+	void receipt(int o_no) throws SQLException;
+
+	void delivery(int o_no) throws SQLException;
+
+	void receive(int o_no) throws SQLException;
+
 
 	
 }

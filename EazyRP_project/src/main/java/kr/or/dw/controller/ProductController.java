@@ -25,6 +25,7 @@ import com.aspose.cells.Workbook;
 import com.aspose.cells.Worksheet;
 
 import kr.or.dw.command.SearchCriteria;
+import kr.or.dw.dao.ProductDAO;
 import kr.or.dw.service.ProductService;
 import kr.or.dw.vo.BsheetVO;
 import kr.or.dw.vo.BuyDetailVO;
@@ -44,6 +45,9 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private ProductDAO productDAO;
 	
 	@RequestMapping("/productBuy")
 	public ModelAndView productBuy(ModelAndView mnv, String mcode, HttpSession session, SearchCriteria cri) throws SQLException {
@@ -152,12 +156,23 @@ public class ProductController {
 	public ModelAndView orderDetail(ModelAndView mnv, String o_no, String orders) throws SQLException {
 		List<O_DetailVO> detail = productService.getOrderDetail(o_no);
 		OrderVO order = productService.selectOrder(o_no);
-		
+		String c_no = order.getBuy_c_no();
+		String c_name = productService.getC_name(c_no);
 		mnv.addObject("order", order);
 		mnv.addObject("detail", detail);
+		mnv.addObject("length", detail.size());
+		
+		String del = "Y";
+		for(int i = 0; i < detail.size(); i++) {
+			if(detail.get(i).getLack().equals("Y")) {
+				del = "N";
+			}
+		}
 		if(orders.equals("Y")) {
-		mnv.setViewName("/product/orderDetail");
+			mnv.setViewName("/product/orderDetail");
 		} else if(orders.equals("N")) {
+			mnv.addObject("c_name", c_name);
+			mnv.addObject("del",del);
 			mnv.setViewName("/product/orderDetail2");
 		}
 		return mnv;
@@ -345,6 +360,39 @@ public class ProductController {
 		mnv.addObject("mcode", mcode);
 		mnv.setViewName("/product/orderList.page");
 		return mnv;
+	}
+	
+	@RequestMapping("/receipt")
+	public void receipt(int o_no, HttpSession session, HttpServletResponse res) throws SQLException, IOException {
+		productDAO.receipt(o_no);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
+	
+	@RequestMapping("/delivery")
+	public void delevery(int o_no, HttpSession session, HttpServletResponse res) throws SQLException, IOException {
+		productDAO.delivery(o_no);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
+	
+	@RequestMapping("/receive")
+	public void receive(int o_no, HttpSession session, HttpServletResponse res) throws SQLException, IOException {
+		productService.receive(o_no);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
 	}
 	
 	

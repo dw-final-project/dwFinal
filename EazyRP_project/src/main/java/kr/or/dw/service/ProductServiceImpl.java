@@ -151,7 +151,17 @@ public class ProductServiceImpl implements ProductService {
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
+		
+		List<String> c_name = new ArrayList<>();
+		
+		for(int i = 0; i < list.size(); i++) {
+			String c_no2 = list.get(i).getBuy_c_no();
+			String c_name2 = productDAO.getC_name(c_no2);
+			c_name.add(c_name2);
+		}
+		
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("c_name", c_name);
 		map.put("list", list);
 		map.put("pageMaker", pageMaker);
 		
@@ -231,6 +241,16 @@ public class ProductServiceImpl implements ProductService {
 		productDAO.removeDetail(o_no);
 		productDAO.removeOrder(o_no);
 		productDAO.draftOrder(dr_no);
+	}
+
+	@Override
+	public String getC_name(String c_no) throws SQLException {
+		return productDAO.getC_name(c_no);
+	}
+
+	@Override
+	public void receive(int o_no) throws SQLException {
+		productDAO.receive(o_no);
 	} 
 	
 	

@@ -54,5 +54,9 @@ public interface ProductService {
 	void insertOrderDetail(List<O_DetailVO> detail) throws SQLException;
 
 	void orderCancel(int o_no, String dr_no) throws SQLException;
+
+	String getC_name(String c_no) throws SQLException;
+
+	void receive(int o_no) throws SQLException;
 	
 }
