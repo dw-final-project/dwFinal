@@ -29,6 +29,7 @@
 	<bean id="workOrderService" class="kr.or.dw.service.WorkOrderServiceImpl"/>
 	
 	<bean id="contactService" class="kr.or.dw.service.ContactServiceImpl"/>
+	<bean id="warehouseService" class="kr.or.dw.service.WarehouseServiceImpl"/>
 	
 	<!-- 풀캘린더 API -->
 	<bean id="calendarService" class="kr.or.dw.service.CalendarServiceImpl"/>

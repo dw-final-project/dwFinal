@@ -78,10 +78,18 @@ public class ContactServiceImpl implements ContactService {
 	}
 
 	@Override
-	public void updateAccount(String ac_no, String bank, String ac_cd) throws SQLException {
-		contactDAO.updateAccount(ac_no, ac_cd, bank);
+	public void updateAccount(Map<String, String> account) throws SQLException {
+		contactDAO.updateAccount(account);
 		
 	}
+
+	@Override
+	public void deleteContact(CompanyVO contact) throws SQLException {
+		contactDAO.deleteContact(contact);
+		
+	}
+
+	
 
 	
 	

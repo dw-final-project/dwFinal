@@ -31,7 +31,9 @@ public interface ContactDAO {
 
 	void modifyContact(CompanyVO contact) throws SQLException;
 
-	void updateAccount(String ac_no, String ac_cd, String bank) throws SQLException;
+	void updateAccount(Map<String, String> account) throws SQLException;
+
+	void deleteContact(CompanyVO contact) throws SQLException;
 
 	
 }

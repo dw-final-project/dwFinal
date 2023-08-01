@@ -24,8 +24,8 @@
 		</if>
 	</sql>
 	
-	<!-- account -->
-	<select id="selectContactList" resultType="co">
+	<!-- contact -->
+	<select id="selectContactList" resultType="company">
 		SELECT c.c_no
 			  ,c_name
 			  ,c_rname
@@ -51,7 +51,7 @@
 		   <include refid="search"/>
 	</select>
 	
-	<select id="getSearchContactList" resultType="co">
+	<select id="getSearchContactList" resultType="company">
 		SELECT *
 		  FROM company
 		 WHERE contact_gb != 1
@@ -76,7 +76,7 @@
 		ORDER BY c_name
 	</select>
 	
-	<select id="getContactList" resultType="co">
+	<select id="getContactList" resultType="company">
 		SELECT *
 		  FROM company
 		 WHERE contact_gb != 1
@@ -126,6 +126,11 @@
 		UPDATE account SET bank = #{bank}
 						  ,ac_no = #{ac_no}
 		 WHERE ac_cd = #{ac_cd} 
+	</update>
+	
+	<update id="deleteContact">
+		UPDATE company SET contact_gb = 0
+		 WHERE c_no = #{c_no} 
 	</update>
 	
 </mapper>

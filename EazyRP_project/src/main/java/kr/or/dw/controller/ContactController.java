@@ -38,9 +38,9 @@ import kr.or.dw.vo.ShopVO;
 
 @Controller
 @RequestMapping("/erp4")
-public class InventoryController {
+public class ContactController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(InventoryController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ContactController.class);
 	
 	@Autowired
 	private MenuService menuService;
@@ -111,15 +111,25 @@ public class InventoryController {
 	@RequestMapping("/modifyContact")
 	public void modifyContact(CompanyVO contact, HttpServletResponse res, HttpSession session, String acc) throws Exception {
 		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
+		System.out.println(emp_no);
 		contact.setSys_reg(emp_no + "");
 		contact.setSys_up(emp_no + "");
 		
-		int index = contact.getAccount().indexOf(" ");
+		int index = acc.indexOf(" ");
+		System.out.println(index);
 		String bank = acc.substring(0, index);
+		System.out.println(bank);
 		String ac_no = acc.substring(index + 1);
+		System.out.println(ac_no);
 		String ac_cd = contact.getAccount(); 
+		System.out.println(ac_cd);
 		
-		contactService.updateAccount(ac_no, ac_cd, bank);
+		Map<String, String> account = new HashMap<>();
+		account.put("ac_no", ac_no);
+		account.put("ac_cd", ac_cd);
+		account.put("bank", bank);
+		
+		contactService.updateAccount(account);
 		
 		contactService.modifyContact(contact);
 		
@@ -127,6 +137,19 @@ public class InventoryController {
 		PrintWriter out = res.getWriter();
 		out.println("<script>");
 		out.println("alert('성공적으로 수정 되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
+	
+	@RequestMapping("/deleteContact")
+	public void deleteContact(CompanyVO contact, HttpServletResponse res, HttpSession session) throws Exception{
+		
+		contactService.deleteContact(contact);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 삭제 되었습니다.')");
 		out.println("window.opener.location.reload(true); window.close();");
 		out.println("</script>");
 	}
