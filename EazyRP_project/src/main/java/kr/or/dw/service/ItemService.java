@@ -6,6 +6,7 @@ import java.util.Map;
 
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.vo.CompanyVO;
+import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.WareHouseVO;
 
 public interface ItemService {
@@ -15,6 +16,12 @@ public interface ItemService {
 	List<Map<String, Object>> getWarehouse(Map<String, String> dataMap) throws SQLException;
 
 	List<Map<String, Object>> getWarehouseList() throws SQLException;
+
+	List<Map<String, Object>> getSprice(Map<String, String> dataMap) throws SQLException;
+
+	List<Map<String, Object>> getSpriceList() throws SQLException;
+
+	void registItem(ProductVO product) throws SQLException;
 
 
 }
