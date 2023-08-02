@@ -25,6 +25,7 @@
 		<typeAlias type="kr.or.dw.vo.O_DetailVO" alias="o_detail"/>
 		<typeAlias type="kr.or.dw.vo.Pro_whVO" alias="pro_wh"/>
 		<typeAlias type="kr.or.dw.vo.InquiryVO" alias="inquiry"/>
+		<typeAlias type="kr.or.dw.vo.SpriceVO" alias="sprice"/>
 
 		
 		<!-- 희성이꼬 --><!-- 즐, 똥, 엿-->

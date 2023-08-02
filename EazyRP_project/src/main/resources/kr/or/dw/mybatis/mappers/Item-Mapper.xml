@@ -100,5 +100,83 @@
 		 ORDER BY wh_name
 	</select>
 	
+	<select id="selectFindSearchSpriceList" resultType="Map">
+		SELECT *
+		  FROM sprice
+		 WHERE enabled = 'Y'
+		 <if test="searchType == 'n'.toString()">
+			AND sp_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'i'.toString()">
+			AND sp_in LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'e'.toString()">
+			AND sp_ex LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'all'.toString()">
+			AND (sp_name LIKE '%' || #{keyword} || '%'
+			OR sp_in LIKE '%' || #{keyword} || '%'
+			OR sp_ex LIKE '%' || #{keyword} || '%')
+		</if>
+		ORDER BY sp_no
+	</select>
+	
+	<select id="selectFindSpriceList" resultType="Map">
+		SELECT *
+		  FROM sprice
+		 WHERE enabled = 'Y'
+		 ORDER BY sp_no
+	</select>
+	
+	<insert id="insertItem">
+		<selectKey keyProperty="pr_no" order="BEFORE" resultType="java.lang.String">
+				SELECT ('PR_') || CASE 
+					WHEN LENGTH(product_seq.nextval) = 1
+					THEN '00' || product_seq.nextval
+					WHEN LENGTH(product_seq.nextval) = 2
+					THEN '0' || product_seq.nextval
+					ELSE '' || product_seq.nextval
+		   	    	END PR_NO
+			   FROM dual
+		</selectKey>
+		INSERT INTO product (
+							   pr_no
+							  ,pr_name
+							  ,c_no
+							  ,pr_gr
+							  ,pr_st
+							  ,pr_inprice
+							  ,pr_exprice
+							  ,pr_class
+							  ,img
+							  ,exdate
+							  ,sp_no
+							  ,sys_up
+							  ,sys_regdate
+							  ,sys_updatedate
+							  ,sys_reg
+							  ,quantity
+							  ,wh_no
+							   )
+						VALUES(
+							   #{pr_no}
+							  ,#{pr_name}
+							  ,#{c_no}
+							  ,#{pr_gr}
+							  ,#{pr_st}
+							  ,#{pr_inprice}
+							  ,#{pr_exprice}
+							  ,#{pr_class}
+							  ,#{img}
+							  ,#{exdate}
+							  ,#{sp_no}
+							  ,#{sys_up}
+							  ,sysdate
+							  ,sysdate
+							  ,#{sys_reg}
+							  ,#{quantity}
+							  ,#{wh_no}
+			   				   )
+	</insert>
 	
 </mapper>

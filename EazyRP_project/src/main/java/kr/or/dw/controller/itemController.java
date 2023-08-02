@@ -1,5 +1,6 @@
 package kr.or.dw.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.dw.command.SearchCriteria;
@@ -68,22 +71,53 @@ public class itemController {
 		return mnv;
 	}
 	
-//	@RequestMapping("/registWarehouse")
-//	public void registWarehouse(WareHouseVO warehouse, HttpServletResponse res, int emp_no) throws Exception{
-//		
-//		warehouse.setSys_reg(emp_no + "");
-//		warehouse.setSys_up(emp_no + "");
-//		
-//		warehouseService.registWarehouse(warehouse);
-//		
-//		res.setContentType("text/html; charset=utf-8");
-//		PrintWriter out = res.getWriter();
-//		out.println("<script>");
-//		out.println("alert('성공적으로 등록 되었습니다.')");
-//		out.println("window.opener.location.reload(true); window.close();");
-//		out.println("</script>");
-//	}
-//	
+	@RequestMapping("/registItem")
+	public void registItem(@RequestParam("files")MultipartFile multi, ProductVO product, HttpServletResponse res, int emp_no) throws Exception{
+		
+		String fileName = "";
+		
+		if(!multi.isEmpty()) {
+			UUID uuid = UUID.randomUUID();
+			String[] uuids = uuid.toString().split("-");
+			
+			String uniqueName = uuids[0];
+			
+			String fileRealName = multi.getOriginalFilename();
+			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length());
+			String uploadFolder = "C:\\upload\\";
+			
+			fileName = uniqueName+fileExtension;
+			
+			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
+			
+			if(!saveFile.exists()) {
+				saveFile.mkdirs();
+			}
+			
+			try {
+				multi.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		product.setSys_reg(emp_no + "");
+		product.setSys_up(emp_no + "");
+		product.setImg(fileName);
+		
+		itemService.registItem(product);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 등록 되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
+	
 //	@RequestMapping("/warehouseDetail")
 //	public ModelAndView warehouseDetail (ModelAndView mnv, String wh_no) throws SQLException {
 //		Map<String, Object> warehouse = warehouseService.selectWarehouseDetail(wh_no);
@@ -114,6 +148,31 @@ public class itemController {
 		mnv.setViewName(url);
 		mnv.addAllObjects(dataMap);
 		mnv.addObject("warehouseList", warehouseList);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/findSprice")
+	public ModelAndView findSprice(ModelAndView mnv, String searchType, String keyword) throws SQLException {
+		String url = "inventory/basic/findSprice";
+		if(searchType == "") {
+			searchType = null;
+		}
+		if(keyword == "") {
+			keyword = null;
+		}
+		List<Map<String, Object>> spriceList = null;
+		Map<String, String> dataMap = new HashMap<>();
+		dataMap.put("searchType", searchType);
+		dataMap.put("keyword", keyword);
+		if(keyword != null){
+			spriceList = itemService.getSprice(dataMap);
+		} else {
+			spriceList = itemService.getSpriceList();
+		}
+		mnv.setViewName(url);
+		mnv.addAllObjects(dataMap);
+		mnv.addObject("spriceList", spriceList);
 		
 		return mnv;
 	}

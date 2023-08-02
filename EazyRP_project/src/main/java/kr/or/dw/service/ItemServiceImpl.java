@@ -17,6 +17,7 @@ import kr.or.dw.dao.ItemDAO;
 import kr.or.dw.dao.WarehouseDAO;
 import kr.or.dw.vo.CompanyVO;
 import kr.or.dw.vo.EmpVO;
+import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.WareHouseVO;
 
 
@@ -58,6 +59,24 @@ public class ItemServiceImpl implements ItemService {
 	public List<Map<String, Object>> getWarehouseList() throws SQLException {
 		List<Map<String, Object>> warehouseList = itemDAO.selectFindWarehouseList();
 		return warehouseList;
+	}
+
+	@Override
+	public List<Map<String, Object>> getSprice(Map<String, String> dataMap) throws SQLException {
+		List<Map<String, Object>> spriceList = itemDAO.selectFindSearchSpriceList(dataMap);
+		return spriceList;
+	}
+
+	@Override
+	public List<Map<String, Object>> getSpriceList() throws SQLException {
+		List<Map<String, Object>> spriceList = itemDAO.selectFindSpriceList();
+		return spriceList;
+	}
+
+	@Override
+	public void registItem(ProductVO product) throws SQLException {
+		itemDAO.insertItem(product);
+		
 	}
 
 	

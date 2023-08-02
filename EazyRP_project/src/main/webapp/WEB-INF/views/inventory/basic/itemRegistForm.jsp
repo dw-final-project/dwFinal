@@ -8,7 +8,7 @@
 <div style="height: 50px"></div>
 	<section class="content container-fluid">
 		<div class="row justify-content-center">
-			<div class="col-md-9" style="max-width: 800px;">
+			<div class="col-md-9" style="max-width: 900px;">
 				<div class="card card-outline card-info">
 					<div class="card-header">
 						<h3 class="card-title p-1">품목 추가</h3>
@@ -19,9 +19,10 @@
 						</div>
 					</div>
 					<div class="card-body pad">
-						<form role="form" method="post" action="registItem.do" name="detailForm">
+						<form role="form" method="post" action="registItem.do" name="detailForm" enctype="multipart/form-data">
 							<input type="hidden" id="wh_no" value="" name="wh_no" >
 							<input type="hidden" id="c_no" value="" name="c_no" >
+							<input type="hidden" id="sp_no" value="" name="sp_no" >
 							<input type="hidden" id="emp_no" value="${emp_no }" name="emp_no" >
 							<div class="form-group col-sm-12 row">
 								<label for="pr_name" class="col-sm-3">제품명</label>
@@ -46,7 +47,7 @@
 							<div class="form-group col-sm-12 row">
 								<label for="quantity" class="col-sm-3">수 량</label>
 								<input type="text" id="quantity" name="quantity" class="form-control col-sm-3 mch4" value="">
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<label for="pr_class" class="col-sm-2">품목구분</label>
 								<select id="pr_class" class="form-control col-sm-3 mch3" name="pr_class">
 									<option value="음식">음식</option>
@@ -60,7 +61,7 @@
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="sp_name" class="col-sm-3">특별단가</label>
-								<input type="text" id="sp_name" name="sp_name" class="form-control col-sm-9 mch4 sprice" value="">
+								<input type="text" id="sp_name" name="sp_name" class="form-control col-sm-9 mch4 sp_name" value="">
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="wh_name" class="col-sm-3">창 고</label>
@@ -69,6 +70,10 @@
 							<div class="form-group col-sm-12 row">
 								<label for="c_name" class="col-sm-3">회 사</label>
 								<input type="text" id="c_name" name="c_name" class="form-control col-sm-9 mch4 c_name" value="">
+							</div>
+							<div class="form-group col-sm-12 row">
+								<label for="files" class="col-sm-3">사진 첨부</label>
+								<input type="file" id="files" name="files" class="form-control col-sm-9 mch4 files" value="">
 							</div>
 						</form>
 					</div>
@@ -126,7 +131,7 @@
 			
 		});
 		
-		$(document).on('click', '.sprice', function(){
+		$(document).on('click', '.sp_name', function(){
 			
 			let openWin = OpenWindow("/erp4/findSprice.do", "특별단가 찾기", 800, 500);
 			
