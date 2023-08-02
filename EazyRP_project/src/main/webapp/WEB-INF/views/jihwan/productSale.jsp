@@ -9,7 +9,7 @@
 			<div class="col-md-10" style="max-width: 1100px;">
 				<div class="card card-outline card-info">
 					<div class="card-header" style="border-bottom: none;">
-						<h2 class="card-title p-1">제품 구매 내역</h2>
+						<h2 class="card-title p-1">제품 판매 내역</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm2" method="post" action="/erp4/productSale.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
@@ -37,12 +37,12 @@
 									<th width="25%" style="text-align: center;">작성자</th>
 									<th width="25%" style="text-align: center;">발생금액</th>
 								</tr>
-									<c:forEach items="${note}" var="note">
+									<c:forEach items="${saleList}" var="sale">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick=""></a></td>
-										<td style="text-align: center;"></td>
-										<td style="text-align: center;"></td>
-										<td style="text-align: center;"></td>
+										<td style="text-align: center;">${sale.PR_NAME }<a id="aTag" href="#" onclick=""></a></td>
+										<td style="text-align: center;">${sale.SYS_REGDATE}</td>
+										<td style="text-align: center;">${sale.E_NAME }</td>
+										<td style="text-align: center;">${sale.PR_EXPRICE } 원</td>
 									</tr>
 									</c:forEach>
 							</table>
