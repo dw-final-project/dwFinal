@@ -32,5 +32,6 @@ public class SiVO {
 	private String pr_name;
 	private String pr_no;
 	private String content;
+	private String pr_delete;
 	
 }

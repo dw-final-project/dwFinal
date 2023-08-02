@@ -38,6 +38,7 @@
 		   <include refid="search"/>
 		   ORDER BY wh_no
 	</select>
+
 	
 	<select id="selectWarehouseListCount" resultType="int">
 		SELECT COUNT(*)

@@ -27,6 +27,7 @@
 		SELECT	*
 		FROM	workorder
 		WHERE	1=1
+		AND		c_no = #{c_no}
 		<include refid="search"></include>
 		ORDER BY wo_no desc
 	</select>
@@ -35,6 +36,7 @@
 		SELECT	COUNT(*)
 		FROM	workorder
 		WHERE	1=1
+		AND		c_no = #{c_no}
 		<include refid="search"></include>
 	</select>
 	
@@ -43,5 +45,70 @@
 		FROM	workorder wo, emp e
 		WHERE	wo.emp_no = e.emp_no
 	</select>
+	
+	<!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 -->
+	<insert id="insertWorkOrder" parameterType="workOrder">
+		<selectKey keyProperty="wo_no" order="BEFORE" resultType="java.lang.String">
+			<include refid="makeWorkOrderNoSeq"/>
+		</selectKey>
+		INSERT INTO workorder (
+			wo_no,
+			wo_name,
+			sys_regdate,
+			fac_no,
+			emp_no,
+			c_no,
+			deliverydate,
+			progress,
+			files,
+			enabled
+		)
+		VALUES(
+			#{wo_no},	<!-- 셀렉트키를 이용함으로써 이게 된다고? -->
+			#{wo_name},
+			sysdate,
+			#{fac_no},
+			#{emp_no},
+			#{c_no},
+			#{deliverydate},
+			#{progress},
+			#{files},
+			'y'
+		)
+	</insert>
+	
+	<sql id="makeWorkOrderNoSeq">
+		SELECT ('WO_') || CASE 
+							WHEN LENGTH(workorder_seq.nextval) = 1
+							THEN '00' || workorder_seq.nextval
+							WHEN LENGTH(workorder_seq.nextval) = 2
+							THEN '0' || workorder_seq.nextval
+							ELSE '' || workorder_seq.nextval
+				   	      END WO_NO
+		  FROM dual
+	</sql>
+	
+	<sql id="makeWorkOrderDetailSeq">
+		SELECT workorderdetail_seq.nextval
+		  FROM dual
+	</sql>
+
+	<insert id="insertWorkOrderDetail" parameterType="workOrder">
+		INSERT INTO workorderdetail (
+			detail_no,
+			quantity,
+			wo_no,
+			pr_no
+		)
+		VALUES (
+			workorderdetail_seq.nextval,	<!-- 이 부분이 제일 이해 안됨!!!!!!!!!!! -->
+			#{quantity},
+			#{wo_no},
+			#{pr_no
+		)
+	</insert>
+	<!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 -->
+	
+	
 	
 </mapper>

@@ -80,8 +80,10 @@
             <td><input type="text" name="wo_name"></td>
         </tr>
         <tr>
-        	<td width="40%" align="center"><b>생산 공장</b></td>
-            <td><input type="text" name="emp_no" id="find_fac" class="fac_names" value="" name="fac_name" readonly onclick="OpenWindow('/erp4/findFactory.do', '공장찾기', 400, 600)"></td>
+        	<td width="40%" align="center" id="workorder"><b id="factory">생산 공장</b></td>
+            <td>
+            	<input type="hidden" name="fac_no" value="">
+            	<input type="text" id="find_fac" class="fac_names" value="" name="fac_name" readonly onclick="OpenWindow('/erp4/findFactory.do', '공장찾기', 400, 600)"></td>
         </tr>
         <tr>
             <td width="40%" align="center"><b>담당자</b></td>
@@ -120,7 +122,7 @@
     	<thead>
         <tr>
             <th align="center" style="width: 20%;">품목명</th>
-            <th align="center" style="width: 20%;">수량</th>           
+            <th align="center" style="width: 20%;">수량</th>
             <th align="center" style="width: 15%;">비고</th>
             
         </tr>
@@ -177,6 +179,7 @@
 	
 	// 창고코드 이벤트
 	$(document).on('click', '.wh_names', function(){
+		
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
 		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);

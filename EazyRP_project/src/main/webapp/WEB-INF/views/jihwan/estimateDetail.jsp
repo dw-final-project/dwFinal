@@ -130,7 +130,7 @@
 	       <input type="hidden" class="rownum" value="${est.ROWNUM }">
 	       <input type="hidden" name="estdetail_no" id="dtail_no" value="${est.ESTDETAIL_NO }">
 	       <input type="hidden" name="enabled" id="estenabled" value="${est.ENABLED }">
-	       <input type="hidden" name="pr_delete" value="n">
+	       <input type="hidden" name="pr_delete" value="o">
         	<td>
         		<input type="text" id="${est.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${est.P_NAME }"><input type="hidden" name="pr_no" value="${est.PR_NO }">
         	</td>
@@ -272,9 +272,14 @@ $('tr').on('click', function(){
 	
 	//제품 삭제 버튼
 	$('#prInput').on('click', '#cancelBtn', function(){
+		if($(this).parent('td').parent('tr').find("input[name='pr_delete']").val() == "n") {
+	        $(this).parent('td').parent('tr').remove();
+	    }else{
 		$(this).parents('tr').css('display', 'none');
 		$(this).parents('tr').find("input[name='pr_delete']").val("d")
-	});
+	    }
+	   });
+	
 	
 	//창고코드 이벤트
 	$(document).on('click', '.wh_names', function(){
