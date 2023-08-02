@@ -14,10 +14,8 @@
 						<form id="searchForm2" method="post" action="/product/productBuy.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="tcw" ${searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
-								<option value="t" ${searchType eq 't' ? 'selected' : '' }>구매요청자</option>
-								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>진행상황</option>
+								<option value="t" ${searchType eq 't' ? 'selected' : '' }>작성자</option>
 								<option value="p" ${searchType eq 'p' ? 'selected' : '' }>구매제품명</option>
-								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>요청업체</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
@@ -32,7 +30,7 @@
 						<div>
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
-									<th width="25%" style="text-align: center;">구매제품명</th>
+									<th width="25%" style="text-align: center;">비고</th>
 									<th width="25%" style="text-align: center;">요청날짜</th>
 									<th width="25%" style="text-align: center;">작성자</th>
 									<th width="25%" style="text-align: center;">발생금액</th>

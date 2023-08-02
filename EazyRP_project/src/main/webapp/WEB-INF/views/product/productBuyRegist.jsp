@@ -95,18 +95,18 @@
 				</select></td>
         </tr>
         <tr>
-            <td align="center"><b>구매 업체</b></td>
-            <td><input type="text" name="con_c_name" id="con_c_name" readonly onclick="OpenWindow('/product/findCompany.do', '업체 찾기', 300, 500)">
-            <input type="hidden" name="con_c_no" id="con_c_no" readonly></td>
+            <td align="center"><b>비고</b></td>
+            <td><input type="text" name="pr_name" id="pr_name" style="width: 100%;"></td>
         </tr>
     </table>
     <button type="button" class="btn btn-primary" id="addPutBtn" style="margin-bottom: 5px;">제품추가</button>
     <table>
     	<thead>
         <tr>
-            <th align="center" style="width: 27%;">제품명</th>
-            <th align="center" style="width: 27%;">수량</th>
-            <th align="center" style="width: 27%;">가격</th>
+            <th align="center" style="width: 22%;">제품명</th>
+            <th align="center" style="width: 17%;">수량</th>
+            <th align="center" style="width: 22%;">가격</th>
+            <th align="center" style="width: 22%;">합계</th>
             <th align="center" style="width: 15%;"></th>
             
         </tr>
@@ -114,18 +114,19 @@
         <tbody id="prInput">
         <input type="hidden" value="" id="cnt">
         <tr>
-            <td><input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>
-            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>
+            <td><input type="text" class="pr_no" name="pr_no" style="width: 100%;" value=""></td>
+            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value=""></td>
+            <td><input type="text" class="cost" id="cost" style="width: 100%;"></td>
             <td><input type="text" id="amount" name="amount" style="width: 100%;" value="" class="readonly" readonly></td>
-            <td style="text-align : center;"><button type="button" class="btn btn-danger" id="cancelBtn">삭제</button></td>
+            <td style="text-align : center;"></td>
         </tr>
         </tbody>
         <tr class="total">
-            <td colspan="2" align="center">총계</td>
+            <td colspan="3" align="center">총계</td>
             <td colspan="2" align="center"><input type="text" id="price" name="price" class="readonly" style="width: 100%;" value="" readonly></td>
         </tr>
     </table>
-            <input type="submit" class="btn btn-primary" style="text-align : center;" value="추가">
+            <input type="submit" class="btn btn-primary" style="text-align : center;" value="등록">
             <input type="button" id="calcelBtn" class="btn btn-warning" style="text-align : center;" value="닫기">
 </form>
 </body>
@@ -136,25 +137,17 @@
 	$('#addPutBtn').on('click', function(){
 		cnt++;
 		$('#prInput').append('<tr>'+
-        '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
-        '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
-        '<td><input type="text" id="amount" name="amount" style="width: 100%;" value="" class="readonly" readonly></td>'+
-        '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'+
+			'<td><input type="text" class="pr_no" name="pr_no" style="width: 100%;" value=""></td>'+
+           '<td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value=""></td>'+
+           '<td><input type="text" class="cost" id="cost" style="width: 100%;"></td>'+
+           '<td><input type="text" id="amount" name="amount" style="width: 100%;" value="" class="readonly" readonly></td>'+
+           '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'+
     '</tr>');
 	});
 	
 	$('#calcelBtn').on('click', function(){
 		window.close();
 	})
-	
-	// 제품코드 td 클릭 이벤트
-	$(document).on('click', '.pr_names', function(){
-		let idVal = $(this).attr('id');
-		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
-		
-// 		openWin.document.getElementById('cnt').value = cnt;
-	});
 	
 	// 제품 삭제 버튼
 	$('#prInput').on('click', '#cancelBtn', function(){
@@ -170,8 +163,20 @@
 	
 	// 수량 이벤트
 	$(document).on('keyup', '.quantity', function(){
-// 		let quantity = $(this).val();
-		$(this).parent().next().children().val($(this).val()*$(this).next().val());
+		var cost = $(this).parent('td').next().find('#cost').val();
+		console.log(cost)
+		var amount = $(this).parent('td').next().next().find('#amount').val();
+		console.log(amount)
+		console.log($(this).val());
+		$(this).parent('td').next().next().find('#amount').val(cost * $(this).val());
+	})
+	
+	$(document).on('keyup', '.cost', function(){
+		var quantity = $(this).parent('td').prev().find('#quantity').val();
+		console.log(quantity)
+		var amount = $(this).parent('td').next().find('#amount').val();
+		console.log(amount)
+		$(this).parent('td').next().find('#amount').val(quantity * $(this).val());
 	})
 	
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
