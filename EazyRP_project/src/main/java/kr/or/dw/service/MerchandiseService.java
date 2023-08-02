@@ -14,9 +14,9 @@ public interface MerchandiseService {
 
 	Map<String, Object> selectMerchandiseList(SearchCriteria cri) throws SQLException;
 
-	List<ProductVO> getProduct1(Map<String, String> dataMap) throws SQLException;
+	List<ProductVO> getProduct(Map<String, String> dataMap) throws SQLException;
 
-	List<ProductVO> getProductList1() throws SQLException;
+	List<ProductVO> getProductList() throws SQLException;
 
 	void insertMerchandise(MerchandiseVO mchVO) throws SQLException;
 
@@ -25,6 +25,10 @@ public interface MerchandiseService {
 	void modifyMerchandise(MerchandiseVO mchVO) throws SQLException;
 
 	void deleteMerchandise(MerchandiseVO mchVO) throws SQLException;
+
+	List<Map<String, Object>> getMerchandise(Map<String, String> dataMap) throws SQLException;
+
+	List<Map<String, Object>> getMerchandiseList() throws SQLException;
 
 	
 	

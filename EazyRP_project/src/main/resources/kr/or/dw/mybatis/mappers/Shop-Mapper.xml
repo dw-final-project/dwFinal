@@ -25,21 +25,16 @@
 	
 	<sql id="search">
 		<if test="searchType == 'd'.toString()">
-			AND sp.sp_no LIKE '%' || #{keyword} || '%'
+			AND s_no LIKE '%' || #{keyword} || '%'
 		</if>
 		<if test="searchType == 't'.toString()">
 			AND s_name LIKE '%' || #{keyword} || '%'
 		</if>
-		<if test="searchType == 'w'.toString()">
-			AND pr_name LIKE '%' || #{keyword} || '%'
-		</if>
 		<if test="searchType == 'all'.toString()">
 			AND (
-			sp.sp_no LIKE '%' || #{keyword} || '%'
+			s_no LIKE '%' || #{keyword} || '%'
 			OR
 			s_name LIKE '%' || #{keyword} || '%'
-			OR
-			pr_name LIKE '%' || #{keyword} || '%'
 			)
 		</if>
 	</sql>
@@ -47,7 +42,9 @@
 	<select id="selectShopList" resultType="shop">
 		SELECT *
 		FROM shop
-		WHERE 1=1 
+		WHERE 1=1
+		  AND enabled = '1' 
+		<include refid="search"/>
 	</select>
 	
 	<select id="selectShopListCount" resultType="int">

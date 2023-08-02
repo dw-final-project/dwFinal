@@ -60,17 +60,18 @@ public class MerchandiseServiceImpl implements MerchandiseService {
 	}
 
 	@Override
-	public List<ProductVO> getProduct1(Map<String, String> dataMap) throws SQLException {
+	public List<ProductVO> getProduct(Map<String, String> dataMap) throws SQLException {
 		List<ProductVO> product = null;
 		product = estimateDAO.getProduct(dataMap);
-		return product;
 		
+		return product;
 	}
 
 	@Override
-	public List<ProductVO> getProductList1() throws SQLException {
+	public List<ProductVO> getProductList() throws SQLException {
 		List<ProductVO> product = null;
 		product = estimateDAO.getProductList();
+		
 		return product;
 	}
 
@@ -104,6 +105,24 @@ public class MerchandiseServiceImpl implements MerchandiseService {
 
 		merchandiseDAO.deleteMerchandise(mchVO);
 		
+	}
+
+	@Override
+	public List<Map<String, Object>> getMerchandise(Map<String, String> dataMap) throws SQLException {
+		
+		List<Map<String, Object>> merchandise = null;
+		merchandise = merchandiseDAO.getMerchandise(dataMap);
+		
+		return merchandise;
+	}
+
+	@Override
+	public List<Map<String, Object>> getMerchandiseList() throws SQLException {
+		
+		List<Map<String, Object>> merchandise = null;
+		merchandise = merchandiseDAO.getMerchandiseList();
+		
+		return merchandise;
 	}
 
 	

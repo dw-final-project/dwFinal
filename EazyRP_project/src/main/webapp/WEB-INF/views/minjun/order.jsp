@@ -2,31 +2,21 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<%@ include file="../include/header.jsp" %>
-<%@ include file="../include/sidebar.jsp" %>
-
-<!-- 페이징 -->
 <c:set var="cri" value="${pageMaker.cri }"/>
-
-<body>
-<div class="container col-10">
-	
-<div class="content-wrapper">
-	<h3>주문관리</h3>
-	<section class="content container-fluid">
+<div style="height: 40px"></div>
+<section class="content container-fluid">
 		<div class="row justify-content-center">
-			<div class="col-md-10" style="max-width: 1100px;">
+			<div class="col-md-10" style="max-width: 1400px;">
 				<div class="card card-outline card-info">
-					<div class="card-header">
-						<h3 class="card-title p-1">주문관리</h3>
+					<div class="card-header" style="border-bottom: none;">
+						<h2 class="card-title p-1">주문관리</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm" method="post" action="/mymenu/search.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/erp5/merchandise.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="tcw" ${searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
-								<option value="t" ${searchType eq 't' ? 'selected' : '' }>제  목</option>
-								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>보낸사람</option>
-								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>업  체</option>
+								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
+								<option value="d" ${searchType eq 'd' ? 'selected' : '' }>상품코드</option>
+								<option value="t" ${searchType eq 't' ? 'selected' : '' }>쇼핑몰 이름</option>
+								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>제품 이름</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
@@ -39,65 +29,83 @@
 					</div>
 					<div class="card-body pad">
 						<div>
-							<table style="font-size: 0.8em; display: table; width: 100%" >
+							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
-									<th width="" style="text-align: center;">주문번호</th>
-									<th width="" style="text-align: center;">상품코드</th>
-									<th width="" style="text-align: center;">주문수량</th>
-									<th width="" style="text-align: center;">주문일</th>
-									<th width="" style="text-align: center;">배송방법</th>
-									<th width="" style="text-align: center;">송장번호</th>
-									<th width="" style="text-align: center;">배송시작일</th>
-									<th width="" style="text-align: center;">배송종료일</th>
-									<th width="" style="text-align: center;">진행상태</th>
-									<th width="" style="text-align: center;">실패사유</th>
+									<th width="150px" style="text-align: center;">주문 번호</th>
+									<th width="150px" style="text-align: center;">상품 코드</th>
+									<th width="150px" style="text-align: center;">상품 이름</th>
+									<th width="150px" style="text-align: center;">주문 수량</th>
+									<th width="200px" style="text-align: center;">주문일</th>
+									<th width="150px" style="text-align: center;">배송방법</th>
+									<th width="150px" style="text-align: center;">송장번호</th>
+									<th width="200px" style="text-align: center;">배송시작일</th>
+									<th width="200px" style="text-align: center;">배송종료일</th>
+									<th width="200px" style="text-align: center;">진행상태</th>
 								</tr>
-									<tr style="height: 20px;"></tr>
+									<c:forEach items="${orderList}" var="order" varStatus="loop">
 									<tr>
-										<td id="read_${loop.index}" style="text-align: center; height:80%; font-weight:bold; font-size: 0.7em; color: ${note.readable == 'N' ? 'red' : 'blue' };">
-										1
+										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('orderDetail.do?so_no=${order.SO_NO}','상품 상세보기', 1000 , 800);">${order.SO_NO }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('merchandiseDetail.do?sp_no=${order.SP_NO}','상품 상세보기', 800 , 600);">${order.SP_NO }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('merchandiseDetail.do?sp_no=${order.SP_NO}','상품 상세보기', 800 , 600);">${order.PR_NAME }</a></td>
+										<td style="text-align: center;">${order.QUANTITY}</td>
+										<td style="text-align: center;">
+											<fmt:formatDate value="${order.ORDERDATE }"
+												pattern="yyyy-MM-dd"></fmt:formatDate>
 										</td>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/mymenu/detail.do?n_no=${note.n_no }&send=N', '쪽지보기', 700, 1000, '${loop.index}')">2</a></td>
-										<td style="text-align: center;">3</td>
-										<td style="text-align: center;">4</td>
-										<td style="text-align: center;">5</td>
-										<td style="text-align: center;">6</td>
-										<td style="text-align: center;">7</td>
-										<td style="text-align: center;">8</td>
-										<td style="text-align: center;">9</td>
-										<td style="text-align: center;">10</td>
+										<td style="text-align: center;">${order.METHOD }</td>
+										<td style="text-align: center;">${order.INVOICE }</td>
+										<td style="text-align: center;">
+											<fmt:formatDate value="${order.DELSTARTDATE }"
+												pattern="yyyy-MM-dd"></fmt:formatDate>
+										</td>
+										<td style="text-align: center;">
+											<fmt:formatDate value="${order.DELENDDATE }"
+												pattern="yyyy-MM-dd"></fmt:formatDate>
+										</td>
+										<td style="text-align: center;">${order.PROGRESS }</td>
 									</tr>
+									</c:forEach>
 							</table>
 							<div class="card-footer">
-								<%@ include file="/WEB-INF/views/common/pagination2.jsp" %>
+								<%@ include file="/WEB-INF/views/common/pagination.jsp" %>
 							</div>
 						</div>
 					</div>
 					</div>
-					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('orderRegistForm.do', '주문등록', 700, 1000)"
-					style="width: 100px; margin: 20px; align-self: center;">주문등록</button>
-				</div>
+						<div style="display: flex; align-items: end; justify-content: end;">
+								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('orderRegistForm.do', '상품등록', 1000, 800)"
+								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">주문 등록</button>
+							</div>
 			</div>
-			
 		</div>
 	</section>
-</div>
-</div>
-</body>
-</html>
-
-<script>
-   function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
-      winleft = (screen.width - WinWidth) / 2;
-      wintop = (screen.height - WinHeight) / 2;
-      var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
-                        + "height=" + WinHeight + ",top="+ wintop + ",left="
-                        + winleft + ",resizable=yes,status=yes");
-   }
-</script>
-
+	
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+	
+<script>
+		
+	$('#searchBtn').on('click', function(){
+		$('#searchForm2').submit();
+	})
+	
+	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight, index){
+		winleft = (screen.width - WinWidth) / 2;
+		wintop = (screen.height - WinHeight) / 2;
+		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
+								+ "height=" + WinHeight + ",top="+ wintop + ",left="
+								+ winleft + ",resizable=yes,status=yes");
+		win.focus();
+	};
+	
+	function OpenWindow2(UrlStr, WinTitle, WinWidth, WinHeight){
+		winleft = (screen.width - WinWidth) / 2;
+		wintop = (screen.height - WinHeight) / 2;
+		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
+								+ "height=" + WinHeight + ",top="+ wintop + ",left="
+								+ winleft + ",resizable=yes,status=yes");
+		win.focus();
+	};
+
+	
+</script>
 <%@ include file="../include/footer_js.jsp" %>

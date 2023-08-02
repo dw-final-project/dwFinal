@@ -30,5 +30,9 @@ public interface MerchandiseDAO {
 
 	void deleteShopMerchandise(ShopVO shopVO) throws SQLException;
 
+	List<Map<String, Object>> getMerchandise(Map<String, String> dataMap) throws SQLException;
+
+	List<Map<String, Object>> getMerchandiseList() throws SQLException;
+
 	
 }
