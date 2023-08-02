@@ -33,7 +33,7 @@
 											<td style="text-align: center;">${qna.REGDATE }</td>
 											<td style="text-align: center;">${empty qna.ANS_CON ? 'N' : 'Y' }</td>
 										</tr>
-										<tr class="collapse accordion-collapse" style="position: absolute; z-index : 3; display: contents;" id="r1"
+										<tr class="collapse accordion-collapse" style="position: absolute; z-index : 1; display: contents;" id="r1"
 											data-bs-parent=".table">
 											<td colspan="3" >${qna.ANS_CON }</td>
 										</tr>
