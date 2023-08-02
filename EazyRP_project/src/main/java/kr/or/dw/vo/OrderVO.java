@@ -1,25 +1,37 @@
 package kr.or.dw.vo;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
 public class OrderVO {
-	
-	private String o_no;
-	private String o_name;
-	private String o_gb;
-	private String sys_regdate;
-	private String deliverydate;
-	private String receivedate;
-	private String progress;
+	private String so_no;
+	private String sp_no;
+	private String reciever;
+	private String tel;
+	private String addr;
 	private int quantity;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date orderdate;
+	private String method;
+	private String request;
+	private String invoice;
+	private int delfee;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date delstartdate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date delenddate;
+	private String failure;
+	private String progress;
+	private String gb;
+	private String enabled;
+	private String sys_up;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date sys_regdate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date sys_updatedate;
 	private String sys_reg;
-	private int buy_price;
-	private int unit_price;
-	private String buy_c_no;
-	private String con_c_no;
-	private String con_c_name;
-	private String dr_no;
-	private String title;
-
 }

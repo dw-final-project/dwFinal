@@ -86,12 +86,10 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/productBuyRegistFrom")
-	public void productBuyRegistFrom(HttpServletResponse res, HttpSession session, BsheetVO sheet, String[] pr_no, String[] pr_name, int[] quantity, int[] amount) throws SQLException, IOException {
+	public void productBuyRegistFrom(HttpServletResponse res, HttpSession session, BsheetVO sheet, String[] pr_no, String pr_name, int[] quantity, int[] amount) throws SQLException, IOException {
 		sheet.setBuy_c_no((String)session.getAttribute("c_no"));
-		if(pr_name.length > 1) {
-			int length = pr_name.length - 1 ;
-			sheet.setPr_name(pr_name[0]+" 외 " + length + "건");
-		}
+		sheet.setPr_name(pr_name);
+		sheet.setCon_c_no("");
 		int sheet_no = productService.insertProductBuy(sheet);
 		
 		List<BuyDetailVO> detail = new ArrayList<BuyDetailVO>();

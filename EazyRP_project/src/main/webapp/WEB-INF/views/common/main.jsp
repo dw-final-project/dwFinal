@@ -1,6 +1,10 @@
 <%-- <%@ include file="../include/header.jsp" %> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!-- 모리스 차트 -->
+ <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+ <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+ <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 <!-- main -->
 
 <body>
@@ -23,10 +27,10 @@
 		<div class="col">
 			<div class="card mb-3 rounded-3 shadow-sm border" style="height: 75%;" >
 				<div class="card-header py-3">
-					<h5 class="my-0 fw-normal">굴다리</h5>
+					<h5 class="my-0 fw-normal">손익 차트</h5>
 				</div>
 				<div class="card-body">
-					<p>내용2</p>
+     				<div id="area-chart" ></div>
 				</div>
 			</div>
 		</div>
@@ -125,6 +129,45 @@ function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 							+ winleft + ",resizable=yes,status=yes");
 	win.focus();
 };
+
+var data = [
+    { y: "2021", g1: 120, g2: 144, g3: 100, g4: 180, g5: 162},
+    { y: "2022", g1: 100, g2: 168, g3: 112, g4: 130, g5: 112},
+    { y: "2023", g1: 150, g2: 128, g3: 182, g4: 160, g5: 101},
+  ],
+  config = {
+    data: data,
+    xkey: 'y',
+    ykeys: ['g1', 'g2', 'g3', 'g4', 'g5'],
+    labels: ['그룹1', '그룹2', '그룹3', '그룹4', '그룹5'],
+    fillOpacity: 0.6,
+    hideHover: 'auto',
+    behaveLikeLine: true,
+    resize: true,
+    pointFillColors:['#ffffff'],
+    pointStrokeColors: ['green'],
+    lineColors:['gray','red', 'yellow', 'blue', 'cyan']
+};
+config.element = 'area-chart';
+Morris.Area(config);
+config.element = 'line-chart';
+Morris.Line(config);
+config.element = 'bar-chart';
+Morris.Bar(config);
+config.element = 'stacked';
+config.stacked = true;
+Morris.Bar(config);
+Morris.Donut({
+element: 'pie-chart',
+data: [
+  {label: "가", value: 30},
+  {label: "나", value: 15},
+  {label: "다", value: 45},
+  {label: "라", value: 10},
+]
+});
+
+
 </script>
 <script
 	src="<%=request.getContextPath()%>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
@@ -132,4 +175,5 @@ function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
 <%@ include file="../include/footer_js.jsp"%>

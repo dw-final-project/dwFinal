@@ -88,11 +88,6 @@
 		  FROM dual
 	</sql>
 	
-<!-- 	<sql id="makeWorkOrderDetailSeq"> -->
-<!-- 		SELECT workorderdetail_seq.nextval -->
-<!-- 		  FROM dual -->
-<!-- 	</sql> -->
-
 	<insert id="insertWorkOrderDetail" parameterType="workOrder">
 		INSERT INTO workorderdetail (
 			detail_no,
@@ -109,6 +104,20 @@
 	</insert>
 	<!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 -->
 	
+	<select id="selectWorkOrderDetail" parameterType="str" resultType="Map">
+		SELECT wo.wo_no, wo.wo_name, f.fac_name, e.e_name, wo.DELIVERYDATE, wo.PROGRESS, wo.FILES, wo.sys_regdate
+		FROM workorder wo, factory f, emp e
+		WHERE wo.fac_no = f.fac_no
+		AND wo.emp_no = e.EMP_NO
+		AND wo.wo_no = #{wo_no}
+	</select>
 	
+	<select id="selectWorkOrderDetailList" resultType="Map">
+		SELECT ROWNUM, p.pr_name ,wd.WO_NO ,wd.QUANTITY ,wd.DETAIL_NO 
+		FROM WORKORDER wo, WORKORDERDETAIL wd, PRODUCT p 
+		WHERE wo.wo_no = wd.WO_NO
+		AND wd.pr_no = p.pr_no
+		AND wo.wo_no = #{wo_no}				
+	</select>	
 	
 </mapper>

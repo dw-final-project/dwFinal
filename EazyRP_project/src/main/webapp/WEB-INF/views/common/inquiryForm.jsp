@@ -36,6 +36,7 @@
 										<td style="text-align: center;">${qna.REGDATE }</td>
 										<td style="text-align: center;">${empty qna.ANS_CON ? 'N' : 'Y' }</td>
 									</tr>
+
 									<c:if test="${not empty qna.ANS_CON }">
 										<tr class="r1">
 											<td colspan="3">${qna.ANS_CON }</td>

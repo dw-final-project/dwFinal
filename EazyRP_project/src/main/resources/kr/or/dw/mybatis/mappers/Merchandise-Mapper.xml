@@ -40,6 +40,7 @@
 		   AND sp.pr_no = p.pr_no
 		   AND sp.enabled = '1'
 		 <include refid="search"/>
+		 ORDER BY sp.sp_no
 	</select>
 	
 	<select id="selectMerchandiseListCount" resultType="int">
@@ -132,4 +133,38 @@
 	<delete id="deleteShopMerchandise" parameterType="str">
 		DELETE FROM shop_pr WHERE s_no = #{s_no}
 	</delete>
+	
+	<select id="getMerchandiseList" resultType="Map">
+		SELECT sp.sp_no, sp.sp_q, sp.price, p.pr_name, sh.s_name 
+		  FROM shop_pr sp, product p, shop sh  
+		 WHERE sp.pr_no = p.pr_no
+		   AND sp.s_no = sh.s_no
+		   AND sp.status = '판매중'
+		   AND sp.endperiod &lt; sysdate
+	  ORDER BY sp.sp_no 
+	</select>
+
+	<select id="getMerchandise" resultType="Map">
+		SELECT sp.sp_no, sp.sp_q, sp.price, p.pr_name, sh.s_name 
+		  FROM shop_pr sp, product p, shop sh  
+		 WHERE sp.pr_no = p.pr_no
+		   AND sp.s_no = sh.s_no
+		   AND sp.status = '판매중'
+		   AND sp.endperiod &lt; sysdate
+		<if test="searchType == 'w'.toString()">
+			AND sp.sp_no LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND sh.s_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'd'.toString()">
+			AND p.pr_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'cwd'.toString()">
+			AND (sp.sp_no LIKE '%' || #{keyword} || '%'
+			OR sh.s_name LIKE '%' || #{keyword} || '%'
+			OR p.pr_name LIKE '%' || #{keyword} || '%')
+		</if>
+		ORDER BY sp.sp_no
+	</select>
 </mapper>

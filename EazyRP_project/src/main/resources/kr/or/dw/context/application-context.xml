@@ -25,6 +25,7 @@
 	
 	<bean id="merchandiseService" class="kr.or.dw.service.MerchandiseServiceImpl"/>
 	<bean id="shopService" class="kr.or.dw.service.ShopServiceImpl"/>
+	<bean id="orderService" class="kr.or.dw.service.OrderServiceImpl"/>
 
 	<bean id="whService" class="kr.or.dw.service.WhServiceImpl"/>
 	<bean id="factoryService" class="kr.or.dw.service.FactoryServiceImpl"/>

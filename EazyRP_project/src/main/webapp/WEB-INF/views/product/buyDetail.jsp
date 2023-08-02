@@ -93,8 +93,8 @@
             <td><input type="text" name="sys_regdate" value="${sheet.sys_regdate }" readonly></td>
         </tr>
         <tr>
-            <td align="center">외화 명</td>
-            <td>${sheet.fc_no }</td>
+            <td align="center">비고</td>
+            <td>${sheet.pr_name }</td>
         </tr>
     </table>
     <table>
@@ -106,7 +106,7 @@
     	<tbody id="prInput">
        <c:forEach items="${detail }" var="detail" varStatus="loop">
         <tr>    	
-            <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${detail.pr_name}" readonly ></td>
+            <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${detail.pr_no}" readonly ></td>
             <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${detail.quantity}" readonly ></td>
             <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${detail.amount} 원" readonly ></td>
         </tr>
@@ -154,7 +154,6 @@ window.onload = function(){
 	});
 	
 	$('button#listBtn').on('click', function(){
-		window.opener.location.reload(true);
 		window.close();
 	});
 }

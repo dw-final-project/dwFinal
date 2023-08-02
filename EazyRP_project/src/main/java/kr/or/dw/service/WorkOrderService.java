@@ -11,4 +11,6 @@ public interface WorkOrderService {
 	Map<String, Object> selectWorkOrderList(Map<String, Object> map) throws SQLException;
 
 	void registWorkOrder(List<WorkOrderVO> woList) throws SQLException;
+
+	Map<String, Object> selectWorkOrderDetail(String wo_no) throws SQLException;
 }

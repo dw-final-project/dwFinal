@@ -369,6 +369,7 @@ public class BusinessController {
 		String url = "jihwan/siSelect.page";
 		Map<String, Object> dataMap = siService.selectSiList(cri);
 		mnv.setViewName(url);
+		mnv.addObject("cri",cri);
 		mnv.addObject("mcode",mcode);
 		mnv.addAllObjects(dataMap);
 		return mnv;

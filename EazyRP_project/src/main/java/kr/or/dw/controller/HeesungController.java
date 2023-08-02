@@ -417,4 +417,19 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		
 	}
 	
+	@RequestMapping("workorder/detail")
+	public ModelAndView workOrderDetail(ModelAndView mnv, String wo_no) throws SQLException {
+		
+		System.out.println("erp4/workorder/detail 진입");
+		
+		Map<String, Object> dataMap = workOrderService.selectWorkOrderDetail(wo_no);
+		String url = "heesung/workorder/detail.open";
+		
+		mnv.addAllObjects(dataMap);
+		mnv.setViewName(url);
+		
+		return mnv;
+		
+	}
+	
 }
