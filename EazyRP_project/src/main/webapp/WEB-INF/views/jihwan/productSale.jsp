@@ -11,13 +11,12 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">제품 판매 내역</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/erp4/productSale.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/erp4/sale.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="tcw" ${searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
-								<option value="t" ${searchType eq 't' ? 'selected' : '' }>판매요청자</option>
-								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>진행상황</option>
+								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
+								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>업체명</option>
 								<option value="p" ${searchType eq 'p' ? 'selected' : '' }>판매제품명</option>
-								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>요청업체</option>
+								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>금액</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
@@ -32,16 +31,16 @@
 						<div>
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
-									<th width="25%" style="text-align: center;">구매제품명</th>
+									<th width="25%" style="text-align: center;">판매제품명</th>
 									<th width="25%" style="text-align: center;">요청날짜</th>
-									<th width="25%" style="text-align: center;">작성자</th>
+									<th width="25%" style="text-align: center;">판매업체</th>
 									<th width="25%" style="text-align: center;">발생금액</th>
 								</tr>
-									<c:forEach items="${saleList}" var="sale">
+									<c:forEach items="${sale}" var="sale">
 									<tr>
 										<td style="text-align: center;">${sale.PR_NAME }<a id="aTag" href="#" onclick=""></a></td>
 										<td style="text-align: center;">${sale.SYS_REGDATE}</td>
-										<td style="text-align: center;">${sale.E_NAME }</td>
+										<td style="text-align: center;">${sale.C_NAME }</td>
 										<td style="text-align: center;">${sale.PR_EXPRICE } 원</td>
 									</tr>
 									</c:forEach>
