@@ -256,7 +256,6 @@ $('#addPutBtn').on('click', function(){
 	    }else{
 		      $(this).parents('tr').css('display', 'none');
 		      $(this).parents('tr').find("input[name='pr_delete']").val("y");
-		      
 	    }
 		
 	});

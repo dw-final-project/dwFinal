@@ -75,14 +75,15 @@ SELECT s2.SI_NO,
 	
 
 <select id="selectSiDetail" resultType="Map">
-	SELECT *
-  FROM si
- WHERE SI_NO = #{SI_NO}
+	SELECT s.*
+  FROM si s
+ WHERE s.SI_NO = #{SI_NO}
 </select>	
 	
 	
 <select id="forSiList" resultType="Map">
-SELECT s2.si_no
+SELECT ROWNUM,
+	s2.si_no
   	  ,s2.SIDETAIL_NO 
 	  ,e.e_name e_name
 	  ,s2.shipdate 
