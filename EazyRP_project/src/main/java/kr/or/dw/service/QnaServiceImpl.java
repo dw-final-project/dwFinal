@@ -17,6 +17,7 @@ import kr.or.dw.dao.QnaDAO;
 import kr.or.dw.dao.WarehouseDAO;
 import kr.or.dw.vo.CompanyVO;
 import kr.or.dw.vo.EmpVO;
+import kr.or.dw.vo.InquiryVO;
 import kr.or.dw.vo.WareHouseVO;
 
 
@@ -45,6 +46,12 @@ public class QnaServiceImpl implements QnaService {
 		dataMap.put("pageMaker", pageMaker);
 		
 		return dataMap;
+	}
+
+	@Override
+	public void insertQna(InquiryVO qna) throws SQLException {
+		qnaDAO.insertQna(qna);
+		
 	}
 
 

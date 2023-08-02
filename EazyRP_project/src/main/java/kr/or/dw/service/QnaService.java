@@ -6,11 +6,14 @@ import java.util.Map;
 
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.vo.CompanyVO;
+import kr.or.dw.vo.InquiryVO;
 import kr.or.dw.vo.WareHouseVO;
 
 public interface QnaService {
 
 	Map<String, Object> selectQnaList(SearchCriteria cri) throws SQLException;
+
+	void insertQna(InquiryVO qna) throws SQLException;
 
 
 
