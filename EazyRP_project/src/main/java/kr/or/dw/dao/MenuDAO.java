@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.MenuVO;
 
 @Mapper
@@ -22,6 +23,8 @@ public interface MenuDAO {
 	List<String> getEmp_no(String selectedC_no)throws SQLException;
 
 	String selectEname(String selectedEmp) throws SQLException;
+
+	List<DraftVO> getPayment(int emp_no) throws SQLException;
 
 	
 

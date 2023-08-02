@@ -57,7 +57,9 @@
     .nav d-flex {
       justify-content: space-evenly;
     }
-
+	#sora:hover{
+		color: red;
+	}
   </style>
   <!-- Custom styles for this template -->
 </head>
@@ -77,25 +79,19 @@
         <div class="row">
           <div class="col-12 table-responsive">
           <table class="table table-striped">
-          <thead>
-          <tr>
-          <th class="mb-6 text-center">내 용</th>
-          <th class="mb-3 text-center">날 짜</thv>
-          <th class="mb-3 text-center">답변여부</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-          <td class="mb-6">문의내용ㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
-          <td class="mb-3">2023.05.10</td>
-          <td class="mb-3"> O </td>
-          </tr>
-          <tr >
-          <td class=" text-center align-middle"colspan="3" style=" height: 200px;">문의 답변 내용 ddddddddddddddㅇㅇㅇㅇㅇㅇ</td>
-          </tr>
-
-
-          </tbody>
+          	<tr>
+          		<th>내용이다</th>
+          		<th>날짜다</th>
+          		<th>답변여부다</th>
+          	</tr>
+          	<tr id="sora2">
+          		<td>내용1</td>
+          		<td>날짜1</td>
+          		<td>답변1</td>
+          	</tr>
+          	<tr id="sora" style="position: absolute; z-index: -2;">
+          		<td colspan=3>asdfasdfasdf</td>
+          	</tr>
           </table>
           </div>
           
@@ -107,8 +103,6 @@
       </div>
 </div>
 
-  <!-- footer -->
-  
 
 
 </body>

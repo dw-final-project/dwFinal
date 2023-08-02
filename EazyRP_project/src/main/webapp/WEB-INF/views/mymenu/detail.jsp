@@ -29,21 +29,21 @@
 					<div class="card-body">	<!-- card body Start -->
 						<div class="form-group col-sm-12">
 							<label for="title">제 목</label>
-							<input type="text" class="form-control" id="title" value="${note.title }" readonly>
+							<input type="text" class="form-control" id="title" value="${note.title }" readonly style="background-color : white;">
 						</div>
 						<div class="row" style="align-items: center; justify-content: space-evenly;">
 							<div class="form-group col-sm-3">
 								<label for="writer">보낸 사람</label>
-								<input type="text" class="form-control" id="writer" value="${note.callerName }" readonly>
+								<input type="text" style="background-color : white;" class="form-control" id="writer" value="${note.callerName }" readonly>
 							</div>
 							<div class="form-group col-sm-4">
 								<label for="regdate">보낸 날짜</label>
-								<input type="text" class="form-control" id="regdate" 
+								<input type="text" class="form-control" style="background-color : white;" id="regdate" 
 									value="${note.senddate }" readonly>
 							</div>
 							<div class="form-group col-sm-4">
 								<label for="viewcnt">업체명</label>
-								<input type="text" class="form-control" id="viewcnt" value="${note.c_cname }" readonly>
+								<input type="text" class="form-control" style="background-color : white;" id="viewcnt" value="${note.c_cname }" readonly>
 							</div>
 						</div>
 						<div class="form-group col-sm-12">

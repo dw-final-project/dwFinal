@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.dw.service.CalendarService;
+import kr.or.dw.service.ManagementService;
 import kr.or.dw.service.MemberService;
 import kr.or.dw.service.MenuService;
 import kr.or.dw.vo.CalendarVO;
+import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.MenuVO;
 
 @Controller
@@ -38,7 +40,7 @@ public class CommonController {
 	
 	@Autowired
 	private CalendarService calendarService;
-
+	
 	@GetMapping("/common/loginForm")
 	public String loginForm(HttpServletResponse res) throws Exception {
 		String url = "/common/loginForm";
@@ -114,7 +116,9 @@ public class CommonController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	
+		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
+		List<DraftVO> draft = menuService.getPayment(emp_no);
+		mnv.addObject("draft", draft);
 		session.setAttribute("menuList", menuList);
 		session.setAttribute("subMenuList", subMenuList);
 		session.setAttribute("smallMenuList", smallMenuList);

@@ -57,6 +57,6 @@ public interface ProductService {
 
 	String getC_name(String c_no) throws SQLException;
 
-	void receive(int o_no) throws SQLException;
+	void receive(String o_no) throws SQLException;
 	
 }

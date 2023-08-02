@@ -258,9 +258,14 @@ public class ProductController {
 		data2.put("quantity", quantity);
 		int totalBuy = 0;
 		int totalUnit = 0;
+		System.out.println(product);
+		for(int i = 0; i < product.size(); i++) {
+			System.out.println(product.get(i).getPr_exprice());
+		}
 		for(int i = 0; i < product.size(); i++){
 			int buy = product.get(i).getPr_exprice();
 			product.get(i).setPr_exprice(buy * Integer.parseInt(quantity.get(i)));
+			System.out.println("왜안돼냐고3");
 			totalBuy += product.get(i).getPr_exprice();
 			int unit = product.get(i).getPr_inprice();
 			product.get(i).setPr_inprice(unit * Integer.parseInt(quantity.get(i)));
@@ -292,7 +297,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/orderRegistForm")
-	public void orderRegistForm(HttpServletResponse res, HttpSession session, OrderVO order, String[] pr_no, int[] quantity, int[] buy_price2, int[] unit_price2, String[] pr_name, String[] wh_no) throws SQLException, IOException {
+	public void orderRegistForm(HttpServletResponse res, HttpSession session, OrderVO order, String[] pr_no, int[] quantity, int[] buy_price2, int[] unit_price2, String[] pr_name, String[] wh_no, String[] lack) throws SQLException, IOException {
 		String c_no = (String) session.getAttribute("c_no");
 		String e_name = (String) session.getAttribute("e_name");
 		order.setBuy_c_no(c_no);
@@ -315,6 +320,7 @@ public class ProductController {
 			vo.setBuy_price(buy_price2[i]);
 			vo.setUnit_price(unit_price2[i]);
 			vo.setWh_no(wh_no[i]);
+			vo.setLack(lack[i]);
 			
 			detail.add(vo);
 			System.out.println(vo);
@@ -385,7 +391,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/receive")
-	public void receive(int o_no, HttpSession session, HttpServletResponse res) throws SQLException, IOException {
+	public void receive(String o_no, HttpSession session, HttpServletResponse res) throws SQLException, IOException {
 		productService.receive(o_no);
 		
 		res.setContentType("text/html; charset=utf-8");
