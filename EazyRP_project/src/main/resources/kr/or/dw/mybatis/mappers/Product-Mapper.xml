@@ -308,4 +308,8 @@
 		UPDATE ordermanage SET progress = '입고 완료', receivedate = sysdate WHERE o_no = #{o_no}
 	</update>
 	
+	<update id="consumptionProduct">
+		UPDATE product SET quantity = quantity - #{quantity} WHERE pr_no = #{pr_no}
+	</update>
+	
 </mapper>

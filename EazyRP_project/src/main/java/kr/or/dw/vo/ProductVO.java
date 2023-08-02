@@ -10,6 +10,7 @@ import lombok.Data;
 public class ProductVO {
 	private String pr_no;
 	private String pr_name;
+	private String c_name;
 	private String c_no;
 	private String pr_gr;
 	private String pr_st;
@@ -28,5 +29,6 @@ public class ProductVO {
 	private Date sys_regdate;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date sys_updatedate;
+	private String c_name;
 
 }

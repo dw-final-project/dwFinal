@@ -42,7 +42,7 @@
 										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/product/orderDetail.do?o_no=${order.o_no }&orders=Y', '발주 내역', 700, 700)">${order.o_name }</a></td>
 										<td style="text-align: center;">${order.sys_regdate }</td>
 										<td style="text-align: center;">${order.sys_reg }</td>
-										<td style="text-align: center;">${order.progress }</td>
+										<td style="text-align: center;" style=" ${order.progress eq '배송중' ? 'font-weight:bold; color: blue;' : ''}">${order.progress }</td>
 										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/management/detail.do?dr_no=${order.dr_no}', '기안문', 700, 700)">${order.title }</a></td>
 									</tr>
 									</c:forEach>

@@ -249,8 +249,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void receive(int o_no) throws SQLException {
+	public void receive(String o_no) throws SQLException {
 		productDAO.receive(o_no);
+		List<O_DetailVO> detail = productDAO.getOrderDetail(o_no);
+		
+		for(int i = 0; i < detail.size(); i++) {
+			productDAO.consumptionProduct(detail.get(i));
+		}
 	} 
 	
 	

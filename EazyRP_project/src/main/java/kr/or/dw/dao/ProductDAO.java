@@ -87,7 +87,9 @@ public interface ProductDAO {
 
 	void delivery(int o_no) throws SQLException;
 
-	void receive(int o_no) throws SQLException;
+	void receive(String o_no) throws SQLException;
+
+	void consumptionProduct(O_DetailVO o_DetailVO) throws SQLException;
 
 
 	

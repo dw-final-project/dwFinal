@@ -131,7 +131,7 @@ html {
 		    </div>
 		</c:if>
       <div class="container-fluid" style="position: relative;">
-        <a class="navbar-brand" href="/common/main.do"><img src="<%=request.getContextPath() %>/resources/img/EazyRP.png" style="width: 100px;"></a>
+        <a class="navbar-brand" href="/common/main.do"><img src="<%=request.getContextPath() %>/resources/img/EazyRP2.png" style="width: 100px;"></a>
             <div style="display: flex;">
             	<form>
 	             <select id="selectOp2" class="form-control" name="selectedC_no" style="margin-right: 20px;">

@@ -33,4 +33,13 @@
 	<select id="selectEname" resultType="str">
 		SELECT e_name FROM emp WHERE emp_no = #{selectedEmp}
 	</select>
+	
+	<select id="getPayment" resultType="draft">
+		SELECT ROWNUM, d.*, e.e_name e_name
+		FROM draft d, emp e
+		WHERE d.emp_no = e.emp_no
+		  AND d.emp_no = #{emp_no}
+		  ORDER BY d.DR_NO DESC
+	</select>
+	
 </mapper>

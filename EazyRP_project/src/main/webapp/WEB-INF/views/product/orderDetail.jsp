@@ -124,7 +124,7 @@
     </table>
     <div class="card-footer">
 		<button type="button" id="listBtn" class="btn btn-primary">닫기</button>
-		<c:if test="${order.progress eq '접수중'}">
+		<c:if test="${order.progress eq '배송중'}">
 	    	<button type="button" id="receiveBtn" class="btn btn-primary">입고 확인</button>
 	    </c:if>
 		<button type="button" id="cancelBtn" class="btn btn-danger" style="float: right;" ${order.progress ne '접수중' ? 'disabled' : '' }>요청 취소</button>
