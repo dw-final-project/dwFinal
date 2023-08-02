@@ -26,4 +26,8 @@ public interface WorkOrderDAO {
 
 	void insertWorkOrderDetail(WorkOrderVO wo) throws SQLException;
 
+	Map<String, Object> selectWorkOrderDetail(String wo_no) throws SQLException;
+
+	List<Map<String, Object>> selectWorkOrderDetailList(String wo_no) throws SQLException;
+
 }

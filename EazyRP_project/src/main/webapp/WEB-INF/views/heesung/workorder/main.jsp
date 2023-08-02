@@ -35,11 +35,11 @@
 									<th width="30%" style="text-align: center;">제목</th>
 									<th width="10%" style="text-align: center;">담당자</th>
 									<th width="15%" style="text-align: center;">납기일</th>
-									<th width="10%" style="text-align: center;">첨부파일</th>
 									<th width="15%" style="text-align: center;">상태</th>
 								</tr>
 									<c:forEach items="${woList}" var="wo" varStatus="">
 									<tr>
+										<input type="hidden" name="${wo.wo_no }">
 										<td width="15%" style="text-align: center;">
 											<fmt:formatDate value="${wo.sys_regdate}" pattern="yyyy-MM-dd"></fmt:formatDate>
 										</td>
@@ -52,8 +52,6 @@
 										<td width="15%" style="text-align: center;">
 											<fmt:formatDate value="${wo.deliverydate }" pattern="yyyy-MM-dd"></fmt:formatDate>
 										</td>
-										<td width="10%" style="text-align: center;"><fmt:formatDate value="${estimate.REGDATE }"
-											pattern="yyyy-MM-dd"></fmt:formatDate>${note.senddate }</td>
 										<td width="15%" style="text-align: center;">${wo.progress == '0' ? '대기중' : (wo.progress == '1' ? '진행중' : '완료')}</td>
 									</tr>
 									</c:forEach>

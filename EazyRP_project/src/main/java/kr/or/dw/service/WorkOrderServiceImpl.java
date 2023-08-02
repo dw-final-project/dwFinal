@@ -77,4 +77,20 @@ public class WorkOrderServiceImpl implements WorkOrderService{
 		
 	}
 
+	@Override
+	public Map<String, Object> selectWorkOrderDetail(String wo_no) throws SQLException {
+
+		System.out.println("workOrderServiceImpl.selectWorkOrderDetail - 진입");
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> wo = (Map<String, Object>) workOrderDAO.selectWorkOrderDetail(wo_no);
+		
+		List<Map<String, Object>> woDetail = workOrderDAO.selectWorkOrderDetailList(wo_no);
+		
+		dataMap.put("wo", wo);
+		dataMap.put("woDetail", woDetail);
+
+		return dataMap;
+
+	}
+
 }
