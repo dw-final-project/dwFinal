@@ -25,6 +25,7 @@ import com.aspose.cells.Workbook;
 import com.aspose.cells.Worksheet;
 
 import kr.or.dw.command.SearchCriteria;
+import kr.or.dw.dao.ProductDAO;
 import kr.or.dw.service.ProductService;
 import kr.or.dw.vo.BsheetVO;
 import kr.or.dw.vo.BuyDetailVO;
@@ -44,6 +45,9 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private ProductDAO productDAO;
 	
 	@RequestMapping("/productBuy")
 	public ModelAndView productBuy(ModelAndView mnv, String mcode, HttpSession session, SearchCriteria cri) throws SQLException {
@@ -152,12 +156,23 @@ public class ProductController {
 	public ModelAndView orderDetail(ModelAndView mnv, String o_no, String orders) throws SQLException {
 		List<O_DetailVO> detail = productService.getOrderDetail(o_no);
 		OrderVO order = productService.selectOrder(o_no);
-		
+		String c_no = order.getBuy_c_no();
+		String c_name = productService.getC_name(c_no);
 		mnv.addObject("order", order);
 		mnv.addObject("detail", detail);
+		mnv.addObject("length", detail.size());
+		
+		String del = "Y";
+		for(int i = 0; i < detail.size(); i++) {
+			if(detail.get(i).getLack().equals("Y")) {
+				del = "N";
+			}
+		}
 		if(orders.equals("Y")) {
-		mnv.setViewName("/product/orderDetail");
+			mnv.setViewName("/product/orderDetail");
 		} else if(orders.equals("N")) {
+			mnv.addObject("c_name", c_name);
+			mnv.addObject("del",del);
 			mnv.setViewName("/product/orderDetail2");
 		}
 		return mnv;
@@ -243,9 +258,14 @@ public class ProductController {
 		data2.put("quantity", quantity);
 		int totalBuy = 0;
 		int totalUnit = 0;
+		System.out.println(product);
+		for(int i = 0; i < product.size(); i++) {
+			System.out.println(product.get(i).getPr_exprice());
+		}
 		for(int i = 0; i < product.size(); i++){
 			int buy = product.get(i).getPr_exprice();
 			product.get(i).setPr_exprice(buy * Integer.parseInt(quantity.get(i)));
+			System.out.println("왜안돼냐고3");
 			totalBuy += product.get(i).getPr_exprice();
 			int unit = product.get(i).getPr_inprice();
 			product.get(i).setPr_inprice(unit * Integer.parseInt(quantity.get(i)));
@@ -277,7 +297,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/orderRegistForm")
-	public void orderRegistForm(HttpServletResponse res, HttpSession session, OrderVO order, String[] pr_no, int[] quantity, int[] buy_price2, int[] unit_price2, String[] pr_name, String[] wh_no) throws SQLException, IOException {
+	public void orderRegistForm(HttpServletResponse res, HttpSession session, OrderVO order, String[] pr_no, int[] quantity, int[] buy_price2, int[] unit_price2, String[] pr_name, String[] wh_no, String[] lack) throws SQLException, IOException {
 		String c_no = (String) session.getAttribute("c_no");
 		String e_name = (String) session.getAttribute("e_name");
 		order.setBuy_c_no(c_no);
@@ -300,6 +320,7 @@ public class ProductController {
 			vo.setBuy_price(buy_price2[i]);
 			vo.setUnit_price(unit_price2[i]);
 			vo.setWh_no(wh_no[i]);
+			vo.setLack(lack[i]);
 			
 			detail.add(vo);
 			System.out.println(vo);
@@ -345,6 +366,39 @@ public class ProductController {
 		mnv.addObject("mcode", mcode);
 		mnv.setViewName("/product/orderList.page");
 		return mnv;
+	}
+	
+	@RequestMapping("/receipt")
+	public void receipt(int o_no, HttpSession session, HttpServletResponse res) throws SQLException, IOException {
+		productDAO.receipt(o_no);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
+	
+	@RequestMapping("/delivery")
+	public void delevery(int o_no, HttpSession session, HttpServletResponse res) throws SQLException, IOException {
+		productDAO.delivery(o_no);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
+	
+	@RequestMapping("/receive")
+	public void receive(String o_no, HttpSession session, HttpServletResponse res) throws SQLException, IOException {
+		productService.receive(o_no);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
 	}
 	
 	

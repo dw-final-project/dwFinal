@@ -119,7 +119,9 @@ html {
    @keyframes ct {
         50% {color: yellow;}
    }
-
+	#header{
+		box-shadow: 0px 5px 10px gray;
+	}
 </style>
 
 <body class="bg-light" style="padding: 0px;">
@@ -131,7 +133,7 @@ html {
 		    </div>
 		</c:if>
       <div class="container-fluid" style="position: relative;">
-        <a class="navbar-brand" href="/common/main.do"><img src="<%=request.getContextPath() %>/resources/img/EazyRP.png" style="width: 100px;"></a>
+        <a class="navbar-brand" href="/common/main.do"><img src="<%=request.getContextPath() %>/resources/img/EazyRP2.png" style="width: 100px;"></a>
             <div style="display: flex;">
             	<form>
 	             <select id="selectOp2" class="form-control" name="selectedC_no" style="margin-right: 20px;">
@@ -157,7 +159,7 @@ html {
          </div>
     </nav>
 
-    <nav class="nav d-flex" style="padding: 0 16.66666667%; padding-top: 6px; background-color: #7bc4b2; justify-content:space-evenly;">
+    <nav class="nav d-flex" id="header" style="padding: 0 16.66666667%; padding-top: 6px; background-color: #7bc4b2; justify-content:space-evenly;">
       <c:forEach items="${menuList}" var="menu">
          <li class="nav-scroller py-1 mb-2 dropdown">
           <a class="p-2 a nav-link  bold fw-bold" href="javascript:goPage('${menu.murl}', '${menu.mcode}', '${menu.micon }');" data-url="${menu.mcode }" aria-expanded="true" style="color: white; text-decoration-line: none;">${menu.mname }</a>

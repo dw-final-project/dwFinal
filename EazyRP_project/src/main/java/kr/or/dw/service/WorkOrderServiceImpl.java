@@ -21,19 +21,19 @@ public class WorkOrderServiceImpl implements WorkOrderService{
 	private WorkOrderDAO workOrderDAO;
 	
 	@Override
-	public Map<String, Object> selectWorkOrderList(SearchCriteria cri) throws SQLException {
+	public Map<String, Object> selectWorkOrderList(Map<String, Object> map) throws SQLException {
 		
 		List<WorkOrderVO> woList = null;
-		
+		SearchCriteria cri = (SearchCriteria) map.get("cri");
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		// 현재 page 번호에 맞는 리스트를 perPageNum 개수 만큼 가져오기
-		woList = workOrderDAO.selectSearchWorkOrderList(cri, rowBounds);
+		woList = workOrderDAO.selectSearchWorkOrderList(rowBounds, map);
 		
 		// 전체 board 개수
-		int totalCount = workOrderDAO.selectSearchWorkOrderListCount(cri);
+		int totalCount = workOrderDAO.selectSearchWorkOrderListCount(map);
 		
 		// PageMaker 생성
 		PageMaker pageMaker = new PageMaker();
@@ -56,6 +56,25 @@ public class WorkOrderServiceImpl implements WorkOrderService{
 		}
 		
 		return dataMap;
+		
+	}
+	
+	@Override
+	public void registWorkOrder(List<WorkOrderVO> woList) throws SQLException {
+		
+		workOrderDAO.insertWorkOrder(woList.get(0));	// woList의 get 0번째는 wo_no 이다. (wo_no_seq로 시퀀서 등록되어있음)
+		
+		System.out.println("insertWorkOrder 완료");
+
+		String wo_no = woList.get(0).getWo_no();
+		
+		for (WorkOrderVO wo : woList) {
+			wo.setWo_no(wo_no);
+			workOrderDAO.insertWorkOrderDetail(wo);
+		}
+		
+		System.out.println("insertWorkOrderDetail 완료");
+		
 	}
 
 }

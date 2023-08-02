@@ -19,13 +19,13 @@
 					<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm2" method="post" action="/erp4/estimate.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
-								<option value="d" ${searchType eq 'd' ? 'selected' : '' }>거래처</option>
-								<option value="t" ${searchType eq 't' ? 'selected' : '' }>담당자</option>
-								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>품목명</option>
-								<option value="p" ${searchType eq 'p' ? 'selected' : '' }>진행상태</option>
+								<option value="all" ${cri.searchType eq 'all' ? 'selected' : '' }>전  체</option>
+								<option value="d" ${cri.searchType eq 'd' ? 'selected' : '' }>거래처</option>
+								<option value="t" ${cri.searchType eq 't' ? 'selected' : '' }>담당자</option>
+								<option value="w" ${cri.searchType eq 'w' ? 'selected' : '' }>품목명</option>
+								<option value="p" ${cri.searchType eq 'p' ? 'selected' : '' }>진행상태</option>
 							</select>
-							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
+							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${cri.keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
 								<button class="btn btn-primary" type="button" id="searchBtn">
 									<i class="fa fa-fw fa-search" style="font-size: 0.8em; padding: 0px;"></i>

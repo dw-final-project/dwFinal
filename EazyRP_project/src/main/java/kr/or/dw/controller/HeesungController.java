@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +38,7 @@ import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.ProcessVO;
 import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.WhVO;
+import kr.or.dw.vo.WorkOrderVO;
 
 @Controller
 @RequestMapping("/erp4")
@@ -70,10 +73,14 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	}
 	
 	@RequestMapping("/findWorkOrder")
-	public ModelAndView findWorkOrder(ModelAndView mnv, SearchCriteria cri) throws SQLException {
+	public ModelAndView findWorkOrder(ModelAndView mnv, SearchCriteria cri, HttpSession session) throws SQLException {
 		String url = "heesung/findWorkOrder.open";
 		
-		Map<String, Object> dataMap = workOrderService.selectWorkOrderList(cri);
+		String c_no = session.getAttribute("c_no").toString();
+		Map<String, Object> map = new HashMap<>();
+		map.put("cri", cri);
+		map.put("c_no", c_no);
+		Map<String, Object> dataMap = workOrderService.selectWorkOrderList(map);
 		
 		mnv.setViewName(url);
 		mnv.addAllObjects(dataMap);
@@ -290,14 +297,18 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////workorder(작업지시서)
 	
 	@RequestMapping("/workorder")
-	public ModelAndView workorder(ModelAndView mnv, SearchCriteria cri, String mcode) throws SQLException {
+	public ModelAndView workorder(ModelAndView mnv, SearchCriteria cri, String mcode, HttpSession session) throws SQLException {
 		
 		System.out.println("HeesungController - erp4/workorder 진입");
 		
 		// 페이지 정보와 작업지시서의 정보를 가지고 url에 반환할것이다 url에서는 게시판 형태로 사용자에게 보여준다.
 		String url = "heesung/workorder/main.page";
 		
-		Map<String, Object> dataMap = workOrderService.selectWorkOrderList(cri);
+		String c_no = session.getAttribute("c_no").toString();
+		Map<String, Object> map = new HashMap<>();
+		map.put("cri", cri);
+		map.put("c_no", c_no);
+		Map<String, Object> dataMap = workOrderService.selectWorkOrderList(map);
 		
 		mnv.setViewName(url);
 		mnv.addObject("mcode", mcode);
@@ -307,9 +318,103 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	}
 	
 	@RequestMapping("/workorder/registForm")
-	public String workorderRegistForm() {
+	public ModelAndView workorderRegistForm(ModelAndView mnv, HttpSession session) throws SQLException {
+		
+		System.out.println("HeesungController - erp4/workorder/registForm 진입");
+		
+		int empno = Integer.parseInt(session.getAttribute("emp_no").toString());
+		String ename = estimateService.ename(empno);
+		
+		String c_no = session.getAttribute("c_no").toString();
+		String c_name = session.getAttribute("c_name").toString();
+		
 		String url = "heesung/workorder/registForm.open";
-		return url;
+		
+		mnv.setViewName(url);
+		mnv.addObject("empno", empno);		// 사원번호
+		mnv.addObject("ename", ename);		// 사원이름
+		mnv.addObject("c_no", c_no);		// 회사번호
+		mnv.addObject("c_name", c_name);	// 회사이름
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/workorder/regist")
+	public void registWorkOrder (HttpServletResponse res, @RequestParam("files")MultipartFile multi, String wo_name, 
+		String fac_no, @DateTimeFormat(pattern="yyyy-MM-dd")Date deliverydate, String progress, String[] pr_no, int[] quantity, int emp_no, HttpSession session) throws SQLException, IOException {
+		
+		System.out.println("희성 컨트롤러 erp4/workorder/regist 진입");
+		
+		String c_no = session.getAttribute("c_no").toString();
+		
+		String filess = "";
+		
+		if(!multi.isEmpty()) {
+			UUID uuid = UUID.randomUUID();
+			String[] uuids = uuid.toString().split("-");
+			
+			String uniqueName = uuids[0];
+			
+			String fileRealName = multi.getOriginalFilename();
+			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
+			String uploadFolder = "C:\\upload\\";
+			
+			filess = uniqueName+fileExtension;
+			
+			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
+			
+			if(!saveFile.exists()) {
+				saveFile.mkdirs();
+			}
+			
+			try {
+				multi.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		List<WorkOrderVO> woList = new ArrayList<WorkOrderVO>();
+		
+		System.out.println("pr_no.length : " + pr_no);
+		
+		for(int i = 0; i < pr_no.length; i++) {
+			
+			WorkOrderVO wo = new WorkOrderVO();
+
+			// workorder 테이블
+			wo.setC_no(c_no);
+			wo.setWo_name(wo_name);
+			wo.setFac_no(fac_no);
+			wo.setEmp_no(emp_no);
+			wo.setDeliverydate(deliverydate);
+			wo.setProgress(progress);
+			wo.setFiles(filess);
+			wo.setC_no(c_no);
+			
+			// workorderdetail 테이블
+			wo.setPr_no(pr_no[i]);
+			wo.setQuantity(quantity[i]);
+			
+			woList.add(wo);
+			
+		}
+		
+		System.out.println("workOrder registService 진입 전");
+		
+		workOrderService.registWorkOrder(woList);
+		
+		System.out.println("workOrder registService 진입 후");
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 등록되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+		
 	}
 	
 }

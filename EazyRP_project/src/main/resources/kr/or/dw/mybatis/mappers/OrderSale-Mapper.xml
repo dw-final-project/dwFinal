@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dw.dao.OrderSaleDAO">
+	
+	<sql id="search">
+		<if test="searchType == 'number'.toString()">
+			AND pr_no LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'code'.toString()">
+			AND pr_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'title'.toString()">
+			AND pr_gr LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'nnc'.toString()">
+			AND (
+			pr_no LIKE '%' || #{keyword} || '%'
+			OR
+			pr_name LIKE '%' || #{keyword} || '%'
+			OR
+			pr_gr LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+	</sql>
+	
+	
+	<select id="selectSaleList" resultType="Map">
+		SELECT p.*, c_name
+		FROM product p, company c
+		WHERE 1=1
+		AND p.c_no = c.c_no
+		<include refid="search"/>
+	</select>
+	
+	<select id="selectSearchSaleListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM product
+		WHERE 1=1
+		<include refid="search"/>
+	</select>
+	
+
+</mapper>

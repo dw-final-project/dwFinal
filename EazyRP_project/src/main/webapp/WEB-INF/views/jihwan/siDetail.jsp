@@ -95,11 +95,11 @@
         </tr>
          <tr>
             <td align="center">출하 창고</td>
-             <td><input type="text" id="0" class="wh_names" name="wh_name" style="width: 100%;" value="${siList.get(0).WH_NAME }"><input type="hidden" name="wh_no" value=""></td>
+             <td><input type="text" id="0" class="wh_names" name="wh_name" style="width: 100%;" value="${siList.get(0).WH_NAME }"><input type="hidden" name="wh_no" value="${siList.get(0).WH_NO }"></td>
         </tr>
         <tr>
             <td align="center">출하 일자</td>
-            <td><input type="date" value="<fmt:formatDate value="${siList.get(0).SHIPDATE }" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
+            <td><input type="date" name= "shipdate" value="<fmt:formatDate value="${siList.get(0).SHIPDATE }" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
         </tr>
        
     </table>
@@ -118,9 +118,9 @@
         <tr id="trChk" >    	
 	       <input type="hidden" class="rownum" value="${si.ROWNUM }">
 	       <input type="hidden" name="sidetail_no" id="sidtail_no" value="${si.SIDETAIL_NO }">
-	       <input type="hidden" name="enabled" id="estenabled" value="${si.ENABLED }">
-	       <input type="hidden" name="pr_delete" value="n">
-        	<td><input type="text" id="" class="pr_nos" name="pr_no" value="${si.PR_NO }"  style="width: 100%;" readonly><input type="hidden" name="pr_no" value="${si.PR_NO }"></td>
+	       <input type="hidden" name="enabled" id="sienabled" value="${si.ENABLED }">
+	       <input type="hidden" name="pr_delete" value="o">
+        	<td><input type="text" id="" class="pr_nos" name="pr_no" value="${si.PR_NO }"  style="width: 100%;" readonly></td>
         	<td><input type="text" id="${si.ROWNUM }" class="pr_names2" name="pr_name" style="width: 100%;" value="${si.PR_NAME }"></td>
             <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${si.QUANTITY }">
             <td><input type="text" id="contents" class="content" name="content" style="width: 100%;" value="${si.CONTENT }"  ></td>
@@ -139,61 +139,125 @@
 </script>
 
 <script>
+
+
+window.onload = function(){
+	
+	let formObj = $('form[role="form"]');
+
+	$('button#modifyBtn').on('click', function(){
+		formObj.attr({
+			'action' : 'simodifyForm.do',
+			'method' : 'post'
+		});
+		
+		let trCnt = 0;
+		
+		for(let i = 0; i < $('tr[id="trChk"]').get().length; i++){
+			if($('tr[id="trChk"]').eq(i).css("display") != "none") {
+				for(let j = 0; j < $('tr[id="trChk"]').eq(i).find('input[type="text"]').get().length; j++) {
+					if($('tr[id="trChk"]').eq(i).find('input[type="text"]').eq(j).val() == "" || $('tr[id="trChk"]').eq(i).find('input[type="text"]').eq(j).val() == null) {
+						alert("값을 입력해 주세요.");
+						return;
+					}
+				}				
+			} else {
+				trCnt += 1;
+			}
+		}
+		
+		if($('tr[id="trChk"]').get().length == trCnt) {
+			alert("제품 추가하쇼");
+			return;
+		}
+		
+		
+		
+		
+		formObj.submit();
+		
+		
+	})
+	
+	
+	
+
+	$('button#removeBtn').on('click', function(){
+		if(confirm("정말 삭제하시겠습니까?")){
+			formObj.attr({
+				'action' : 'siremove',
+				'method' : 'post' 
+			});
+			formObj.submit();
+		};
+	});
+	
+	$('button#listBtn').on('click', function(){
+		window.opener.location.reload(true);
+		window.close();
+	});
+	
+	
+	
+}
+
 let rownumList = $('.rownum');
 let cnt = rownumList.length; 
 console.log(cnt);
-let dtail_no = $('#dtail_no').val();
+let dtail_no = $('#sidtail_no').val();
 
 
 
-$('button#modifyBtn').on('click', function(){
-	formObj.attr({
-		'action' : 'modifyForm.do',
-		'method' : 'post'
-//			'enctype' : 'multipart/form-data'
-	});
 
 // 제품 추가 버튼
 $('#addPutBtn').on('click', function(){
 	cnt++;
 	$('#prInput').append('<tr id="trChk"><input type="hidden" class="rownum" value="'+ cnt + '">' +
-	'<input type="hidden" name="sidetail_no" value="0">'+
-	'<input type="hidden" name="pr_delete" value="n">'+
-	'<td><input type="text" id="" class="pr_nos" name="pr_no" value="" style="width: 100%;" readonly><input type="hidden" name="pr_no" value=""></td>' + 
+	'<input type="hidden" name="sidetail_no" id="sidtail_no" value="0">'+
+	'<input type="hidden" name="pr_delete" id="sienabled" value="n">'+
+	'<td><input type="text" id="" class="pr_nos" name="pr_no" value="" style="width: 100%;" readonly></td>' + 
 	'<td><input type="text" id="' + cnt + '" class="pr_names2" name="pr_name" style="width: 100%;" value=""></td>' +
     '<td><input type="text" id="quantity'+ cnt +'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
     '<td><input type="text" id="contents' + cnt +'"class="content" name="content" style="width: 100%;" value="" ></td>' +
     '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'+
 '</tr>');
 });
-	 var totalQuantity = 0;
+
+
+	 let totalQuantity = 0;
+	 
 	$('.quantity').each(function(){
-	    totalQuantity += parseInt($(this).val());
+		totalQuantity += parseInt($(this).val());
 	});
 	$('#totalQuantity').val(totalQuantity);
 
 
-function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
-	winleft = (screen.width - WinWidth) / 2;
-	wintop = (screen.height - WinHeight) / 2;
-	var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
-							+ "height=" + WinHeight + ",top="+ wintop + ",left="
-							+ winleft + ",resizable=yes,status=yes");
-	win.focus();
-	return win;
-};
-
-$('tr').on('click', function(){
-	$('#name', opener.document).val($(this).find('#c_name').text() + " / " + $(this).find('#name').text());
-	$('#receiver', opener.document).val($(this).find("#emp_no").val());
+	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
+		winleft = (screen.width - WinWidth) / 2;
+		wintop = (screen.height - WinHeight) / 2;
+		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
+								+ "height=" + WinHeight + ",top="+ wintop + ",left="
+								+ winleft + ",resizable=yes,status=yes");
+		win.focus();
+		return win;
+	};
 	
-})
+	$('tr').on('click', function(){
+		$('#name', opener.document).val($(this).find('#c_name').text() + " / " + $(this).find('#name').text());
+		$('#receiver', opener.document).val($(this).find("#emp_no").val());
+		
+	})
 
 	
 	//제품 삭제 버튼
 	$('#prInput').on('click', '#cancelBtn', function(){
-		$(this).parents('tr').css('display', 'none');
-		$(this).parents('tr').find("input[name='pr_delete']").val("d")
+		if($(this).parent('td').parent('tr').find("input[name='pr_delete']").val() == "n") {
+	        $(this).parent('td').parent('tr').remove();
+	    }else{
+		      $(this).parents('tr').css('display', 'none');
+		      $(this).parents('tr').find("input[name='pr_delete']").val("y");
+	    }
+		
 	});
 	
 	//창고코드 이벤트
@@ -218,15 +282,7 @@ $('tr').on('click', function(){
 		    $(this).siblings('.pr_nos').val(selectedValue);
 		});
 	
-// 	// 제품코드 td 클릭 이벤트
-// 	$(document).on('click', '.pr_names2', function(){
-// 		let idVal = $(this).parents("tr").find(".rownum").val();
-// 		$('#cnt').val(idVal);
-// 		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
-		
-// 	});
-	
-	
+
 
 	// 제품 코드 클릭 이벤트
 	$(document).on('click', '.pr_names2', function() {
@@ -249,9 +305,9 @@ $('tr').on('click', function(){
 	})
 	
 	
-	let fc_no = "${si.FC_NO}";
-	$('#fc-select').val(fc_no);
-	$('select#fc-select').find('option[value="' + fc_no + '"]').attr('selected', 'selected');
+// 	let fc_no = "${si.FC_NO}";
+// 	$('#fc-select').val(fc_no);
+// 	$('select#fc-select').find('option[value="' + fc_no + '"]').attr('selected', 'selected'); 
 </script>
 
 

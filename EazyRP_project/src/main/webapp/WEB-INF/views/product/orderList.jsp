@@ -33,17 +33,15 @@
 								<tr>
 									<th width="20%" style="text-align: center;">요청한 제품</th>
 									<th width="20%" style="text-align: center;">요청 날짜</th>
-									<th width="20%" style="text-align: center;">요청한 사람</th>
+									<th width="20%" style="text-align: center;">요청한 업체</th>
 									<th width="20%" style="text-align: center;">진행상황</th>
-									<th width="20%" style="text-align: center;">발주보고서 조회</th>
 								</tr>
 									<c:forEach items="${list}" var="order" varStatus="loop">
 									<tr>
 										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/product/orderDetail.do?o_no=${order.o_no }&orders=N', '발주 내역', 700, 700)">${order.o_name }</a></td>
 										<td style="text-align: center;">${order.sys_regdate }</td>
-										<td style="text-align: center;">${order.sys_reg }</td>
-										<td style="text-align: center;">${order.progress }</td>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/management/detail.do?dr_no=${order.dr_no}', '기안문', 700, 700)">${order.title }</a></td>
+										<td style="text-align: center;">${c_name.get(loop.index) }</td>
+										<td style="text-align: center;" style=" ${order.progress eq '배송중' ? 'font-weight:bold; color: blue;' : ''}">${order.progress }</td>
 									</tr>
 									</c:forEach>
 							</table>

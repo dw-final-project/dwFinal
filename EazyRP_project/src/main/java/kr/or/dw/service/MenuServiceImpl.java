@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.dw.dao.MenuDAO;
+import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.MenuVO;
 
 @Service
@@ -74,6 +75,11 @@ public class MenuServiceImpl implements MenuService{
 	public String selectEname(String selectedEmp) throws SQLException {
 		String ename = menuDAO.selectEname(selectedEmp);
 		return ename;
+	}
+
+	@Override
+	public List<DraftVO> getPayment(int emp_no) throws SQLException {
+		return menuDAO.getPayment(emp_no);
 	}
 
 

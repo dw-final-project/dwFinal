@@ -46,7 +46,7 @@
 					<tr class="trHover">
 						<td style="text-align: center;" id="fac_no">${factory.fac_no }</td>
 						<td style="text-align: center;" id="fac_name">${factory.fac_name }</td>
-					<input type="hidden" id="wh_no" value="${wh.wh_no }">
+						<input type="hidden" id="wh_no" value="${wh.wh_no }">
 					</tr>
 				</c:forEach>
 			</table>
@@ -65,20 +65,31 @@
 		
 	$(document).ready(function() {
 		
-		let parentInputId = opener.$("#cnt").val();
-		let parentInputId2 = opener.$("#find_fac").val();
+		// 작업지시서 테이블에서 열었을때는 if문에서 거짓이므로 if문을 무시하고 실행한다.
+		// if문 안에 있는 코드는 생산입고에서 실행된다.
+		let sort = opener.$('b#factory');
 		
 		$('tr').on('click', function(){
+			
 			let fac_noName = $(this).find('#fac_name').text();
-// 			let price = $(this).find('.cost').val();
-			let parentEl = $("#" + parentInputId, opener.document);
-// 			parentEl.val(fac_noName);
-			parentEl.parents('tr').find('input.fac_names').val(fac_noName);
-			parentEl.parents('tr').find('input[name="fac_no"]').val($(this).find('#fac_no').text());
+		
+			if (sort.text() != '생산 공장') {
+				
+				let parentInputId = opener.$("#cnt").val();
+				let parentEl = $("#" + parentInputId, opener.document);
+		
+				parentEl.parents('tr').find('input.fac_names').val(fac_noName);
+				parentEl.parents('tr').find('input[name="fac_no"]').val($(this).find('#fac_no').text());
+				
+				window.close();
+				
+			}
+			
+			opener.$('input[name="fac_no"]').val($(this).find('#fac_no').text());
+			opener.$('#find_fac').val(fac_noName);
+			
 			window.close();
 			
-// 			$('#wh_no', opener.document).val($(this).find('#wh_name').text() + " / " + $(this).find('#addr').text());
-// 			window.close();
 		})
 		
 	})

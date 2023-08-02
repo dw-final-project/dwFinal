@@ -81,29 +81,24 @@
 <input type="hidden" name="o_no" value="${order.o_no }">
 	<table>
 		<tr>
-            <td align="center">작성자</td>
-            <td><input type="text" style="" value="${order.sys_reg}" id="name" name="sys_reg" readonly></td>
+            <td align="center">요청 업체</td>
+            <td><input type="text" style="" value="${c_name}" id="name" name="sys_reg" readonly></td>
         </tr>
         <tr>
-            <td align="center">등록일자</td>
+            <td align="center">등록 일자</td>
             <td><input type="text" name="sys_regdate" value="${order.sys_regdate }" readonly></td>
         </tr>
         <tr>
             <td align="center">진행 상태</td>
             <td>${order.progress }</td>
         </tr>
-        <tr>
-            <td align="center">발주 보고서</td>
-            <td><a id="aTag" href="#" onclick="OpenWindow('/management/detail.do?dr_no=${order.dr_no}', '기안문', 700, 700)">${order.title }</a></td>
-        	<input type="hidden" name="dr_no" value="${order.dr_no}">
-        </tr>
     </table>
     <table style="margin: 0px;">
         <tr>
-            <th align="center" style="width: 20%;">창고명</th>
+            <th align="center" style="width: 25%;">창고명</th>
             <th align="center" style="width: 20%;">업체명</th>
             <th align="center" style="width: 20%;">제품명</th>
-            <th align="center" style="width: 20%;">수량</th>
+            <th align="center" style="width: 15%;">수량</th>
             <th align="center" style="width: 20%;">가격</th>
         </tr>
     	<tbody id="prInput">
@@ -127,12 +122,14 @@
     </table>
     <div class="card-footer">
 		<button type="button" id="listBtn" class="btn btn-primary">닫기</button>
-		<c:forEach items="${detail }" var="detail">
-			<c:if test="${detail.lack eq 'Y'}">
-	            <button type="button" class="btn btn-warning" style="float: right;">작업지시서 작성</button>
-	        </c:if>
-        </c:forEach>
-        <button type="button" id="listBtn" class="btn btn-primary">배송</button>
+        <button type="button" id="registBtn" class="btn btn-warning" style="float: right;" onclick="OpenWindow('/erp4/workorder/registForm.do', '작업지시서 작성', 700, 700)">작업지시서 작성</button>
+        <c:if test="${order.progress eq '접수중'}">
+	    	<button type="button" id="receiptBtn" class="btn btn-primary">접수</button>
+	    </c:if>
+	    <c:if test="${order.progress eq '접수완료'}">
+	    	<button type="button" id="deliveryBtn" class="btn btn-primary" ${del eq 'N' ? 'disabled' : ''}>배송 처리</button>
+	    	<c:if test="${del eq 'N'}"><p style="position: absolute; z-index: 2; font-size: 0.5em; color: red; left: 25%;">재고 부족으로 배송이 불가능합니다.</p></c:if>
+	    </c:if>
 	</div>
 </form>
 </body>
@@ -141,7 +138,6 @@
 	
 
 <script>
-for(let i = 0; i < ${detail})
 window.onload = function(){
 	
 	let fc_no = "${est.FC_NO}";
@@ -156,94 +152,35 @@ window.onload = function(){
 		}
 	})
 	
+	
 	$('button#listBtn').on('click', function(){
 		window.opener.location.reload(true);
 		window.close();
 	});
-}
-
-</script>
-
-<script>
-let rownumList = $('.rownum');
-let cnt = rownumList.length; 
-console.log(cnt);
-let dtail_no = $('#dtail_no').val();
-// 제품 추가 버튼
-$('#addPutBtn').on('click', function(){
-	cnt++;
-	$('#prInput').append('<tr><input type="hidden" class="rownum" value="'+ cnt + '">' +
-	'<input type="hidden" name="estdetail_no" value="0">'+
-    '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
-    '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'+
-    '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
-    '<td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>'+
-    '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-secondary">삭제</button></td>'+
-'</tr>');
 	
-	
-	
-//		$('script').append(
-//			'$("#quantity' + cnt + '").on("keyup", function(){'+
-//				'alert($(this).val())'+
-//				'$(this).parent().next().children().val($(this).val()*$(this).next().val())});'
-//		)
-});
-
-
-function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
-	winleft = (screen.width - WinWidth) / 2;
-	wintop = (screen.height - WinHeight) / 2;
-	var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
-							+ "height=" + WinHeight + ",top="+ (wintop - 50) + ",left="
-							+ (winleft + 50) + ",resizable=yes,status=yes");
-	win.focus();
-	return win;
-};
-
-$('tr').on('click', function(){
-	$('#name', opener.document).val($(this).find('#c_name').text() + " / " + $(this).find('#name').text());
-	$('#receiver', opener.document).val($(this).find("#emp_no").val());
-	
-})
-
-	// 제품코드 td 클릭 이벤트
-	$(document).on('click', '.pr_names', function(){
-		let idVal = $(this).parents("tr").find(".rownum").val();
-		console.log(idVal);
-		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
-		
-	});
-	
-	//제품 삭제 버튼
-	$('#prInput').on('click', '#cancelBtn', function(){
-		$(this).parent('td').parent('tr').remove();
-	});
-	
-	//창고코드 이벤트
-	$(document).on('click', '.wh_names', function(){
-		let whVal = $(this).attr('id');
-		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
-	})
-	
-	// 수량 이벤트
-	$(document).on('keyup', '.quantity', function(){
-// 		let quantity = $(this).val();
-		$(this).parent().next().children().val($(this).val()*$(this).next().val());
-	})
-
-	
-	$(document).on('change, keyup', '#prInput', function(){
-		let sum = Number(0);
-		let inputAmount = $('input[name="amount"]').get();
-		for(let i = 0; i < inputAmount.length; i++){
-			sum += Number($('input[name="amount"]').eq(i).val());
+	$('#deliveryBtn').on('click', function(){
+		if(confirm('배송 처리를 하시겠습니까?')){
+			alert('배송 처리가 완료되었습니다.');
+			location.href='/product/delivery.do?o_no=${order.o_no }';
 		}
-		
-		$('#totalAmount').val(sum);
 	})
+	
+	$('#receiptBtn').on('click', function(){
+		alert('해당 발주 요청건이 접수되었습니다.');
+		location.href='/product/receipt.do?o_no=${order.o_no }';
+	})
+}	
+	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
+		winleft = (screen.width - WinWidth) / 2 + 50;
+		wintop = (screen.height - WinHeight) / 2 + 50;
+		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
+								+ "height=" + WinHeight + ",top="+ wintop + ",left="
+								+ winleft + ",resizable=yes,status=yes");
+		win.focus();
+	};
+
+
+
 	
 </script>
 

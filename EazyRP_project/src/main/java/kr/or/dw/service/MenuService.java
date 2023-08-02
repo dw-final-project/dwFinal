@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.MenuVO;
 
 public interface MenuService {
@@ -20,5 +21,7 @@ public interface MenuService {
 	List<String> getEmp_no(String selectedC_no) throws SQLException;
 
 	String selectEname(String selectedEmp) throws SQLException;
+
+	List<DraftVO> getPayment(int emp_no) throws SQLException;
 
 }
