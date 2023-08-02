@@ -31,7 +31,9 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.service.MailSendService;
 import kr.or.dw.service.MemberService;
+import kr.or.dw.service.MenuService;
 import kr.or.dw.service.QnaService;
+import kr.or.dw.vo.InquiryVO;
 import kr.or.dw.vo.MemberVO;
 
 @Component
@@ -39,6 +41,9 @@ import kr.or.dw.vo.MemberVO;
 @RequestMapping("/member")
 public class MemberController {
 
+	@Autowired
+	private MenuService menuService;
+	
 	@Autowired
 	private MemberService memberService;
 
@@ -63,10 +68,43 @@ public class MemberController {
 	@RequestMapping("/qna")
 	public ModelAndView qna (SearchCriteria cri, ModelAndView mnv, String mcode, HttpSession session) throws Exception {
 		String url = "/common/inquiryForm.page";
+		
 		Map<String, Object> dataMap = qnaService.selectQnaList(cri);
 		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
+		
+		return mnv;
+		
+	}
+	
+	@RequestMapping("/qnaRegist")
+	public ModelAndView qnaRegist (SearchCriteria cri, ModelAndView mnv, String mcode, String inq_con, HttpSession session) throws Exception {
+		
+		mcode="M010200";
+		
+		String getUrl = menuService.getUrl(mcode);
+		String getUrlResult = getUrl.substring(0, getUrl.indexOf("."));
+		String url = getUrl + "?mcode=M010000";			
+		
+		int u_no = 0;
+		
+		if(session.getAttribute("loginUser") != null) {
+			MemberVO member = (MemberVO) session.getAttribute("loginUser");
+			u_no = member.getU_no();
+		}
+		
+		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
+		
+		InquiryVO qna = new InquiryVO();
+		qna.setInq_con(inq_con);
+		qna.setU_no(u_no);
+		qna.setSys_reg(emp_no + "");
+		qna.setSys_up(emp_no + "");
+		
+		qnaService.insertQna(qna);
+		
+		mnv.setViewName("redirect:" + url);		
 		
 		return mnv;
 		

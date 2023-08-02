@@ -40,5 +40,16 @@
 		   <include refid="search"/>
 	</select>
 	
+		<insert id="insertQna" >
+		INSERT INTO inquiry
+				(inq_no
+			  ,inq_con
+			  ,regdate
+			  ,u_no
+			  ,updatedate
+			  ,sys_up
+			  ,sys_reg)
+		VALUES(inq_seq.nextVal, #{inq_con}, sysdate, #{u_no}, sysdate, #{sys_up}, #{sys_reg})
+	</insert> 
 	
 </mapper>

@@ -9,6 +9,7 @@ import org.apache.ibatis.session.RowBounds;
 
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.vo.CompanyVO;
+import kr.or.dw.vo.InquiryVO;
 import kr.or.dw.vo.MerchandiseVO;
 import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.ShopVO;
@@ -21,6 +22,8 @@ public interface QnaDAO {
 	int selectQnaListCount(SearchCriteria cri)throws SQLException;
 
 	List<Map<String, Object>> selectQnaList(SearchCriteria cri, RowBounds rowBounds) throws SQLException;
+
+	void insertQna(InquiryVO qna) throws SQLException;
 
 
 	
