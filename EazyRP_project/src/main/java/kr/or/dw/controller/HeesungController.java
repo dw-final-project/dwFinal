@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -319,6 +320,8 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	@RequestMapping("/workorder/registForm")
 	public ModelAndView workorderRegistForm(ModelAndView mnv, HttpSession session) throws SQLException {
 		
+		System.out.println("HeesungController - erp4/workorder/registForm 진입");
+		
 		int empno = Integer.parseInt(session.getAttribute("emp_no").toString());
 		String ename = estimateService.ename(empno);
 		
@@ -338,9 +341,11 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	
 	@RequestMapping("/workorder/regist")
 	public void registWorkOrder (HttpServletResponse res, @RequestParam("files")MultipartFile multi, String wo_name, 
-		String fac_no, Date deliverydate, String progress, String[] pr_no, int[] quantity, String c_no, int emp_no) throws SQLException {
+		String fac_no, @DateTimeFormat(pattern="yyyy-MM-dd")Date deliverydate, String progress, String[] pr_no, int[] quantity, int emp_no, HttpSession session) throws SQLException, IOException {
 		
 		System.out.println("희성 컨트롤러 erp4/workorder/regist 진입");
+		
+		String c_no = session.getAttribute("c_no").toString();
 		
 		String filess = "";
 		
@@ -387,6 +392,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 			wo.setDeliverydate(deliverydate);
 			wo.setProgress(progress);
 			wo.setFiles(filess);
+			wo.setC_no(c_no);
 			
 			// workorderdetail 테이블
 			wo.setPr_no(pr_no[i]);
@@ -401,6 +407,13 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		workOrderService.registWorkOrder(woList);
 		
 		System.out.println("workOrder registService 진입 후");
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 등록되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
 		
 	}
 	

@@ -66,7 +66,7 @@ public class WorkOrderServiceImpl implements WorkOrderService{
 		
 		System.out.println("insertWorkOrder 완료");
 
-		int wo_no = woList.get(0).getWo_no();
+		String wo_no = woList.get(0).getWo_no();
 		
 		for (WorkOrderVO wo : woList) {
 			wo.setWo_no(wo_no);

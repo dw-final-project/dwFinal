@@ -20,7 +20,7 @@ public interface WorkOrderDAO {
 	// 담당자 이름 가져오기
 	List<String> selectEName(int getEmp_no) throws SQLException;
 
-	int selectWono(int wono) throws SQLException;
+	String selectWono(int wono) throws SQLException;
 
 	void insertWorkOrder(WorkOrderVO woList) throws SQLException;
 

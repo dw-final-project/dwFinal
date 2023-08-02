@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class WorkOrderVO {
-	private int wo_no;
+	private String wo_no;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date sys_regdate;
 	private int emp_no;

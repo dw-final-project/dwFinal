@@ -88,10 +88,10 @@
 		  FROM dual
 	</sql>
 	
-	<sql id="makeWorkOrderDetailSeq">
-		SELECT workorderdetail_seq.nextval
-		  FROM dual
-	</sql>
+<!-- 	<sql id="makeWorkOrderDetailSeq"> -->
+<!-- 		SELECT workorderdetail_seq.nextval -->
+<!-- 		  FROM dual -->
+<!-- 	</sql> -->
 
 	<insert id="insertWorkOrderDetail" parameterType="workOrder">
 		INSERT INTO workorderdetail (
@@ -101,10 +101,10 @@
 			pr_no
 		)
 		VALUES (
-			workorderdetail_seq.nextval,	<!-- 이 부분이 제일 이해 안됨!!!!!!!!!!! -->
+			workorderdetail_seq.nextval,	<!-- 하드코딩을 시퀀서로 한거라고 생각하면됨 -->
 			#{quantity},
 			#{wo_no},
-			#{pr_no
+			#{pr_no}
 		)
 	</insert>
 	<!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 -->
