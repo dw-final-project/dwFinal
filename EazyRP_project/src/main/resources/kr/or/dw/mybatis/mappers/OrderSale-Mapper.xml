@@ -3,29 +3,29 @@
 <mapper namespace="kr.or.dw.dao.OrderSaleDAO">
 	
 	<sql id="search">
-		<if test="searchType == 'number'.toString()">
-			AND pr_no LIKE '%' || #{keyword} || '%'
+		<if test="searchType == 'c'.toString()">
+			AND c_name LIKE '%' || #{keyword} || '%'
 		</if>
-		<if test="searchType == 'code'.toString()">
+		<if test="searchType == 'w'.toString()">
+			AND pr_exprice LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'p'.toString()">
 			AND pr_name LIKE '%' || #{keyword} || '%'
 		</if>
-		<if test="searchType == 'title'.toString()">
-			AND pr_gr LIKE '%' || #{keyword} || '%'
-		</if>
-		<if test="searchType == 'nnc'.toString()">
+		<if test="searchType == 'all'.toString()">
 			AND (
-			pr_no LIKE '%' || #{keyword} || '%'
+			c_name LIKE '%' || #{keyword} || '%'
+			OR
+			pr_exprice LIKE '%' || #{keyword} || '%'
 			OR
 			pr_name LIKE '%' || #{keyword} || '%'
-			OR
-			pr_gr LIKE '%' || #{keyword} || '%'
 			)
 		</if>
 	</sql>
 	
 	
 	<select id="selectSaleList" resultType="Map">
-		SELECT p.*, c_name
+		SELECT p.*, c.c_name
 		FROM product p, company c
 		WHERE 1=1
 		AND p.c_no = c.c_no
@@ -34,8 +34,9 @@
 	
 	<select id="selectSearchSaleListCount" resultType="int">
 		SELECT COUNT(*)
-		FROM product
+		FROM product p, company c
 		WHERE 1=1
+		AND p.c_no = c.c_no
 		<include refid="search"/>
 	</select>
 	
