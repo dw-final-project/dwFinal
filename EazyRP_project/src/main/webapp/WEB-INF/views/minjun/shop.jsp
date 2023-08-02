@@ -11,12 +11,11 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">쇼핑몰 관리</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/erp5/merchandise.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/erp5/shop.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
-								<option value="d" ${searchType eq 'd' ? 'selected' : '' }>상품코드</option>
+								<option value="d" ${searchType eq 'd' ? 'selected' : '' }>쇼핑몰 코드</option>
 								<option value="t" ${searchType eq 't' ? 'selected' : '' }>쇼핑몰 이름</option>
-								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>제품 이름</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">

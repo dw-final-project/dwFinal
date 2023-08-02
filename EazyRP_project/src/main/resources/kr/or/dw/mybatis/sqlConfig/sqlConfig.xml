@@ -20,9 +20,10 @@
 		<typeAlias type="kr.or.dw.vo.MerchandiseVO" alias="merchandise"/>
 		<typeAlias type="kr.or.dw.vo.DraftGbVO" alias="draftGb"/>
 		<typeAlias type="kr.or.dw.vo.ShopVO" alias="shop"/>
+		<typeAlias type="kr.or.dw.vo.OrderVO" alias="order"/>
 
 		
-		<!-- 희성이꼬 --><!-- 즐 -->
+		<!-- 희성이꼬 --><!-- 즐 --><!-- 집에갑시다~~ -->
 		<typeAlias type="kr.or.dw.vo.BsheetVO" alias="bsheet"/>
 		<typeAlias type="kr.or.dw.vo.BuyDetailVO" alias="buyDetail"/>
 		<typeAlias type="kr.or.dw.vo.CalendarVO" alias="calendar"/>

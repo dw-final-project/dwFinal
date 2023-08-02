@@ -19,10 +19,6 @@
 					</div>
 					<div class="card-body pad">
 						<form role="form" method="post" action="insertMerchandise.do" name="registForm">
-<!-- 							<div class="form-group col-sm-12 row"> -->
-<!-- 								<label for="sp_no" class="col-sm-3">상품 코드</label> -->
-<!-- 								<input type="text" id="sp_no" class="form-control col-sm-9" placeholder="상품코드는 자동등록 됩니다." readonly> -->
-<!-- 							</div> -->
 							<div class="form-group col-sm-12 row">
 								<label for="s_name" class="col-sm-3">쇼핑몰 코드</label>
 								<input type="text" id="shname" name="s_name" class="form-control col-sm-9 s_name mch1" value="" placeholder="쇼핑몰코드를 입력하세요." readonly style="background-color: white;">
@@ -49,7 +45,6 @@
 										<option value="판매중지">판매중지</option>
 									</select>
 								</div>
-<%-- 								<input type="text" id="status" name="status" class="form-control col-sm-9 mch5" value="${merchandise.STATUS}" placeholder="판매상태를 입력하세요."> --%>
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="stperiod" class="col-sm-3">판매시작일</label>
@@ -125,8 +120,7 @@
 
 	$(document).on('click', '.pr_no', function(){
 		
-		let openWin = OpenWindow("/erp5/findProduct2.do", "제품 찾기", 800, 600);
-		
+		let openWin = OpenWindow("/erp5/findProduct.do", "제품 찾기", 800, 600);
 	});
 	
 	$(document).on('click', '.s_name', function(){
