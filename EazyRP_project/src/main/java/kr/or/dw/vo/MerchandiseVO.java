@@ -23,5 +23,6 @@ public class MerchandiseVO {
 	private Date sys_regdate;
 	private Date sys_updatedate;
 	private String enabled;
+	private int unitprice;
 	
 }

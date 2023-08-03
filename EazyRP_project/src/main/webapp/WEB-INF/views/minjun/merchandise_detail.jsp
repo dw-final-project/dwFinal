@@ -42,8 +42,12 @@
 								<input type="text" id="sp_q" name="sp_q" class="form-control col-sm-9 mch3" value="${merchandise.SP_Q}" placeholder="수량을 입력하세요.">
 							</div>
 							<div class="form-group col-sm-12 row">
-								<label for="price" class="col-sm-3">가격</label>
-								<input type="text" id="price" name="price" class="form-control col-sm-9 mch4" value="${merchandise.PRICE}" placeholder="가격을 입력하세요.">
+								<label for="price" class="col-sm-3">판매가격</label>
+								<input type="text" id="price" name="price" class="form-control col-sm-9 mch4" value="${merchandise.PRICE}" placeholder="판매가격을 입력하세요.">
+							</div>
+							<div class="form-group col-sm-12 row">
+								<label for="unitprice" class="col-sm-3">단가</label>
+								<input type="text" id="unitprice" name="unitprice" class="form-control col-sm-9 mch8" value="${merchandise.UNITPRICE}" placeholder="단가를 입력하세요.">
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="status" class="col-sm-3">판매상태</label>
@@ -116,6 +120,10 @@
 				alert("빈 항목이 있습니다.");
 				return;
 			}
+			if($('.mch8').val() == "") {
+				alert("빈 항목이 있습니다.");
+				return;
+			}
 			
 			form.submit();
 		});
@@ -151,7 +159,7 @@
 
 	$(document).on('click', '.pr_no', function(){
 		
-		let openWin = OpenWindow("/erp5/findProduct2.do", "제품 찾기", 500, 500);
+		let openWin = OpenWindow("/erp5/findProduct.do", "제품 찾기", 500, 500);
 		
 	});
 	
