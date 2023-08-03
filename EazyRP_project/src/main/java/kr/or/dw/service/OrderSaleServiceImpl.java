@@ -53,6 +53,17 @@ public class OrderSaleServiceImpl implements OrderSaleService {
 		return map;
 		
 	}
+
+	@Override
+	public List<SaleDetailVO> getSaleDetail(String sheet_no) throws SQLException {
+		return ordersaleDAO.getSaleDetail(sheet_no);
+	}
+
+	@Override
+	public SsheetVO getSheet(String sheet_no) throws SQLException {
+		// TODO Auto-generated method stub
+		return ordersaleDAO.getSheet(sheet_no);
+	}
 	
 	
 

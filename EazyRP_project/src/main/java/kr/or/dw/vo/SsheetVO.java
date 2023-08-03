@@ -18,5 +18,10 @@ public class SsheetVO {
 	private String ac_cd;
 	private String sys_up;
 	private String sys_updatedate;
+	private String buy_c_no;
+	private String con_c_no;
 	
+	private String pr_name;
+	private String buy_c_name;
+	private String e_name;
 }

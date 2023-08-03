@@ -98,7 +98,7 @@ SELECT ROWNUM,
 	  ,p.pr_no 
 	  ,s2.wh_no
   FROM emp e, warehouse w,product p ,SIDETAIL s2 
- WHERE s2.emp_no = e.emp_
+ WHERE s2.emp_no = e.emp_no
    AND s2.wh_no = w.wh_no
    AND s2.pr_no = p.pr_no
    AND s2.SI_NO = #{si_no}

@@ -31,8 +31,13 @@
 		<typeAlias type="kr.or.dw.vo.Pro_whVO" alias="pro_wh"/>
 		<typeAlias type="kr.or.dw.vo.InquiryVO" alias="inquiry"/>
 		<typeAlias type="kr.or.dw.vo.SpriceVO" alias="sprice"/>
+
+		<typeAlias type="kr.or.dw.vo.SsheetVO" alias="ssheet"/>
+		<typeAlias type="kr.or.dw.vo.SaleDetailVO" alias="saleDetail"/>
+
 		<typeAlias type="kr.or.dw.vo.ProfitLossVO" alias="profitLoss"/>
 		<typeAlias type="kr.or.dw.vo.Tr_historyVO" alias="tr_history"/>
+
 
 		
 		<!-- 희성이꼬 --><!-- 즐, 똥, 엿-->

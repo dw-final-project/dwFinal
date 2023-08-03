@@ -25,20 +25,69 @@
 	
 	
 	<select id="selectSaleList" resultType="Map">
-		SELECT p.*, c.c_name
-		FROM product p, company c
-		WHERE 1=1
-		AND p.c_no = c.c_no
-		<include refid="search"/>
+		SELECT s.*, e.e_name e_name
+		 FROM S_SHEET s, emp e
+		WHERE s.emp_no = e.emp_no
+		  AND s.con_c_no = #{c_no}
+	  	<if test="searchType == 'a'.toString()">
+			AND e.e_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'b'.toString()">
+			AND s.progress LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND s.pr_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'd'.toString()">
+			AND s.buy_c_no LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'all'.toString()">
+			AND (e.e_name LIKE '%' || #{keyword} || '%'
+			OR s.progress LIKE '%' || #{keyword} || '%'
+			OR s.pr_name LIKE '%' || #{keyword} || '%'
+			OR s.buy_c_no LIKE '%' || #{keyword} || '%')
+		</if>
+		ORDER BY s.sheet_no desc
 	</select>
 	
 	<select id="selectSearchSaleListCount" resultType="int">
 		SELECT COUNT(*)
-		FROM product p, company c
-		WHERE 1=1
-		AND p.c_no = c.c_no
-		<include refid="search"/>
+		 FROM S_SHEET s, emp e , company c
+		WHERE s.emp_no = e.emp_no
+		  AND s.con_c_no = #{c_no}
+		  AND s.buy_c_no = c.c_no
+		<if test="searchType == 'a'.toString()">
+			AND e.e_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'b'.toString()">
+			AND s.progress LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND s.pr_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'd'.toString()">
+			AND s.buy_c_no LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'all'.toString()">
+			AND (e.e_name LIKE '%' || #{keyword} || '%'
+			OR s.progress LIKE '%' || #{keyword} || '%'
+			OR s.pr_name LIKE '%' || #{keyword} || '%'
+			OR s.buy_c_no LIKE '%' || #{keyword} || '%')
+		</if>
+		ORDER BY s.sheet_no desc	
 	</select>
 	
-
+	<select id="getSaleDetail" resultType="saleDetail">
+		SELECT s.*, p.pr_name
+		FROM SALE_DETAIL s
+		JOIN PRODUCT p ON s.PR_NO = p.PR_NO
+		WHERE s.SHEET_NO = #{SHEET_NO}
+	</select>
+	
+	<select id="getSheet" resultType="ssheet">
+		SELECT s.*, e.e_name e_name
+		FROM s_sheet s, emp e
+		WHERE s.emp_no = e.emp_no
+		AND sheet_no = #{sheet_no}
+	</select>
 </mapper>
