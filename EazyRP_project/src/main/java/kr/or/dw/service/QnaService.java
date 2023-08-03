@@ -15,6 +15,10 @@ public interface QnaService {
 
 	void insertQna(InquiryVO qna) throws SQLException;
 
+	void remove(int inq_no) throws SQLException;
+
+	void modifyQna(InquiryVO inquiry) throws SQLException;
+
 
 
 }
