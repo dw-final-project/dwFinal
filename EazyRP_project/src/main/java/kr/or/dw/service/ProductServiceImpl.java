@@ -21,7 +21,7 @@ import kr.or.dw.vo.CompanyVO;
 import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.NoteVO;
 import kr.or.dw.vo.O_DetailVO;
-import kr.or.dw.vo.OrderVO;
+import kr.or.dw.vo.Order2VO;
 import kr.or.dw.vo.Pro_whVO;
 import kr.or.dw.vo.ProcessVO;
 import kr.or.dw.vo.ProductVO;
@@ -125,14 +125,13 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Map<String, Object> allOrderList(Map<String, Object> dataMap) throws SQLException {
-		List<OrderVO> list = null;
+		List<Order2VO> list = null;
 		SearchCriteria cri = (SearchCriteria) dataMap.get("cri");
 		String c_no = (String) dataMap.get("c_no");
 		
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
 		
 		list = productDAO.allOrderList(dataMap, rowBounds);
 		String order = (String) dataMap.get("order");
@@ -142,7 +141,7 @@ public class ProductServiceImpl implements ProductService {
 			String pr_no1 = pr_no.get(0);
 			List<String> sno = productDAO.getSheet_no(pr_no1, pr_no);
 			for(String sheet : sno) {
-				OrderVO insert = productDAO.insertOrderList(sheet, c_no);
+				Order2VO insert = productDAO.insertOrderList(sheet, c_no);
 				list.add(insert);
 			}
 		}
@@ -174,7 +173,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public OrderVO selectOrder(String o_no) throws SQLException {
+	public Order2VO selectOrder(String o_no) throws SQLException {
 		return productDAO.selectOrder(o_no);
 	}
 
@@ -216,7 +215,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int orderRegist(OrderVO order) throws SQLException {
+	public int orderRegist(Order2VO order) throws SQLException {
 		System.out.println("기안문업데이트한다");
 		productDAO.draftUpdate(order.getDr_no());
 		System.out.println("발주요청사항등록한다");

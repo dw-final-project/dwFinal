@@ -10,7 +10,7 @@ import kr.or.dw.vo.BuyDetailVO;
 import kr.or.dw.vo.CompanyVO;
 import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.O_DetailVO;
-import kr.or.dw.vo.OrderVO;
+import kr.or.dw.vo.Order2VO;
 import kr.or.dw.vo.Pro_whVO;
 import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.SiVO;
@@ -37,7 +37,7 @@ public interface ProductService {
 
 	List<O_DetailVO> getOrderDetail(String o_no) throws SQLException;
 
-	OrderVO selectOrder(String o_no) throws SQLException;
+	Order2VO selectOrder(String o_no) throws SQLException;
 
 	List<DraftVO> getOrderDraft(String c_no) throws SQLException;
 
@@ -49,7 +49,7 @@ public interface ProductService {
 
 	List<Pro_whVO> getWhList(String pr_name) throws SQLException;
 
-	int orderRegist(OrderVO order) throws SQLException;
+	int orderRegist(Order2VO order) throws SQLException;
 
 	void insertOrderDetail(List<O_DetailVO> detail) throws SQLException;
 

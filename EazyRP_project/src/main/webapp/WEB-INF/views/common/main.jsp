@@ -9,7 +9,7 @@
 
 <body>
 
-	<div class="text-center" style="display: flex; margin-top: 1em; max-height: 70%">
+	<div class="text-center" style="display: flex; margin-top: 1em; max-height: 70%;">
 
 		<div class="" style="width: 40%;">
 			<div class="card mb-6 rounded-3 shadow-sm border">
@@ -24,16 +24,21 @@
 			</div>
 		</div>
 
-		<div class="col">
-			<div class="card mb-3 rounded-3 shadow-sm border" style="height: 75%;" >
-				<div class="card-header py-3">
-					<h5 class="my-0 fw-normal">손익 차트</h5>
-				</div>
-				<div class="card-body">
-     				<div id="area-chart" ></div>
-				</div>
-			</div>
-		</div>
+		
+    <div class="col">
+        <div class="card mb-3 rounded-3 shadow-sm border" style="height: 75%; display: block;">
+            <div class="card-header py-3">
+                <h5 class="my-0 fw-normal">손익 차트</h5>
+            </div>
+            <div style="background-color: red; display: inline-block; color: white; width: 80px; border-radius: 5px; font-size: 0.8em;">판매액</div>
+            <div style="background-color: brown; display: inline-block; color: white; width: 80px; border-radius: 5px; font-size: 0.8em;">급여</div>
+            <div style="background-color: purple; display: inline-block; color: white; width: 80px; border-radius: 5px; font-size: 0.8em;">지출비용</div>
+            <div style="background-color: blue; display: inline-block; color: white; width: 80px; border-radius: 5px; font-size: 0.8em;">총이익</div>
+            <div class="card-body" id="barBody" style="margin-top: 30px;">
+                <div id="area-chart"></div>
+            </div>
+        </div>
+    </div>
 
 		<div class="col">
 			<div class="card mb-3 rounded-3 shadow-sm border" style="height: 75%;" >
@@ -120,6 +125,7 @@
 
 </html>
 <!-- jQuery -->
+<script src="<%=request.getContextPath()%>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <script>
 function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 	winleft = (screen.width - WinWidth) / 2;
@@ -131,49 +137,48 @@ function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 };
 
 var data = [
-    { y: "2021", g1: 120, g2: 144, g3: 100, g4: 180, g5: 162},
-    { y: "2022", g1: 100, g2: 168, g3: 112, g4: 130, g5: 112},
-    { y: "2023", g1: 150, g2: 128, g3: 182, g4: 160, g5: 101},
+    { y: "2021", g1: 120, g2: 144, g3: 100, g4: 180},
+    { y: "2022", g1: 100, g2: 168, g3: 112, g4: 130},
+    { y: "2023", g1: 150, g2: 128, g3: 182, g4: 160},
   ],
   config = {
     data: data,
     xkey: 'y',
-    ykeys: ['g1', 'g2', 'g3', 'g4', 'g5'],
-    labels: ['그룹1', '그룹2', '그룹3', '그룹4', '그룹5'],
+    ykeys: ['g1', 'g2', 'g3', 'g4'],
+    labels: ['판매액', '지출비용', '급여', '총이익'],
     fillOpacity: 0.6,
     hideHover: 'auto',
     behaveLikeLine: true,
     resize: true,
     pointFillColors:['#ffffff'],
     pointStrokeColors: ['green'],
-    lineColors:['gray','red', 'yellow', 'blue', 'cyan']
+    lineColors:['red', 'purple', 'brown', 'blue']
 };
-config.element = 'area-chart';
-Morris.Area(config);
-config.element = 'line-chart';
-Morris.Line(config);
-config.element = 'bar-chart';
-Morris.Bar(config);
-config.element = 'stacked';
-config.stacked = true;
-Morris.Bar(config);
-Morris.Donut({
-element: 'pie-chart',
-data: [
-  {label: "가", value: 30},
-  {label: "나", value: 15},
-  {label: "다", value: 45},
-  {label: "라", value: 10},
-]
+
+$(document).ready(function () {
+    config.element = 'area-chart';
+    Morris.Area(config);
+    /* config.element = 'line-chart';
+    Morris.Line(config);
+    config.element = 'bar-chart';
+    Morris.Bar(config); */
+    /* config.element = 'stacked';
+    config.stacked = true;
+    Morris.Bar(config);
+    Morris.Donut({
+        element: 'pie-chart',
+        data: [
+            {label: "가", value: 30},
+            {label: "나", value: 15},
+            {label: "다", value: 45},
+            {label: "라", value: 10},
+        ]
+    }); */
 });
-
-
 </script>
-<script
-	src="<%=request.getContextPath()%>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+	
 
 <%@ include file="../include/footer_js.jsp"%>

@@ -90,9 +90,9 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void minusQuantity(OrderVO orderVO) throws SQLException {
-		
+	public void minusQuantity(OrderVO orderVO, String c_no) throws SQLException {
 		orderDAO.minusQuantity(orderVO);
+		orderDAO.trHistory(orderVO, c_no);
 		
 	}
 
