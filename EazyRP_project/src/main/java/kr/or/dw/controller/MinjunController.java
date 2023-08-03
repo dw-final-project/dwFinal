@@ -326,20 +326,23 @@ public class MinjunController {
 		}
 		List<Map<String, Object>> merchandise = null;
 		Map<String, String> dataMap = new HashMap<>();
+		
 		dataMap.put("sp_no", sp_no);
 		dataMap.put("s_name", s_name);
 		dataMap.put("pr_name", pr_name);
 		dataMap.put("searchType", searchType);
 		dataMap.put("keyword", keyword);
+		
 		if(keyword != null){
 			merchandise = merchandiseService.getMerchandise(dataMap);
 		} else {
 			merchandise = merchandiseService.getMerchandiseList();
 		}
-		mnv.setViewName(url);
+		
 		dataMap.put("sp_no", sp_no);
 		dataMap.put("s_name", s_name);
 		dataMap.put("pr_name", pr_name);
+		mnv.setViewName(url);
 		mnv.addObject("searchType", searchType);
 		mnv.addObject("keyword", keyword);
 		mnv.addObject("merchandise", merchandise);

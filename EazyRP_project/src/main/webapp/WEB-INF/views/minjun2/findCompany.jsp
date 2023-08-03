@@ -36,10 +36,10 @@
 				<th width="50px" style="text-align: center;">회사 코드</th>
 				<th width="100px" style="text-align: center;">회사 이름</th>
 			</tr>
-			<c:forEach items="${shop}" var="shop">
+			<c:forEach items="${company}" var="company">
 				<tr>
 					<td style="text-align: center;" class="c_no">${company.c_no}</td>
-					<td style="text-align: center;" class="cname">${company.cname }</td>
+					<td style="text-align: center;" class="cname">${company.c_name}</td>
 				</tr>
 			</c:forEach>
 		</table>
