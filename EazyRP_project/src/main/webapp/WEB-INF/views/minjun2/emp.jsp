@@ -9,14 +9,15 @@
 			<div class="col-md-10" style="max-width: 1100px;">
 				<div class="card card-outline card-info">
 					<div class="card-header" style="border-bottom: none;">
-						<h2 class="card-title p-1">상품관리</h2>
+						<h2 class="card-title p-1">직원관리</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/erp5/merchandise.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/management/emp.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
-								<option value="d" ${searchType eq 'd' ? 'selected' : '' }>상품코드</option>
-								<option value="t" ${searchType eq 't' ? 'selected' : '' }>쇼핑몰 이름</option>
-								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>제품 이름</option>
+								<option value="d" ${searchType eq 'a' ? 'selected' : '' }>사원명</option>
+								<option value="t" ${searchType eq 'b' ? 'selected' : '' }>업체명</option>
+								<option value="w" ${searchType eq 'c' ? 'selected' : '' }>부서명</option>
+								<option value="w" ${searchType eq 'd' ? 'selected' : '' }>직급</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
@@ -31,33 +32,23 @@
 						<div>
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
-									<th width="150px" style="text-align: center;">상품 코드</th>
-									<th width="150px" style="text-align: center;">쇼핑몰 이름</th>
-									<th width="200px" style="text-align: center;">제품 이름</th>
-									<th width="100px" style="text-align: center;">수량</th>
-									<th width="200px" style="text-align: center;">판매가격</th>
-									<th width="200px" style="text-align: center;">단가</th>
-									<th width="200px" style="text-align: center;">판매상태</th>
-									<th width="200px" style="text-align: center;">판매시작일</th>
-									<th width="200px" style="text-align: center;">판매종료일</th>
+									<th width="200px" style="text-align: center;">사원번호</th>
+									<th width="200px" style="text-align: center;">업체명</th>
+									<th width="150px" style="text-align: center;">사원명</th>
+									<th width="200px" style="text-align: center;">부서명</th>
+									<th width="150px" style="text-align: center;">직급</th>
+									<th width="100px" style="text-align: center;">email</th>
+									<th width="200px" style="text-align: center;">전화번호</th>
 								</tr>
-									<c:forEach items="${merchandiseList}" var="md" varStatus="loop">
+									<c:forEach items="${empList}" var="emp" varStatus="loop">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('merchandiseDetail.do?sp_no=${md.SP_NO}','견적서 조회', 800 , 600);">${md.SP_NO}</a></td>
-										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('shopDetail.do?s_no=${md.S_NO}','쇼핑몰 조회', 500 , 400);">${md.S_NAME}</a></td>
-										<td style="text-align: center;">${md.PR_NAME}</td>
-										<td style="text-align: center;">${md.SP_Q}</td>
-										<td style="text-align: center;">${md.PRICE}</td>
-										<td style="text-align: center;">${md.UNITPRICE}</td>
-										<td style="text-align: center;">${md.STATUS}</td>
-										<td style="text-align: center;">
-											<fmt:formatDate value="${md.STARTPERIOD }"
-												pattern="yyyy-MM-dd"></fmt:formatDate>
-										</td>
-										<td style="text-align: center;">
-											<fmt:formatDate value="${md.ENDPERIOD }"
-												pattern="yyyy-MM-dd"></fmt:formatDate>
-										</td>
+										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('empDetail.do?emp_no=${emp.EMP_NO}','직원 상세보기', 800 , 600);">${emp.EMP_NO}</a></td>
+										<td style="text-align: center;"><a id="aTag" href="">${emp.C_NAME}</a></td>
+										<td style="text-align: center;">${emp.E_NAME}</td>
+										<td style="text-align: center;">${emp.DNAME}</td>
+										<td style="text-align: center;">${emp.E_RANK}</td>
+										<td style="text-align: center;">${emp.E_EMAIL}</td>
+										<td style="text-align: center;">${emp.E_TEL}</td>
 									</tr>
 									</c:forEach>
 							</table>
@@ -69,7 +60,7 @@
 					</div>
 						<div style="display: flex; align-items: end; justify-content: end;">
 								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('merchandiseRegistForm.do', '상품등록', 700, 700)"
-								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">상품 등록</button>
+								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">직원 등록</button>
 							</div>
 			</div>
 		</div>

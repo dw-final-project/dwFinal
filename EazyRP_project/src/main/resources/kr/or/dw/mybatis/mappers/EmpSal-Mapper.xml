@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dw.dao.EmpSalDAO">
+	
+	<select id="getCompanyList" resultType="company">
+		SELECT *
+		FROM company
+		WHERE 1=1 
+	</select>
+
+	<select id="getCompany" resultType="company">
+		SELECT * FROM company WHERE 1=1
+		<if test="searchType == 'w'.toString()">
+			AND c_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND c_no LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'cw'.toString()">
+			AND (c_name LIKE '%' || #{keyword} || '%'
+			OR c_no LIKE '%' || #{keyword} || '%')
+		</if>
+		ORDER BY c_no
+	</select>
+	
+	<sql id="search">
+		<if test="searchType == 'a'.toString()">
+			AND E_NAME LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'b'.toString()">
+			AND C_NAME LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND DNAME LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'd'.toString()">
+			AND E_RANK LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'all'.toString()">
+			AND (
+			E_NAME LIKE '%' || #{keyword} || '%'
+			OR
+			C_NAME LIKE '%' || #{keyword} || '%'
+			OR
+			DNAME LIKE '%' || #{keyword} || '%'
+			OR
+			E_RANK LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+	</sql>
+	
+	<select id="selectEmpList" resultType="Map">
+		SELECT e.emp_no, e.e_name, d.dname, e.e_email, e.e_tel, e.e_rank, c.c_name
+		  FROM emp e, dept d, company c
+		  WHERE e.dept_no = d.dept_no
+		  AND e.c_no = c.c_no
+		<include refid="search"/>
+		ORDER BY e.emp_no
+	</select>
+	
+	<select id="selectEmpListCount" resultType="int">
+		SELECT COUNT(*)
+		 FROM emp e, dept d, company c
+		 WHERE e.dept_no = d.dept_no
+		  AND e.c_no = c.c_no
+		<include refid="search"/>
+	</select>
+	
+	<select id="selectDetail" resultType="Map">
+		SELECT *
+		  FROM emp e, dept d, company c
+		  WHERE e.dept_no = d.dept_no
+		  AND e.c_no = c.c_no
+		  AND e.emp_no = #{emp_no}
+	</select>
+</mapper>

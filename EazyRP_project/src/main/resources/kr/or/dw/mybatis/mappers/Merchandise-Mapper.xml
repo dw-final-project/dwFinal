@@ -34,7 +34,8 @@
 				price,
 				status,
 				startperiod,
-				endperiod
+				endperiod,
+				unitprice
 		  FROM shop_pr sp, product p, shop s
 		 WHERE sp.s_no = s.s_no
 		   AND sp.pr_no = p.pr_no
@@ -76,7 +77,8 @@
 			sys_up,
 			sys_regdate,
 			sys_updatedate,
-			enabled
+			enabled,
+			unitprice
 			)
 		VALUES(
 			#{sp_no},
@@ -91,7 +93,8 @@
 			#{sys_up},
 			sysdate,
 			sysdate,
-			'1'
+			'1',
+			#{unitprice}
 		)
 	</insert>
 	
@@ -105,7 +108,8 @@
 				price,
 				status,
 				startperiod,
-				endperiod
+				endperiod,
+				unitprice
 		  FROM shop_pr sp, product p, shop s
 		 WHERE sp.s_no = s.s_no
 		   AND sp.pr_no = p.pr_no
@@ -120,7 +124,8 @@
 							status		=	#{status},
 							startperiod	=	#{startperiod},
 							endperiod 	=	#{endperiod},
-							sys_updatedate = sysdate
+							sys_updatedate = sysdate,
+							unitprice	=	#{unitprice}
 				WHERE sp_no = #{sp_no}
 	</update>
 	
@@ -135,7 +140,7 @@
 	</delete>
 	
 	<select id="getMerchandiseList" resultType="Map">
-		SELECT sp.sp_no, sp.sp_q, sp.price, p.pr_name, sh.s_name 
+		SELECT sp.sp_no, sp.sp_q, sp.price, p.pr_name, sh.s_name, sp.unitprice
 		  FROM shop_pr sp, product p, shop sh  
 		 WHERE sp.pr_no = p.pr_no
 		   AND sp.s_no = sh.s_no
@@ -145,7 +150,7 @@
 	</select>
 
 	<select id="getMerchandise" resultType="Map">
-		SELECT sp.sp_no, sp.sp_q, sp.price, p.pr_name, sh.s_name 
+		SELECT sp.sp_no, sp.sp_q, sp.price, p.pr_name, sh.s_name, sp.unitprice
 		  FROM shop_pr sp, product p, shop sh  
 		 WHERE sp.pr_no = p.pr_no
 		   AND sp.s_no = sh.s_no
