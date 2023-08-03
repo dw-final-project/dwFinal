@@ -17,22 +17,32 @@
 		<selectKey keyProperty="pc_code" order="BEFORE" resultType="java.lang.String">
 			<include refid="makeProcessNoSeq"/>
 		</selectKey>
-		INSERT 	INTO process (pc_code, pc_name, pc_order) 
-				VALUES (pc_code_seq.nextVal,#{pc_name},#{pc_order})
+		INSERT INTO process (
+			pc_code, 
+			pc_name, 
+			pc_order, 
+			pc_content
+		) 
+		VALUES (
+			#{pc_code},
+			#{pc_name},
+			#{pc_order},
+			#{pc_content}
+		)
 	</insert>
 	
 	<sql id="search">
-		<if test="searchType == 'code'.toString()">
-			AND pc_code LIKE '%' || #{keyword} || '%'
-		</if>
-		<if test="searchType == 'title'.toString()">
+		<if test="searchType == 't'.toString()">
 			AND pc_name LIKE '%' || #{keyword} || '%'
 		</if>
-		<if test="searchType == 'nnc'.toString()">
+		<if test="searchType == 'o'.toString()">
+			AND pc_order LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'to'.toString()">
 			AND (
-			pc_code LIKE '%' || #{keyword} || '%'
-			OR
 			pc_name LIKE '%' || #{keyword} || '%'
+			OR
+			pc_order LIKE '%' || #{keyword} || '%'
 			)
 		</if>
 	</sql>
@@ -71,6 +81,7 @@
 			pc_code = #{pc_code}
 			,pc_name = #{pc_name}
 			,pc_order = #{pc_order}
+			,pc_content = #{pc_content}
 		WHERE pc_code = #{pc_code}
 	</update>
 </mapper>
