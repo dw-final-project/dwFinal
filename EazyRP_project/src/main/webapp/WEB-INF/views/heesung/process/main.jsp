@@ -2,43 +2,36 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<!-- 페이징 -->
 <c:set var="cri" value="${pageMaker.cri }"/>
-
-<body>
-	
-	<div class="content-wrapper">
-		<section class="row">
-			<div class="col-1"></div>
-			<div class="card col-10" style="margin-top:3em;">
-				<div class="card-header with-border">
-					<button type="button" class="btn btn-success" id="" onclick="OpenWindow('process/registForm.do', '공정등록', 800, 700);">등록</button>
-					<div class="card-tools">
-						<div class="input-group">
-							<select class="custom-select form-control col-md-4" name="searchType" id="searchType" style="apa">
-								<option value="nnc" ${cri.searchType eq 'nnc' ? 'selected' : '' }>전 체</option>
-								<option value="number" ${cri.searchType eq 'number' ? 'selected' : '' }>글번호</option>
-								<option value="code" ${cri.searchType eq 'code' ? 'selected' : '' }>공정코드</option>
-								<option value="title" ${cri.searchType eq 'title' ? 'selected' : '' }>공정명</option>
+<div style="height: 40px"></div>
+<section class="content container-fluid">
+		<div class="row justify-content-center">
+			<div class="col-md-10" style="max-width: 1100px;">
+				<div class="card card-outline card-info">
+					<div class="card-header" style="border-bottom: none;">
+						<h2 class="card-title p-1">공정 목록</h2>
+						<div class="input-group row" style="width: 90%; margin-left: 50%;">
+						<form id="searchForm2" method="post" action="/erp4/process.do?mcode=${mcode }" style="display: contents;">
+							<select class="form-control col-md-2 custom-select" name="searchType" id="searchType" style="font-size: 0.8em;">
+								<option value="to" ${searchType eq 'to' ? 'selected' : '' }>전체</option>
+								<option value="t" ${searchType eq 't' ? 'selected' : '' }>공정명</option>
+								<option value="o" ${searchType eq 'o' ? 'selected' : '' }>순번</option>
 							</select>
-							<input class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="${cri.keyword }">
-							<span class="input-group-append">
-								<button class="btn btn-primary" type="button" onclick="searchList_go(1);">
-									<i>검색</i>
+							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
+							<span class="input-group-append col-md-3" style=" padding: 0px;">
+								<button class="btn btn-primary" type="button" id="searchBtn">
+									<i class="fa fa-fw fa-search" style="font-size: 0.8em; padding: 0px;"></i>
 								</button>
 							</span>
+						</form>
 						</div>
 					</div>
-				</div>
-				<div class="card-body">
-					<table class="table table-borderd text-center">
-						<tr style="font-size:0.95em;">
-							<th>글번호</th>
-							<th>생산공정코드</th>
-							<th>생산공정명</th>
+				<div class="card-body pad">
+					<table style="font-size: 0.8em;" class="table table-borderd text-center">
+						<tr>
+							<th>공정코드</th>
+							<th>공정명</th>
 							<th>순번</th>
-							<th>작업코드등록</th>
 						</tr>
 						<c:if test="${empty processList }">
 							<tr>
@@ -48,32 +41,44 @@
 							</tr>
 						</c:if>
 						<c:forEach items="${processList }" var="process">		
-							<tr style="font-size: 0.85em;">
-								<td>${process.pc_no }</td>
+							<tr>
 								<td>
-									<a href="javascript:OpenWindow('/erp4/process/detail.do?pc_code=${process.pc_code}', '공정상세보기', 800, 700);">${process.pc_code}</a>
+									${process.pc_code}
 								</td>								
-								<td>${process.pc_name}</td>
+								<td>
+									<a href="javascript:OpenWindow('/erp4/process/detail.do?pc_code=${process.pc_code}', '공정상세보기', 800, 700);">
+										${process.pc_name}
+									</a>
+								</td>
 								<td>${process.pc_order}</td>
-								<td><span class="badge bg-red" onclick="">등록</span></td>
 							</tr>
 						</c:forEach>
 					</table>
 				</div>
-				<!-- 페이징 -->
 				<div class="card-footer">
 					<%@ include file="/WEB-INF/views/common/pagination.jsp" %>
 				</div>
-				
+				<div style="display: flex; align-items: end; justify-content: end;">
+					<button type="button" class="btn btn-primary" id="registBtn" 
+							onclick="OpenWindow('/erp4/process/registForm.do', 
+									'공정 등록', 500, 520)"
+							style="width: 100px; margin: 20px; align-self: center;">
+						등록
+					</button>
+				</div>
 			</div>
-		</section>
-	</div>
+		</div>
+	</section>
 	
 	
 </body>
 </html>
 
 <script>
+
+	$('#searchBtn').on('click', function(){
+		$('#searchForm2').submit();
+	})
 	
 	// 팝업창 띄우기
 	// 새로운 Window 창을 Open 할 경우 사용되는 함수 (arg : 주소, 창 타이틀, 넓이, 길이)

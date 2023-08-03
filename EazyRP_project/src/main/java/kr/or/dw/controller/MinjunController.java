@@ -326,20 +326,23 @@ public class MinjunController {
 		}
 		List<Map<String, Object>> merchandise = null;
 		Map<String, String> dataMap = new HashMap<>();
+		
 		dataMap.put("sp_no", sp_no);
 		dataMap.put("s_name", s_name);
 		dataMap.put("pr_name", pr_name);
 		dataMap.put("searchType", searchType);
 		dataMap.put("keyword", keyword);
+		
 		if(keyword != null){
 			merchandise = merchandiseService.getMerchandise(dataMap);
 		} else {
 			merchandise = merchandiseService.getMerchandiseList();
 		}
-		mnv.setViewName(url);
+		
 		dataMap.put("sp_no", sp_no);
 		dataMap.put("s_name", s_name);
 		dataMap.put("pr_name", pr_name);
+		mnv.setViewName(url);
 		mnv.addObject("searchType", searchType);
 		mnv.addObject("keyword", keyword);
 		mnv.addObject("merchandise", merchandise);
@@ -371,9 +374,10 @@ public class MinjunController {
 		orderVO.setSys_up(emp_no + "");
 		orderVO.setSo_no(so_no);
 		orderVO.setSp_no(sp_no);
-		
+		System.out.println(orderVO.getQuantity());
+		String c_no = (String) session.getAttribute("c_no");
 		if(orderVO.getProgress().equals("배송완료")) {
-			orderService.minusQuantity(orderVO);
+			orderService.minusQuantity(orderVO, c_no);
 		}else if(orderVO.getProgress().equals("반품")){
 			orderService.plusQuantity(orderVO);
 		} else if (orderVO.getProgress().equals(oldprogress)) {

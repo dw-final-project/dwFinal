@@ -7,43 +7,41 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<!-- 페이징 -->
-<c:set var="cri" value="${pageMaker.cri }"/>
-
-<div style="min-height: 800px;">
-
-	<%-- <jsp:include page="/WEB-INF/views/content_header.jsp">
-		<jsp:param value="자유게시판" name="subject"/>
-		<jsp:param value="등록" name="item"/>
-	</jsp:include> --%>
-	
+<div style="margin: 1em;">
 	<section class="content container-fluid">
 		<div class="row justify-content-center">
-			<div class="col-md-9" style="max-width: 950px;">
+			<div class="col-md-9" style="max-width: ;">
 				<div class="card card-outline card-info">
+					
 					<div class="card-header">
-						<h3 class="card-title p-1">공정 등록</h3>
-						<div class="card-tools">
-							<button type="button" class="btn btn-primary" id="registBtn" >등 록</button>
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<button type="button" class="btn btn-warning" id="cancelBtn">취 소</button>
-						</div>
+						<h3 class="card-title p-1">쇼핑몰 등록</h3>
 					</div>
+					
 					<div class="card-body pad">
 						<form role="form" method="post" action="regist.do" name="registForm">
-							<div class="form-group">
-								<label for="pc_code">생산 공정 코드</label>
-								<input type="text" id="pc_code" name="pc_code" class="form-control" placeholder="제목을 입력하세요.">
+							<div class="form-group col-sm-12 row">
+								<label for="sp_no" class="col-sm-3">생산공정 코드</label>
+								<input type="text" id="pc_code" name="pc_code" class="form-control col-sm-9" placeholder="코드는 자동으로 입력됩니다." readonly>
 							</div>
-							<div class="form-group">
-								<label for="pc_name">생산 공정 이름</label>
-								<input type="text" id="pc_name" name="pc_name" class="form-control" value="">
+							<div class="form-group col-sm-12 row">
+								<label for="s_name" class="col-sm-3">생산공정 이름</label>
+								<input type="text" id="pc_name" name="pc_name" class="form-control col-sm-9" value="" placeholder="공정명을 입력하세요.">
 							</div>
-							<div class="form-group">
-								<label for="pc_order">순번</label>
-								<textarea class="textarea" name="pc_order" id="pc_order" rows="10" placeholder="1000자 내외로 작성하세요." style="display: block; width: 100%"></textarea>
+							<div class="form-group col-sm-12 row">
+								<label for="pc_order" class="col-sm-3">순번</label>
+								<input type="text" id="pc_order" name="pc_order" class="form-control col-sm-9" value="" placeholder="쇼핑몰명을 입력하세요.">
+							</div>
+							<div class="form-group col-sm-12 row">
+								<label for="pc_content" class="col-sm-3">내용</label>
+								<input type="text" id="pc_content" name="pc_content" class="form-control col-sm-9" value="" placeholder="해당 공정에 대한 내용을 입력하세요.">
 							</div>
 						</form>
+					</div>
+					
+					<div class="card-footer card-tools">
+						<button type="button" class="btn btn-primary" id="registBtn" >등 록</button>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="button" class="btn btn-warning" id="cancelBtn">취 소</button>
 					</div>
 				</div>
 			</div>

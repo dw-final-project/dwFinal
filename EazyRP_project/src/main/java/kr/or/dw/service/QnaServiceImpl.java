@@ -54,6 +54,17 @@ public class QnaServiceImpl implements QnaService {
 		
 	}
 
+	@Override
+	public void remove(int inq_no) throws SQLException {
+		qnaDAO.deleteQna(inq_no);
+		
+	}
+
+	@Override
+	public void modifyQna(InquiryVO inquiry) throws SQLException {
+		qnaDAO.modifyQna(inquiry);
+	}
+
 
 	
 

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -72,6 +74,8 @@ public class MemberController {
 		Map<String, Object> dataMap = qnaService.selectQnaList(cri);
 		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(dataMap);
+		List<InquiryVO> vo = (List<InquiryVO>) dataMap.get("qnaList");
+		System.out.println(vo);
 		mnv.setViewName(url);
 		
 		return mnv;
@@ -110,6 +114,25 @@ public class MemberController {
 		
 	}
 	
+	@RequestMapping("/modify")
+	public void modify (InquiryVO inquiry)throws Exception{
+		qnaService.modifyQna(inquiry);
+		
+	}
+
+	//Q&A 삭제 
+	@RequestMapping("/remove")
+	public ModelAndView remove (int inq_no, ModelAndView mnv, String mcode) throws Exception {
+		
+
+		qnaService.remove(inq_no);
+		
+		mnv.addObject("mcode", mcode);
+		mnv.setViewName("");	
+		
+		return mnv;
+	};
+	
 	// 아이디 중복확인
 	@RequestMapping("/idCheck") 
 	public ResponseEntity<String> idCheck(String id, HttpServletRequest req){
@@ -127,6 +150,9 @@ public class MemberController {
 		return entity;
 	};
 
+
+	
+	
 	//회원가입 페이지 이동
 
 		@GetMapping("/registerForm")
@@ -155,6 +181,7 @@ public class MemberController {
 	      return "/common/loginForm";
 	}
 	
+	// 아이디 찾기 
 	@RequestMapping("/IDfindForm")
 	public String IDfindForm(HttpServletResponse res) throws Exception {
 
@@ -183,7 +210,7 @@ public class MemberController {
 		
 	}
 	
-	
+	//비밀번호 찾기 
 	@RequestMapping("/PWfindForm")
 	public String PWfindForm() {
 		return "/common/PWfindForm";
@@ -202,6 +229,7 @@ public class MemberController {
 		
 		return mnv;
 	}
+	// 새로운 비밀번호 설정
 	@RequestMapping("/PWrenew")
 	public ModelAndView PWrenew (ModelAndView mnv, String pwd, String id) throws Exception{
 		String url = "/common/loginForm";
@@ -271,4 +299,5 @@ public class MemberController {
 		memberService.delete(id);
 		return "/common/loginForm";
 	}
+
 }

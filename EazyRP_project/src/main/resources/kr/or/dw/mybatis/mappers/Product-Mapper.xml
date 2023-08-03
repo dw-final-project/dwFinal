@@ -29,7 +29,7 @@
 		  FROM product
 		 WHERE 1=1
 		 <include refid="search"/>
-		 ORDER BY pr_no desc
+		 order BY pr_no desc
 	</select>
 	
 	<select id="selectSearchProductListCount" resultType="int">
@@ -62,7 +62,7 @@
 			OR b.pr_name LIKE '%' || #{keyword} || '%'
 			OR b.con_c_no LIKE '%' || #{keyword} || '%')
 		</if>
-		ORDER BY b.sheet_no desc
+		order BY b.sheet_no desc
 	</select>
 	
 	<select id="selectSearchNoteListCount" resultType="int">
@@ -90,7 +90,7 @@
 				OR b.pr_name LIKE '%' || #{keyword} || '%'
 				OR b.con_c_no LIKE '%' || #{keyword} || '%')
 			</if>
-			ORDER BY b.sheet_no desc
+			order BY b.sheet_no desc
 	</select>
 	
 	<select id="getBuyDetail" resultType="buyDetail">
@@ -145,7 +145,7 @@
 		)
 	</insert>
 	
-	<select id="allOrderList" resultType="order">
+	<select id="allOrderList" resultType="order2">
 		SELECT o.*, d.title title
 		FROM ordermanage o, draft d
 		WHERE o.dr_no = d.dr_no
@@ -165,7 +165,7 @@
 		<if test="order == 'Y'.toString()">
 			AND o.con_c_no = #{c_no}
 		</if>
-		ORDER BY o.sys_regdate desc
+		order BY o.sys_regdate desc
 	</select>
 	
 	<select id="getSheet_no" resultType="str">
@@ -188,7 +188,7 @@
 		SELECT pr_no FROM product WHERE pr_name LIKE '%' || #{keyword} || '%'
 	</select>
 	
-	<select id="insertOrderList" resultType="order">
+	<select id="insertOrderList" resultType="order2">
 		SELECT * FROM ordermanage 
 		WHERE o_no = #{sheet} 
 			AND buy_c_no = #{c_no}
@@ -207,7 +207,7 @@
 		  AND w.c_no = c.c_no
 	</select>
 	
-	<select id="selectOrder" resultType="order">
+	<select id="selectOrder" resultType="order2">
 		SELECT o.*, c.c_name con_c_name, d.dr_no dr_no, d.title title
 		 FROM ordermanage o, company c, draft d
 		WHERE o.o_no = #{o_no}
@@ -216,7 +216,7 @@
 	</select>
 	
 	<select id="getOrderDraft" resultType="draft">
-		SELECT * FROM draft WHERE dg_no = 'D003' AND pl_progress = '3' AND ORDER_GB = 'N' AND c_no = #{c_no}
+		SELECT * FROM draft WHERE dg_no = 'D003' AND pl_progress = '3' AND order_GB = 'N' AND c_no = #{c_no}
 	</select>
 	
 	<select id="getFileName" resultType="str">
@@ -307,5 +307,55 @@
 	<update id="consumptionProduct">
 		UPDATE product SET quantity = quantity - #{quantity} WHERE pr_no = #{pr_no}
 	</update>
+	
+	<insert id="tr_History">
+		INSERT INTO tr_history VALUES(
+			th_no_seq.nextval,
+			sysdate,
+			sysdate,
+			#{buy_c_no},
+			#{emp_no},
+			'FC_003',
+			#{amount},
+			#{sheet_no},
+			'구매',
+			'Y',
+			'/product/butDetail.do?sheet_no=' || #{sheet_no},
+			#{quantity},
+			'',
+			'AC_001',
+			'T_001',
+			'',
+			'',
+			(SELECT e_name FROM emp WHERE emp_no = #{emp_no}),
+			'',
+			''
+		)
+	</insert>
+	
+	<insert id="tr_History2">
+		INSERT INTO tr_history VALUES(
+			th_no_seq.nextval,
+			sysdate,
+			sysdate,
+			#{buy_c_no},
+			#{emp_no},
+			'FC_003',
+			#{buy_price},
+			#{o_no},
+			'발주',
+			'Y',
+			'/product/orderDetail.do?o_no=' || #{o_no},
+			#{quantity},
+			'',
+			'AC_001',
+			'T_001',
+			'',
+			'',
+			#{sys_reg},
+			'',
+			''
+		)
+	</insert>
 	
 </mapper>

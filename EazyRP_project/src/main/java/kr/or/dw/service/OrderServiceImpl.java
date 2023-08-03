@@ -20,6 +20,7 @@ import kr.or.dw.vo.OrderVO;
 import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.ShopVO;
 import kr.or.dw.vo.SiVO;
+import kr.or.dw.vo.Tr_historyVO;
 
 
 @Service
@@ -90,10 +91,40 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void minusQuantity(OrderVO orderVO) throws SQLException {
+	public void minusQuantity(OrderVO orderVO, String c_no) throws SQLException {
+		Tr_historyVO vo = new Tr_historyVO();
+		vo.setC_no(c_no);
+		Map<String, Object> map = new HashMap<>();
+
+		int emp_no = Integer.parseInt(orderVO.getSys_up());
+		vo.setEmp_no(emp_no);
+	    String sp_no = orderVO.getSp_no();
+	    int unitprice = orderDAO.getUnitprice(sp_no);
+	    int price = orderDAO.getPrice(sp_no);
+	    int quantity = orderVO.getQuantity();
+	    unitprice = unitprice * quantity;
+	    price = price * quantity;
+	    int amount = price - unitprice;
+	    vo.setAmount(amount);
+	    vo.setPrice(price);
+	    vo.setUnitprice(unitprice);
+	    vo.setQuantity(quantity);
+//	    map.put("vo", vo);
+//		map.put("ov", orderVO);
+		
+		map.put("c_no", c_no);
+		map.put("emp_no", emp_no);
+		map.put("amount", amount);
+		map.put("so_no", orderVO.getSo_no());
+		map.put("quantity", quantity);
+		map.put("price", price);
+		map.put("unitprice", unitprice);
+	    orderDAO.trHistory(map);
+
+		
 		
 		orderDAO.minusQuantity(orderVO);
-		
+
 	}
 
 	@Override

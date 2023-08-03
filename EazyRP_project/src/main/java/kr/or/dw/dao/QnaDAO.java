@@ -25,6 +25,10 @@ public interface QnaDAO {
 
 	void insertQna(InquiryVO qna) throws SQLException;
 
+	void deleteQna(int inq_no) throws SQLException;
+
+	void modifyQna(InquiryVO inquiry) throws SQLException;
+
 
 	
 }

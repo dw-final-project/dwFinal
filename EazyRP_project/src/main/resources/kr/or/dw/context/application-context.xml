@@ -26,6 +26,7 @@
 	<bean id="merchandiseService" class="kr.or.dw.service.MerchandiseServiceImpl"/>
 	<bean id="shopService" class="kr.or.dw.service.ShopServiceImpl"/>
 	<bean id="orderService" class="kr.or.dw.service.OrderServiceImpl"/>
+	<bean id="empsalService" class="kr.or.dw.service.EmpSalServiceImpl"/>
 
 	<bean id="whService" class="kr.or.dw.service.WhServiceImpl"/>
 	<bean id="factoryService" class="kr.or.dw.service.FactoryServiceImpl"/>
@@ -34,6 +35,7 @@
 	<bean id="contactService" class="kr.or.dw.service.ContactServiceImpl"/>
 	<bean id="warehouseService" class="kr.or.dw.service.WarehouseServiceImpl"/>
 	<bean id="itemService" class="kr.or.dw.service.ItemServiceImpl"/>
+	<bean id="profitLossService" class="kr.or.dw.service.ProfitLossServiceImpl"/>
 	
 	<!-- 풀캘린더 API -->
 	<bean id="calendarService" class="kr.or.dw.service.CalendarServiceImpl"/>
