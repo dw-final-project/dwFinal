@@ -105,6 +105,7 @@ public class ProductController {
 			System.out.println(i + "번째 추가 " + vo);
 		}
 		productService.insertProductDetail(detail);
+		productService.Tr_History(sheet_no, detail);
 		
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
@@ -142,6 +143,7 @@ public class ProductController {
 		dataMap.put("c_no", c_no);
 		dataMap.put("order", "N");
 		Map<String, Object> map = new HashMap<>();
+		System.out.println("1번");
 		map = productService.allOrderList(dataMap);
 		
 		mnv.addObject("mcode", mcode);
@@ -390,8 +392,8 @@ public class ProductController {
 	
 	@RequestMapping("/receive")
 	public void receive(String o_no, HttpSession session, HttpServletResponse res) throws SQLException, IOException {
-		productService.receive(o_no);
-		
+		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
+		productService.receive(o_no,emp_no);
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
 		out.println("<script>");

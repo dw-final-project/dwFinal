@@ -145,7 +145,7 @@
 		)
 	</insert>
 	
-	<select id="allorderList" resultType="order2">
+	<select id="allOrderList" resultType="order2">
 		SELECT o.*, d.title title
 		FROM ordermanage o, draft d
 		WHERE o.dr_no = d.dr_no
@@ -188,7 +188,7 @@
 		SELECT pr_no FROM product WHERE pr_name LIKE '%' || #{keyword} || '%'
 	</select>
 	
-	<select id="insertorderList" resultType="order2">
+	<select id="insertOrderList" resultType="order2">
 		SELECT * FROM ordermanage 
 		WHERE o_no = #{sheet} 
 			AND buy_c_no = #{c_no}
@@ -198,7 +198,7 @@
 		SELECT COUNT(*) FROM ordermanage WHERE buy_c_no = #{c_no}
 	</select>
 	
-	<select id="getorderDetail" resultType="o_detail">
+	<select id="getOrderDetail" resultType="o_detail">
 		SELECT o.*, w.wh_name wh_name, p.pr_name pr_name, c.c_name c_name
 		FROM orderdetail o, warehouse w, product p, company c
 		WHERE o.o_no = #{o_no}
@@ -207,7 +207,7 @@
 		  AND w.c_no = c.c_no
 	</select>
 	
-	<select id="selectorder" resultType="order2">
+	<select id="selectOrder" resultType="order2">
 		SELECT o.*, c.c_name con_c_name, d.dr_no dr_no, d.title title
 		 FROM ordermanage o, company c, draft d
 		WHERE o.o_no = #{o_no}
@@ -215,7 +215,7 @@
 		  AND d.dr_no = o.dr_no
 	</select>
 	
-	<select id="getorderDraft" resultType="draft">
+	<select id="getOrderDraft" resultType="draft">
 		SELECT * FROM draft WHERE dg_no = 'D003' AND pl_progress = '3' AND order_GB = 'N' AND c_no = #{c_no}
 	</select>
 	
@@ -263,7 +263,7 @@
 		SELECT o_no_seq.currval o_no FROM dual
 	</select>
 	
-	<insert id="insertorderDetail">
+	<insert id="insertOrderDetail">
 		INSERT INTO orderdetail VALUES(
 			od_no_seq.nextval,
 			#{o_no},
@@ -280,11 +280,11 @@
 		DELETE orderdetail WHERE o_no = #{o_no}
 	</delete>
 	
-	<delete id="removeorder">
+	<delete id="removeOrder">
 		DELETE ordermanage WHERE o_no = #{o_no}
 	</delete>
 	
-	<update id="draftorder">
+	<update id="draftOrder">
 		UPDATE draft SET order_gb = 'N'
 	</update>
 	
@@ -307,5 +307,55 @@
 	<update id="consumptionProduct">
 		UPDATE product SET quantity = quantity - #{quantity} WHERE pr_no = #{pr_no}
 	</update>
+	
+	<insert id="tr_History">
+		INSERT INTO tr_history VALUES(
+			th_no_seq.nextval,
+			sysdate,
+			sysdate,
+			#{buy_c_no},
+			#{emp_no},
+			'FC_003',
+			#{amount},
+			#{sheet_no},
+			'구매',
+			'Y',
+			'/product/butDetail.do?sheet_no=' || #{sheet_no},
+			#{quantity},
+			'',
+			'AC_001',
+			'T_001',
+			'',
+			'',
+			(SELECT e_name FROM emp WHERE emp_no = #{emp_no}),
+			'',
+			''
+		)
+	</insert>
+	
+	<insert id="tr_History2">
+		INSERT INTO tr_history VALUES(
+			th_no_seq.nextval,
+			sysdate,
+			sysdate,
+			#{buy_c_no},
+			#{emp_no},
+			'FC_003',
+			#{buy_price},
+			#{o_no},
+			'발주',
+			'Y',
+			'/product/orderDetail.do?o_no=' || #{o_no},
+			#{quantity},
+			'',
+			'AC_001',
+			'T_001',
+			'',
+			'',
+			#{sys_reg},
+			'',
+			''
+		)
+	</insert>
 	
 </mapper>

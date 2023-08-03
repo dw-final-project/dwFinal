@@ -57,6 +57,9 @@ public interface ProductService {
 
 	String getC_name(String c_no) throws SQLException;
 
-	void receive(String o_no) throws SQLException;
+	void receive(String o_no, int emp_no) throws SQLException;
+
+	void Tr_History(int sheet_no, List<BuyDetailVO> detail) throws SQLException;
+
 	
 }
