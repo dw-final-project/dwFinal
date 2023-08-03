@@ -18,7 +18,6 @@
 						<div class="input-group">
 							<select class="custom-select form-control col-md-4" name="searchType" id="searchType" style="apa">
 								<option value="nnc" ${cri.searchType eq 'nnc' ? 'selected' : '' }>전 체</option>
-								<option value="number" ${cri.searchType eq 'number' ? 'selected' : '' }>글번호</option>
 								<option value="code" ${cri.searchType eq 'code' ? 'selected' : '' }>공정코드</option>
 								<option value="title" ${cri.searchType eq 'title' ? 'selected' : '' }>공정명</option>
 							</select>
@@ -34,7 +33,6 @@
 				<div class="card-body">
 					<table class="table table-borderd text-center">
 						<tr style="font-size:0.95em;">
-							<th>글번호</th>
 							<th>생산공정코드</th>
 							<th>생산공정명</th>
 							<th>순번</th>
@@ -49,7 +47,6 @@
 						</c:if>
 						<c:forEach items="${processList }" var="process">		
 							<tr style="font-size: 0.85em;">
-								<td>${process.pc_no }</td>
 								<td>
 									<a href="javascript:OpenWindow('/erp4/process/detail.do?pc_code=${process.pc_code}', '공정상세보기', 800, 700);">${process.pc_code}</a>
 								</td>								
