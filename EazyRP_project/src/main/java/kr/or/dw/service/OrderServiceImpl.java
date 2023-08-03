@@ -91,8 +91,17 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void minusQuantity(OrderVO orderVO, String c_no) throws SQLException {
+		Map<String, Object> map = new HashMap<>();
+		map.put("c_no", c_no);
+		map.put("ov", orderVO);
+		int emp_no = Integer.parseInt(orderVO.getSys_up());
+		map.put("emp_no", emp_no);
+		orderDAO.trHistory(map);
+		
+		
 		orderDAO.minusQuantity(orderVO);
-		orderDAO.trHistory(orderVO, c_no);
+		
+
 		
 	}
 

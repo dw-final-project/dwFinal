@@ -150,7 +150,7 @@
 			sysdate,
 			#{c_no},
 			#{emp_no},
-			#{sys_up},
+			#{emp_no},
 			'',
 			(#{price} - #{unitprice}),
 			#{so_no},
