@@ -17,8 +17,8 @@ public interface ProcessService {
 	// 공정  상세페이지
 	ProcessVO selectProcess(String pc_code) throws SQLException;
 
-	void remove(String pc_code) throws SQLException;
+	void processRemove(String pc_code) throws SQLException;
 
-	void modify(ProcessVO process) throws SQLException;
+	void processModify(ProcessVO process) throws SQLException;
 
 }
