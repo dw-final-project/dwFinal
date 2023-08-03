@@ -31,7 +31,7 @@ public interface OrderDAO {
 
 	void plusQuantity(OrderVO orderVO) throws SQLException;
 
-	void trHistory(OrderVO orderVO, String c_no) throws SQLException;
+	void trHistory(Map<String, Object> map) throws SQLException;
 
 
 	
