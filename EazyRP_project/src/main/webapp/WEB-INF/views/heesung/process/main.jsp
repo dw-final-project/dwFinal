@@ -46,7 +46,7 @@
 									${process.pc_code}
 								</td>								
 								<td>
-									<a href="javascript:OpenWindow('/erp4/process/detail.do?pc_code=${process.pc_code}', '공정상세보기', 800, 700);">
+									<a href="javascript:OpenWindow('/erp4/process/detail.do?pc_code=${process.pc_code}', '공정상세보기', 500, 540);">
 										${process.pc_name}
 									</a>
 								</td>
@@ -61,7 +61,7 @@
 				<div style="display: flex; align-items: end; justify-content: end;">
 					<button type="button" class="btn btn-primary" id="registBtn" 
 							onclick="OpenWindow('/erp4/process/registForm.do', 
-									'공정 등록', 500, 520)"
+									'공정 등록', 500, 540)"
 							style="width: 100px; margin: 20px; align-self: center;">
 						등록
 					</button>
