@@ -3,40 +3,37 @@
 <mapper namespace="kr.or.dw.dao.WorkOrderDAO">
 
 	<sql id="search">
-		<if test="searchType == 'number'.toString()">
-			AND pc_no LIKE '%' || #{keyword} || '%'
+		<if test="cri.searchType == 'w'.toString()">
+			AND e.E_NAME LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="searchType == 'code'.toString()">
-			AND pc_code LIKE '%' || #{keyword} || '%'
+		<if test="cri.searchType == 't'.toString()">
+			AND w.WO_NAME LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="searchType == 'title'.toString()">
-			AND pc_name LIKE '%' || #{keyword} || '%'
-		</if>
-		<if test="searchType == 'nnc'.toString()">
+		<if test="cri.searchType == 'tw'.toString()">
 			AND (
-			pc_no LIKE '%' || #{keyword} || '%'
+			w.WO_NAME LIKE '%' || #{cri.keyword} || '%'
 			OR
-			pc_code LIKE '%' || #{keyword} || '%'
-			OR
-			pc_name LIKE '%' || #{keyword} || '%'
+			e.E_NAME LIKE '%' || #{cri.keyword} || '%'
 			)
 		</if>
 	</sql>
 
 	<select id="selectSearchWorkOrderList" resultType="workOrder">
-		SELECT	*
-		FROM	workorder
+		SELECT	w.*, e.e_name
+		FROM	workorder w, emp e
 		WHERE	1=1
-		AND		c_no = #{c_no}
+		AND		w.emp_no = e.emp_no
+		AND		w.c_no = #{c_no}
 		<include refid="search"></include>
-		ORDER BY wo_no desc
+		ORDER BY w.wo_no desc
 	</select>
 	
 	<select id="selectSearchWorkOrderListCount" resultType="int">
 		SELECT	COUNT(*)
-		FROM	workorder
+		FROM	workorder w, emp e
 		WHERE	1=1
-		AND		c_no = #{c_no}
+		AND		w.emp_no = e.emp_no
+		AND		w.c_no = #{c_no}
 		<include refid="search"></include>
 	</select>
 	
@@ -105,10 +102,14 @@
 	<!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 -->
 	
 	<select id="selectWorkOrderDetail" parameterType="str" resultType="Map">
-		SELECT wo.wo_no, wo.wo_name, f.fac_name, e.e_name, wo.DELIVERYDATE, wo.PROGRESS, wo.FILES, wo.sys_regdate
-		FROM workorder wo, factory f, emp e
+		SELECT 	wo.wo_no, wo.wo_name, f.fac_name, e.e_name, 
+				TO_CHAR(wo.DELIVERYDATE, 'yyyy-MM-dd') DELIVERYDATE, 
+				wo.PROGRESS, wo.FILES, c.c_name,
+				TO_CHAR(wo.sys_regdate, 'yyyy-MM-dd') sys_regdate
+		FROM workorder wo, factory f, emp e, company c
 		WHERE wo.fac_no = f.fac_no
 		AND wo.emp_no = e.EMP_NO
+		AND wo.c_no = c.c_no
 		AND wo.wo_no = #{wo_no}
 	</select>
 	

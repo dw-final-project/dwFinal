@@ -11,12 +11,11 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">작업지시서 목록</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/mymenu/noteList.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/erp4/workorder.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2 custom-select" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="tcw" ${searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
-								<option value="t" ${searchType eq 't' ? 'selected' : '' }>제  목</option>
-								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>보낸사람</option>
-								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>업  체</option>
+								<option value="tw" ${searchType eq 'tw' ? 'selected' : '' }>전  체</option>
+								<option value="t" ${searchType eq 't' ? 'selected' : '' }>제목</option>
+								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>담당자</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
@@ -37,7 +36,14 @@
 									<th width="15%" style="text-align: center;">납기일</th>
 									<th width="15%" style="text-align: center;">상태</th>
 								</tr>
-									<c:forEach items="${woList}" var="wo" varStatus="">
+								<c:if test="${empty woList }">
+									<tr>
+										<td colspan="5">
+											<strong>해당 게시글이 없습니다.</strong>
+										</td>
+									</tr>
+								</c:if>
+								<c:forEach items="${woList}" var="wo" varStatus="">
 									<tr>
 										<input type="hidden" name="${wo.wo_no }">
 										<td width="15%" style="text-align: center;">
@@ -54,7 +60,7 @@
 										</td>
 										<td width="15%" style="text-align: center;">${wo.progress == '0' ? '대기중' : (wo.progress == '1' ? '진행중' : '완료')}</td>
 									</tr>
-									</c:forEach>
+								</c:forEach>
 							</table>
 							<div class="card-footer">
 								<%@ include file="/WEB-INF/views/common/pagination.jsp" %>

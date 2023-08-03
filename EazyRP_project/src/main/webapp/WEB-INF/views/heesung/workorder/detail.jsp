@@ -78,12 +78,11 @@
 	</div>
 	<!-- card footer End -->
 <form role="form" method="post" enctype="multipart/form-data">
-		<c:forEach items="${wo }" var="wo" varStatus="loop"/>
-       	<c:forEach items="${woDetail }" var="woDetail" varStatus="loop"/>
+
 		<input type="hidden" name="wo_no" value="">
 		<table>
 	        <tr>
-	            <td width="40%" align="center"><b>코드</b></td>
+	            <td width="40%" align="center"><b>코드번호</b></td>
 	            <td width="100%"><input type="text" style="width: 100%;" value="${wo.WO_NO }" readonly></td>
 	        </tr>
 	        <tr>
@@ -96,7 +95,7 @@
 	        </tr>
 	        <tr>
 	            <td width="40%" align="center"><b>담당자</b></td>
-	            <td width="100%"><input type="text" style="width: 100%;" value="${wo.E_NAME }"></td>
+	            <td width="100%"><input type="text" style="width: 100%;" value="${wo.C_NAME } / ${wo.E_NAME }"></td>
 	        </tr>
 	        
 <!-- 	        <div class="form-group col-sm-12 row"> -->
@@ -110,13 +109,13 @@
 	        <tr>
 	        	<td width="40%" align="center"><b>등록일</b></td>
 	        	<td width="40%" align="center">
-					<input type="date" id="endperiod" name="deliverydate" class="form-control mch7" value="${wo.SYS_REGDATE }" placeholder="납기일을 입력하세요.">
+					<input type="date" id="endperiod" name="deliverydate" class="form-control mch7" value="${wo.SYS_REGDATE }" placeholder="납기일을 입력하세요." disabled>
 	        	</td>
 	        </tr>
 	        <tr>
 	        	<td width="40%" align="center"><b>납기일</b></td>
 	        	<td width="40%" align="center">
-					<input type="date" id="endperiod" name="deliverydate" class="form-control mch7" value="" placeholder="납기일을 입력하세요.">
+					<input type="date" id="endperiod" name="deliverydate" class="form-control mch7" value="${wo.DELIVERYDATE }" placeholder="납기일을 입력하세요.">
 	        	</td>
 	        </tr>
 	        <tr>
@@ -124,35 +123,17 @@
 	            	<b>상태</b>
 	            </td>
 	            <td>
-	            	<select name="progress" id="fc-select">
-					    <option value="0">대기중</option>
-					    <option value="1">진행중</option>
-					    <option value="2">완료</option>
+	            	<select name="progress" id="progress_select">
+					    <option>선택</option>
+					    <option value="" ${wo.PROGRESS eq '' ? 'selected' : '' }>선택</option>
+					    <option value="0" ${wo.PROGRESS eq '0' ? 'selected' : '' }>대기중</option>
+					    <option value="1" ${wo.PROGRESS eq '1' ? 'selected' : '' }>진행중</option>
+					    <option value="2" ${wo.PROGRESS eq '2' ? 'selected' : '' }>완료</option>
 					</select>
 				</td>
 	        </tr>
-<!-- 	        <tr> -->
-<!-- 	            <td align="center">제목</td> -->
-<%-- 	            <td><fmt:formatDate value="${wo.wo_name }" pattern="yyyy-MM-dd"></fmt:formatDate></td> --%>
-<!-- 	        </tr> -->
 	        <tr>
-	            <td align="center">외화 명</td>
-	            <td><select name="fc_no" id="fc-select">
-				    <option value="FC_001">달러</option>
-				    <option value="FC_002">한화</option>
-				    <option value="FC_003">위안화</option>
-				    <option value="FC_004">엔화</option>
-				    <option value="FC_005">페소</option>
-				    <option value="FC_006">동</option>
-					</select></td>
-	        </tr>
-	        <tr>
-	            <td align="center">담당자</td>
-	            <td><input type="hidden" name="emp_no" id="receiver" value="${est.EMP_NO }">
-	            <input type="text" style="width: 100%;" value="${est.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 500, 500)"></td>
-	        </tr>
-	        <tr>
-	            <td align="center">첨부파일</td>
+	            <td align="center"><b>첨부파일</b></td>
 	            <td>
 	            <input type="file" name="files" style="width: 100%;" value="">
 	            <c:if test="${!empty est.FILES }">
@@ -163,32 +144,31 @@
 	    </table>
     <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">제품추가</button>
     <table>
+    	
         <tr>
-            <th align="center" style="width: 20%;">제품명</th>
-            <th align="center" style="width: 20%;">창고</th>           
+            <th align="center" style="width: 20%;">품목명</th>
             <th align="center" style="width: 20%;">수량</th>
-            <th align="center" style="width: 20%;">가격</th>
-            <th align="center" style="width: 20%;">비고</th>
+            <th align="center" style="width: 15%;">비고</th>
         </tr>
     	<tbody id="prInput">
         <input type="hidden" value="" id="cnt">
-        <tr id="trChk" >    	
-	       <input type="hidden" class="rownum" value="${est.ROWNUM }">
-	       <input type="hidden" name="estdetail_no" id="dtail_no" value="${est.ESTDETAIL_NO }">
-	       <input type="hidden" name="enabled" id="estenabled" value="${est.ENABLED }">
-	       <input type="hidden" name="pr_delete" value="o">
-        	<td>
-        		<input type="text" id="${est.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${est.P_NAME }"><input type="hidden" name="pr_no" value="${est.PR_NO }">
-        	</td>
-            <td><input type="text" id="wh_no${est.ROWNUM }" class="wh_names" name="wh_name" style="width: 100%;" value="${est.WH_NAME }"><input type="hidden" name="wh_no" value="${est.WH_NO }"></td>
-            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${est.QUANTITY }"><input type="hidden" id="cost" value="${est.PR_EXPRICE }"></td>
-            <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${est.AMOUNT }" readonly ></td>
-            <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>
-        </tr>
+       	<c:forEach items="${woDetail }" var="woDetail" varStatus="loop">
+	        <tr id="trChk" >    	
+				<input type="hidden" class="rownum" value="${woDetail.ROWNUM }">
+				<input type="hidden" name="detail_no" id="dtail_no" value="${woDetail.DETAIL_NO }">
+	<%-- 	       <input type="hidden" name="enabled" id="estenabled" value="${est.ENABLED }"> --%>
+	<!-- 	       <input type="hidden" name="pr_delete" value="o"> -->
+	        	<td>
+	        		<input type="text" id="${woDetail.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${woDetail.PR_NAME }"><input type="hidden" name="pr_no" value="${est.PR_NO }">
+	        	</td>
+	            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${woDetail.QUANTITY }"><input type="hidden" id="cost" value="${est.PR_EXPRICE }"></td>
+	            <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>
+	        </tr>
+        </c:forEach>
         </tbody>
         <tr class="total">
-            <td colspan="3" align="center">총계</td>
-            <td colspan="2" align="center"><input type="text" id="totalAmount" style="width: 100%;" value="${est.AMOUNT }" readonly></td>
+            <td colspan="2" align="center">총량</td>
+            <td colspan="1" align="center"><input type="text" id="woTotal" style="width: 100%;" value="${est.AMOUNT }" readonly></td>
         </tr>
     </table>
 </form>
@@ -255,8 +235,6 @@ window.onload = function(){
 		window.close();
 	});
 	
-	
-	
 }
 
 </script>
@@ -270,15 +248,25 @@ let dtail_no = $('#dtail_no').val();
 // 제품 추가 버튼
 $('#addPutBtn').on('click', function(){
 	cnt++;
-	$('#prInput').append('<tr id="trChk"><input type="hidden" class="rownum" value="'+ cnt + '">' +
-	'<input type="hidden" name="estdetail_no" value="0">'+
-	'<input type="hidden" name="pr_delete" value="n">'+
-    '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
-    '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'+
-    '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
-    '<td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>'+
-    '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'+
-'</tr>');
+	$('#prInput').append(
+		'<tr>'+
+	        '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
+	        '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
+	        '<td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>'+
+    	'</tr>'
+    );
+	
+// 	$('#prInput').append(
+// 		'<tr id="trChk"><input type="hidden" class="rownum" value="'+ cnt + '">' +
+// 			'<input type="hidden" name="estdetail_no" value="0">'+
+// 			'<input type="hidden" name="pr_delete" value="n">'+
+// 		    '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
+// 		    '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'+
+// 		    '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
+// 		    '<td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>'+
+// 		    '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'+
+// 		'</tr>'
+// 	);
 	
 	
 	
@@ -339,16 +327,14 @@ $('tr').on('click', function(){
 		$(this).parent().next().children().val($(this).val()*$(this).next().val());
 	})
 
+	let sum = Number(0);
+	let inputquantity = $('input[name="quantity"]').get();
 	
-	$(document).on('change, keyup', '#prInput', function(){
-		let sum = Number(0);
-		let inputAmount = $('input[name="amount"]').get();
-		for(let i = 0; i < inputAmount.length; i++){
-			sum += Number($('input[name="amount"]').eq(i).val());
-		}
-		
-		$('#totalAmount').val(sum);
-	})
+	for(let i = 0; i < inputquantity.length; i++){
+		sum += Number($('input[name="quantity"]').eq(i).val());
+	}
+	
+	$('#woTotal').val(sum);
 	
 </script>
 
