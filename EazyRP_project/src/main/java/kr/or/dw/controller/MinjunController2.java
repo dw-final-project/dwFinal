@@ -87,7 +87,7 @@ public class MinjunController2 {
 	}
 	
 	@RequestMapping("/findCompany")
-	public ModelAndView findCompany(ModelAndView mnv, String c_name, String searchType, String keyword) throws SQLException {
+	public ModelAndView findCompany(ModelAndView mnv, String c_name, String c_no, String searchType, String keyword) throws SQLException {
 		String url = "minjun2/findCompany";
 		
 		if(searchType == "") {
@@ -101,6 +101,7 @@ public class MinjunController2 {
 		Map<String, String> dataMap = new HashMap<>();
 		
 		dataMap.put("c_name", c_name);
+		dataMap.put("c_no", c_no);
 		dataMap.put("searchType", searchType);
 		dataMap.put("keyword", keyword);
 		

@@ -100,9 +100,7 @@ public class OrderServiceImpl implements OrderService {
 		
 		
 		orderDAO.minusQuantity(orderVO);
-		
 
-		
 	}
 
 	@Override

@@ -156,7 +156,7 @@
 			#{so_no},
 			's_order',
 			'Y',
-			'/erp5/orderDetail.do?so_no=#{sp_no}',
+			'/erp5/orderDetail.do?so_no=#{so_no}',
 			#{quantity},
 			'',
 			'AC_001',
