@@ -90,6 +90,18 @@
 				</td>
 			</tr>
 			<tr>
+            <td width="40%" align="center">
+            	<b>상태</b>
+            </td>
+            <td>
+            	<select name="progress" id="fc-select">
+				    <option value="0">대기중</option>
+				    <option value="1">진행중</option>
+				    <option value="2">완료</option>
+				</select>
+			</td>
+        </tr>
+			<tr>
 	            <td align="center"><b>첨부파일</b></td>
 	            <td>
 	            	<input type="file" style="width: 100%;"  name ="files" value="">
@@ -148,10 +160,15 @@
 			</tr>
 		</table>
 		<input type="submit" id="submitBtn" class="btn btn-primary" style="text-align: center;" value="등록">
+		<input type="button" class="btn btn-warning" id="closeBtn" value="취 소">
 	</form>
 </body>
 
 <script>
+// 	window.onload = function() {
+// 		$('#sys_regdate').val('2023-08-09');
+// 	}
+
 	let cnt = 1;
 	// 파일 추가 버튼
 	$('#addPutBtn').on('click', function() {
@@ -233,6 +250,11 @@
 		win.focus();
 		return win;
 	};
+	
+	// 취소버튼 클릭
+	$('input#closeBtn').on('click', function() {
+		window.close();							// 윈도우 창을 닫는다.
+	});
 	
 </script>
 

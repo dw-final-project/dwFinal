@@ -21,19 +21,21 @@ public class WhServiceImpl implements WhService{
 	@Autowired WhDAO whDAO;
 	
 	@Override
-	public Map<String, Object> selectWhList(SearchCriteria cri) throws SQLException {
+	public Map<String, Object> selectWhList(Map<String, Object> map) throws SQLException {
 		
 		List<WhVO> whList = null;
+		
+		SearchCriteria cri = (SearchCriteria) map.get("cri");
 		
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);	// RowBounds : 쿼리에서 페이징 처리된 결과를 알아서 필요한 만큼 가져온다.
 		
 		// 현재 page 번호에 맞는 리스트를 perPageNum 개수 만큼 가져오기
-		whList = whDAO.selectSearchWhList(cri, rowBounds);
+		whList = whDAO.selectSearchWhList(map, rowBounds);
 		
 		// 전체 board 갯수
-		int totalCount = whDAO.selectSearchWhListCount(cri);
+		int totalCount = whDAO.selectSearchWhListCount(map);
 		
 		// PageMaker 생성
 		PageMaker pageMaker = new PageMaker();
@@ -41,7 +43,8 @@ public class WhServiceImpl implements WhService{
 		pageMaker.setTotalCount(totalCount);
 		
 		Map<String, Object> dataMap = new HashMap<String, Object>();
-		
+		dataMap.put("whList", whList);
+		dataMap.put("pageMaker", pageMaker);
 		
 		// 제품의 이름을 담을 객체를 선언한다.
 		// 현재 해당하는 생산입고 게시글에서 창고번호를 조회하고 매퍼에서 가져온 창고명을 넣어준다.
@@ -77,6 +80,20 @@ public class WhServiceImpl implements WhService{
 			whDAO.insertWhDetail(wh); // 상세게시글을 만들기 위한 다오
 		}
 								
+	}
+
+	@Override
+	public Map<String, Object> selectWh(String wh_no) throws SQLException {
+		System.out.println("서비스 임플 wh_no : " + wh_no);
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> wh = whDAO.selectWh(wh_no);
+		
+		List<Map<String, Object>> whDetail = whDAO.selectWhDetail(wh_no);
+		
+		dataMap.put("wh", wh);
+		dataMap.put("whDetail", whDetail);
+		
+		return dataMap;
 	}
 
 }
