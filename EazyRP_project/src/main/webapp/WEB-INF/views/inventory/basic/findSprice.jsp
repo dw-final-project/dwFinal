@@ -67,7 +67,7 @@
 		
 	$('tr').on('click', function(){
 			$('#sp_name', opener.document).val($(this).find('#sp_name').text());
-			$('#sp_no', opener.document).val($(this).find('#sp_no').val());
+			$('#sp_no', opener.document).val($(this).find('#sp_no').text());
 			window.close();
 		})
 	
