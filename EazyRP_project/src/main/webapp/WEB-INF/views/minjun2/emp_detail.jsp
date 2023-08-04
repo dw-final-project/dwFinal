@@ -15,24 +15,24 @@
 						<h3 class="card-title p-1">직원 상세보기</h3>
 					</div>
 					<div class="card-body pad">
-						<form role="form" method="post" action="modifyOrder.do" name="registForm">
+						<form role="form" method="post" action="modifyEmp.do" name="registForm">
 							<div class="form-group col-sm-12 row">
 								<label for="emp_no" class="col-sm-2">사원번호</label>
-								<input type="text" id="emp_no" name="emp_no" class="form-control col-sm-3" value="${emp.EMP_NO }" placeholder="사원번호.">
+								<input type="text" id="emp_no" name="emp_no" class="form-control col-sm-3" value="${emp.EMP_NO }" placeholder="사원번호." readonly>
 								<input type="hidden" id="" name="" value="">
 								<div class="col-sm-1"></div>
 								<label for="e_name" class="col-sm-2">사원명</label>
-								<input type="text" id="e_name" name="e_name" class="form-control col-sm-4" value="${emp.E_NAME }" placeholder="사원명">
+								<input type="text" id="e_name" name="e_name" class="form-control col-sm-4 emp1" value="${emp.E_NAME }" placeholder="사원명">
 								<input type="hidden" id="" name="" value="">
 							</div>
 							<div class="form-group col-sm-12 row " >
 								<label for="c_name" class="col-sm-2">업체명</label>
-								<input type="text" id="c_name" name="c_name" class="form-control col-sm-3 c_name" value="${emp.C_NAME }" placeholder="업체명 ">
+								<input type="text" id="c_name" name="c_name" class="form-control col-sm-3 c_name emp2" value="${emp.C_NAME }" placeholder="업체명 ">
 								<input type="hidden" id="c_no" name="c_no" value="${emp.C_NO }">								
 								<div class="col-sm-1"></div>
 								<label for="e_rank" class="col-sm-2">직급</label>
 <%-- 								<input type="text" id="e_rank" name="e_rank" class="form-control col-sm-4" value="${emp.E_RANK }" placeholder="직급"> --%>
-								<select name="e_rank" id="e_rank" class="form-select col-sm-4">
+								<select name="e_rank" id="e_rank" class="form-select col-sm-4 emp3">
 									<option value="대표이사" ${emp.E_RANK eq "대표이사" ? 'selected' : "" }>대표이사</option>
 									<option value="이사" ${emp.E_RANK eq "이사" ? 'selected' : "" }>이사</option>
 									<option value="전무" ${emp.E_RANK eq "전무" ? 'selected' : "" }>전무</option>
@@ -48,30 +48,33 @@
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="dname" class="col-sm-2">부서명</label>
-								<input type="text" id="dname" name="dname" class="form-control col-sm-3 dname" value="${emp.DNAME }" placeholder="부서명">
+								<input type="text" id="dname" name="dname" class="form-control col-sm-3 dname emp4" value="${emp.DNAME }" placeholder="부서명">
 								<input type="hidden" id="dept_no" name="dept_no" value="${emp.DEPT_NO }">
 								<div class="col-sm-1"></div>
+								<label for="e_name2" class="col-sm-2">대무자</label>
+								<input type="text" id="e_name2" name="e_name2" class="form-control col-sm-4 e_name2 emp5" value="${emp.DAEMU }" placeholder="대무자">
+								<input type="hidden" id="emp_no2" name="emp_no2" value="${emp.EMP_NO2 }">
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="e_email" class="col-sm-2">이메일</label>
-								<input type="text" id="e_email" name="e_email" class="form-control col-sm-3" value="${emp.E_EMAIL}" placeholder="이메일">
+								<input type="text" id="e_email" name="e_email" class="form-control col-sm-3 emp6" value="${emp.E_EMAIL}" placeholder="이메일">
 								<div class="col-sm-1"></div>
 								<label for="e_sal" class="col-sm-2">봉급</label>
-								<input type="text" id="e_sal" name="e_sal" class="form-control col-sm-4" value="${emp.E_SAL }" placeholder="봉급">
+								<input type="text" id="e_sal" name="e_sal" class="form-control col-sm-4 emp7" value="${emp.E_SAL }" placeholder="봉급">
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="e_bank" class="col-sm-2">은행</label>
-								<input type="text" id="e_bank" name="e_bank" class="form-control col-sm-3" value="${emp.E_BANK }" placeholder="은행">
+								<input type="text" id="e_bank" name="e_bank" class="form-control col-sm-3 emp8" value="${emp.E_BANK }" placeholder="은행">
 								<div class="col-sm-1"></div>
 								<label for="e_account" class="col-sm-2">계좌번호</label>
-								<input type="text" id="e_account" name="e_account" class="form-control col-sm-4" value="${emp.E_ACCOUNT }" placeholder="계좌번호">
+								<input type="text" id="e_account" name="e_account" class="form-control col-sm-4 emp9" value="${emp.E_ACCOUNT }" placeholder="계좌번호">
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="e_hd" class="col-sm-2">입사일</label>
 								<c:set var="e_hd">
 									<fmt:formatDate value="${emp.E_HD}" pattern="yyyy-MM-dd"></fmt:formatDate>
 								</c:set>
-								<input type="date" id="e_hd" name="e_hd" class="form-control col-sm-3" value="${e_hd }" placeholder="입사일">
+								<input type="date" id="e_hd" name="e_hd" class="form-control col-sm-3" value="${e_hd }" placeholder="입사일" readonly>
 								<div class="col-sm-1"></div>
 								<label for="e_dd" class="col-sm-2">퇴사일</label>
 								<c:set var="e_dd">
@@ -85,11 +88,29 @@
 									<option value="YES" ${emp.E_RANK eq "YES" ? 'selected' : "" }>YES</option>
 									<option value="NO" ${emp.E_RANK eq "NO" ? 'selected' : "" }>NO</option>
 								</select>
+								<div class="col-sm-1"></div>
+								<label for="e_tel" class="col-sm-2">전화번호</label>
+								<input type="text" id="e_tel" name="e_tel" class="form-control col-sm-4 emp10" value="${emp.E_TEL }" placeholder="전화번호를 입력하세요">
+							</div>
+							<div class="form-group col-sm-12 row">
+								<label for="e_sva" class="col-sm-2">휴가시작일</label>
+								<c:set var="e_sva">
+									<fmt:formatDate value="${emp.E_SVA}" pattern="yyyy-MM-dd"></fmt:formatDate>
+								</c:set>
+								<input type="date" id="e_sva" name="e_sva" class="form-control col-sm-3" value="${e_sva }" placeholder="휴가시작일">
+								<div class="col-sm-1"></div>
+								<label for="e_eva" class="col-sm-2">휴가종료일</label>
+								<c:set var="e_eva">
+									<fmt:formatDate value="${emp.E_EVA }" pattern="yyyy-MM-dd"></fmt:formatDate>
+								</c:set>
+								<input type="date" id="e_eva" name=""e_eva"" class="form-control col-sm-4" value="${e_eva }" placeholder="휴가종료일">
 							</div>
 						</form>
 					</div>
 					<div class="card-footer card-tools">
 						<button type="button" class="btn btn-primary" id="modifyBtn" >수 정</button>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="button" class="btn btn-danger" id="deleteBtn">삭 제</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;
 						<button type="button" class="btn btn-warning" id="cancelBtn">취 소</button>
 					</div>
@@ -101,13 +122,67 @@
 
 <script>
 	window.onload = function(){
-
+		
 		let form = $('form[role="form"]');
-
+		
 		// 수정버튼 클릭
 		$('#modifyBtn').on('click', function() {
-
+			
+			if($('.emp1').val == ""){
+				alert('빈항목이 있습니다.');
+				return
+			};
+			if($('.emp2').val == ""){
+				alert('빈항목이 있습니다.');
+				return
+			};
+			if($('.emp3').val == ""){
+				alert('빈항목이 있습니다.');
+				return
+			};
+			if($('.emp4').val == ""){
+				alert('빈항목이 있습니다.');
+				return
+			};
+			if($('.emp5').val == ""){
+				alert('빈항목이 있습니다.');
+				return
+			};
+			if($('.emp6').val == ""){
+				alert('빈항목이 있습니다.');
+				return
+			};
+			if($('.emp7').val == ""){
+				alert('빈항목이 있습니다.');
+				return
+			};
+			if($('.emp8').val == ""){
+				alert('빈항목이 있습니다.');
+				return
+			};
+			if($('.emp9').val == ""){
+				alert('빈항목이 있습니다.');
+				return
+			};
+			if($('.emp10').val == ""){
+				alert('빈항목이 있습니다.');
+				return
+			};
+			
 			form.submit();
+		});
+		
+		// 삭제버튼 클릭
+		$('#deleteBtn').on('click', function() {
+			if(confirm("정말 삭제하시겠습니까?")){
+				
+				form.attr({
+					'action' : 'deleteEmp.do',
+					'method' : 'post' 
+				});
+				
+				form.submit();
+			};
 		});
 		
 		// 취소버튼 클릭
@@ -136,6 +211,12 @@
 		$(document).on('click', '.dname', function(){
 			
 			let openWin = OpenWindow("/management/findDept.do", "부서명 찾기", 500, 500);
+			
+		});
+		
+		$(document).on('click', '.e_name2', function(){
+			let c_no = $('#c_no').val();
+			let openWin = OpenWindow("/management/findEmp.do?c_no=" + c_no, "사원 찾기", 500, 500);
 			
 		});
 	}
