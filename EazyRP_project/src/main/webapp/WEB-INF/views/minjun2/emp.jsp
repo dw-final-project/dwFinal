@@ -59,7 +59,7 @@
 					</div>
 					</div>
 						<div style="display: flex; align-items: end; justify-content: end;">
-								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('merchandiseRegistForm.do', '상품등록', 700, 700)"
+								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('empRegistForm.do', '직원등록', 800, 600)"
 								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">직원 등록</button>
 							</div>
 			</div>

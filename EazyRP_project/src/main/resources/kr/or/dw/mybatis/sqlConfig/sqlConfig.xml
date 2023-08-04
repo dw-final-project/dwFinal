@@ -4,6 +4,14 @@
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+	<!-- 마이바티스 null값 insert 설정 --> 
+	<settings>
+<!-- 		<setting name="jdbcTypeForNull" value="null"/>  -->
+	    <setting name="callSettersOnNulls" value="true"/>
+	    <setting name="returnInstanceForEmptyRow" value="true"/>
+	</settings>
+	
+	
 	<typeAliases>
 		<typeAlias type="java.lang.String" alias="str"/>
 		<typeAlias type="java.lang.Integer" alias="int"/>
@@ -29,9 +37,10 @@
 		<typeAlias type="kr.or.dw.vo.SpriceVO" alias="sprice"/>
 		<typeAlias type="kr.or.dw.vo.ProfitLossVO" alias="profitLoss"/>
 		<typeAlias type="kr.or.dw.vo.Tr_historyVO" alias="tr_history"/>
+		<typeAlias type="kr.or.dw.vo.DeptVO" alias="dept"/>
 
 		
-		<!-- 희성이꼬 --><!-- 즐, 똥, 엿-->
+		<!-- 희성이꼬 --><!-- 즐, 똥, 엿--><!-- 맛있겠다 -->
 		<typeAlias type="kr.or.dw.vo.BsheetVO" alias="bsheet"/>
 		<typeAlias type="kr.or.dw.vo.BuyDetailVO" alias="buyDetail"/>
 		<typeAlias type="kr.or.dw.vo.CalendarVO" alias="calendar"/>

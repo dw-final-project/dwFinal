@@ -76,20 +76,20 @@ public class MinjunController {
 	@RequestMapping("/insertShop")
 	public void insertShop (ShopVO shopVO, HttpServletResponse res, HttpSession session) throws Exception {
 			
-			int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
-			
-			shopVO.setSys_reg(emp_no + "");
-			shopVO.setSys_up(emp_no + "");
-			
-			shopService.insertShop(shopVO);
-			
-			res.setContentType("text/html; charset=utf-8");
-			PrintWriter out = res.getWriter();
-			out.println("<script>");
-			out.println("alert('성공적으로 등록되었습니다.')");
-			out.println("window.opener.location.reload(true); window.close();");
-			out.println("</script>");
-		}
+		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
+		
+		shopVO.setSys_reg(emp_no + "");
+		shopVO.setSys_up(emp_no + "");
+		
+		shopService.insertShop(shopVO);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 등록되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
 	
 	@RequestMapping("/shopDetail")
 	public ModelAndView shopDetail (ModelAndView mnv ,String s_no) throws SQLException {
