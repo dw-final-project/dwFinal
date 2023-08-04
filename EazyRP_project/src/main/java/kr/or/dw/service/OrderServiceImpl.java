@@ -106,7 +106,7 @@ public class OrderServiceImpl implements OrderService {
 	    price = price * quantity;
 	    int amount = price - unitprice;
 	    vo.setAmount(amount);
-	    vo.setPrice(price);
+	    vo.setSaleprice(price);
 	    vo.setUnitprice(unitprice);
 	    vo.setQuantity(quantity);
 //	    map.put("vo", vo);
