@@ -316,4 +316,8 @@ WHEN NOT MATCHED THEN
 		WHERE est_no = #{est_no}
 </delete>
 
+<update id="deletUpdateEstimate" >
+	UPDATE estimate SET ENABLED = 'n' WHERE est_no = #{est_no} 
+</update>
+
 </mapper>

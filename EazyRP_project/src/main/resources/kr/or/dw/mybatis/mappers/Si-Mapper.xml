@@ -230,4 +230,7 @@ WHEN NOT MATCHED THEN
 	WHERE si_no = #{si_no}
 </delete>	
 	
+<update id="siUpdateRemove">
+	UPDATE si SET enabled = 'N' WHERE si_no = #{si_no}
+</update>
 </mapper>

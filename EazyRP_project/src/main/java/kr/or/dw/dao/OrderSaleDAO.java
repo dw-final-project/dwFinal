@@ -23,6 +23,18 @@ public interface OrderSaleDAO {
 
 	SsheetVO getSheet(String sheet_no) throws SQLException;
 
+	void insertProductSale(SsheetVO sheet) throws SQLException;
+
+	int insertSheetNo() throws SQLException;
+	
+	void insertProudctDetail(SaleDetailVO vo) throws SQLException;
+
+	void detailRemove(String sheet_no)throws SQLException;
+	
+	void saleRemove(String sheet_no) throws SQLException;
+
+
+
 	
 	
 }	
