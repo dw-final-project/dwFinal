@@ -40,7 +40,7 @@
 		   <include refid="search"/>
 	</select>
 	
-		<insert id="insertQna" >
+	<insert id="insertQna" >
 		INSERT INTO inquiry
 				(inq_no
 			  ,inq_con
@@ -51,5 +51,18 @@
 			  ,sys_reg)
 		VALUES(inq_seq.nextVal, #{inq_con}, sysdate, #{u_no}, sysdate, #{sys_up}, #{sys_reg})
 	</insert> 
+	
+	<delete id="deleteQna" parameterType="int">
+		DELETE FROM inquiry
+		WHERE inq_no = #{inq_no}	
+	</delete>
+	
+	<update id="modifyQna" >
+		UPDATE inquiry 
+		   SET inq_con = #{inq_con} 
+			   ,updatedate = sysdate
+		 WHERE inq_no = #{inq_no}
+	</update>
+
 	
 </mapper>

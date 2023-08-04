@@ -22,7 +22,7 @@ public class Tr_historyVO {
 	private String sys_up;
 	private String sys_updatedate;
 	private String sys_reg;
-	private int saleprice;
+	private int price;
 	private int unitprice;
 	
 

@@ -5,34 +5,46 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" rel="stylesheet">
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
-<div style="min-width: 420px; min-height: 800px; margin: 0 auto;">
-	
+
+<div style="margin: 1em;">
 	<section class="content container-fluid">
-		<div class="row">	<!-- row Start -->
-			<div class="col-md-12">
+		<div class="row justify-content-center">
+			<div class="col-md-9" style="max-width: ;">
 				<div class="card card-outline card-info">
 					<div class="card-header">
-						<h3 class="card-title">공정 상세보기</h3>
+						<h3 class="card-title p-1">공정 상세보기</h3>
 					</div>
 					<div class="card-body">	<!-- card body Start -->
+					
 						<div class="form-group col-sm-12 row">
-							<label for="title" class="col-sm-2">코드</label>
-							<input type="text" class="col-sm-10 form-control" id="pc_code" name="pc_code" value="${process.pc_code }" readonly>
+							<label for="title" class="col-sm-3">코드</label>
+							<input type="text" class="col-sm-9 form-control" id="pc_code" name="pc_code" value="${process.pc_code }" readonly>
 						</div>
+						
 						<div class="form-group col-sm-12 row">
-							<label for="writer" class="col-sm-2">공정명</label>
-							<input type="text" class="col-sm-10 form-control" id="pc_name" name="pc_name" value="${process.pc_name }" readonly>
+							<label for="writer" class="col-sm-3">공정명</label>
+							<input type="text" class="col-sm-9 form-control" id="pc_name" name="pc_name" value="${process.pc_name }">
 						</div>
+						
 						<div class="form-group col-sm-12 row">
-							<label for="regdate" class="col-sm-2">순번</label>
-							<input type="text" class="col-sm-10 form-control" id="pc_order" name="pc_order" value="${process.pc_order }" readonly>
+							<label for="regdate" class="col-sm-3">순번</label>
+							<input type="text" class="col-sm-9 form-control" id="pc_order" name="pc_order" value="${process.pc_order }">
 						</div>
+						
+						<div class="form-group col-sm-12 row">
+							<label for="regdate" class="col-sm-3">내용</label>
+							<input type="text" class="col-sm-9 form-control" id="pc_content" name="pc_content" value="${process.pc_content }">
+						</div>
+						
 					</div>	<!-- card body End -->
-					<div class="card-footer">
-						<button type="button" id="modifyBtn" class="btn btn-warning">수정</button>
-						<button type="button" id="removeBtn" class="btn btn-danger">삭제</button>
-						<button type="button" id="listBtn" class="btn btn-primary">닫기</button>
-					</div>	<!-- card footer End -->
+					<div class="card-footer card-tools">
+						<button type="button" class="btn btn-primary" id="modifyBtn">수 정</button>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="button" class="btn btn-danger" id="removeBtn">삭 제</button>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="button" class="btn btn-warning" id="closeBtn">닫 기</button>
+					</div>
+					
 				</div>
 			</div>
 		</div>	<!-- row End -->
@@ -48,28 +60,65 @@ window.onload = function(){
 
 	let formObj = $('form[role="form"]');
 
+	// 수정 버튼 클릭
 	$('button#modifyBtn').on('click', function(){
-		formObj.attr({
-			'action' : 'modifyForm.do',
-			'method' : 'post' 
-		});
-		formObj.submit();
+		
+		if ($('#pc_name').val() == "") {
+			
+			alert("공정명을 입력하세요.");
+			$('#pc_name').focus();
+			return;
+			
+		} else if ($('#pc_order').val() == "") {
+			
+			alert("순번을 입력하세요.");
+			$('#pc_order').focus();
+			return;
+			
+		} else if ($('#pc_content').val() == "") {
+			
+			alert("내용을 입력하세요.");
+			$('#pc_content').focus();
+			return;
+			
+		} else {
+		
+			if (confirm("해당 내용으로 수정하시겠습니까?")) {
+				
+				formObj.attr({
+					'action' : 'modify.do',
+					'method' : 'post' 
+				});
+			
+				formObj.submit();
+			
+			}
+			
+		}
+	
 	});
 	
+	// 삭제 버튼 클릭
 	$('button#removeBtn').on('click', function(){
+	
 		if(confirm("정말 삭제하시겠습니까?")){
+		
 			formObj.attr({
-				'action' : 'remove',
+				'action' : 'remove.do',
 				'method' : 'post' 
 			});
+			
 			formObj.submit();
+		
 		};
+	
 	});
 	
-	$('button#listBtn').on('click', function(){
-		window.opener.location.reload(true);
-		window.close();
+	// 닫기 버튼 클릭
+	$('button#closeBtn').on('click', function() {
+		window.close();							
 	});
+	
 }
 </script>
 

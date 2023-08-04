@@ -111,7 +111,9 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	
 	@RequestMapping("/process/regist")
 	public void processRegist(ProcessVO processVo, HttpServletRequest req, HttpServletResponse res) throws SQLException, IOException {
-//		process.setTitle((String)req.getAttribute("XSStitle"));
+
+		System.out.println("erp4/process/regist - 진입");
+		
 		processService.registProcess(processVo);
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
@@ -135,44 +137,44 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		return mnv;
 	}
 
-	@RequestMapping("/process/modifyForm")
-	public ModelAndView processModifyForm(String pc_code, ModelAndView mnv) throws SQLException {
-		String url = "heesung/process/modify";
-		
-		ProcessVO process = null;
-		
-		process = processService.selectProcess(pc_code);
-		
-		mnv.addObject("process", process);
-		mnv.setViewName(url);
-		
-		return mnv;
-	}
+//	@RequestMapping("/process/modifyForm")
+//	public ModelAndView processModifyForm(String pc_code, ModelAndView mnv) throws SQLException {
+//		String url = "heesung/process/modify";
+//		
+//		ProcessVO process = null;
+//		
+//		process = processService.selectProcess(pc_code);
+//		
+//		mnv.addObject("process", process);
+//		mnv.setViewName(url);
+//		
+//		return mnv;
+//	}
 
 	@RequestMapping("/process/modify")
 	public void processModify(ProcessVO process, HttpServletRequest req, HttpServletResponse res) throws IOException, SQLException {
 
-		processService.modify(process);
+		processService.processModify(process);
 		
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
 		out.println("<script>");
 		out.println("window.opener.location.reload();");
-		out.println("location.href='process/detail.do?pc_code=" + process.getPc_code() + "';");
 		out.println("alert('수정 되었습니다.')");
+		out.println("window.close();");
 		out.println("</script>");
 	}
 	
 	@RequestMapping("/process/remove")
 	public void processRemove(String pc_code, HttpServletRequest req, HttpServletResponse res) throws IOException, SQLException {
 		System.out.println("컨트롤러 진입");
-		processService.remove(pc_code);
+		processService.processRemove(pc_code);
 		
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
 		out.println("<script>");
-		out.println("alert('삭제 되었습니다.')");
 		out.println("window.opener.location.reload();");
+		out.println("alert('삭제 되었습니다.')");
 		out.println("window.close();");
 		out.println("</script>");
 	}

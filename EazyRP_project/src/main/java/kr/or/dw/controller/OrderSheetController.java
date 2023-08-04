@@ -17,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.service.OrderSaleService;
 import kr.or.dw.vo.CompanyVO;
+import kr.or.dw.vo.SaleDetailVO;
+import kr.or.dw.vo.SsheetVO;
 
 @Controller
 @RequestMapping("/erp4")
@@ -46,7 +48,20 @@ public class OrderSheetController {
 		return mnv;
 	}
 	
-
+	@RequestMapping("/saleDetail")
+	public ModelAndView saleDetail (ModelAndView mnv,String sheet_no, HttpSession session) throws SQLException  {
+		String url = "/jihwan/saleDetail.open";
+		
+		List<SaleDetailVO> saledetail = orderSaleService.getSaleDetail(sheet_no);
+		SsheetVO sheet = orderSaleService.getSheet(sheet_no);
+		
+		mnv.addObject("saledetail" , saledetail);
+		mnv.addObject("sheet", sheet);
+		mnv.setViewName(url);
+		
+		return mnv;
+		
+	}
 	
 	
 }

@@ -79,6 +79,24 @@ public class ItemServiceImpl implements ItemService {
 		
 	}
 
+	@Override
+	public Map<String, Object> selectProductDetail(String pr_no) throws SQLException {
+		Map<String, Object> product = itemDAO.selectProductDetail(pr_no);
+		return product;
+	}
+
+	@Override
+	public void modifyItem(ProductVO product) throws SQLException {
+		itemDAO.updateProduct(product);
+		
+	}
+
+	@Override
+	public void deleteProduct(ProductVO product) throws SQLException {
+		itemDAO.deleteProduct(product);
+		
+	}
+
 	
 
 	

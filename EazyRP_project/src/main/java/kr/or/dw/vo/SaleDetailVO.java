@@ -13,6 +13,7 @@ public class SaleDetailVO {
 	private int	quantity;
 	private int	s_no;
 	private String	wh_no;
+	private String pr_name;
 	
 	
 }

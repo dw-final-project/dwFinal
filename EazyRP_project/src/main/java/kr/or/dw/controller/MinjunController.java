@@ -374,6 +374,7 @@ public class MinjunController {
 		orderVO.setSys_up(emp_no + "");
 		orderVO.setSo_no(so_no);
 		orderVO.setSp_no(sp_no);
+		System.out.println(orderVO.getQuantity());
 		String c_no = (String) session.getAttribute("c_no");
 		if(orderVO.getProgress().equals("배송완료")) {
 			orderService.minusQuantity(orderVO, c_no);

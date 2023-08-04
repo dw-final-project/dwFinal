@@ -49,8 +49,6 @@ public interface ProductDAO {
 
 	Order2VO insertOrderList(String sheet, String c_no) throws SQLException;
 
-	List<Order2VO> allOrderList(Map<String, Object> dataMap, RowBounds rowBounds) throws SQLException;
-
 	int orderCount(Map<String, Object> dataMap) throws SQLException;
 
 	List<O_DetailVO> getOrderDetail(String o_no) throws SQLException;
@@ -90,6 +88,12 @@ public interface ProductDAO {
 	void receive(String o_no) throws SQLException;
 
 	void consumptionProduct(O_DetailVO o_DetailVO) throws SQLException;
+
+	void tr_History(Map<String, Object> map) throws SQLException;
+
+	List<Order2VO> allOrderList(Map<String, Object> dataMap, RowBounds rowBounds) throws SQLException;
+
+	void tr_History2(Map<String, Object> map) throws SQLException;
 
 
 	

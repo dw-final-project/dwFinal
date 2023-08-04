@@ -1,10 +1,15 @@
 package kr.or.dw.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +19,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -84,7 +92,7 @@ public class itemController {
 			
 			String fileRealName = multi.getOriginalFilename();
 			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length());
-			String uploadFolder = "C:\\upload\\";
+			String uploadFolder = "C:\\upload\\product\\";
 			
 			fileName = uniqueName+fileExtension;
 			
@@ -103,6 +111,12 @@ public class itemController {
 			}
 		}
 		
+		if(product.getExdate() == null) {
+			String strDate = "99991231";
+			SimpleDateFormat dtFormat = new SimpleDateFormat("yyyyMMdd");
+			Date formatDate = dtFormat.parse(strDate);
+			product.setExdate(formatDate);
+		}
 		
 		product.setSys_reg(emp_no + "");
 		product.setSys_up(emp_no + "");
@@ -118,14 +132,14 @@ public class itemController {
 		out.println("</script>");
 	}
 	
-//	@RequestMapping("/warehouseDetail")
-//	public ModelAndView warehouseDetail (ModelAndView mnv, String wh_no) throws SQLException {
-//		Map<String, Object> warehouse = warehouseService.selectWarehouseDetail(wh_no);
-//		String url = "inventory/basic/warehouseDetail";
-//		mnv.addObject("warehouse", warehouse);
-//		mnv.setViewName(url);
-//		return mnv;
-//	}
+	@RequestMapping("/itemDetail")
+	public ModelAndView warehouseDetail (ModelAndView mnv, String pr_no) throws SQLException {
+		Map<String, Object> product = itemService.selectProductDetail(pr_no);
+		String url = "inventory/basic/itemDetail";
+		mnv.addObject("product", product);
+		mnv.setViewName(url);
+		return mnv;
+	}
 	
 	@RequestMapping("/findWarehouseToitem")
 	public ModelAndView findCompany(ModelAndView mnv, String searchType, String keyword) throws SQLException {
@@ -177,41 +191,121 @@ public class itemController {
 		return mnv;
 	}
 	
-//	@RequestMapping("/modifyWarehouse")
-//	public void modifyWarehouse(WareHouseVO warehouse, HttpServletResponse res, HttpSession session) throws Exception {
-//		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
-//		System.out.println(emp_no);
-//		warehouse.setSys_reg(emp_no + "");
-//		warehouse.setSys_up(emp_no + "");
-//		
-//		warehouseService.modifyWarehouse(warehouse);
-//		
-//		res.setContentType("text/html; charset=utf-8");
-//		PrintWriter out = res.getWriter();
-//		out.println("<script>");
-//		out.println("alert('성공적으로 수정 되었습니다.')");
-//		out.println("window.opener.location.reload(true); window.close();");
-//		out.println("</script>");
-//	}
-//	
-//	@RequestMapping("/deleteWarehouse")
-//	public void deleteContact(String wh_no, HttpServletResponse res, HttpSession session) throws Exception{
-//		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
-//		
-//		WareHouseVO warehouse = new WareHouseVO();
-//		
-//		warehouse.setSys_up(emp_no + "");
-//		warehouse.setSys_reg(emp_no + "");
-//		warehouse.setWh_no(wh_no);
-//		
-//		warehouseService.deleteWarehouse(warehouse);
-//		
-//		res.setContentType("text/html; charset=utf-8");
-//		PrintWriter out = res.getWriter();
-//		out.println("<script>");
-//		out.println("alert('성공적으로 삭제 되었습니다.')");
-//		out.println("window.opener.location.reload(true); window.close();");
-//		out.println("</script>");
-//	}
+	@RequestMapping("/getPicture")
+	public ResponseEntity<byte[]> getPicture(String picture) throws Exception {
+		InputStream in = null;
+		ResponseEntity<byte[]> entity = null;
+		String imgPath = "C:\\upload\\product\\";
+		
+		if (picture != null || picture != "") {
+			try {
+				in = new FileInputStream(new File(imgPath, picture));
+				
+				entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), HttpStatus.CREATED);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				entity = new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}finally {
+				in.close();
+			}
+		}
+		
+		return entity;
+	}
+	
+	@RequestMapping("/modifyItem")
+	public void modifyItem(ProductVO product, HttpServletResponse res, HttpSession session, String oldPicture, String uploadPicture, @RequestParam("files")MultipartFile multi) throws Exception {
+		
+		String fileName = oldPicture;
+		
+		product.setImg(fileName);
+		
+		if(!(oldPicture.equals(uploadPicture) || uploadPicture.equals("") || uploadPicture == null) ) {	
+			if(!multi.isEmpty()) {
+				UUID uuid = UUID.randomUUID();
+				String[] uuids = uuid.toString().split("-");
+				
+				String uniqueName = uuids[0];
+				
+				String fileRealName = multi.getOriginalFilename();
+				String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length());
+				String uploadFolder = "C:\\upload\\product\\";
+				
+				fileName = uniqueName+fileExtension;
+				
+				File saveFile = new File(uploadFolder+uniqueName+fileExtension);
+				if(!saveFile.exists()) {
+					saveFile.mkdirs();
+				}
+				try {
+					multi.transferTo(saveFile);
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				if(!oldPicture.equals("")) {
+					File oldFile = new File(uploadFolder, oldPicture);
+					if(oldFile.exists()) {
+						oldFile.delete();
+					};
+				};
+			};
+			product.setImg(fileName);
+		} else if (uploadPicture.equals("") || uploadPicture == null) {
+			String uploadFolder = "C:\\upload\\product\\";
+			File oldFile = new File(uploadFolder, oldPicture);
+			if(oldFile.exists()) {
+				oldFile.delete();
+			};
+			
+			product.setImg("");
+		}
+		
+		
+		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
+
+		product.setSys_reg(emp_no + "");
+		product.setSys_up(emp_no + "");
+		
+		
+		itemService.modifyItem(product);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 수정 되었습니다.')");
+		out.println("location.href='itemDetail.do?pr_no=" + product.getPr_no() + "'");
+		out.println("window.opener.location.reload();");
+		out.println("</script>");
+	}
+	
+	@RequestMapping("/deleteItem")
+	public void deleteContact(String pr_no, HttpServletResponse res, HttpSession session, String oldPicture) throws Exception{
+		
+		String uploadFolder = "C:\\upload\\product\\";
+		File oldFile = new File(uploadFolder, oldPicture);
+		if(oldFile.exists()) {
+			oldFile.delete();
+		};
+		
+		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
+		
+		ProductVO product = new ProductVO();
+		
+		product.setSys_up(emp_no + "");
+		product.setSys_reg(emp_no + "");
+		product.setPr_no(pr_no);
+	
+		itemService.deleteProduct(product);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 삭제 되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
 
 }

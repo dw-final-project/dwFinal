@@ -128,7 +128,6 @@ public class ProductServiceImpl implements ProductService {
 		List<Order2VO> list = null;
 		SearchCriteria cri = (SearchCriteria) dataMap.get("cri");
 		String c_no = (String) dataMap.get("c_no");
-		
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
@@ -145,20 +144,17 @@ public class ProductServiceImpl implements ProductService {
 				list.add(insert);
 			}
 		}
-
 		int totalCount = list.size();
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
 		
 		List<String> c_name = new ArrayList<>();
-		
 		for(int i = 0; i < list.size(); i++) {
 			String c_no2 = list.get(i).getBuy_c_no();
 			String c_name2 = productDAO.getC_name(c_no2);
 			c_name.add(c_name2);
 		}
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("c_name", c_name);
 		map.put("list", list);
@@ -248,13 +244,42 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void receive(String o_no) throws SQLException {
+	public void receive(String o_no, int emp_no) throws SQLException {
 		productDAO.receive(o_no);
 		List<O_DetailVO> detail = productDAO.getOrderDetail(o_no);
-		
+		int quantity = 0;
 		for(int i = 0; i < detail.size(); i++) {
 			productDAO.consumptionProduct(detail.get(i));
+			quantity += detail.get(i).getQuantity();
 		}
+		Order2VO order = productDAO.selectOrder(o_no);
+		int amount = order.getBuy_price() * -1;
+		Map<String, Object> map = new HashMap<>();
+		map.put("amount", amount);
+		map.put("order", order);
+		map.put("emp_no", emp_no);
+		map.put("quantity", quantity);
+		productDAO.tr_History2(map);
+	}
+
+	@Override
+	public void Tr_History(int sheet_no, List<BuyDetailVO> detail) throws SQLException {
+		BsheetVO sheet = productDAO.getSheet(sheet_no+"");
+		System.out.println("sheet = " + sheet);
+		Map<String, Object> map = new HashMap<>();
+		map.put("sheet", sheet);
+		int amount = 0;
+		int quantity = 0;
+		for(int i = 0; i < detail.size(); i++) {
+			amount += detail.get(i).getAmount();
+			quantity += detail.get(i).getQuantity();
+		}
+		amount = amount * -1;
+		map.put("amount", amount);
+		System.out.println("amount = " + amount);
+		map.put("quantity", quantity);
+		System.out.println("quantity = " + quantity);
+		productDAO.tr_History(map);
 	} 
 	
 	

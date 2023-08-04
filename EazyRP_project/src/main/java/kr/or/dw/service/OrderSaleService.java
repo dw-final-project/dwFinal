@@ -6,11 +6,17 @@ import java.util.Map;
 
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.vo.CompanyVO;
+import kr.or.dw.vo.SaleDetailVO;
+import kr.or.dw.vo.SsheetVO;
 
 public interface OrderSaleService {
 
 
 	Map<String, Object> selectSaleList(Map<String, Object> dataMap) throws SQLException;
+
+	List<SaleDetailVO> getSaleDetail(String sheet_no) throws SQLException;
+
+	SsheetVO getSheet(String sheet_no) throws SQLException;
 
 	
 	

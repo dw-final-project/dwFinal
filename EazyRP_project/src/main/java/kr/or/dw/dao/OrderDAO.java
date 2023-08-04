@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import kr.or.dw.command.SearchCriteria;
@@ -33,6 +34,8 @@ public interface OrderDAO {
 
 	void trHistory(Map<String, Object> map) throws SQLException;
 
+	int getUnitprice(String sp_no) throws SQLException;
 
+	int getPrice(String sp_no) throws SQLException;
 	
 }
