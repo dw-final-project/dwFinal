@@ -34,6 +34,8 @@ public interface SiDAO {
 	void modifySiDetail(SiVO si) throws SQLException;
 
 	void siRemove(String si_no) throws SQLException;
+
+	void siUpdateRemove(String si_no) throws SQLException;
 	
 
 

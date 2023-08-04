@@ -35,12 +35,13 @@
 									<th width="25%" style="text-align: center;">작성자</th>
 									<th width="25%" style="text-align: center;">발생금액</th>
 								</tr>
+									<input type="hidden" value="" name="sheet_no">
 									<c:forEach items="${sale}" var="sale">
 									<tr>
 										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/erp4/saleDetail.do?sheet_no=${sale.SHEET_NO}', '판매내역 상세조회', 600, 600)">${sale.PR_NAME }</a></td>
 										<td style="text-align: center;">${sale.SYS_REGDATE}</td>
 										<td style="text-align: center;">${sale.E_NAME }</td>
-										<td style="text-align: center;">${sale.PRICE } 원</td>
+										<td style="text-align: center;">${sale.PRICE }원</td>
 									</tr>
 									</c:forEach>
 							</table>
@@ -51,7 +52,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick=""
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/erp4/productSaleRegist.do', '구매 내역 추가', 600, 700)"
 					style="width: 100px; margin: 20px; align-self: center; font-size: 0.7em;">판매 내역 추가</button>
 				</div>
 			</div>
