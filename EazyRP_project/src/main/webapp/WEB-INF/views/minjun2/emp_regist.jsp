@@ -83,10 +83,10 @@
 								<label for="e_tel" class="col-sm-2">전화번호</label>
 								<input type="text" id="e_tel" name="e_tel" class="form-control col-sm-4 emp10" value="" placeholder="전화번호를 입력하세요">
 							</div>
-<!-- 							<div class="form-group col-sm-12 row"> -->
-<!-- 								<label for="stampimg" class="col-sm-2">도장</label> -->
-<!-- 								<input type="file" id="stampImg" name="stampImg" class="form-control col-sm-6" value=""> -->
-<!-- 							</div> -->
+ 							<div class="form-group col-sm-12 row">
+								<label for="files" class="col-sm-3">도장 첨부</label>
+								<input type="file" id="files" name="files" class="form-control col-sm-9 files" value="" accept=".jpg, .jpeg, .png, .PPM, .PGM, .PBM, .PNM">
+							</div>
 						</form>
 					</div>
 					<div class="card-footer card-tools">

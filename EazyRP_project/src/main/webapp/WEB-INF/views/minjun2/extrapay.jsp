@@ -11,7 +11,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">직원관리</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/management/emp.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/management/extrapay.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
 								<option value="d" ${searchType eq 'a' ? 'selected' : '' }>사원명</option>
@@ -32,23 +32,23 @@
 						<div>
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
-									<th width="200px" style="text-align: center;">사원번호</th>
-									<th width="200px" style="text-align: center;">업체명</th>
-									<th width="150px" style="text-align: center;">사원명</th>
-									<th width="200px" style="text-align: center;">부서명</th>
-									<th width="150px" style="text-align: center;">직급</th>
-									<th width="100px" style="text-align: center;">email</th>
-									<th width="200px" style="text-align: center;">전화번호</th>
+									<th width="200px" style="text-align: center;">수당코드</th>
+									<th width="200px" style="text-align: center;">수당명</th>
+									<th width="150px" style="text-align: center;">표시순서</th>
+									<th width="150px" style="text-align: center;">배율</th>
+									<th width="200px" style="text-align: center;">비과세유형</th>
+									<th width="150px" style="text-align: center;">지급유형</th>
+									<th width="100px" style="text-align: center;">계산식</th>
 								</tr>
-									<c:forEach items="${empList}" var="emp" varStatus="loop">
+									<c:forEach items="${extrapayList}" var="extrapay" varStatus="loop">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('empDetail.do?emp_no=${emp.EMP_NO}','직원 상세보기', 800 , 1000);">${emp.EMP_NO}</a></td>
-										<td style="text-align: center;">${emp.C_NAME}</td>
-										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('empDetail.do?emp_no=${emp.EMP_NO}','직원 상세보기', 800 , 1000);">${emp.E_NAME}</a></td>
-										<td style="text-align: center;">${emp.DNAME}</td>
-										<td style="text-align: center;">${emp.E_RANK}</td>
-										<td style="text-align: center;">${emp.E_EMAIL}</td>
-										<td style="text-align: center;">${emp.E_TEL}</td>
+										<td style="text-align: center;">${extrapay.EP_NO}</td>
+										<td style="text-align: center;">${extrapay.EP_NAME}</td>
+										<td style="text-align: center;">${extrapay.ORDER}</td>
+										<td style="text-align: center;">${extrapay.MAG}</td>
+										<td style="text-align: center;">${extrapay.FREE_GB}</td>
+										<td style="text-align: center;">${extrapay.PAYMENT}</td>
+										<td style="text-align: center;">${extrapay.CALC}</td>
 									</tr>
 									</c:forEach>
 							</table>
@@ -59,8 +59,8 @@
 					</div>
 					</div>
 						<div style="display: flex; align-items: end; justify-content: end;">
-								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('empRegistForm.do', '직원등록', 800, 600)"
-								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">직원 등록</button>
+								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('extrapayRegistForm.do', '수당등록', 800, 600)"
+								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">수당 등록</button>
 						</div>
 			</div>
 		</div>

@@ -137,6 +137,31 @@ public class EmpSalServiceImpl implements EmpSalService {
 		empsalDAO.deleteEmp(empVO);
 		
 	}
+
+	@Override
+	public Map<String, Object> selectExtrapayList(SearchCriteria cri) throws SQLException {
+	
+		int offset = cri.getPageStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);		// RowBounds : 쿼리에서 페이징 처리된 결과를 알아서 필요한 만큼 가져온다.
+
+		// 현재 page 번호에 맞는 리스트를 perPageNum 개수 만큼 가져오기
+//		merchandiseList = merchandiseDAO.selectMerchandiseList(cri, rowBounds);
+		List<Map<String, Object>> extrapayList = empsalDAO.selectExtrapayList(cri, rowBounds);
+		// 전체 board 개수
+		int totalCount = empsalDAO.selectExtrapayListCount(cri);
+
+		// PageMaker 생성
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("extrapayList", extrapayList);
+		dataMap.put("pageMaker", pageMaker);
+		
+		return dataMap;
+	}
 	
 	
 }

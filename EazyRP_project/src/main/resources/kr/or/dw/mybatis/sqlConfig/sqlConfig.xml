@@ -35,6 +35,7 @@
 		<typeAlias type="kr.or.dw.vo.Pro_whVO" alias="pro_wh"/>
 		<typeAlias type="kr.or.dw.vo.InquiryVO" alias="inquiry"/>
 		<typeAlias type="kr.or.dw.vo.SpriceVO" alias="sprice"/>
+		<typeAlias type="kr.or.dw.vo.ExtrapayVO" alias="extrapay"/>
 
 		<typeAlias type="kr.or.dw.vo.SsheetVO" alias="ssheet"/>
 		<typeAlias type="kr.or.dw.vo.SaleDetailVO" alias="saleDetail"/>

@@ -53,7 +53,7 @@ public class MinjunController {
 	@Autowired
 	private OrderService orderService;
 	
-	// Shop CRUD
+	// Shop CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/shop")
 	public ModelAndView shopMain(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
@@ -150,7 +150,7 @@ public class MinjunController {
 		return mnv;
 	}
 	
-	// Merchandise CRUD 
+	// Merchandise CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/merchandise")
 	public ModelAndView merchandiseMain(String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
@@ -276,7 +276,7 @@ public class MinjunController {
 	}
 	
 	
-	// ORDER CRUD
+	// ORDER CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/order.do")
 	public ModelAndView orderMain(String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
