@@ -310,24 +310,24 @@
 	
 	<insert id="tr_History">
 		INSERT INTO tr_history VALUES(
-			th_no_seq.nextval,
+			'TH_' || LPAD(th_no_seq.nextval, 4, '0'),
 			sysdate,
 			sysdate,
-			#{buy_c_no},
-			#{emp_no},
+			#{sheet.buy_c_no},
+			#{sheet.emp_no},
 			'FC_003',
 			#{amount},
-			#{sheet_no},
+			#{sheet.sheet_no},
 			'구매',
 			'Y',
-			'/product/butDetail.do?sheet_no=' || #{sheet_no},
+			'/product/butDetail.do?sheet_no=' || #{sheet.sheet_no},
 			#{quantity},
 			'',
 			'AC_001',
 			'T_001',
 			'',
 			'',
-			(SELECT e_name FROM emp WHERE emp_no = #{emp_no}),
+			(SELECT e_name FROM emp WHERE emp_no = #{sheet.emp_no}),
 			'',
 			''
 		)
@@ -335,24 +335,24 @@
 	
 	<insert id="tr_History2">
 		INSERT INTO tr_history VALUES(
-			th_no_seq.nextval,
+			'TH_' || LPAD(th_no_seq.nextval, 4, '0'),
 			sysdate,
 			sysdate,
-			#{buy_c_no},
+			#{order.buy_c_no},
 			#{emp_no},
 			'FC_003',
-			#{buy_price},
-			#{o_no},
+			#{amount},
+			#{order.o_no},
 			'발주',
 			'Y',
-			'/product/orderDetail.do?o_no=' || #{o_no},
-			#{quantity},
+			'/product/orderDetail.do?o_no=' || #{order.o_no},
+			#{order.quantity},
 			'',
 			'AC_001',
 			'T_001',
 			'',
 			'',
-			#{sys_reg},
+			#{order.sys_reg},
 			'',
 			''
 		)

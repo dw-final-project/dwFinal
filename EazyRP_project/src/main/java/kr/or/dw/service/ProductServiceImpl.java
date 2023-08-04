@@ -128,11 +128,9 @@ public class ProductServiceImpl implements ProductService {
 		List<Order2VO> list = null;
 		SearchCriteria cri = (SearchCriteria) dataMap.get("cri");
 		String c_no = (String) dataMap.get("c_no");
-		System.out.println("2번");
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		System.out.println("3번");
 		
 		list = productDAO.allOrderList(dataMap, rowBounds);
 		String order = (String) dataMap.get("order");
@@ -146,20 +144,17 @@ public class ProductServiceImpl implements ProductService {
 				list.add(insert);
 			}
 		}
-		System.out.println("4번");
 		int totalCount = list.size();
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
 		
 		List<String> c_name = new ArrayList<>();
-		System.out.println("5번");
 		for(int i = 0; i < list.size(); i++) {
 			String c_no2 = list.get(i).getBuy_c_no();
 			String c_name2 = productDAO.getC_name(c_no2);
 			c_name.add(c_name2);
 		}
-		System.out.println("6번");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("c_name", c_name);
 		map.put("list", list);
@@ -258,7 +253,9 @@ public class ProductServiceImpl implements ProductService {
 			quantity += detail.get(i).getQuantity();
 		}
 		Order2VO order = productDAO.selectOrder(o_no);
+		int amount = order.getBuy_price() * -1;
 		Map<String, Object> map = new HashMap<>();
+		map.put("amount", amount);
 		map.put("order", order);
 		map.put("emp_no", emp_no);
 		map.put("quantity", quantity);
