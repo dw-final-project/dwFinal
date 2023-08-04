@@ -182,12 +182,22 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////// wh(생산입고)
 	
 	@RequestMapping("/wh")
-	public ModelAndView wh(String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
+	public ModelAndView wh(String mcode, ModelAndView mnv, SearchCriteria cri, HttpSession session) throws SQLException {
 		
 		String url = "heesung/wh/main.page";
 		
-		// 공정관리 목록 조회
-		Map<String, Object> dataMap = whService.selectWhList(cri);
+		String c_no = session.getAttribute("c_no").toString();
+		
+//		// 공정관리 목록 조회
+//		Map<String, Object> dataMap = whService.selectWhList(cri);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("cri", cri);
+		map.put("c_no", c_no);
+		
+//		// 공정관리 목록 조회
+		Map<String, Object> dataMap = whService.selectWhList(map);
+		
 		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
@@ -204,6 +214,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		String c_no = session.getAttribute("c_no").toString();
 		String c_name = session.getAttribute("c_name").toString();
 		
+		
 		String url = "heesung/wh/registForm.open";
 		
 		mnv.setViewName(url);
@@ -217,14 +228,11 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	}
 	
 	@RequestMapping("/wh/regist")
-	public void whRegist(HttpServletResponse res, int emp_no,  int wo_no, int wh_total, String[] pr_no, String[] fac_no, String wh_no[], 
-		int[] outprice, int[] quantity, int[] total_outprice, @RequestParam("files")MultipartFile multi) throws SQLException, IOException {
+	public void whRegist(HttpServletResponse res, int emp_no,  String wo_no, int wh_total, String[] pr_no, String[] fac_no, String wh_no[], 
+		int[] outprice, int[] quantity, int[] total_outprice, @RequestParam("files")MultipartFile multi, HttpSession session, String progress) throws SQLException, IOException {
 		
 		System.out.println("erp4/wh/regist 컨트롤러 진입");
 		
-		System.out.println("emp_no : " + emp_no);
-		System.out.println("wo_no : " + wo_no);
-		System.out.println("wh_total : " + wh_total);
 
 		List<WhVO> whDetailVoList = new ArrayList<WhVO>();	// 상세 정보들을 만들기 위한 객체
 		
@@ -258,16 +266,9 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 			}
 		}
 		
+		String c_no = session.getAttribute("c_no").toString();
+		
 		for(int i = 0; i < pr_no.length; i++) {
-			
-			System.out.println("pr_no.length : " + pr_no.length);
-			System.out.println("pr_no : " + pr_no[i]);
-			System.out.println("fac_no: " + fac_no[i]);
-			System.out.println("wh_no2: " + wh_no[i]);
-			System.out.println("outprice: " + outprice[i]);
-			System.out.println("quantity: " + quantity[i]);
-			System.out.println("total_outprice: " + total_outprice[i]);
-			System.out.println("files : " + total_outprice[i]);
 			
 			WhVO whDetailVo = new WhVO();
 			
@@ -281,6 +282,9 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 			whDetailVo.setQuantity(quantity[i]);
 			whDetailVo.setTotal_outprice(total_outprice[i]);
 			whDetailVo.setFiles(filess);
+			whDetailVo.setC_no(c_no);
+			whDetailVo.setProgress(progress);
+			
 			
 			whDetailVoList.add(whDetailVo);
 		}
@@ -294,6 +298,21 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		out.println("window.opener.location.reload(true); window.close();");
 		out.println("</script>");
 		
+	}
+	
+	@RequestMapping("/wh/detail")
+	public ModelAndView whDetail(String wh_no, ModelAndView mnv) throws SQLException {
+		
+		System.out.println("erp4/wh/detail - 진입");
+		
+		String url = "heesung/wh/detail.open";
+		
+		Map<String, Object> dataMap = whService.selectWh(wh_no);
+		
+		mnv.addAllObjects(dataMap);
+		mnv.setViewName(url);
+	
+		return mnv;
 	}
 	
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////workorder(작업지시서)
