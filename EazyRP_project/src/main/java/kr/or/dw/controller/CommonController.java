@@ -47,27 +47,27 @@ public class CommonController {
 		return url;
 	}
 	
-//	@RequestMapping("/security/accessDenied")
-//	public String accessDenied(HttpServletResponse res) throws Exception{
-//		String url = "security/accessDenied.open";
-//		
-//		res.setStatus(302);
-//		
-//		return url;
-//	}
-//	
-//	@RequestMapping("/common/LoginTimeOut")
-//	public void loginTimeOut(HttpServletRequest req, HttpServletResponse res) throws Exception {
-//		
-//		res.setContentType("text/html; charset=utf-8");
-//		PrintWriter out = res.getWriter();
-//		
-//		out.println("<script>");
-//		out.println("alert('세션이 만료되었습니다.\\n다시 로그인하세요!')");
-//		out.println("location.href='/common/loginForm'");
-//		out.println("</script>");
-//		out.close();
-//	}
+	@RequestMapping("/security/accessDenied")
+	public String accessDenied(HttpServletResponse res) throws Exception{
+		String url = "security/accessDenied.open";
+		
+		res.setStatus(302);
+		
+		return url;
+	}
+	
+	@RequestMapping("/common/LoginTimeOut")
+	public void loginTimeOut(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		
+		out.println("<script>");
+		out.println("alert('세션이 만료되었습니다.\\n다시 로그인하세요!')");
+		out.println("location.href='/common/loginForm'");
+		out.println("</script>");
+		out.close();
+	}
 	
 	@RequestMapping("/common/LoginExpired")
 	public void loginExpired(HttpServletRequest req, HttpServletResponse res) throws Exception {

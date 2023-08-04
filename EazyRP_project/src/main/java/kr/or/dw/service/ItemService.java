@@ -23,5 +23,11 @@ public interface ItemService {
 
 	void registItem(ProductVO product) throws SQLException;
 
+	Map<String, Object> selectProductDetail(String pr_no)throws SQLException;
+
+	void modifyItem(ProductVO product) throws SQLException;
+
+	void deleteProduct(ProductVO product) throws SQLException;
+
 
 }

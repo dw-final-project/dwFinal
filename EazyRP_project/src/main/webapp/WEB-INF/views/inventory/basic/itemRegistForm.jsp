@@ -46,7 +46,7 @@
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="quantity" class="col-sm-3">수 량</label>
-								<input type="text" id="quantity" name="quantity" class="form-control col-sm-3 mch4" value="">
+								<input type="text" id="quantity" name="quantity" class="form-control col-sm-3" value="">
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<label for="pr_class" class="col-sm-2">품목구분</label>
 								<select id="pr_class" class="form-control col-sm-3 mch3" name="pr_class">
@@ -73,7 +73,7 @@
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="files" class="col-sm-3">사진 첨부</label>
-								<input type="file" id="files" name="files" class="form-control col-sm-9 mch4 files" value="">
+								<input type="file" id="files" name="files" class="form-control col-sm-9 mch4 files" value="" accept=".jpg, .jpeg, .png, .PPM, .PGM, .PBM, .PNM">
 							</div>
 						</form>
 					</div>

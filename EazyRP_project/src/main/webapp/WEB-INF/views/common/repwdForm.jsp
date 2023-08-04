@@ -14,6 +14,10 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
 <style>
+    html{
+      width: 100%;
+      height: 100%;
+    }
 body {
 	font-family: 'Varela Round', sans-serif;
    justify-content: center;
@@ -154,10 +158,14 @@ body {
 		<div class="modal-content " >
 			<div class="modal-header">				
 				<h4 class="modal-title">비밀번호 변경</h4>
+						<form id="searchForm2" method="post"
+							action="/member/mypage.do?mcode=${mcode }"
+							style="display: contents;"></form>
 			</div>
 			<div class="modal-body">
 				<form id="repwdForm" action="/member/repwd.do" method="post">
 					<input type="hidden" name="id" value="${id }">
+					<input type="hidden" name="mcode" value="${mcode }">
 					<div class="form-group d-flex">
 						<div class="input-group inputText">
 							<span class="input-group-addon"><i class="fa fa-lock"></i></span>

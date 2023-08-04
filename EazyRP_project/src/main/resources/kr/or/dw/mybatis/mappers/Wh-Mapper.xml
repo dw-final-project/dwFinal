@@ -37,17 +37,27 @@
 	
 	<!-- 셀렉트할때는 리절트타입 필요하고 insert delete 등할때는 파라미터 타입이 들어감 -->
 	<select id="selectSearchWhList" resultType="wh">
-		SELECT	*
-		FROM	wh
+		SELECT	wh.*, emp.e_name, wa.wh_name
+		FROM	wh wh, emp emp, company com, warehouse wa, whdetail whd
 		WHERE	1=1
+		AND		wh.emp_no = emp.emp_no
+		AND		wh.wh_no = whd.wh_no
+		AND		whd.wh_no2 = wa.wh_no
+		AND 	wh.c_no = com.c_no 
+		AND		wh.c_no = #{c_no}
 		<include refid="search"/>
-		ORDER BY wh_no
+		ORDER BY wh.wh_no
 	</select>
 	
 	<select id="selectSearchWhListCount" resultType="int">
 		SELECT	COUNT(*)
-		FROM	wh
+		FROM	wh wh, emp emp, company com, warehouse wa, whdetail whd
 		WHERE	1=1
+		AND		wh.emp_no = emp.emp_no
+		AND		wh.wh_no = whd.wh_no
+		AND		whd.wh_no2 = wa.wh_no
+		AND 	wh.c_no = com.c_no 
+		AND		wh.c_no = #{c_no}
 		<include refid="search"/>
 	</select>
 	
@@ -63,24 +73,28 @@
 			emp_no,
 			enabled,
 			files,
+			progress,
 			wo_no,
 			sys_up,
 			sys_updatedate,
 			sys_reg,
-			wh_total
+			wh_total,
+			c_no
 		)
 		VALUES
 		(
 			#{wh_no},
 			sysdate,
 			#{emp_no},
-			1,
+			'y',
 			#{files},
+			#{progress},
 			#{wo_no},
 			#{emp_no},
 			sysdate,
 			#{emp_no},
-			#{wh_total}
+			#{wh_total},
+			#{c_no}
 		)
 	</insert>
 	
@@ -123,6 +137,39 @@
 		FROM 	WHDETAIL wd, product pd
 		WHERE 	wd.pr_no = pd.pr_no
 		AND		wd.wh_no = #{getWh_no}
+	</select>
+	
+	<select id="selectWh" resultType="Map">
+		SELECT 	wh.wh_no,
+				TO_CHAR(wh.sys_regdate, 'yyyy-MM-dd') sys_regdate,
+				wh.wo_no, wo.wo_name,	<!-- 작업지시서 번호, 제목 -->
+				wh.progress,
+				emp.e_name,
+				com.c_name,
+				wh.wh_total
+		FROM wh wh, emp emp, workorder wo, company com
+		WHERE wh.emp_no = emp.emp_no
+		AND wh.wo_no = wo.wo_no
+		AND wh.c_no = com.c_no
+		AND wh.wh_no = #{wh_no}
+	</select>
+	
+	<select id="selectWhDetail" resultType="Map">
+		SELECT	ROWNUM,
+				whd.wh_no,
+				whd.detail_no,
+				whd.pr_no, p.pr_name,
+				whd.fac_no, f.fac_name,
+				whd.wh_no2, wa.wh_name,
+				whd.outprice,
+				whd.quantity,
+				whd.total_outprice
+		FROM whdetail whd, wh wh, factory f, product p, warehouse wa
+		WHERE whd.wh_no = wh.wh_no
+		AND whd.fac_no = f.fac_no
+		AND whd.pr_no = p.pr_no
+		AND whd.wh_no2 = wa.wh_no
+		AND whd.wh_no = #{wh_no}
 	</select>
 	
 </mapper>

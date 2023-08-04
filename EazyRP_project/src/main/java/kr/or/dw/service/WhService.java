@@ -9,8 +9,10 @@ import kr.or.dw.vo.WhVO;
 
 public interface WhService {
 	
-	Map<String, Object> selectWhList(SearchCriteria cri) throws SQLException;
+	Map<String, Object> selectWhList(Map<String, Object> map) throws SQLException;
 
 	void registWh(List<WhVO> whDetailVoList) throws SQLException;
+
+	Map<String, Object> selectWh(String wh_no) throws SQLException;
 
 }
