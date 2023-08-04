@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.dw.dao.EmpSalDAO">
 	
+	<!--  Find  -->
+	
 	<select id="getCompanyList" resultType="company">
 		SELECT *
 		FROM company
@@ -92,6 +94,8 @@
 		</if>
 	</sql>
 	
+	<!--  Emp  -->
+	
 	<select id="selectEmpList" resultType="Map">
 		SELECT e.emp_no, e.e_name, d.dname, e.e_email, e.e_tel, e.e_rank, c.c_name
 		  FROM emp e, dept d, company c
@@ -168,7 +172,7 @@
 			sysdate,
 			sysdate,
 			#{sys_reg},
-			null
+			#{stampimg, jdbcType = VARCHAR}
 		)
 	</insert>
 	
@@ -189,8 +193,8 @@
 							e_sva		=	#{e_sva, jdbcType = DATE},
 							e_eva		=	#{e_eva, jdbcType = DATE},
 							sys_up		=	#{sys_up},
-							sys_updatedate	=	sysdate
-<!-- 							stampimg	=	#{stampimg} -->
+							sys_updatedate	=	sysdate,
+							stampimg	=	#{stampimg, jdbcType = VARCHAR}
 				WHERE emp_no = #{emp_no}
 	</update>
 	
@@ -201,4 +205,17 @@
 				WHERE emp_no = #{emp_no}
 	</update>
 	
+	<!--  Extrapay  -->
+	
+	<select id="selectExtrapayList" resultType="Map">
+		SELECT *
+		  FROM extrapay
+		  WHERE 1=1
+	</select>
+	
+	<select id="selectExtrapayListCount" resultType="int">
+		SELECT COUNT(*)
+		  FROM extrapay
+		   WHERE 1=1
+	</select>
 </mapper>

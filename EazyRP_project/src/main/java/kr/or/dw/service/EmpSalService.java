@@ -35,4 +35,8 @@ public interface EmpSalService {
 
 	void deleteEmp(EmpVO empVO) throws SQLException;
 
+	Map<String, Object> selectExtrapayList(SearchCriteria cri) throws SQLException;
+
+
+
 }

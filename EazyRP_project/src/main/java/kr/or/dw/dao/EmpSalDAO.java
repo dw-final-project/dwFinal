@@ -45,5 +45,9 @@ public interface EmpSalDAO {
 
 	void deleteEmp(EmpVO empVO) throws SQLException;
 
+	List<Map<String, Object>> selectExtrapayList(SearchCriteria cri, RowBounds rowBounds) throws SQLException;
+
+	int selectExtrapayListCount(SearchCriteria cri) throws SQLException;
+
 	
 }

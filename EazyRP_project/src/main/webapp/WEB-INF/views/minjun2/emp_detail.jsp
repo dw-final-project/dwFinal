@@ -15,7 +15,7 @@
 						<h3 class="card-title p-1">직원 상세보기</h3>
 					</div>
 					<div class="card-body pad">
-						<form role="form" method="post" action="modifyEmp.do" name="registForm">
+						<form role="form" method="post" action="modifyEmp.do" name="registForm" enctype="multipart/form-data">
 							<div class="form-group col-sm-12 row">
 								<label for="emp_no" class="col-sm-2">사원번호</label>
 								<input type="text" id="emp_no" name="emp_no" class="form-control col-sm-3" value="${emp.EMP_NO }" placeholder="사원번호." readonly>
@@ -103,7 +103,20 @@
 								<c:set var="e_eva">
 									<fmt:formatDate value="${emp.E_EVA }" pattern="yyyy-MM-dd"></fmt:formatDate>
 								</c:set>
-								<input type="date" id="e_eva" name=""e_eva"" class="form-control col-sm-4" value="${e_eva }" placeholder="휴가종료일">
+								<input type="date" id="e_eva" name="e_eva" class="form-control col-sm-4" value="${e_eva }" placeholder="휴가종료일">
+							</div>
+							<div class="form-group col-sm-12 row">
+								<div class="input-group input-group-sm">
+									<label for="files" class="btn btn-warning btn-sm input-group-addon">도장 첨부</label>
+									<input id="inputFileName" class="form-control col-sm-12" type="text" name="inputFileName" value="${emp.STAMPIMG }" disabled>
+									<label class="btn btn-danger btn-sm input-group-addon" id="pictureDelBtn">도장 삭제</label>
+									<input type="file" id="files" name="files" class="form-control col-sm-9 files" style="display:none;" value="" accept=".jpg, .jpeg, .png, .PPM, .PGM, .PBM, .PNM"
+									  onchange="imageChange_go();">
+								</div>
+								<input type="hidden" name="oldPicture" value="${emp.STAMPIMG }">
+								<input type="hidden" name="uploadPicture" value="${emp.STAMPIMG }">
+								<div id="pictureView" style="border: 1px solid green; height: 150px; width: 150px; margin:0 auto; margin-bottom: 15px;"></div>
+								<br>
 							</div>
 						</form>
 					</div>
@@ -219,6 +232,80 @@
 			let openWin = OpenWindow("/management/findEmp.do?c_no=" + c_no, "사원 찾기", 500, 500);
 			
 		});
+		
+		let imageURL = "getPicture.do?picture=${emp.STAMPIMG }";
+		
+		if($('input[name="oldPicture"]').val() != '') { 
+			$('div#pictureView').css({
+										'background-image' : 'url(' + imageURL + ')',
+										'background-repeat' : 'no-repeat',
+										'background-position' : 'center',
+										'background-size' : 'cover',
+									});
+		}
+		
+		$('#pictureDelBtn').on('click', function () {
+			$('input[name="uploadPicture"]').val("");
+			$('input[name="inputFileName"]').val("");
+			$('div#pictureView').css({
+				'background-image' : 'url()',
+				'background-position' : 'center',
+				'background-size' : 'cover',
+				'background-repeat' : 'no-repeat'
+			});
+			
+		})
+	}
+	
+	
+	function imageChange_go(){
+		let inputImage = $('input#files')[0];
+		preViewPicture(inputImage, $('div#pictureView'));
+		$('input[name="uploadPicture"]').val(inputImage.files[0].name);
+	};
+	
+	
+	function preViewPicture(inputImage, target){
+		let fileFormat = inputImage.value.substr(inputImage.value.lastIndexOf('.')+1).toUpperCase();
+		
+		if(fileFormat == ""){
+			document.getElementById('inputFileName').value = "";
+
+			target.css({
+				'background-image' : 'url()',
+				'background-position' : 'center',
+				'background-size' : 'cover',
+				'background-repeat' : 'no-repeat'
+			});
+
+			return;
+		}
+		
+		// 이미지 파일 용량 체크
+		if(inputImage.files[0].size > 1024 * 1024 * 1){
+			alert("사진 용량은 1MB 이하만 가능합니다.");
+			inputImage.value = "";
+			return;
+		};
+		
+		// 파일명 inputTag에 삽입
+		document.getElementById('inputFileName').value = inputImage.files[0].name;
+		
+		// 미리보기
+		if(inputImage.files){
+			let reader = new FileReader();
+			
+			reader.onload = function(e){
+				target.css({
+					'background-image' : 'url(' + e.target.result + ')',
+					'background-position' : 'center',
+					'background-size' : 'cover',
+					'background-repeat' : 'no-repeat'
+				});
+			};
+			
+			reader.readAsDataURL(inputImage.files[0]);
+		};
 	}
 </script>
 
