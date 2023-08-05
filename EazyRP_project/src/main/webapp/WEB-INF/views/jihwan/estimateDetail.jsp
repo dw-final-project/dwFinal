@@ -290,9 +290,17 @@ $('tr').on('click', function(){
 	// 수량 이벤트
 	$(document).on('keyup', '.quantity', function(){
 // 		let quantity = $(this).val();
-		$(this).parent().next().children().val($(this).val()*$(this).next().val());
+		console.log($(this).val());
+		console.log($(this).next().val().split(' 원')[0]);
+		console.log(typeof $(this).val());
+		console.log(typeof $(this).next().val().split(' 원')[0]);
+		$(this).parent().next().children().val($(this).val()*$(this).next().val().split(' 원')[0]);
 	})
+	
+	
 
+
+	
 	
 	$(document).on('change, keyup', '#prInput', function(){
 		let sum = Number(0);
