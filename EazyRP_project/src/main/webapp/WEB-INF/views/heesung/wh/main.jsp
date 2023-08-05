@@ -57,7 +57,7 @@
 										<td style="text-align: center;">${wh.wh_name }</td>
 										<td style="text-align: center;">${wh.e_name}</td>
 										<td style="text-align: center;">${wh.pr_name}</td>
-										<td style="text-align: center;">${wh.wo_no }</td>
+										<td style="text-align: center;">${wh.wo_name }</td>
 										<td style="text-align: center;">${wh.progress == '0' ? '대기중' : (wh.progress == '1' ? '진행중' : '완료')}</td>
 									</tr>
 								</c:forEach>

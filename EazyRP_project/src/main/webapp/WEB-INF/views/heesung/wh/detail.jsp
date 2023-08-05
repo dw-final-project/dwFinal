@@ -128,7 +128,7 @@
 				</td> 
 	        </tr>
 	    </table>
-    <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">제품추가</button>
+    <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">추가</button>
     <table>
     	<thead>
 	        <tr>
@@ -154,11 +154,11 @@
 						<input type="hidden" name="pr_no" value="${whDetail.PR_NO }">
 					</td>
 					<td>	
-						<input type="text" id="" class="fac_names" name="fac_name" style="width: 100%;" value="${whDetail.FAC_NAME }">
+						<input type="text" id="fac_no${whDetail.ROWNUM }" class="fac_names" name="fac_name" style="width: 100%;" value="${whDetail.FAC_NAME }">
 						<input type="hidden" name="fac_no" value="${whDetail.FAC_NO }">
 					</td>
 					<td>		
-						<input type="text" id="" class="wh_names" name="wh_name" style="width: 100%;" value="${whDetail.WH_NAME }">
+						<input type="text" id="wh_no${whDetail.ROWNUM }" class="wh_names" name="wh_name" style="width: 100%;" value="${whDetail.WH_NAME }">
 						<input type="hidden" name="wh_no" value="${whDetail.WH_NO2 }">
 					</td>
 					<td>
@@ -171,7 +171,7 @@
 						<input type="text" id="total_outprice" name="total_outprice" style="width: 100%;" value="${whDetail.TOTAL_OUTPRICE }">
 					</td>
 					<td style="text-align: center;">
-						<button type="button" id="cancelBtn">삭제</button>
+						<button type="button" id="cancelBtn" class="btn btn-danger">삭제</button>
 					</td>
 		        </tr>
 	        </c:forEach>
@@ -261,12 +261,12 @@ $('#addPutBtn').on('click', function(){
 			'<tr id="trChk"><input type="hidden" class="rownum" value="'+ cnt + '">'
 				+ '<input type="hidden" name="detail_no" id="" value="">'
  				+ '<td><input type="text" id="' + cnt + '" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'
-				+ '<td><input type="text" id="" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no"></td>'
-				+ '<td><input type="text" id="" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no2"></td>'
+				+ '<td><input type="text" id="fac_no' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no"></td>'
+				+ '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'
 				+ '<td><input type="text" id="outprice' + cnt + '" class="outprice" name="outprice" style="width: 100%;" value=""></td>'
 				+ '<td><input type="text" id="quantity' + cnt + '" class="quantity" name="quantity" style="width: 100%;" value=""></td>'
 				+ '<td><input type="text" id="amount" name="total_outprice" style="width: 100%;" value=""></td>'
-				+ '<td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>'
+				+ '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'
 			+ '</tr>'
 		);
 	
@@ -335,6 +335,13 @@ $('tr').on('click', function(){
 		}
 		
 		$('#wh_total').val(sum);
+	})
+	
+	// 공장 클릭시 목록 열기 이벤트
+	$(document).on('click', '.fac_names', function() {
+		let whVal = $(this).attr('id');
+		$('#cnt').val(whVal);
+		let openWin = OpenWindow("/erp4/findFactory.do", "공장 찾기", 800, 600);
 	})
 	
 </script>

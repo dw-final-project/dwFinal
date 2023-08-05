@@ -37,12 +37,13 @@
 	
 	<!-- 셀렉트할때는 리절트타입 필요하고 insert delete 등할때는 파라미터 타입이 들어감 -->
 	<select id="selectSearchWhList" resultType="wh">
-		SELECT	wh.*, emp.e_name, wa.wh_name
-		FROM	wh wh, emp emp, company com, warehouse wa, whdetail whd
+		SELECT	DISTINCT wh.wh_no, wh.*, emp.e_name, wa.wh_name, wo.wo_name
+		FROM	wh wh, emp emp, company com, warehouse wa, whdetail whd, workorder wo
 		WHERE	1=1
 		AND		wh.emp_no = emp.emp_no
 		AND		wh.wh_no = whd.wh_no
 		AND		whd.wh_no2 = wa.wh_no
+		AND		wh.wo_no = wo.wo_no
 		AND 	wh.c_no = com.c_no 
 		AND		wh.c_no = #{c_no}
 		<include refid="search"/>
@@ -50,7 +51,7 @@
 	</select>
 	
 	<select id="selectSearchWhListCount" resultType="int">
-		SELECT	COUNT(*)
+		SELECT	COUNT(DISTINCT wh.wh_no)
 		FROM	wh wh, emp emp, company com, warehouse wa, whdetail whd
 		WHERE	1=1
 		AND		wh.emp_no = emp.emp_no
@@ -136,6 +137,13 @@
 		SELECT 	pd.pr_name
 		FROM 	WHDETAIL wd, product pd
 		WHERE 	wd.pr_no = pd.pr_no
+		AND		wd.wh_no = #{getWh_no}
+	</select>
+	
+	<select id="selectWareHouseName" resultType="str">
+		SELECT 	wa.wh_name
+		FROM 	WHDETAIL wd, warehouse wa
+		WHERE 	wd.wh_no2 = wa.wh_no
 		AND		wd.wh_no = #{getWh_no}
 	</select>
 	

@@ -268,25 +268,62 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		
 		String c_no = session.getAttribute("c_no").toString();
 		
+		System.out.println("pr_no.length : " + pr_no.length);
+		
 		for(int i = 0; i < pr_no.length; i++) {
+			
+			System.out.println(i + "번째 시작");
 			
 			WhVO whDetailVo = new WhVO();
 			
+			// wh 테이블
 			whDetailVo.setEmp_no(emp_no);
 			whDetailVo.setWo_no(wo_no);
 			whDetailVo.setWh_total(wh_total);
+			whDetailVo.setFiles(filess);
+			whDetailVo.setC_no(c_no);
+			whDetailVo.setProgress(progress);
+			
+			// whdetail 테이블
 			whDetailVo.setPr_no(pr_no[i]);
 			whDetailVo.setFac_no(fac_no[i]);
 			whDetailVo.setWh_no2(wh_no[i]);
 			whDetailVo.setOutprice(outprice[i]);
 			whDetailVo.setQuantity(quantity[i]);
 			whDetailVo.setTotal_outprice(total_outprice[i]);
-			whDetailVo.setFiles(filess);
-			whDetailVo.setC_no(c_no);
-			whDetailVo.setProgress(progress);
 			
+//			// wh 테이블
+//			whDetailVo.setEmp_no(emp_no);
+//			System.out.println(i + "번째 whDetailVo.setEmp_no(emp_no); : " + emp_no);
+//			whDetailVo.setWo_no(wo_no);
+//			System.out.println(i + "번째 whDetailVo.setWo_no(wo_no); : " + wo_no);
+//			whDetailVo.setWh_total(wh_total);
+//			System.out.println(i + "번째 whDetailVo.setWh_total(wh_total); : " + wh_total);
+//			whDetailVo.setFiles(filess);
+//			System.out.println(i + " 번째 whDetailVo.setFiles(filess); : " + filess);
+//			whDetailVo.setC_no(c_no);
+//			System.out.println(i + " 번째 whDetailVo.setC_no(c_no); : " + c_no);
+//			whDetailVo.setProgress(progress);
+//			System.out.println(i + " 번쨰 whDetailVo.setProgress(progress); : " + progress);
+//			// whdetail 테이블
+//			whDetailVo.setPr_no(pr_no[i]);
+//			System.out.println(i + " 번째 whDetailVo.setPr_no(pr_no[i]); : " + pr_no[i]);
+//			whDetailVo.setFac_no(fac_no[i]);
+//			System.out.println(i + " 번째 whDetailVo.setFac_no(fac_no[i]); : " + fac_no[i]);
+//			whDetailVo.setWh_no2(wh_no[i]);
+//			System.out.println(i + " 번째 whDetailVo.setWh_no2(wh_no[i]); : " + wh_no[i]);
+//			whDetailVo.setOutprice(outprice[i]);
+//			System.out.println(i + " 번째 whDetailVo.setOutprice(outprice[i]); : " + outprice[i]);
+//			whDetailVo.setQuantity(quantity[i]);
+//			System.out.println(i + " 번째 whDetailVo.setQuantity(quantity[i]); : " + quantity[i]);
+//			whDetailVo.setTotal_outprice(total_outprice[i]);
+//			System.out.println(i + " 번째 whDetailVo.setTotal_outprice(total_outprice[i]); : " + total_outprice[i]);
 			
 			whDetailVoList.add(whDetailVo);
+			System.out.println(i + " 번째 whDetailVoList.add(whDetailVo); : " + whDetailVoList);
+			
+			System.out.println(i + " 번째 종료");
+			
 		}
 
 		whService.registWh(whDetailVoList);
