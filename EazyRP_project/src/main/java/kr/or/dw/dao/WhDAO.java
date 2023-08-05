@@ -21,11 +21,15 @@ public interface WhDAO {
 	
 	void insertWhDetail(WhVO wh) throws SQLException;
 
-	// 제품명 가져오기
+	// 제품명 가져오기 ( 사용 용도 : ~ 외 2건 ) 
 	List<String> selectProductName(String getWh_no) throws SQLException;
+
+	// 창고명 가져오기 ( 사용 용도 : ~ 외 2건 ) 
+	List<String> selectWareHouseName(String getWh_no) throws SQLException;
 
 	Map<String, Object> selectWh(String wh_no) throws SQLException;
 
 	List<Map<String, Object>> selectWhDetail(String wh_no) throws SQLException;
+
 
 }

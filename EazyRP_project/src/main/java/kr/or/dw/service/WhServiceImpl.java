@@ -52,14 +52,31 @@ public class WhServiceImpl implements WhService{
 			
 			String getWh_no = whList.get(i).getWh_no();
 			
-			List<String> productName = whDAO.selectProductName(getWh_no); // 해당 pr_no 의 pr_name 값을 가져온다.
+			List<String> productName = whDAO.selectProductName(getWh_no); 	// 해당 pr_no 의 pr_name 값을 가져온다.
+			List<String> wareHouseName = whDAO.selectWareHouseName(getWh_no);	
+			
 			String pr_name = "";
-			if (productName.size() == 1) {
+			String wh_name = "";
+			
+			if (wareHouseName.size() <= 1 && productName.size() <= 1) {
+				wh_name = wareHouseName.get(0);
 				pr_name = productName.get(0);
-			} else {
+			} else if (wareHouseName.size() > 1 && productName.size() > 1) {
+				wh_name = wareHouseName.get(0) + " 외 " + (wareHouseName.size() - 1) + "건";
 				pr_name = productName.get(0) + " 외 " + (productName.size() - 1) + "건";
+			} else if (wareHouseName.size() > 1 && productName.size() <= 1) {
+				wh_name = wareHouseName.get(0) + " 외 " + (wareHouseName.size() - 1) + "건";
+				pr_name = productName.get(0);
+			} else if (wareHouseName.size() <= 1 && productName.size() > 1) {
+				wh_name = wareHouseName.get(0);
+				pr_name = productName.get(0) + " 외 " + (productName.size() - 1) + "건";
+			} else {
+				System.out.println("productName.size() : " + productName.size());
+				System.out.println("wareHouseName.size() : " + wareHouseName.size());
+				System.out.println("WhServiceImpl 경우의 수 예외 발생 (Line:71)");
 			}
 			whList.get(i).setPr_name(pr_name);
+			whList.get(i).setWh_name(wh_name);
 			
 		}
 
@@ -69,6 +86,8 @@ public class WhServiceImpl implements WhService{
 
 	@Override
 	public void registWh(List<WhVO> whDetailVoList) throws SQLException {
+		
+		System.out.println("registWH - 진입");
 		
 		whDAO.insertWh(whDetailVoList.get(0));
 		String wh_no = whDetailVoList.get(0).getWh_no();
