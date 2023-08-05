@@ -28,5 +28,6 @@ public class ProductVO {
 	private Date sys_regdate;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date sys_updatedate;
+	private String c_name;
 
 }
