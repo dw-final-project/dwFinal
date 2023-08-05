@@ -17,7 +17,7 @@ public interface WhDAO {
 
 	int selectSearchWhListCount(Map<String, Object> map) throws SQLException;
 
-	void insertWh(WhVO whVo) throws SQLException;
+	void insertWh(WhVO whList) throws SQLException;
 	
 	void insertWhDetail(WhVO wh) throws SQLException;
 
