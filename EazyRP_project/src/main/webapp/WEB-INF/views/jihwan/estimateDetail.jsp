@@ -235,8 +235,7 @@ $('#addPutBtn').on('click', function(){
     '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'+
 '</tr>');
 	
-	
-	
+
 //		$('script').append(
 //			'$("#quantity' + cnt + '").on("keyup", function(){'+
 //				'alert($(this).val())'+
@@ -275,10 +274,10 @@ $('tr').on('click', function(){
 		if($(this).parent('td').parent('tr').find("input[name='pr_delete']").val() == "n") {
 	        $(this).parent('td').parent('tr').remove();
 	    }else{
-		$(this).parents('tr').css('display', 'none');
-		$(this).parents('tr').find("input[name='pr_delete']").val("d")
+			$(this).parents('tr').css('display', 'none');
+			$(this).parents('tr').find("input[name='pr_delete']").val("d")
 	    }
-	   });
+	 });
 	
 	
 	//창고코드 이벤트

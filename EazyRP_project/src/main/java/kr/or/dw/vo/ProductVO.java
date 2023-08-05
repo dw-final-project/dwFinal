@@ -29,8 +29,5 @@ public class ProductVO {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date sys_updatedate;
 	private String c_name;
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 }
