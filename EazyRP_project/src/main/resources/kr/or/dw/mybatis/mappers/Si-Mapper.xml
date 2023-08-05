@@ -45,7 +45,7 @@ SELECT ('SI_') || CASE
 SELECT s2.SI_NO,
 	 MAX((SELECT wh_name FROM WAREHOUSE WHERE wh_no = s2.WH_NO)) wh_name
 	,MAX((SELECT e_name FROM EMP WHERE emp_no = s2.EMP_NO)) e_name
-	,MAX(e.SYS_REGDATE) SYS_REGDATE
+	,MAX(s.SYS_REGDATE) SYS_REGDATE
 	,CASE WHEN count(s2.PR_NO) <![CDATA[ > ]]> 1
 		  		THEN MAX((SELECT pr_name FROM product WHERE pr_no = s2.pr_no)) || ' 외 ' || (count(s2.PR_NO)-1)  || '건'
 		  		ELSE MAX((SELECT pr_name FROM product WHERE pr_no = s2.pr_no))
