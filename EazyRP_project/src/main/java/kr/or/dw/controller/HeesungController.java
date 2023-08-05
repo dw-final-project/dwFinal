@@ -32,11 +32,13 @@ import kr.or.dw.service.EstimateService;
 import kr.or.dw.service.FactoryService;
 import kr.or.dw.service.MenuService;
 import kr.or.dw.service.ProcessService;
+import kr.or.dw.service.RownumService;
 import kr.or.dw.service.WhService;
 import kr.or.dw.service.WorkOrderService;
 import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.ProcessVO;
 import kr.or.dw.vo.ProductVO;
+import kr.or.dw.vo.RownumVO;
 import kr.or.dw.vo.WhVO;
 import kr.or.dw.vo.WorkOrderVO;
 
@@ -58,6 +60,8 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	private WorkOrderService workOrderService;
 	@Autowired
 	private EstimateService estimateService;
+	@Autowired
+	private RownumService rownumService;
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 목록 열기
 	
@@ -206,7 +210,11 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	}
 	
 	@RequestMapping("/wh/registForm")
-	public ModelAndView whRegistForm(ModelAndView mnv, HttpSession session) throws SQLException {
+	public ModelAndView whRegistForm(ModelAndView mnv, HttpSession session, RownumVO rownumVo) throws SQLException {
+		
+		// 생산입고를 등록할때 registForm에서 디테일 리스트들을 추가할때마다 번호를 부여하여 구분하기 위함임
+		// 이렇게 하지 않으면 cnt 값이 모두 같기 때문에 findFactory 등을 하였을때 모든 tr의 fac_name 값이 같은걸로 바뀌어 버림
+		int rownum = rownumService.selectRownum(rownumVo);
 		
 		int empno = Integer.parseInt(session.getAttribute("emp_no").toString());
 		String ename = estimateService.ename(empno);
@@ -218,6 +226,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		String url = "heesung/wh/registForm.open";
 		
 		mnv.setViewName(url);
+		mnv.addObject("rownum", rownum);
 		mnv.addObject("empno", empno);	// 사원번호
 		mnv.addObject("ename", ename);	// 사원이름
 		mnv.addObject("c_no", c_no);	// 회사이름
@@ -234,7 +243,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		System.out.println("erp4/wh/regist 컨트롤러 진입");
 		
 
-		List<WhVO> whDetailVoList = new ArrayList<WhVO>();	// 상세 정보들을 만들기 위한 객체
+		List<WhVO> whList = new ArrayList<WhVO>();	// 상세 정보들을 만들기 위한 객체
 		
 		String filess = "";
 		
@@ -274,59 +283,48 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 			
 			System.out.println(i + "번째 시작");
 			
-			WhVO whDetailVo = new WhVO();
+			WhVO wh = new WhVO();
 			
 			// wh 테이블
-			whDetailVo.setEmp_no(emp_no);
-			whDetailVo.setWo_no(wo_no);
-			whDetailVo.setWh_total(wh_total);
-			whDetailVo.setFiles(filess);
-			whDetailVo.setC_no(c_no);
-			whDetailVo.setProgress(progress);
+			wh.setEmp_no(emp_no);
+			wh.setWo_no(wo_no);
+			wh.setWh_total(wh_total);
+			wh.setFiles(filess);
+			wh.setC_no(c_no);
+			wh.setProgress(progress);
 			
 			// whdetail 테이블
-			whDetailVo.setPr_no(pr_no[i]);
-			whDetailVo.setFac_no(fac_no[i]);
-			whDetailVo.setWh_no2(wh_no[i]);
-			whDetailVo.setOutprice(outprice[i]);
-			whDetailVo.setQuantity(quantity[i]);
-			whDetailVo.setTotal_outprice(total_outprice[i]);
+			wh.setPr_no(pr_no[i]);
+			wh.setFac_no(fac_no[i]);
+			wh.setWh_no2(wh_no[i]);
+			wh.setOutprice(outprice[i]);
+			wh.setQuantity(quantity[i]);
+			wh.setTotal_outprice(total_outprice[i]);
+			
+			whList.add(wh);
 			
 //			// wh 테이블
-//			whDetailVo.setEmp_no(emp_no);
 //			System.out.println(i + "번째 whDetailVo.setEmp_no(emp_no); : " + emp_no);
-//			whDetailVo.setWo_no(wo_no);
 //			System.out.println(i + "번째 whDetailVo.setWo_no(wo_no); : " + wo_no);
-//			whDetailVo.setWh_total(wh_total);
 //			System.out.println(i + "번째 whDetailVo.setWh_total(wh_total); : " + wh_total);
-//			whDetailVo.setFiles(filess);
 //			System.out.println(i + " 번째 whDetailVo.setFiles(filess); : " + filess);
-//			whDetailVo.setC_no(c_no);
 //			System.out.println(i + " 번째 whDetailVo.setC_no(c_no); : " + c_no);
-//			whDetailVo.setProgress(progress);
 //			System.out.println(i + " 번쨰 whDetailVo.setProgress(progress); : " + progress);
 //			// whdetail 테이블
-//			whDetailVo.setPr_no(pr_no[i]);
 //			System.out.println(i + " 번째 whDetailVo.setPr_no(pr_no[i]); : " + pr_no[i]);
-//			whDetailVo.setFac_no(fac_no[i]);
 //			System.out.println(i + " 번째 whDetailVo.setFac_no(fac_no[i]); : " + fac_no[i]);
-//			whDetailVo.setWh_no2(wh_no[i]);
 //			System.out.println(i + " 번째 whDetailVo.setWh_no2(wh_no[i]); : " + wh_no[i]);
-//			whDetailVo.setOutprice(outprice[i]);
 //			System.out.println(i + " 번째 whDetailVo.setOutprice(outprice[i]); : " + outprice[i]);
-//			whDetailVo.setQuantity(quantity[i]);
 //			System.out.println(i + " 번째 whDetailVo.setQuantity(quantity[i]); : " + quantity[i]);
-//			whDetailVo.setTotal_outprice(total_outprice[i]);
 //			System.out.println(i + " 번째 whDetailVo.setTotal_outprice(total_outprice[i]); : " + total_outprice[i]);
-			
-			whDetailVoList.add(whDetailVo);
-			System.out.println(i + " 번째 whDetailVoList.add(whDetailVo); : " + whDetailVoList);
+//			
+//			System.out.println(i + " 번째 whDetailVoList.add(whDetailVo); : " + whList);
 			
 			System.out.println(i + " 번째 종료");
 			
 		}
 
-		whService.registWh(whDetailVoList);
+		whService.registWh(whList);
 		
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();

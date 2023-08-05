@@ -165,23 +165,21 @@
 </body>
 
 <script>
-// 	window.onload = function() {
-// 		$('#sys_regdate').val('2023-08-09');
-// 	}
 
 	let cnt = 1;
+
 	// 파일 추가 버튼
 	$('#addPutBtn').on('click', function() {
 		
 		cnt++;
-		
+
 		$('#prInput').append(
 			'<tr>'
  				+ '<td><input type="text" id="' + cnt + '" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'
 				+ '<td><input type="text" id="fac_no' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no"></td>'
 				+ '<td><input type="text" id="wh_no' + cnt + '" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'
-				+ '<td><input type="text" id="outprice' + cnt + '" class="outprice" name="outprice" style="width: 100%;" value=""></td>'
-				+ '<td><input type="text" id="quantity' + cnt + '" class="quantity" name="quantity" style="width: 100%;" value=""></td>'
+				+ '<td><input type="text" id="outprice" class="outprice" name="outprice" style="width: 100%;" value=""></td>'
+				+ '<td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value=""></td>'
 				+ '<td><input type="text" id="amount" name="total_outprice" style="width: 100%;" value=""></td>'
 				+ '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'
 			+ '</tr>'

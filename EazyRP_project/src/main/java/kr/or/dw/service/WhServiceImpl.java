@@ -85,16 +85,20 @@ public class WhServiceImpl implements WhService{
 	}
 
 	@Override
-	public void registWh(List<WhVO> whDetailVoList) throws SQLException {
+	public void registWh(List<WhVO> whList) throws SQLException {
 		
-		System.out.println("registWH - 진입");
+		System.out.println("WhServiceImpl - registWH - 진입");
 		
-		whDAO.insertWh(whDetailVoList.get(0));
-		String wh_no = whDetailVoList.get(0).getWh_no();
+		System.out.println("whDAO.insertWh(whDetailVoList.get(0)); - 전");
+		whDAO.insertWh(whList.get(0));
+		System.out.println("whDAO.insertWh(whDetailVoList.get(0)); - 후");
+		System.out.println("String wh_no = whDetailVoList.get(0).getWh_no(); - 전");
+		String wh_no = whList.get(0).getWh_no();
+		System.out.println("String wh_no = whDetailVoList.get(0).getWh_no(); - 후");
 		
 		System.out.println("wh_no : " + wh_no);
 		
-		for (WhVO wh : whDetailVoList) {
+		for (WhVO wh : whList) {
 			wh.setWh_no(wh_no);
 			whDAO.insertWhDetail(wh); // 상세게시글을 만들기 위한 다오
 		}

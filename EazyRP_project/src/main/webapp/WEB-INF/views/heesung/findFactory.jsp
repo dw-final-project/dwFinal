@@ -78,6 +78,10 @@
 				let parentInputId = opener.$("#cnt").val();
 				let parentEl = $("#" + parentInputId, opener.document);
 		
+				
+				/* 	생산입고 registForm에서 제품 추가를 하여 여러개의 td들을 추가하고 생산 공장들을 각각 선택해도
+					마지막에 선택한 생산 공장의 벨류로 모두 바뀌어서 보내지기 때문에 모두 같은 정보가 DB에 등록된다.	*/
+				
 				parentEl.parents('tr').find('input.fac_names').val(fac_noName);
 				parentEl.parents('tr').find('input[name="fac_no"]').val($(this).find('#fac_no').text());
 				
