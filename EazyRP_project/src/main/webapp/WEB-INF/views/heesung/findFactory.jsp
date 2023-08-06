@@ -90,7 +90,7 @@
 					alert('parentInputId : ' + parentInputId);
 					
 					parentEl.parents('tr').find('input.fac_names').val(fac_noName);
-					parentEl.parents('tr').find('input[type="hidden"]#fac_no').val($(this).find('#fac_no').text());
+					parentEl.parents('tr').find('input[type="hidden"]#fac_no0').val($(this).find('#fac_no').text());
 					
 					
 				} else {	// 제품을 추가한 경우
@@ -106,13 +106,14 @@
 				
 				window.close();
 				
+			} else{
+			
+				opener.$('input[name="fac_no"]').val($(this).find('#fac_no').text());
+				opener.$('#find_fac').val(fac_noName);
+				
+				window.close();
+			
 			}
-			
-			opener.$('input[name="fac_no"]').val($(this).find('#fac_no').text());
-			opener.$('#find_fac').val(fac_noName);
-			
-			window.close();
-			
 		})
 		
 	})
