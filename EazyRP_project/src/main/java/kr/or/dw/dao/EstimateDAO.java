@@ -53,6 +53,8 @@ public interface EstimateDAO {
 	// 견적서에있는 enabled를  N으로 바꿔놈
 	void deletUpdateEstimate(String est_no) throws SQLException;
 
+	void deletUpdateEstimate(String est_no) throws SQLException;
+
 	
 
 
