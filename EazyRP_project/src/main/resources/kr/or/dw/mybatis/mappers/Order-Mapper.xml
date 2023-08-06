@@ -153,7 +153,7 @@
 			'FC_003',
 			#{amount},
 			#{so_no},
-			'쇼핑몰 판매',
+			's',
 			'Y',
 			'/erp5/orderDetail.do?so_no=' || #{so_no},
 			#{quantity},

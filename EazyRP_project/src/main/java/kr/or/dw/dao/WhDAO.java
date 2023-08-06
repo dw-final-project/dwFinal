@@ -2,6 +2,7 @@ package kr.or.dw.dao;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
@@ -12,15 +13,23 @@ import kr.or.dw.vo.WhVO;
 @Mapper
 public interface WhDAO {
 
-	List<WhVO> selectSearchWhList(SearchCriteria cri, RowBounds rowBounds) throws SQLException;
+	List<WhVO> selectSearchWhList(Map<String, Object> map, RowBounds rowBounds) throws SQLException;
 
-	int selectSearchWhListCount(SearchCriteria cri) throws SQLException;
+	int selectSearchWhListCount(Map<String, Object> map) throws SQLException;
 
 	void insertWh(WhVO whVo) throws SQLException;
 	
 	void insertWhDetail(WhVO wh) throws SQLException;
 
-	// 제품명 가져오기
+	// 제품명 가져오기 ( 사용 용도 : ~ 외 2건 ) 
 	List<String> selectProductName(String getWh_no) throws SQLException;
+
+	// 창고명 가져오기 ( 사용 용도 : ~ 외 2건 ) 
+	List<String> selectWareHouseName(String getWh_no) throws SQLException;
+
+	Map<String, Object> selectWh(String wh_no) throws SQLException;
+
+	List<Map<String, Object>> selectWhDetail(String wh_no) throws SQLException;
+
 
 }

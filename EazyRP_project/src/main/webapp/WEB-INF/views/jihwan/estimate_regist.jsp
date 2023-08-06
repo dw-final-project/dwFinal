@@ -98,7 +98,7 @@
             </td>
         </tr>
     </table>
-    <button type="button" id="addPutBtn">제품추가</button>
+    <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">제품추가</button>
     <table>
     	<thead>
         <tr>

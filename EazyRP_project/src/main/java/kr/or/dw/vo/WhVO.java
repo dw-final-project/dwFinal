@@ -18,13 +18,14 @@ public class WhVO {
 	private int quantity;			// 수량
 	private String files;			// 첨부파일
 	private int outprice;			// 외주비단가
-	private int wo_no;				// 작업지시서 번호
+	private String wo_no;			// 작업지시서 번호
 	private String sys_up;			// 수정자
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date sys_updatedate;	// 수정일
 	private String sys_reg;			// 최초등록자
 	private int wh_total;			// 총합계
 	private String progress;		// 진행상황
+	private String c_no;			// 업체번호
 
 	private String pr_no;			// 제품번호
 	private String pr_name;			// 제품명
@@ -32,5 +33,7 @@ public class WhVO {
 	private int total_outprice;		// 외주비합계
 	private int dtail_no;			// 상세번호
 	private String e_name;			// 사원이름
+	private String wh_name;			// 창고이름
+	private String wo_name;			// 작업지시서 이름
 	
 }

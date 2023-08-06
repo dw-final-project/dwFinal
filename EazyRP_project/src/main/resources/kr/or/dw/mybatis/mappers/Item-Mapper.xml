@@ -29,7 +29,6 @@
 		</if>
 	</sql>
 	
-	<!-- contact -->
 	<select id="selectItemList" resultType="product">
 		SELECT pr_no
 			  ,pr_name
@@ -41,12 +40,14 @@
 			  ,pr_class
 			  ,p.exdate
 			  ,p.img
-			  ,p.sp_no
+			  ,s.sp_name sp_no
 			  ,p.quantity
 			  ,w.wh_name wh_no
-		  FROM product p, company c, warehouse w
+		  FROM product p, company c, warehouse w, sprice s
 		 WHERE p.c_no = c.c_no
 		   AND p.wh_no = w.wh_no
+		   AND p.sp_no = s.sp_no
+		   AND p.enabled = 'Y'
 		   <include refid="search"/>
 		   ORDER BY pr_no
 	</select>
@@ -55,7 +56,7 @@
 	<select id="selectItemListCount" resultType="int">
 		SELECT COUNT(*)
 		  FROM product
-		 WHERE 1 = 1
+		 WHERE enabled = 'Y'
 		   <include refid="search"/>
 	</select>
 	
@@ -157,6 +158,7 @@
 							  ,sys_reg
 							  ,quantity
 							  ,wh_no
+							  ,enabled
 							   )
 						VALUES(
 							   #{pr_no}
@@ -176,7 +178,57 @@
 							  ,#{sys_reg}
 							  ,#{quantity}
 							  ,#{wh_no}
+							  ,'Y'
 			   				   )
 	</insert>
+	
+	<select id="selectProductDetail" resultType="Map">
+		SELECT p.pr_no
+			  ,pr_name
+			  ,p.c_no
+			  ,c_name
+			  ,pr_gr
+			  ,pr_st
+			  ,pr_inprice
+			  ,pr_exprice
+			  ,pr_class
+			  ,p.exdate
+			  ,p.img
+			  ,p.sp_no
+			  ,s.sp_name
+			  ,p.quantity
+			  ,p.wh_no
+			  ,w.wh_name
+		  FROM product p, company c, warehouse w, sprice s
+		 WHERE p.c_no = c.c_no
+		   AND p.wh_no = w.wh_no
+		   AND p.sp_no = s.sp_no
+		   AND p.pr_no = #{pr_no}
+	</select>
+	
+	<update id="updateProduct">
+		UPDATE product SET pr_name = #{pr_name}
+						  ,c_no = #{c_no}
+						  ,pr_gr = #{pr_gr}
+						  ,pr_st = #{pr_st}
+						  ,pr_inprice = #{pr_exprice}
+						  ,pr_class = #{pr_class}
+						  ,img = #{img}
+						  ,exdate = #{exdate}
+						  ,sp_no = #{sp_no}
+						  ,sys_up = #{sys_up}
+						  ,sys_updatedate = sysdate
+						  ,quantity = #{quantity}
+						  ,wh_no = #{wh_no}
+		 WHERE pr_no = #{pr_no} 
+	</update>
+	
+	<update id="deleteProduct">
+		UPDATE product SET enabled = 'N'
+						  ,img = null
+						  ,sys_updatedate = sysdate
+						  ,sys_up = #{sys_up}
+		 WHERE pr_no = #{pr_no} 
+	</update>
 	
 </mapper>

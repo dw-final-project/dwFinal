@@ -42,9 +42,9 @@
 								</tr>
 									<c:forEach items="${empList}" var="emp" varStatus="loop">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('empDetail.do?emp_no=${emp.EMP_NO}','직원 상세보기', 800 , 600);">${emp.EMP_NO}</a></td>
-										<td style="text-align: center;"><a id="aTag" href="">${emp.C_NAME}</a></td>
-										<td style="text-align: center;">${emp.E_NAME}</td>
+										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('empDetail.do?emp_no=${emp.EMP_NO}','직원 상세보기', 800 , 1000);">${emp.EMP_NO}</a></td>
+										<td style="text-align: center;">${emp.C_NAME}</td>
+										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('empDetail.do?emp_no=${emp.EMP_NO}','직원 상세보기', 800 , 1000);">${emp.E_NAME}</a></td>
 										<td style="text-align: center;">${emp.DNAME}</td>
 										<td style="text-align: center;">${emp.E_RANK}</td>
 										<td style="text-align: center;">${emp.E_EMAIL}</td>
@@ -59,9 +59,9 @@
 					</div>
 					</div>
 						<div style="display: flex; align-items: end; justify-content: end;">
-								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('merchandiseRegistForm.do', '상품등록', 700, 700)"
+								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('empRegistForm.do', '직원등록', 800, 600)"
 								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">직원 등록</button>
-							</div>
+						</div>
 			</div>
 		</div>
 	</section>

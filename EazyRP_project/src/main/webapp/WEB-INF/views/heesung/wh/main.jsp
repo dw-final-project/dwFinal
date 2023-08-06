@@ -39,21 +39,28 @@
 									<th style="text-align: center;">작업지시서</th>
 									<th style="text-align: center;">상태</th>
 								</tr>
-									<c:forEach items="${whList}" var="wh" varStatus="loop">
+								<c:if test="${empty whList }">
+									<tr>
+										<td colspan="7">
+											<strong>해당 게시글이 없습니다.</strong>
+										</td>
+									</tr>
+								</c:if>
+								<c:forEach items="${whList}" var="wh" varStatus="loop">
 									<tr>
 										<td style="text-align: center;"><fmt:formatDate value="${wh.sys_regdate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 										<td style="text-align: center;">
-											<a id="whDetailBtn" href="#" onclick="detailOpenWindow('erp4/wh/detail.do'), '생산입고 상세정보', 700, 1000)">
+											<a id="whDetailBtn" href="#" onclick="detailOpenWindow('/erp4/wh/detail.do?wh_no=${wh.wh_no}', '생산입고 상세정보', 700, 1000)">
 												${wh.wh_no}
 											</a>
 										</td>
-										<td style="text-align: center;">11111</td>
+										<td style="text-align: center;">${wh.wh_name }</td>
 										<td style="text-align: center;">${wh.e_name}</td>
 										<td style="text-align: center;">${wh.pr_name}</td>
-										<td style="text-align: center;">${wh.wo_no }</td>
+										<td style="text-align: center;">${wh.wo_name }</td>
 										<td style="text-align: center;">${wh.progress == '0' ? '대기중' : (wh.progress == '1' ? '진행중' : '완료')}</td>
 									</tr>
-									</c:forEach>
+								</c:forEach>
 							</table>
 							<div class="card-footer">
 								<%@ include file="/WEB-INF/views/common/pagination.jsp" %>

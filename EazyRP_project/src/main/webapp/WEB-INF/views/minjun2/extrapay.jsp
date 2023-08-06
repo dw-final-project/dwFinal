@@ -9,13 +9,15 @@
 			<div class="col-md-10" style="max-width: 1100px;">
 				<div class="card card-outline card-info">
 					<div class="card-header" style="border-bottom: none;">
-						<h2 class="card-title p-1">제품 판매 내역</h2>
+						<h2 class="card-title p-1">직원관리</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/erp4/sale.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/management/extrapay.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
-								<option value="a" ${searchType eq 'a' ? 'selected' : '' }>작성자</option>
-								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>제목</option>
+								<option value="d" ${searchType eq 'a' ? 'selected' : '' }>사원명</option>
+								<option value="t" ${searchType eq 'b' ? 'selected' : '' }>업체명</option>
+								<option value="w" ${searchType eq 'c' ? 'selected' : '' }>부서명</option>
+								<option value="w" ${searchType eq 'd' ? 'selected' : '' }>직급</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
@@ -30,18 +32,23 @@
 						<div>
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
-									<th width="25%" style="text-align: center;">비고</th>
-									<th width="25%" style="text-align: center;">요청날짜</th>
-									<th width="25%" style="text-align: center;">작성자</th>
-									<th width="25%" style="text-align: center;">발생금액</th>
+									<th width="200px" style="text-align: center;">수당코드</th>
+									<th width="200px" style="text-align: center;">수당명</th>
+									<th width="150px" style="text-align: center;">표시순서</th>
+									<th width="150px" style="text-align: center;">배율</th>
+									<th width="200px" style="text-align: center;">비과세유형</th>
+									<th width="150px" style="text-align: center;">지급유형</th>
+									<th width="100px" style="text-align: center;">계산식</th>
 								</tr>
-									<input type="hidden" value="" name="sheet_no">
-									<c:forEach items="${sale}" var="sale">
+									<c:forEach items="${extrapayList}" var="extrapay" varStatus="loop">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/erp4/saleDetail.do?sheet_no=${sale.SHEET_NO}', '판매내역 상세조회', 600, 600)">${sale.PR_NAME }</a></td>
-										<td style="text-align: center;">${sale.SYS_REGDATE}</td>
-										<td style="text-align: center;">${sale.E_NAME }</td>
-										<td style="text-align: center;">${sale.PRICE }원</td>
+										<td style="text-align: center;">${extrapay.EP_NO}</td>
+										<td style="text-align: center;">${extrapay.EP_NAME}</td>
+										<td style="text-align: center;">${extrapay.ORDER}</td>
+										<td style="text-align: center;">${extrapay.MAG}</td>
+										<td style="text-align: center;">${extrapay.FREE_GB}</td>
+										<td style="text-align: center;">${extrapay.PAYMENT}</td>
+										<td style="text-align: center;">${extrapay.CALC}</td>
 									</tr>
 									</c:forEach>
 							</table>
@@ -51,12 +58,11 @@
 						</div>
 					</div>
 					</div>
-					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/erp4/productSaleRegist.do', '구매 내역 추가', 600, 700)"
-					style="width: 100px; margin: 20px; align-self: center; font-size: 0.7em;">판매 내역 추가</button>
-				</div>
+						<div style="display: flex; align-items: end; justify-content: end;">
+								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('extrapayRegistForm.do', '수당등록', 800, 600)"
+								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">수당 등록</button>
+						</div>
 			</div>
-			
 		</div>
 	</section>
 	

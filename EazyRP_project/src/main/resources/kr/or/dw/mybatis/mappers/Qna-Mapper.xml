@@ -29,15 +29,13 @@
 			  ,(SELECT ans_con FROM ans a WHERE a.inq_no = i.inq_no) ans_con
 		  FROM inquiry i
 		 WHERE 1 = 1		   
-		   <include refid="search"/>
-		   ORDER BY inq_no
+		   ORDER BY inq_no desc
 	</select>
 	
 	<select id="selectQnaListCount" resultType="int">
 		SELECT COUNT(*)
 		  FROM inquiry
 		 WHERE 1 = 1
-		   <include refid="search"/>
 	</select>
 	
 	<insert id="insertQna" >

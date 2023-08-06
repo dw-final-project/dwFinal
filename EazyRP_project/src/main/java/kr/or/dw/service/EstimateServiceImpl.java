@@ -161,9 +161,10 @@ public class EstimateServiceImpl implements EstimateService {
 	@Override
 	public void deleteEstimate(String est_no) throws SQLException {
 			
-			estimateDAO.deleteEstimate(est_no);				
-			estimateDAO.deletUpdateEstimate(est_no);
+			estimateDAO.deleteEstimate(est_no);			
 			
+			estimateDAO.deletUpdateEstimate(est_no);
+	
 		
 	}
 

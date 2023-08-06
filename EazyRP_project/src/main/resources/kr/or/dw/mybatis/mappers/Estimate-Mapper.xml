@@ -193,7 +193,7 @@
 	VALUES(
 		  #{est_no}
 		  ,sysdate
-		  ,'y'
+		  ,'Y'
 		  ,#{emp_no}
 		  ,sysdate
 		  ,#{emp_no}	
@@ -317,7 +317,7 @@ WHEN NOT MATCHED THEN
 </delete>
 
 <update id="deletUpdateEstimate" >
-	UPDATE estimate SET ENABLED = 'n' WHERE est_no = #{est_no} 
+	UPDATE estimate SET ENABLED = 'N' WHERE est_no = #{est_no} 
 </update>
 
 </mapper>

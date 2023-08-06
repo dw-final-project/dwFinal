@@ -46,8 +46,12 @@ public interface EstimateDAO {
 	void modifyEstimate(Map<String, String> modifyMap) throws SQLException;
 
 	void deleteEstimate(String est_no) throws SQLException;
-
+	
+	// 견적서 디테일 삭제
 	void deleteEstimateDetail(EstimateVO est) throws SQLException;
+	
+	// 견적서에있는 enabled를  N으로 바꿔놈
+	void deletUpdateEstimate(String est_no) throws SQLException;
 
 	void deletUpdateEstimate(String est_no) throws SQLException;
 

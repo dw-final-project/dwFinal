@@ -235,8 +235,7 @@ $('#addPutBtn').on('click', function(){
     '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'+
 '</tr>');
 	
-	
-	
+
 //		$('script').append(
 //			'$("#quantity' + cnt + '").on("keyup", function(){'+
 //				'alert($(this).val())'+
@@ -275,10 +274,10 @@ $('tr').on('click', function(){
 		if($(this).parent('td').parent('tr').find("input[name='pr_delete']").val() == "n") {
 	        $(this).parent('td').parent('tr').remove();
 	    }else{
-		$(this).parents('tr').css('display', 'none');
-		$(this).parents('tr').find("input[name='pr_delete']").val("d")
+			$(this).parents('tr').css('display', 'none');
+			$(this).parents('tr').find("input[name='pr_delete']").val("d")
 	    }
-	   });
+	 });
 	
 	
 	//창고코드 이벤트
@@ -291,9 +290,17 @@ $('tr').on('click', function(){
 	// 수량 이벤트
 	$(document).on('keyup', '.quantity', function(){
 // 		let quantity = $(this).val();
-		$(this).parent().next().children().val($(this).val()*$(this).next().val());
+		console.log($(this).val());
+		console.log($(this).next().val().split(' 원')[0]);
+		console.log(typeof $(this).val());
+		console.log(typeof $(this).next().val().split(' 원')[0]);
+		$(this).parent().next().children().val($(this).val()*$(this).next().val().split(' 원')[0]);
 	})
+	
+	
 
+
+	
 	
 	$(document).on('change, keyup', '#prInput', function(){
 		let sum = Number(0);

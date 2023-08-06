@@ -53,7 +53,7 @@ public class MinjunController {
 	@Autowired
 	private OrderService orderService;
 	
-	// Shop CRUD
+	// Shop CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/shop")
 	public ModelAndView shopMain(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
@@ -76,20 +76,20 @@ public class MinjunController {
 	@RequestMapping("/insertShop")
 	public void insertShop (ShopVO shopVO, HttpServletResponse res, HttpSession session) throws Exception {
 			
-			int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
-			
-			shopVO.setSys_reg(emp_no + "");
-			shopVO.setSys_up(emp_no + "");
-			
-			shopService.insertShop(shopVO);
-			
-			res.setContentType("text/html; charset=utf-8");
-			PrintWriter out = res.getWriter();
-			out.println("<script>");
-			out.println("alert('성공적으로 등록되었습니다.')");
-			out.println("window.opener.location.reload(true); window.close();");
-			out.println("</script>");
-		}
+		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
+		
+		shopVO.setSys_reg(emp_no + "");
+		shopVO.setSys_up(emp_no + "");
+		
+		shopService.insertShop(shopVO);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 등록되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
 	
 	@RequestMapping("/shopDetail")
 	public ModelAndView shopDetail (ModelAndView mnv ,String s_no) throws SQLException {
@@ -150,7 +150,7 @@ public class MinjunController {
 		return mnv;
 	}
 	
-	// Merchandise CRUD 
+	// Merchandise CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/merchandise")
 	public ModelAndView merchandiseMain(String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
@@ -276,7 +276,7 @@ public class MinjunController {
 	}
 	
 	
-	// ORDER CRUD
+	// ORDER CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/order.do")
 	public ModelAndView orderMain(String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {

@@ -154,6 +154,9 @@ body {
 		<div class="modal-content " >
 			<div class="modal-header">				
 				<h4 class="modal-title">개인정보 수정</h4>
+					<form id="searchForm2" method="post"
+							action="/member/mypage.do?mcode=${mcode }"
+							style="display: contents;"></form>
 			</div>
 			<div class="modal-body">
 				<form id="modProfileForm" action="/member/modProfile.do" method="post">
