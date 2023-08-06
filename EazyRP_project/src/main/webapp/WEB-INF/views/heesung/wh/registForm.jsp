@@ -130,7 +130,7 @@
 					</td>
 					<td>		<!-- 공장 번호를 가져간다면 hidden 태그 새로 만들어 그 태그에 value값 넣기, 
 								아래 태그는 공장 이름을 표시하는거기 때문에 name을 fac_no에서 fac_name으로 변경함-->
-						<input type="text" id="0" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no">
+						<input type="text" id="0" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no" id="fac_no0">
 					</td>
 					<td>		<!-- 위와 마찬가지로 창고 번호를 가져간다면 hidden 태그 새로 만들어 그 태그에 value값 넣기, 
 								아래 태그는 창고 이름을 표시하는거기 때문에 name을 wh_no2에서 wh_name으로 변경함 -->
@@ -176,7 +176,7 @@
 		$('#prInput').append(
 			'<tr>'
  				+ '<td><input type="text" id="' + cnt + '" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'
-				+ '<td><input type="text" id="fac_no' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no' + cnt + '"></td>'
+				+ '<td><input type="text" id="fac_no' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no" id="fac_no' + cnt + '"</td>'
 				+ '<td><input type="text" id="wh_no' + cnt + '" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'
 				+ '<td><input type="text" id="outprice" class="outprice" name="outprice" style="width: 100%;" value=""></td>'
 				+ '<td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value=""></td>'

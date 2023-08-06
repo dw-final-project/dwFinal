@@ -76,6 +76,7 @@
 			if (sort.text() != '생산 공장') {
 				
 				let parentInputId = opener.$("#cnt").val();
+				
 				let parentEl = $("#" + parentInputId, opener.document);
 				
 				/* 	생산입고 registForm에서 제품 추가를 하여 여러개의 td들을 추가하고 생산 공장들을 각각 선택해도
@@ -86,20 +87,20 @@
 				if (parentEl.attr('id') == 0) {		// 제품을 추가하지 않은 경우
 					
 					alert('1번 실행');
-					parentEl.parents('tr').find('input.fac_names').val(fac_noName);
-					parentEl.parents('tr').find('input[name="fac_no"]').val($(this).find('#fac_no').text());
+					alert('parentInputId : ' + parentInputId);
 					
-					alert("변경될 부모 태그의 name 값은 " + parentEl.parents('tr').find('input[name="fac_no"]').attr('name') + " 입니다.")
+					parentEl.parents('tr').find('input.fac_names').val(fac_noName);
+					parentEl.parents('tr').find('input[type="hidden"]#fac_no').val($(this).find('#fac_no').text());
+					
 					
 				} else {	// 제품을 추가한 경우
 					
 					alert('2번 실행');
 					alert('parentInputId : ' + parentInputId);
-					alert("클릭한 아이디가 fac_no인 녀석의 텍스트 값 : " + $(this).find('#fac_no').text());
-					parentEl.parents('tr').find('input#' + parentInputId).val(fac_noName);
-					parentEl.parents('tr').find('input[name="' + parentInputId + '"]').val($(this).find('#fac_no').text());
 					
-					alert("변경될 부모 태그의 name 값은 " + parentEl.parents('tr').find('input[name="' + parentInputId + '"]').attr('name') + " 입니다.");
+					parentEl.parents('tr').find('input[type="text"]#' + parentInputId).val(fac_noName);
+					parentEl.parents('tr').find('input[type="hidden"]#' + parentInputId).val($(this).find('#fac_no').text());
+					
 					
 				}
 				
