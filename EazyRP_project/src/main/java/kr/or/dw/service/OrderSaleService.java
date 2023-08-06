@@ -17,6 +17,13 @@ public interface OrderSaleService {
 	List<SaleDetailVO> getSaleDetail(String sheet_no) throws SQLException;
 
 	SsheetVO getSheet(String sheet_no) throws SQLException;
+	
+	int insertProductSale(SsheetVO sheet) throws SQLException;
+
+	void insertProductDetail(List<SaleDetailVO> detail) throws SQLException;
+
+	void saleRemove(String sheet_no) throws SQLException;
+
 
 	
 	

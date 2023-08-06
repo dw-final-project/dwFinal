@@ -64,6 +64,32 @@ public class OrderSaleServiceImpl implements OrderSaleService {
 		// TODO Auto-generated method stub
 		return ordersaleDAO.getSheet(sheet_no);
 	}
+
+	@Override
+	public int insertProductSale(SsheetVO sheet) throws SQLException {
+		ordersaleDAO.insertProductSale(sheet);
+		
+		int sheet_no = ordersaleDAO.insertSheetNo();
+		
+		return sheet_no;
+	}
+
+	@Override
+	public void insertProductDetail(List<SaleDetailVO> detail) throws SQLException {
+		for(SaleDetailVO vo : detail) {
+			ordersaleDAO.insertProudctDetail(vo);
+		}
+		
+	}
+
+	@Override
+	public void saleRemove(String sheet_no) throws SQLException {
+		System.out.println("1");
+		ordersaleDAO.detailRemove(sheet_no);	
+		ordersaleDAO.saleRemove(sheet_no);			
+		System.out.println("2");
+		
+	}
 	
 	
 

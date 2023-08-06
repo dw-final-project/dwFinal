@@ -102,11 +102,12 @@ public class SiServiceImpl implements SiService {
 		}
 		
 	}
-
+	
+	@Transactional
 	@Override
 	public void siRemove(String si_no) throws SQLException {
 		siDAO.siRemove(si_no);
-		
+		siDAO.siUpdateRemove(si_no);
 	} 
 	
 	

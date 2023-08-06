@@ -308,6 +308,7 @@ $('#addPutBtn').on('click', function(){
 // 	let fc_no = "${si.FC_NO}";
 // 	$('#fc-select').val(fc_no);
 // 	$('select#fc-select').find('option[value="' + fc_no + '"]').attr('selected', 'selected'); 
+
 </script>
 
 

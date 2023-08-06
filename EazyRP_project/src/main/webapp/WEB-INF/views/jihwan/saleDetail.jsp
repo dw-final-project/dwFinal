@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>판매 상세정보</title>
      <style>
     	input {
     		border: none;
@@ -148,7 +148,7 @@ window.onload = function(){
 	$('button#removeBtn').on('click', function(){
 		if(confirm("정말 삭제하시겠습니까?")){
 			formObj.attr({
-				'action' : 'remove',
+				'action' : '/erp4/saleremove.do',
 				'method' : 'post' 
 			});
 			formObj.submit();
