@@ -222,6 +222,7 @@ let cnt = rownumList.length;
 console.log(cnt);
 let dtail_no = $('#dtail_no').val();
 
+
 // 제품 추가 버튼
 $('#addPutBtn').on('click', function(){
 	cnt++;
