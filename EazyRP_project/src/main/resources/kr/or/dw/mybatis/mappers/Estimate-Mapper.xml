@@ -43,7 +43,7 @@
 		  ,TO_CHAR(SUM(ed.amount), '999,999,999,999,999') || '원' amount
 		  ,MAX(ed.PROGRESS) progress
 		  ,MAX(e.FILES) files 
-		  ,MAX(e.REALFILENAME) realfilename
+		  ,MAX(e.REALFILENAME) realFileName
 	  FROM ESTIMATE e , ESTDETAIL ed, company c, emp em, product p
 	 WHERE 1=1
 	   AND e.EST_NO = ed.EST_NO
@@ -84,7 +84,7 @@
 		  ,SUM(ed.amount) amount
 		  ,MAX(ed.PROGRESS) progress
 		  ,MAX(e.FILES) files
-		  ,MAX(e.realfilename) realfilename
+		  ,MAX(e.realFileName) realFileName
 	  FROM ESTIMATE e , ESTDETAIL ed
 	 WHERE 1=1
 	   AND e.EST_NO = ed.EST_NO
@@ -192,17 +192,17 @@
 		sys_updatedate,
 		sys_reg,
 		files,
-		realfilename
+		realFileName
 		)
 	VALUES(
-		  #{est_no}
-		  ,sysdate
-		  ,'Y'
-		  ,#{emp_no}
-		  ,sysdate
-		  ,#{emp_no}
-		  ,files
-		  ,realfilename	
+		  #{est_no},
+		  sysdate,
+		  'Y',
+		  #{emp_no},
+		  sysdate,
+		  #{emp_no},
+		  #{files},
+		  #{realFileName}	
 	)
 </insert>
 
@@ -258,12 +258,15 @@
 </select>
 
 <update id="modifyEstimate">
-	UPDATE estimate SET sys_up = #{emp_no}, sys_updatedate = sysdate, files = #{files}, realfilename = #{realfilename}
+	UPDATE estimate SET sys_up = #{emp_no},
+						sys_updatedate = sysdate,
+						enabled = 'Y',
+						files = #{files},
+						realFileName = #{realFileName}
 	WHERE est_no = #{est_no}
 </update>
 
 <update id="modifyEstimateDetail" >
-
   MERGE 
   INTO ESTDETAIL  
   USING dual 
@@ -290,7 +293,8 @@ WHEN NOT MATCHED THEN
 		quantity,
 		pr_no,
 		regdate,
-		c_no)
+		c_no
+		 )
 	VALUES (
 		estdetail_seq.nextval,
 		#{est_no},

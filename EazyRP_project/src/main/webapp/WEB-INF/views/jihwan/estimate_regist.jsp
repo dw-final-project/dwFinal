@@ -95,7 +95,7 @@
             <td align="center"><b>첨부파일</b></td>
             <td><input type="file" style="width: 100%;" id="file" name ="files" value="">
             	<input type="hidden" id="fileName" name="fileName" value=""> 
-            	<input type="hidden" id="realfilename" name="realfilename">
+            	<input type="hidden" id="realfilename" name="realfilename" value="">
             </td>
         </tr>
     </table>
@@ -136,6 +136,7 @@
 	$('#file').on('change', function(){
 		$('#fileName').val($('#file').val());
 	})
+	
 	let cnt = 1;
 	
 	// 파일 추가 버튼
