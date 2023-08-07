@@ -19,5 +19,15 @@ public interface ProfitLossDAO {
 
 	List<Tr_historyVO> getHistory(Map<String, Object> dataMap, RowBounds rowBounds) throws SQLException;
 
+	void insertProfitLoss(Map<String, Object> map) throws SQLException;
+
+	List<Tr_historyVO> getDayHistory(Map<String, Object> dataMap) throws SQLException;
+
+	List<Integer> getPrevMontTotal(Map<String, String> maps) throws SQLException;
+
+	List<Tr_historyVO> getMonthHistory(Map<String, String> day) throws SQLException;
+
+	Tr_historyVO getTr(Map<String, String> map) throws SQLException;
+
 	
 }

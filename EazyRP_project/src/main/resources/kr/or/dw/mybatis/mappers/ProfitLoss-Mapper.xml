@@ -25,10 +25,27 @@
 		</if>
 	</sql>
 	
+	<sql id="search2">
+		<if test="cri2.searchType1 == 'l'.toString()">
+			AND amount <![CDATA[<]]> 0
+		</if>
+		<if test="cri2.searchType1 == 'p'.toString()">
+			AND amount <![CDATA[>]]> 0
+		</if>
+		
+		<if test="cri2.searchType2 != 'all'.toString() and cri2.searchType2 != null">
+			AND tr_gb LIKE '%' || #{cri2.searchType2} || '%'
+		</if>
+		
+		<if test="cri2.startDate != ''.toString()">
+			AND sys_regdate = #{cri2.startDate}
+		</if>
+	</sql>
+	
 	<select id="getHistory" resultType="tr_history">
 		SELECT * FROM tr_history WHERE c_no = #{c_no}
 		<include refid="search"/>
-		ORDER BY th_no DESC
+		ORDER BY sys_regdate DESC
 	</select>
 	
 	<select id="getTotalCount" resultType="int">
@@ -36,30 +53,44 @@
 		<include refid="search"/>
 	</select>
 	
-	<insert id="tr">
+	<insert id="insertProfitLoss">
 		INSERT INTO tr_history VALUES(
 			'TH_' || LPAD(th_no_seq.nextval, 4, '0'),
 			#{date},
 			#{date},
 			'C000001',
-			0,
+			1,
 			'FC_003',
 			#{amount},
-			'',
-			'o',
+			'X',
+			#{gb},
 			'Y',
-			'/product/orderDetail.do?o_no=' || #{order.o_no},
-			#{order.quantity},
+			'',
+			#{quantity},
 			'',
 			'AC_001',
 			'T_001',
 			'',
 			'',
 			'추가',
-			'',
-			''
+			#{saleprice},
+			#{unitprice}
 		)
 	</insert>
 	
+	<select id="getDayHistory" resultType="tr_history">
+		SELECT * FROM tr_history WHERE c_no = #{c_no}
+		<include refid="search"/>
+		ORDER BY sys_regdate DESC
+	</select>
+	
+	<select id="getPrevMontTotal" resultType="int">
+		SELECT amount FROM tr_history 
+		WHERE sys_regdate BETWEEN #{prevMonth} AND #{prevMonth2}
+	</select>
+	
+	<select id="getMonthHistory" resultType="tr_history">
+		SELECT * FROM tr_history WHERE sys_regdate BETWEEN #{start} AND #{end}
+	</select>
 	
 </mapper>
