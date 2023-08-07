@@ -350,6 +350,91 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		return mnv;
 	}
 	
+	@RequestMapping("wh/modify")
+	public void whModify(HttpServletResponse res, int emp_no,  String wo_no, int wh_total, String[] pr_no, String[] fac_no, String[] wh_no, int[] detail_no,
+			int[] outprice, int[] quantity, int[] total_outprice, @RequestParam("files")MultipartFile multi, HttpSession session, String progress, String[] pr_delete, String whNo) throws SQLException, IOException {
+		
+		System.out.println("erp4/wh/modify - 진입");
+		
+		List<WhVO> whList = new ArrayList<WhVO>();	// 상세 정보들을 만들기 위한 객체
+		
+		String filess = "";
+		
+		if(!multi.isEmpty()) {
+			UUID uuid = UUID.randomUUID();
+			String[] uuids = uuid.toString().split("-");
+			
+			String uniqueName = uuids[0];
+			
+			String fileRealName = multi.getOriginalFilename();
+			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
+			String uploadFolder = "C:\\upload\\";
+			
+			filess = uniqueName+fileExtension;
+			
+			
+			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
+			
+			if(!saveFile.exists()) {
+				saveFile.mkdirs();
+			}
+			
+			try {
+				multi.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		String c_no = session.getAttribute("c_no").toString();
+		
+		System.out.println("pr_no.length : " + pr_no.length);
+		
+		for(int i = 0; i < pr_no.length; i++) {
+			
+			System.out.println(i + "번째 시작");
+			
+			WhVO wh = new WhVO();
+			
+			// wh 테이블
+			wh.setWh_no(whNo);
+			wh.setEmp_no(emp_no);
+			System.out.println(emp_no);
+			wh.setWo_no(wo_no);
+			wh.setWh_total(wh_total);
+			wh.setFiles(filess);
+			wh.setC_no(c_no);
+			wh.setProgress(progress);
+			
+			// whdetail 테이블
+			wh.setDetail_no(detail_no[i]);
+			wh.setPr_no(pr_no[i]);
+			wh.setFac_no(fac_no[i]);
+			wh.setWh_no2(wh_no[i]);
+			wh.setOutprice(outprice[i]);
+			wh.setQuantity(quantity[i]);
+			wh.setTotal_outprice(total_outprice[i]);
+			wh.setPr_delete(pr_delete[i]);
+			
+			whList.add(wh);
+		
+			System.out.println(i + " 번째 종료");
+			
+		}
+
+		whService.modifyWh(whList);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 수정되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+		
+	}
+	
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////workorder(작업지시서)
 	
 	@RequestMapping("/workorder")

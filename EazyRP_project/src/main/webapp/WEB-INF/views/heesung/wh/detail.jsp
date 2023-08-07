@@ -79,7 +79,7 @@
 	<!-- card footer End -->
 <form role="form" method="post" enctype="multipart/form-data">
 
-		<input type="hidden" name="wh_no" value="">
+		<input type="hidden" name="whNo" value="${wh.WH_NO }">
 		<table>
 	        <tr>
 	            <td width="40%" align="center"><b>코드번호</b></td>
@@ -91,7 +91,10 @@
 	        </tr>
 	        <tr>
 	            <td width="40%" align="center"><b>담당자</b></td>
-	            <td width="100%"><input type="text" style="width: 100%;" value="${wh.C_NAME } / ${wh.E_NAME }"></td>
+	            <td width="100%">
+		        	<input type="hidden" id="receiver" name="emp_no" value="${wh.EMP_NO }">
+	            	<input type="text" style="width: 100%;" value="${wh.C_NAME } / ${wh.E_NAME }">
+	            </td>
 	        </tr>
 	        <tr>
 	        	<td width="40%" align="center"><b>등록일</b></td>
@@ -143,13 +146,14 @@
        	</thead>
     	<tbody id="prInput">
 	        <input type="hidden" value="" id="cnt">
+	        <input type="hidden" value="A" id="A">
 	       	<c:forEach items="${whDetail }" var="whDetail" varStatus="loop">
 		        <tr id="trChk" >    	
 					<input type="hidden" class="rownum" value="${whDetail.ROWNUM }">
 					<input type="hidden" name="detail_no" id="dtail_no" value="${whDetail.DETAIL_NO }">
 		<%-- 	       <input type="hidden" name="enabled" id="estenabled" value="${est.ENABLED }"> --%>
-		<!-- 	       <input type="hidden" name="pr_delete" value="o"> -->
-		        	<td>								<!-- 아래 태그 name을 pr_no에서 pr_name으로 변경 -->
+					<input type="hidden" name="pr_delete" value="o">
+		        	<td>								
 						<input type="text" id="${whDetail.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${whDetail.PR_NAME }">
 						<input type="hidden" name="pr_no" value="${whDetail.PR_NO }">
 					</td>
@@ -190,22 +194,22 @@
 <script>
 window.onload = function(){
 	
-	let fc_no = "${est.FC_NO}";
-	$('#fc-select').val(fc_no);
-	$('select#fc-select').find('option[value="' + fc_no + '"]').attr('selected', 'selected');
-	console.log(fc_no);
+// 	let fc_no = "${est.FC_NO}";
+// 	$('#fc-select').val(fc_no);
+// 	$('select#fc-select').find('option[value="' + fc_no + '"]').attr('selected', 'selected');
+// 	console.log(fc_no);
 	
 	let formObj = $('form[role="form"]');
 
 	$('button#modifyBtn').on('click', function(){
 		formObj.attr({
-			'action' : 'modifyForm.do',
+			'action' : 'modify.do',
 			'method' : 'post'
-// 			'enctype' : 'multipart/form-data'
+// 			'enctype' : 'multipart/form-ata'
 		});
 		console.log($('form[role="form"]').serializeArray());
 		
-		alert($('tr[id="trChk"]').get().length);
+		alert("tr은 총 " + $('tr[id="trChk"]').get().length) + "개 입니다.";
 		
 		let trCnt = 0;
 		for(let i = 0; i < $('tr[id="trChk"]').get().length; i++){
@@ -222,7 +226,7 @@ window.onload = function(){
 		}
 		
 		if($('tr[id="trChk"]').get().length == trCnt) {
-			alert("제품 추가하쇼");
+			alert("제품을 추가하세요.");
 			return;
 		}
 		
@@ -259,7 +263,8 @@ $('#addPutBtn').on('click', function(){
 	cnt++;
 	$('#prInput').append(
 			'<tr id="trChk"><input type="hidden" class="rownum" value="'+ cnt + '">'
-				+ '<input type="hidden" name="detail_no" id="" value="">'
+				+ '<input type="hidden" name="detail_no" id="" value="0">'
+				+ '<input type="hidden" name="pr_delete" value="n">'
  				+ '<td><input type="text" id="' + cnt + '" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'
 				+ '<td><input type="text" id="fac_no' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no"></td>'
 				+ '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'
@@ -282,12 +287,6 @@ function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 	win.focus();
 	return win;
 };
-
-$('tr').on('click', function(){
-	$('#name', opener.document).val($(this).find('#c_name').text() + " / " + $(this).find('#name').text());
-	$('#receiver', opener.document).val($(this).find("#emp_no").val());
-	
-})
 
 	// 제품코드 td 클릭 이벤트
 	$(document).on('click', '.pr_names', function(){

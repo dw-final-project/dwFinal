@@ -15,4 +15,6 @@ public interface WhService {
 
 	Map<String, Object> selectWh(String wh_no) throws SQLException;
 
+	void modifyWh(List<WhVO> whList) throws SQLException;
+
 }

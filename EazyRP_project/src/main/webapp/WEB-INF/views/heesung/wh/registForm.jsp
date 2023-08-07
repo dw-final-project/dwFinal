@@ -124,6 +124,7 @@
 			</thead>
 			<tbody id="prInput">
 				<input type="hidden" value="" id="cnt">
+				<input type="hidden" value="A" id="A">
 				<tr>
 					<td>								<!-- 아래 태그 name을 pr_no에서 pr_name으로 변경 -->
 						<input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no">
