@@ -141,5 +141,10 @@ public class WhServiceImpl implements WhService{
 		
 		
 	}
+
+	@Override
+	public void whRemove(String whNo) throws SQLException {
+		whDAO.deleteWh(whNo);
+	}
 	
 }

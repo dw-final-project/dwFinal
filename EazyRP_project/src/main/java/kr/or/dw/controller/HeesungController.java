@@ -350,7 +350,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		return mnv;
 	}
 	
-	@RequestMapping("wh/modify")
+	@RequestMapping("/wh/modify")
 	public void whModify(HttpServletResponse res, int emp_no,  String wo_no, int wh_total, String[] pr_no, String[] fac_no, String[] wh_no, int[] detail_no,
 			int[] outprice, int[] quantity, int[] total_outprice, @RequestParam("files")MultipartFile multi, HttpSession session, String progress, String[] pr_delete, String whNo) throws SQLException, IOException {
 		
@@ -431,6 +431,23 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		out.println("<script>");
 		out.println("alert('성공적으로 수정되었습니다.')");
 		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+		
+	}
+	
+	@RequestMapping("/wh/remove")
+	public void whRemove(HttpServletResponse res, String whNo) throws SQLException, IOException {
+		
+		System.out.println("erp4/wh/remove - 진입");
+		
+		whService.whRemove(whNo);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("window.opener.location.reload();");
+		out.println("alert('삭제 되었습니다.')");
+		out.println("window.close();");
 		out.println("</script>");
 		
 	}

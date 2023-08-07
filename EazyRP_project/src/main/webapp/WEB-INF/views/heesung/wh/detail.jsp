@@ -163,7 +163,7 @@
 					</td>
 					<td>		
 						<input type="text" id="wh_no${whDetail.ROWNUM }" class="wh_names" name="wh_name" style="width: 100%;" value="${whDetail.WH_NAME }">
-						<input type="hidden" name="wh_no" value="${whDetail.WH_NO2 }">
+						<input type="hidden" id="wh" name="wh_no" value="${whDetail.WH_NO2 }">
 					</td>
 					<td>
 						<input type="text" id="outprice" class="outprice" name="outprice" style="width: 100%;" value="${whDetail.OUTPRICE }">
@@ -266,8 +266,8 @@ $('#addPutBtn').on('click', function(){
 				+ '<input type="hidden" name="detail_no" id="" value="0">'
 				+ '<input type="hidden" name="pr_delete" value="n">'
  				+ '<td><input type="text" id="' + cnt + '" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'
-				+ '<td><input type="text" id="fac_no' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no"></td>'
-				+ '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'
+				+ '<td><input type="text" id="fac_no' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no"id="fac_no' + cnt + '"></td>'
+				+ '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" id="wh" name="wh_no"></td>'
 				+ '<td><input type="text" id="outprice' + cnt + '" class="outprice" name="outprice" style="width: 100%;" value=""></td>'
 				+ '<td><input type="text" id="quantity' + cnt + '" class="quantity" name="quantity" style="width: 100%;" value=""></td>'
 				+ '<td><input type="text" id="amount" name="total_outprice" style="width: 100%;" value=""></td>'
