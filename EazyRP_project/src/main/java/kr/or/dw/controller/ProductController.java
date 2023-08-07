@@ -32,7 +32,7 @@ import kr.or.dw.vo.BuyDetailVO;
 import kr.or.dw.vo.CompanyVO;
 import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.O_DetailVO;
-import kr.or.dw.vo.OrderVO;
+import kr.or.dw.vo.Order2VO;
 import kr.or.dw.vo.Pro_whVO;
 import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.WareHouseVO;
@@ -105,6 +105,7 @@ public class ProductController {
 			System.out.println(i + "번째 추가 " + vo);
 		}
 		productService.insertProductDetail(detail);
+		productService.Tr_History(sheet_no, detail);
 		
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
@@ -142,6 +143,7 @@ public class ProductController {
 		dataMap.put("c_no", c_no);
 		dataMap.put("order", "N");
 		Map<String, Object> map = new HashMap<>();
+		System.out.println("1번");
 		map = productService.allOrderList(dataMap);
 		
 		mnv.addObject("mcode", mcode);
@@ -153,7 +155,7 @@ public class ProductController {
 	@RequestMapping("/orderDetail")
 	public ModelAndView orderDetail(ModelAndView mnv, String o_no, String orders) throws SQLException {
 		List<O_DetailVO> detail = productService.getOrderDetail(o_no);
-		OrderVO order = productService.selectOrder(o_no);
+		Order2VO order = productService.selectOrder(o_no);
 		String c_no = order.getBuy_c_no();
 		String c_name = productService.getC_name(c_no);
 		mnv.addObject("order", order);
@@ -295,7 +297,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/orderRegistForm")
-	public void orderRegistForm(HttpServletResponse res, HttpSession session, OrderVO order, String[] pr_no, int[] quantity, int[] buy_price2, int[] unit_price2, String[] pr_name, String[] wh_no, String[] lack) throws SQLException, IOException {
+	public void orderRegistForm(HttpServletResponse res, HttpSession session, Order2VO order, String[] pr_no, int[] quantity, int[] buy_price2, int[] unit_price2, String[] pr_name, String[] wh_no, String[] lack) throws SQLException, IOException {
 		String c_no = (String) session.getAttribute("c_no");
 		String e_name = (String) session.getAttribute("e_name");
 		order.setBuy_c_no(c_no);
@@ -390,8 +392,8 @@ public class ProductController {
 	
 	@RequestMapping("/receive")
 	public void receive(String o_no, HttpSession session, HttpServletResponse res) throws SQLException, IOException {
-		productService.receive(o_no);
-		
+		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
+		productService.receive(o_no,emp_no);
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
 		out.println("<script>");

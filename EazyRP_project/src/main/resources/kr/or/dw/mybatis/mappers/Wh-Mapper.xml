@@ -15,39 +15,48 @@
 <!-- 	</selectKey> -->
 	
 	<sql id="search">
-		<if test="searchType == 'number'.toString()">
-			AND pc_no LIKE '%' || #{keyword} || '%'
+		<if test="cri.searchType == 'n'.toString()">
+			AND wh.wh_no LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="searchType == 'code'.toString()">
-			AND pc_code LIKE '%' || #{keyword} || '%'
+		<if test="cri.searchType == 'e'.toString()">
+			AND emp.e_name LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="searchType == 'title'.toString()">
-			AND pc_name LIKE '%' || #{keyword} || '%'
-		</if>
-		<if test="searchType == 'nnc'.toString()">
+		<if test="cri.searchType == 'ne'.toString()">
 			AND (
-			pc_no LIKE '%' || #{keyword} || '%'
+			wh.wh_no LIKE '%' || #{cri.keyword} || '%'
 			OR
-			pc_code LIKE '%' || #{keyword} || '%'
-			OR
-			pc_name LIKE '%' || #{keyword} || '%'
+			emp.e_name LIKE '%' || #{cri.keyword} || '%'
 			)
 		</if>
 	</sql>
 	
 	<!-- 셀렉트할때는 리절트타입 필요하고 insert delete 등할때는 파라미터 타입이 들어감 -->
 	<select id="selectSearchWhList" resultType="wh">
-		SELECT	*
-		FROM	wh
-		WHERE	1=1
+		SELECT wh.wh_no
+		,MAX(wh.SYS_REGDATE) sys_regdate
+	    ,MAX((SELECT wh_name FROM WAREHOUSE WHERE wh_no = wd.WH_NO2)) wh_name
+	    ,MAX((SELECT E_NAME  FROM EMP WHERE EMP_NO = wh.EMP_NO)) e_name
+	    ,MAX((SELECT pr_name FROM product WHERE pr_no = wd.PR_NO)) pr_name
+	    ,MAX((SELECT wo_name FROM workorder WHERE wo_no = wh.wo_no)) wo_name
+	    ,max(wh.PROGRESS) progress
+		FROM wh wh, WHDETAIL wd, emp emp
+		WHERE 1=1 
+		AND wh.WH_NO = wd.WH_NO
+		AND wh.emp_no = emp.emp_no
+		AND	wh.c_no = #{c_no}
 		<include refid="search"/>
-		ORDER BY wh_no
+		GROUP BY wh.WH_NO
+		ORDER BY sys_regdate DESC
 	</select>
 	
 	<select id="selectSearchWhListCount" resultType="int">
-		SELECT	COUNT(*)
-		FROM	wh
+		SELECT	COUNT(DISTINCT wh.wh_no)
+		FROM	wh wh, emp emp, company com, whdetail whd
 		WHERE	1=1
+		AND		wh.emp_no = emp.emp_no
+		AND		wh.wh_no = whd.wh_no
+		AND 	wh.c_no = com.c_no 
+		AND		wh.c_no = #{c_no}
 		<include refid="search"/>
 	</select>
 	
@@ -63,24 +72,28 @@
 			emp_no,
 			enabled,
 			files,
+			progress,
 			wo_no,
 			sys_up,
 			sys_updatedate,
 			sys_reg,
-			wh_total
+			wh_total,
+			c_no
 		)
 		VALUES
 		(
 			#{wh_no},
 			sysdate,
 			#{emp_no},
-			1,
+			'y',
 			#{files},
+			#{progress},
 			#{wo_no},
 			#{emp_no},
 			sysdate,
 			#{emp_no},
-			#{wh_total}
+			#{wh_total},
+			#{c_no}
 		)
 	</insert>
 	
@@ -124,5 +137,102 @@
 		WHERE 	wd.pr_no = pd.pr_no
 		AND		wd.wh_no = #{getWh_no}
 	</select>
+	
+	<select id="selectWareHouseName" resultType="str">
+		SELECT 	wa.wh_name
+		FROM 	WHDETAIL wd, warehouse wa
+		WHERE 	wd.wh_no2 = wa.wh_no
+		AND		wd.wh_no = #{getWh_no}
+	</select>
+	
+	<select id="selectWh" resultType="Map">
+		SELECT 	wh.wh_no,
+				TO_CHAR(wh.sys_regdate, 'yyyy-MM-dd') sys_regdate,
+				wh.wo_no, wo.wo_name,	<!-- 작업지시서 번호, 제목 -->
+				wh.progress,
+				emp.e_name,
+				com.c_name,
+				wh.wh_total,
+				wh.emp_no
+		FROM wh wh, emp emp, workorder wo, company com
+		WHERE wh.emp_no = emp.emp_no
+		AND wh.wo_no = wo.wo_no
+		AND wh.c_no = com.c_no
+		AND wh.wh_no = #{wh_no}
+	</select>
+	
+	<select id="selectWhDetail" resultType="Map">
+		SELECT	ROWNUM,
+				whd.wh_no,
+				whd.detail_no,
+				whd.pr_no, p.pr_name,
+				whd.fac_no, f.fac_name,
+				whd.wh_no2, wa.wh_name,
+				whd.outprice,
+				whd.quantity,
+				whd.total_outprice
+		FROM whdetail whd, wh wh, factory f, product p, warehouse wa
+		WHERE whd.wh_no = wh.wh_no
+		AND whd.fac_no = f.fac_no
+		AND whd.pr_no = p.pr_no
+		AND whd.wh_no2 = wa.wh_no
+		AND whd.wh_no = #{wh_no}
+	</select>
+	
+	<update id="whUpdate">
+		UPDATE 	wh
+		SET		sys_up = #{emp_no},
+				emp_no = #{emp_no},
+				sys_updatedate = sysdate,
+				progress = #{progress},
+				c_no = #{c_no},
+				files = #{files}
+		WHERE	wh_no = #{wh_no}
+	</update>
+	
+	<update id="modifyWhDetail">
+		MERGE
+		INTO 	whdetail
+		USING	dual
+		ON		(#{detail_no} != 0)
+		WHEN MATCHED THEN
+			UPDATE
+			SET		
+					wh_no		= #{wh_no},
+					pr_no		= #{pr_no},
+					quantity	= #{quantity},
+					outprice	= #{outprice},
+					wh_no2		= #{wh_no2},
+					fac_no		= #{fac_no},
+					total_outprice = #{total_outprice}
+			WHERE	detail_no	= #{detail_no}		
+		WHEN NOT MATCHED THEN 
+		INSERT (
+			detail_no,
+			wh_no,
+			pr_no,
+			quantity,
+			outprice,
+			wh_no2,
+			fac_no,
+			total_outprice
+		)
+		VALUES(
+			detail_no_seq.nextval,
+			#{wh_no},
+			#{pr_no},
+			#{quantity},
+			#{outprice},
+			#{wh_no2},
+			#{fac_no},
+			#{total_outprice}
+		)
+					
+	</update>
+	
+	<delete id="deleteWhDetail">
+		DELETE 	from whdetail
+		WHERE 	detail_no = #{detail_no}
+	</delete>
 	
 </mapper>

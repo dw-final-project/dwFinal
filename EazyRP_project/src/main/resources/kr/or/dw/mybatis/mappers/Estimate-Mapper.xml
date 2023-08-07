@@ -76,7 +76,7 @@
 		  ,MAX(ed.fc_no) fc_no
 		  ,MAX(e.enabled) enabled
 		  ,MAX((SELECT pr_name FROM product WHERE pr_no = ed.pr_no)) p_name
-		  ,MAX((SELECT wh_name FROM WAREHOUSE WHERE wh_no = ed.wh_no)) wh_name
+		  ,MAX((SELECT wh_name FROM warehouse WHERE wh_no = ed.wh_no)) wh_name
 		  ,MAX((SELECT pr_exprice FROM product p WHERE p.pr_no = ed.pr_no)) || ' 원' pr_exprice
 		  ,MAX(ed.QUANTITY) QUANTITY
 		  ,count(ed.PR_NO) pr_no
@@ -193,7 +193,7 @@
 	VALUES(
 		  #{est_no}
 		  ,sysdate
-		  ,'y'
+		  ,'Y'
 		  ,#{emp_no}
 		  ,sysdate
 		  ,#{emp_no}	
@@ -315,5 +315,9 @@ WHEN NOT MATCHED THEN
 	DELETE FROM estdetail
 		WHERE est_no = #{est_no}
 </delete>
+
+<update id="deletUpdateEstimate" >
+	UPDATE estimate SET ENABLED = 'N' WHERE est_no = #{est_no} 
+</update>
 
 </mapper>

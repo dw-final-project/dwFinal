@@ -114,6 +114,7 @@
         </tr>
     	<tbody id="prInput">
     	<input type="hidden" value="" id="cnt">
+    	<input type="hidden" value="B" id="A">
        <c:forEach items="${siList}" var="si">
         <tr id="trChk" >    	
 	       <input type="hidden" class="rownum" value="${si.ROWNUM }">
@@ -308,6 +309,7 @@ $('#addPutBtn').on('click', function(){
 // 	let fc_no = "${si.FC_NO}";
 // 	$('#fc-select').val(fc_no);
 // 	$('select#fc-select').find('option[value="' + fc_no + '"]').attr('selected', 'selected'); 
+
 </script>
 
 

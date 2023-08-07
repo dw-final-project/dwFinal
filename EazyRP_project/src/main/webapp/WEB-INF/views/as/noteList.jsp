@@ -58,6 +58,7 @@
 					<div style="display: flex; align-items: end; justify-content: end;">
 					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/asmanage/communication.do', '쪽지쓰기', 700, 1000)"
 					style="width: 100px; margin: 20px; align-self: center;">A/S 접수</button>
+
 				</div>
 			</div>
 		</div>

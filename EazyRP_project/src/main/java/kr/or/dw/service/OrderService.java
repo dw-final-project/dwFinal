@@ -22,7 +22,7 @@ public interface OrderService {
 
 	Map<String, Object> selectDetail(String so_no) throws SQLException;
 
-	void minusQuantity(OrderVO orderVO) throws SQLException;
+	void minusQuantity(OrderVO orderVO, String c_no) throws SQLException;
 
 	void modifyOrder(OrderVO orderVO) throws SQLException;
 

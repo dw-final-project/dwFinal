@@ -31,6 +31,12 @@ public interface ItemDAO {
 	List<Map<String, Object>> selectFindSpriceList() throws SQLException;
 
 	void insertItem(ProductVO product) throws SQLException;
+
+	Map<String, Object> selectProductDetail(String pr_no) throws SQLException;
+
+	void updateProduct(ProductVO product) throws SQLException;
+
+	void deleteProduct(ProductVO product) throws SQLException;
 	
 	
 }

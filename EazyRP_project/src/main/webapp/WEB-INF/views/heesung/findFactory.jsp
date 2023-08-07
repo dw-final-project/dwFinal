@@ -76,20 +76,35 @@
 			if (sort.text() != '생산 공장') {
 				
 				let parentInputId = opener.$("#cnt").val();
+				
 				let parentEl = $("#" + parentInputId, opener.document);
-		
-				parentEl.parents('tr').find('input.fac_names').val(fac_noName);
-				parentEl.parents('tr').find('input[name="fac_no"]').val($(this).find('#fac_no').text());
+				
+				/* 	생산입고 registForm에서 제품 추가를 하여 여러개의 td들을 추가하고 생산 공장들을 각각 선택해도
+					마지막에 선택한 생산 공장의 벨류로 모두 바뀌어서 보내지기 때문에 모두 같은 정보가 DB에 등록된다.	*/
+				
+				
+				if (parentEl.attr('id') == 0) {		// 제품을 추가하지 않은 경우
+					
+					parentEl.parents('tr').find('input.fac_names').val(fac_noName);
+					parentEl.parents('tr').find('input[type="hidden"]#fac_no0').val($(this).find('#fac_no').text());
+					
+				} else {	// 제품을 추가한 경우
+					
+					parentEl.parents('tr').find('input[type="text"]#' + parentInputId).val(fac_noName);
+					parentEl.parents('tr').find('input[type="hidden"]#' + parentInputId).val($(this).find('#fac_no').text());
+					
+				}
 				
 				window.close();
 				
+			} else{
+			
+				opener.$('input[name="fac_no"]').val($(this).find('#fac_no').text());
+				opener.$('#find_fac').val(fac_noName);
+				
+				window.close();
+			
 			}
-			
-			opener.$('input[name="fac_no"]').val($(this).find('#fac_no').text());
-			opener.$('#find_fac').val(fac_noName);
-			
-			window.close();
-			
 		})
 		
 	})

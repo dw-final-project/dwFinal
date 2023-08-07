@@ -73,9 +73,12 @@
 			
 			let price = $(this).find('.cost').val();
 			let parentEl = $("#" + parentInputId, opener.document);
+			
 			console.log(parentEl.parents('tr').find('input#cost'))
 			console.log(parentEl)
+			
 			parentEl.val(productName);
+			
 			$('#c_name', opener.document).val(companyName);
 			parentEl.parents('tr').find('input#cost').val(price);
 			$('#pr_no', opener.document).val(pr_noName);

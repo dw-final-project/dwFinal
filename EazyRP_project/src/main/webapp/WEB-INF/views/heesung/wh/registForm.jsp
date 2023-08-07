@@ -90,6 +90,18 @@
 				</td>
 			</tr>
 			<tr>
+            <td width="40%" align="center">
+            	<b>상태</b>
+            </td>
+            <td>
+            	<select name="progress" id="fc-select">
+				    <option value="0">대기중</option>
+				    <option value="1">진행중</option>
+				    <option value="2">완료</option>
+				</select>
+			</td>
+        </tr>
+			<tr>
 	            <td align="center"><b>첨부파일</b></td>
 	            <td>
 	            	<input type="file" style="width: 100%;"  name ="files" value="">
@@ -97,7 +109,7 @@
 	            </td>
         	</tr>
 		</table>
-		<button type="button" id="addPutBtn">추가</button>
+		<button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">추가</button>
 		<table>
 			<thead>
 				<tr>
@@ -112,13 +124,14 @@
 			</thead>
 			<tbody id="prInput">
 				<input type="hidden" value="" id="cnt">
+				<input type="hidden" value="A" id="A">
 				<tr>
 					<td>								<!-- 아래 태그 name을 pr_no에서 pr_name으로 변경 -->
 						<input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no">
 					</td>
 					<td>		<!-- 공장 번호를 가져간다면 hidden 태그 새로 만들어 그 태그에 value값 넣기, 
 								아래 태그는 공장 이름을 표시하는거기 때문에 name을 fac_no에서 fac_name으로 변경함-->
-						<input type="text" id="0" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no">
+						<input type="text" id="0" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no" id="fac_no0">
 					</td>
 					<td>		<!-- 위와 마찬가지로 창고 번호를 가져간다면 hidden 태그 새로 만들어 그 태그에 value값 넣기, 
 								아래 태그는 창고 이름을 표시하는거기 때문에 name을 wh_no2에서 wh_name으로 변경함 -->
@@ -134,7 +147,7 @@
 						<input type="text" id="total_outprice" name="total_outprice" style="width: 100%;" value="">
 					</td>
 					<td style="text-align: center;">
-						<button type="button" id="cancelBtn">삭제</button>
+						<button type="button" id="cancelBtn" class="btn btn-danger">삭제</button>
 					</td>
 				</tr>
 			</tbody>
@@ -148,29 +161,28 @@
 			</tr>
 		</table>
 		<input type="submit" id="submitBtn" class="btn btn-primary" style="text-align: center;" value="등록">
+		<input type="button" class="btn btn-warning" id="closeBtn" value="취 소">
 	</form>
 </body>
 
 <script>
+
 	let cnt = 1;
+
 	// 파일 추가 버튼
 	$('#addPutBtn').on('click', function() {
 		
 		cnt++;
-		
+
 		$('#prInput').append(
 			'<tr>'
-																	// 아래 태그 name이 원래 없었는데 pr_name으로 변경            아래 태그도 마찬가지로 name이 없었는데 pr_no로 변경
  				+ '<td><input type="text" id="' + cnt + '" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'
- 																															// 아래 태그에 name이 없었는데 fac_no로 변경
-				+ '<td><input type="text" id="' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no"></td>'
-																															// 아래 태그에 name이 없었는데 wh_no2로 변경
-				+ '<td><input type="text" id="' + cnt + '" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no2"></td>'
-																															//아래에 있던 input hidden태그 필요 없어 삭제
-				+ '<td><input type="text" id="outprice' + cnt + '" class="outprice" name="outprice" style="width: 100%;" value=""></td>'
-				+ '<td><input type="text" id="quantity' + cnt + '" class="quantity" name="quantity" style="width: 100%;" value=""></td>'
+				+ '<td><input type="text" id="fac_no' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no" id="fac_no' + cnt + '"></td>'
+				+ '<td><input type="text" id="wh_no' + cnt + '" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'
+				+ '<td><input type="text" id="outprice" class="outprice" name="outprice" style="width: 100%;" value=""></td>'
+				+ '<td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value=""></td>'
 				+ '<td><input type="text" id="amount" name="total_outprice" style="width: 100%;" value=""></td>'
-				+ '<td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>'
+				+ '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'
 			+ '</tr>'
 		);
 	
@@ -233,6 +245,11 @@
 		win.focus();
 		return win;
 	};
+	
+	// 취소버튼 클릭
+	$('input#closeBtn').on('click', function() {
+		window.close();							// 윈도우 창을 닫는다.
+	});
 	
 </script>
 

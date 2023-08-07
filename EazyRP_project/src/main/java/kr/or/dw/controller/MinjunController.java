@@ -53,7 +53,7 @@ public class MinjunController {
 	@Autowired
 	private OrderService orderService;
 	
-	// Shop CRUD
+	// Shop CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/shop")
 	public ModelAndView shopMain(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
@@ -76,20 +76,20 @@ public class MinjunController {
 	@RequestMapping("/insertShop")
 	public void insertShop (ShopVO shopVO, HttpServletResponse res, HttpSession session) throws Exception {
 			
-			int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
-			
-			shopVO.setSys_reg(emp_no + "");
-			shopVO.setSys_up(emp_no + "");
-			
-			shopService.insertShop(shopVO);
-			
-			res.setContentType("text/html; charset=utf-8");
-			PrintWriter out = res.getWriter();
-			out.println("<script>");
-			out.println("alert('성공적으로 등록되었습니다.')");
-			out.println("window.opener.location.reload(true); window.close();");
-			out.println("</script>");
-		}
+		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
+		
+		shopVO.setSys_reg(emp_no + "");
+		shopVO.setSys_up(emp_no + "");
+		
+		shopService.insertShop(shopVO);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 등록되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
 	
 	@RequestMapping("/shopDetail")
 	public ModelAndView shopDetail (ModelAndView mnv ,String s_no) throws SQLException {
@@ -150,7 +150,7 @@ public class MinjunController {
 		return mnv;
 	}
 	
-	// Merchandise CRUD 
+	// Merchandise CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/merchandise")
 	public ModelAndView merchandiseMain(String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
@@ -276,7 +276,7 @@ public class MinjunController {
 	}
 	
 	
-	// ORDER CRUD
+	// ORDER CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/order.do")
 	public ModelAndView orderMain(String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
@@ -326,20 +326,23 @@ public class MinjunController {
 		}
 		List<Map<String, Object>> merchandise = null;
 		Map<String, String> dataMap = new HashMap<>();
+		
 		dataMap.put("sp_no", sp_no);
 		dataMap.put("s_name", s_name);
 		dataMap.put("pr_name", pr_name);
 		dataMap.put("searchType", searchType);
 		dataMap.put("keyword", keyword);
+		
 		if(keyword != null){
 			merchandise = merchandiseService.getMerchandise(dataMap);
 		} else {
 			merchandise = merchandiseService.getMerchandiseList();
 		}
-		mnv.setViewName(url);
+		
 		dataMap.put("sp_no", sp_no);
 		dataMap.put("s_name", s_name);
 		dataMap.put("pr_name", pr_name);
+		mnv.setViewName(url);
 		mnv.addObject("searchType", searchType);
 		mnv.addObject("keyword", keyword);
 		mnv.addObject("merchandise", merchandise);
@@ -371,9 +374,10 @@ public class MinjunController {
 		orderVO.setSys_up(emp_no + "");
 		orderVO.setSo_no(so_no);
 		orderVO.setSp_no(sp_no);
-		
+		System.out.println(orderVO.getQuantity());
+		String c_no = (String) session.getAttribute("c_no");
 		if(orderVO.getProgress().equals("배송완료")) {
-			orderService.minusQuantity(orderVO);
+			orderService.minusQuantity(orderVO, c_no);
 		}else if(orderVO.getProgress().equals("반품")){
 			orderService.plusQuantity(orderVO);
 		} else if (orderVO.getProgress().equals(oldprogress)) {

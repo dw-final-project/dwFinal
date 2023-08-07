@@ -142,4 +142,38 @@
 		UPDATE shop_pr SET sp_q = sp_q<![CDATA[+]]>#{quantity}
 		 WHERE sp_no = #{sp_no}
 	</update>	
+	
+	<insert id="trHistory" parameterType="Map">
+		INSERT INTO tr_history VALUES(
+			'TH_' || LPAD(th_no_seq.nextval, 4, '0'),
+			sysdate,
+			sysdate,
+			#{c_no},
+			#{emp_no},
+			'FC_003',
+			#{amount},
+			#{so_no},
+			's',
+			'Y',
+			'/erp5/orderDetail.do?so_no=' || #{so_no},
+			#{quantity},
+			'',
+			'AC_001',
+			'T_001',
+			'',
+			'',
+			(SELECT e_name FROM emp WHERE emp_no = #{emp_no}),
+			#{price},
+			#{unitprice}
+		)
+	</insert>
+	
+	<select id="getUnitprice" resultType="int">
+		SELECT unitprice FROM shop_pr WHERE sp_no = #{sp_no}
+	</select>
+	
+	<select id="getPrice" resultType="int">
+		SELECT price FROM shop_pr WHERE sp_no = #{sp_no}
+	</select>
+	
 </mapper>

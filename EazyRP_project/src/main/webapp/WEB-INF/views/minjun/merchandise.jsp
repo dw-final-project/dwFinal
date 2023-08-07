@@ -35,7 +35,8 @@
 									<th width="150px" style="text-align: center;">쇼핑몰 이름</th>
 									<th width="200px" style="text-align: center;">제품 이름</th>
 									<th width="100px" style="text-align: center;">수량</th>
-									<th width="200px" style="text-align: center;">가격</th>
+									<th width="200px" style="text-align: center;">판매가격</th>
+									<th width="200px" style="text-align: center;">단가</th>
 									<th width="200px" style="text-align: center;">판매상태</th>
 									<th width="200px" style="text-align: center;">판매시작일</th>
 									<th width="200px" style="text-align: center;">판매종료일</th>
@@ -47,6 +48,7 @@
 										<td style="text-align: center;">${md.PR_NAME}</td>
 										<td style="text-align: center;">${md.SP_Q}</td>
 										<td style="text-align: center;">${md.PRICE}</td>
+										<td style="text-align: center;">${md.UNITPRICE}</td>
 										<td style="text-align: center;">${md.STATUS}</td>
 										<td style="text-align: center;">
 											<fmt:formatDate value="${md.STARTPERIOD }"

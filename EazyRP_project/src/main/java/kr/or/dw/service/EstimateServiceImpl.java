@@ -10,6 +10,7 @@ import org.apache.commons.collections4.map.HashedMap;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.dw.command.PageMaker;
 import kr.or.dw.command.SearchCriteria;
@@ -156,10 +157,14 @@ public class EstimateServiceImpl implements EstimateService {
 		
 	}
 
+	@Transactional
 	@Override
 	public void deleteEstimate(String est_no) throws SQLException {
-		
-		estimateDAO.deleteEstimate(est_no);
+			
+			estimateDAO.deleteEstimate(est_no);			
+			
+			estimateDAO.deletUpdateEstimate(est_no);
+	
 		
 	}
 

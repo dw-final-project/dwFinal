@@ -14,7 +14,7 @@ import kr.or.dw.vo.CompanyVO;
 import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.NoteVO;
 import kr.or.dw.vo.O_DetailVO;
-import kr.or.dw.vo.OrderVO;
+import kr.or.dw.vo.Order2VO;
 import kr.or.dw.vo.Pro_whVO;
 import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.SiVO;
@@ -47,15 +47,13 @@ public interface ProductDAO {
 
 	List<String> getPr_no(SearchCriteria cri) throws SQLException;
 
-	OrderVO insertOrderList(String sheet, String c_no) throws SQLException;
-
-	List<OrderVO> allOrderList(Map<String, Object> dataMap, RowBounds rowBounds) throws SQLException;
+	Order2VO insertOrderList(String sheet, String c_no) throws SQLException;
 
 	int orderCount(Map<String, Object> dataMap) throws SQLException;
 
 	List<O_DetailVO> getOrderDetail(String o_no) throws SQLException;
 
-	OrderVO selectOrder(String o_no) throws SQLException;
+	Order2VO selectOrder(String o_no) throws SQLException;
 
 	List<DraftVO> getOrderDraft(String c_no) throws SQLException;
 
@@ -67,7 +65,7 @@ public interface ProductDAO {
 
 	List<Pro_whVO> getWhList(String pr_name) throws SQLException;
 
-	void orderRegist(OrderVO order) throws SQLException;
+	void orderRegist(Order2VO order) throws SQLException;
 
 	int getO_no() throws SQLException;
 
@@ -90,6 +88,12 @@ public interface ProductDAO {
 	void receive(String o_no) throws SQLException;
 
 	void consumptionProduct(O_DetailVO o_DetailVO) throws SQLException;
+
+	void tr_History(Map<String, Object> map) throws SQLException;
+
+	List<Order2VO> allOrderList(Map<String, Object> dataMap, RowBounds rowBounds) throws SQLException;
+
+	void tr_History2(Map<String, Object> map) throws SQLException;
 
 
 	

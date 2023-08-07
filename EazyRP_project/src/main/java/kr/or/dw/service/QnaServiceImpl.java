@@ -12,13 +12,8 @@ import org.springframework.stereotype.Service;
 
 import kr.or.dw.command.PageMaker;
 import kr.or.dw.command.SearchCriteria;
-import kr.or.dw.dao.ContactDAO;
 import kr.or.dw.dao.QnaDAO;
-import kr.or.dw.dao.WarehouseDAO;
-import kr.or.dw.vo.CompanyVO;
-import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.InquiryVO;
-import kr.or.dw.vo.WareHouseVO;
 
 
 

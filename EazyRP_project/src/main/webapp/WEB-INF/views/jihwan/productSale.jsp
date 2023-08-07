@@ -14,9 +14,8 @@
 						<form id="searchForm2" method="post" action="/erp4/sale.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
-								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>업체명</option>
-								<option value="p" ${searchType eq 'p' ? 'selected' : '' }>판매제품명</option>
-								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>금액</option>
+								<option value="a" ${searchType eq 'a' ? 'selected' : '' }>작성자</option>
+								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>제목</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
@@ -31,17 +30,18 @@
 						<div>
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
-									<th width="25%" style="text-align: center;">판매제품명</th>
+									<th width="25%" style="text-align: center;">비고</th>
 									<th width="25%" style="text-align: center;">요청날짜</th>
-									<th width="25%" style="text-align: center;">판매업체</th>
+									<th width="25%" style="text-align: center;">작성자</th>
 									<th width="25%" style="text-align: center;">발생금액</th>
 								</tr>
+									<input type="hidden" value="" name="sheet_no">
 									<c:forEach items="${sale}" var="sale">
 									<tr>
-										<td style="text-align: center;">${sale.PR_NAME }<a id="aTag" href="#" onclick=""></a></td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/erp4/saleDetail.do?sheet_no=${sale.SHEET_NO}', '판매내역 상세조회', 600, 600)">${sale.PR_NAME }</a></td>
 										<td style="text-align: center;">${sale.SYS_REGDATE}</td>
-										<td style="text-align: center;">${sale.C_NAME }</td>
-										<td style="text-align: center;">${sale.PR_EXPRICE } 원</td>
+										<td style="text-align: center;">${sale.E_NAME }</td>
+										<td style="text-align: center;">${sale.PRICE }원</td>
 									</tr>
 									</c:forEach>
 							</table>
@@ -52,8 +52,8 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick=""
-					style="width: 100px; margin: 20px; align-self: center; font-size: 0.7em;">구매 내역 추가</button>
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/erp4/productSaleRegist.do', '구매 내역 추가', 600, 700)"
+					style="width: 100px; margin: 20px; align-self: center; font-size: 0.7em;">판매 내역 추가</button>
 				</div>
 			</div>
 			

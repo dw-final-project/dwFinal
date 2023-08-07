@@ -183,6 +183,8 @@ public class BusinessController {
 			warehouse = estimateService.getWareHouseList();
 		}
 		
+		System.out.println("findWareHoust : dataMap :" + dataMap);
+		System.out.println("findWareHoust : warehouse :" + warehouse);
 		mnv.setViewName(url);
 		mnv.addObject("warehouse",warehouse );
 		mnv.addObject("searchType", searchType);

@@ -1,29 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.dw.dao.ProcessDAO">
-
+	
+	<sql id="makeProcessNoSeq">
+		SELECT ('PC_') || CASE 
+							WHEN LENGTH(pc_code_seq.nextval) = 1
+							THEN '00' || pc_code_seq.nextval
+							WHEN LENGTH(pc_code_seq.nextval) = 2
+							THEN '0' || pc_code_seq.nextval
+							ELSE '' || pc_code_seq.nextval
+				   	      END PC_CODE
+		  FROM dual
+	</sql>
+	
 	<insert id="insertProcess" parameterType="process">
-		INSERT 	INTO process (pc_no, pc_code, pc_name, pc_order) 
-				VALUES (pc_no_seq.nextVal,#{pc_code},#{pc_name},#{pc_order})
+		<selectKey keyProperty="pc_code" order="BEFORE" resultType="java.lang.String">
+			<include refid="makeProcessNoSeq"/>
+		</selectKey>
+		INSERT INTO process (
+			pc_code, 
+			pc_name, 
+			pc_order, 
+			pc_content
+		) 
+		VALUES (
+			#{pc_code},
+			#{pc_name},
+			#{pc_order},
+			#{pc_content}
+		)
 	</insert>
 	
 	<sql id="search">
-		<if test="searchType == 'number'.toString()">
-			AND pc_no LIKE '%' || #{keyword} || '%'
-		</if>
-		<if test="searchType == 'code'.toString()">
-			AND pc_code LIKE '%' || #{keyword} || '%'
-		</if>
-		<if test="searchType == 'title'.toString()">
+		<if test="searchType == 't'.toString()">
 			AND pc_name LIKE '%' || #{keyword} || '%'
 		</if>
-		<if test="searchType == 'nnc'.toString()">
+		<if test="searchType == 'o'.toString()">
+			AND pc_order LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'to'.toString()">
 			AND (
-			pc_no LIKE '%' || #{keyword} || '%'
-			OR
-			pc_code LIKE '%' || #{keyword} || '%'
-			OR
 			pc_name LIKE '%' || #{keyword} || '%'
+			OR
+			pc_order LIKE '%' || #{keyword} || '%'
 			)
 		</if>
 	</sql>
@@ -34,7 +53,7 @@
 		  FROM process
 		 WHERE 1=1
 		 <include refid="search"/>
-		 ORDER BY pc_no desc
+		 ORDER BY pc_code desc
 	</select>
 	
 	<select id="selectSearchProcessListCount" resultType="int">
@@ -62,6 +81,7 @@
 			pc_code = #{pc_code}
 			,pc_name = #{pc_name}
 			,pc_order = #{pc_order}
+			,pc_content = #{pc_content}
 		WHERE pc_code = #{pc_code}
 	</update>
 </mapper>

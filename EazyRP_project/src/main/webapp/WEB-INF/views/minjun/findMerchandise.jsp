@@ -38,7 +38,8 @@
 				<th width="100px" style="text-align: center;">제품 이름</th>
 				<th width="100px" style="text-align: center;">쇼핑몰 이름</th>
 				<th width="100px" style="text-align: center;">수량</th>
-				<th width="100px" style="text-align: center;">가격</th>
+				<th width="100px" style="text-align: center;">판매가격</th>
+				<th width="100px" style="text-align: center;">단가</th>
 			</tr>
 			<c:forEach items="${merchandise}" var="mch">
 				<tr>
@@ -47,6 +48,7 @@
 					<td style="text-align: center;" class="s_name">${mch.S_NAME}</td>
 					<td style="text-align: center;" class="sp_q">${mch.SP_Q}</td>
 					<td style="text-align: center;" class="price">${mch.PRICE}</td>
+					<td style="text-align: center;" class="price">${mch.UNITPRICE}</td>
 				</tr>
 			</c:forEach>
 		</table>
