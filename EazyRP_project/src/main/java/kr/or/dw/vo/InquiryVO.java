@@ -20,5 +20,6 @@ public class InquiryVO {
 	private int u_no;	// 문의자 계정번호
 	private String sys_up;	// 수정자
 	private String sys_reg;	// 최초등록
+
 	
 }

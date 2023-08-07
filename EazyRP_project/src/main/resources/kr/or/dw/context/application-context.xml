@@ -20,6 +20,7 @@
 	<bean id="memberService" class="kr.or.dw.service.MemberServiceImpl"/>
 	<bean id="mailService" class="kr.or.dw.service.MailSendServiceImpl"/>
 	<bean id="qnaService" class="kr.or.dw.service.QnaServiceImpl"/>
+	<bean id="asService" class="kr.or.dw.service.AsServiceImpl"/>
 	
 	<bean id="productService" class="kr.or.dw.service.ProductServiceImpl"/>
 	

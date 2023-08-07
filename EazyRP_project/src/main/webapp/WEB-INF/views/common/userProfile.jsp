@@ -140,11 +140,11 @@
 $(function(){
 
 	$('#repwdBtn').on('click', function(){
-		location.href = "/member/repwdForm"; 
+		location.href = "/member/repwdForm.do?mcode=${mcode }"; 
 	});
 	
 	$('#modifyBtn').on('click', function(){
-		location.href = "/member/modProfileForm"; 
+		location.href = "/member/modProfileForm.do?mcode=${mcode }"; 
 	});
 	
 	$('#deleteBtn').on('click', function(){

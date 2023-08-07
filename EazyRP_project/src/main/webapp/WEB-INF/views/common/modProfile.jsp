@@ -160,7 +160,7 @@ body {
 			</div>
 			<div class="modal-body">
 				<form id="modProfileForm" action="/member/modProfile.do" method="post">
-					<input type="hidden" name="id" value="${id }">
+					<input type="hidden" name="mcode" value="${mcode }">
 					<div class="form-group d-flex">
 						<div class="input-group inputText">
 							<span class="input-group-addon"><i class="fa fa-envelope"></i></span>

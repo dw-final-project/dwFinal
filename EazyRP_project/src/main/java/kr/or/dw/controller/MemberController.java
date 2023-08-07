@@ -249,6 +249,7 @@ public class MemberController {
 		return mnv;
 	}
 	
+	//개인정보 수정
 	@RequestMapping("/modProfileForm")
 	public ModelAndView modProfile(String mcode, ModelAndView mnv) throws Exception {		
 		String url = "/common/modProfile.page";
@@ -259,10 +260,12 @@ public class MemberController {
 		return mnv;
 	}	
 
+	// 개인정보 조회
 	@RequestMapping("/modProfile")
 	public ModelAndView Profile(MemberVO member, HttpSession session, String mcode, ModelAndView mnv) throws Exception {
 		String url = "/common/userProfile.page";
 	
+		
 		MemberVO mem = (MemberVO) session.getAttribute("loginUser");
 		String id = mem.getId();
 		member.setId(id);
@@ -286,6 +289,7 @@ public class MemberController {
 	public ModelAndView repwdForm(String mcode, ModelAndView mnv) throws Exception {
 		String url = "/common/repwdForm.page";
 
+		
 		mnv.addObject("mcode", mcode);		
 		mnv.setViewName(url);
 		
@@ -313,8 +317,9 @@ public class MemberController {
 	//회원탈퇴 
 	@RequestMapping("/delete")
 	public String delete(String id)throws Exception {
-		
+			
 		memberService.delete(id);
+
 		return "/common/loginForm";
 	}
 

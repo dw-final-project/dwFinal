@@ -10,7 +10,7 @@
 			<div class="col-md-10" style="max-width: 1100px;">
 				<div class="card card-outline card-info">
 					<div class="card-header" style="border-bottom: none;">
-						<h2 class="card-title p-1">받은 쪽지함</h2>
+						<h2 class="card-title p-1">A/S 관리</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm2" method="post" action="/asmanage/as.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
@@ -33,11 +33,11 @@
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
 									<th width="80px" style="text-align: center;"></th>
-									<th width="350px" style="text-align: center;">제목</th>
-									<th width="120px" style="text-align: center;">보낸 사람</th>
+									<th width="350px" style="text-align: center;">제품명</th>
+									<th width="120px" style="text-align: center;">요청 날짜</th>
 									<th width="220px" style="text-align: center;">업체명</th>
-									<th width="150px" style="text-align: center;">첨부파일 여부</th>
-									<th width="300px" style="text-align: center;">보낸 시간</th>
+									<th width="150px" style="text-align: center;">담당 기사</th>
+									<th width="300px" style="text-align: center;">진행 상황</th>
 								</tr>
 									<c:forEach items="${note}" var="note" varStatus="loop">
 									<tr>
@@ -61,10 +61,9 @@
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
 					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/asmanage/communication.do', '쪽지쓰기', 700, 1000)"
-					style="width: 100px; margin: 20px; align-self: center;">쪽지 쓰기</button>
+					style="width: 100px; margin: 20px; align-self: center;">A/S 접수</button>
 				</div>
 			</div>
-			
 		</div>
 	</section>
 	
@@ -101,4 +100,4 @@
 
 	
 </script>
-<%@ include file="../../include/footer_js.jsp" %>
+<%@ include file="../include/footer_js.jsp" %>

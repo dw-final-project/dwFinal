@@ -12,56 +12,35 @@ import org.springframework.stereotype.Service;
 
 import kr.or.dw.command.PageMaker;
 import kr.or.dw.command.SearchCriteria;
-import kr.or.dw.dao.QnaDAO;
-import kr.or.dw.vo.InquiryVO;
+import kr.or.dw.dao.AsDAO;
 
 
 
 @Service
-public class QnaServiceImpl implements QnaService {
+public class AsServiceImpl implements AsService {
 	
 	@Autowired
-	private QnaDAO qnaDAO;
+	private AsDAO asDAO;
 
 	@Override
-	public Map<String, Object> selectQnaList(SearchCriteria cri) throws SQLException {
+	public Map<String, Object> selectAsList(SearchCriteria cri) throws SQLException {
 		
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		List<Map<String, Object>> qnaList = qnaDAO.selectQnaList(cri, rowBounds);
-		int totalCount = qnaDAO.selectQnaListCount(cri);
+		List<Map<String, Object>> asList = asDAO.selectAsList(cri, rowBounds);
+		int totalCount = asDAO.selectAsListCount(cri);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
 		
 		Map<String, Object> dataMap = new HashMap<String, Object>();
-		dataMap.put("qnaList", qnaList);
+		dataMap.put("asList", asList);
 		dataMap.put("pageMaker", pageMaker);
 		
 		return dataMap;
 	}
-
-	@Override
-	public void insertQna(InquiryVO qna) throws SQLException {
-		qnaDAO.insertQna(qna);
-		
-	}
-
-	@Override
-	public void remove(int inq_no) throws SQLException {
-		qnaDAO.deleteQna(inq_no);
-		
-	}
-
-	@Override
-	public void modifyQna(InquiryVO inquiry) throws SQLException {
-		qnaDAO.modifyQna(inquiry);
-	}
-
-
-	
 
 	
 	
