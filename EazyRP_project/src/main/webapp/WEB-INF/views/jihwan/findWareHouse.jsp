@@ -48,6 +48,7 @@
 				
 			</c:forEach>
 		</table>
+		<input type="hidden" value="" id="cnt">
 	</div>
 </div>
 </div>
@@ -89,7 +90,7 @@ $('#searchBtn').on('click',function(){
 				
 				// 견적서 사용 부분				
 				let parentEl = $("#" + parentInputId, opener.document);
-// 				parentEl.val(wh_noName);
+				parentEl.val(wh_noName);
 				parentEl.parents('tr').find('input.wh_names').val(wh_noName);
 				parentEl.parents('tr').find('input[name="wh_no"]').val($(this).find('#wh_no').val());
 				window.close();
