@@ -75,6 +75,8 @@ $('#searchBtn').on('click',function(){
 		$(document).ready(function() {
 			
 			let parentInputId = opener.$("#cnt").val();
+			let gbVal = opener.$("#A").val();
+			console.log(gbVal);
 			console.log(parentInputId);
 			
 			$('tr').on('click', function(){
@@ -82,18 +84,27 @@ $('#searchBtn').on('click',function(){
 				let wh_no = $(this).find('#wh_no').val();
 				let price = $(this).find('.cost').val();
 				
-				// 출하지시서 사용 부분
-				let parentElSi = $('#si_whname', opener.document);
-				parentElSi.val(wh_noName);
-				let parentElWhNo = $('input[name=wh_no]', opener.document);
-				parentElWhNo.val(wh_no);
-				
-				// 견적서 사용 부분				
-				let parentEl = $("#" + parentInputId, opener.document);
-				parentEl.val(wh_noName);
-				parentEl.parents('tr').find('input.wh_names').val(wh_noName);
-				parentEl.parents('tr').find('input[name="wh_no"]').val($(this).find('#wh_no').val());
-				window.close();
+					
+					if(gbVal == 'A'){
+						// 견적서 사용 부분		
+					let parentEl = $("#" + parentInputId, opener.document);
+					parentEl.val(wh_noName);
+					parentEl.parents('tr').find('input.wh_names').val(wh_noName);
+					parentEl.parents('tr').find('input[name="wh_no"]').val($(this).find('#wh_no').val());
+					$('#wh_no', opener.document).val($(this).find('#wh_name').text() + " / " + $(this).find('#addr').text());
+					window.close();
+					
+					} else if(gbVal == 'B'){
+						// 출하지시서 사용 부분
+						let parentElSi = $('#si_whname', opener.document);
+						parentElSi.val(wh_noName);
+						let parentElWhNo = $('input[name=wh_no]', opener.document);
+						parentElWhNo.val(wh_no)
+						$('#wh_no', opener.document).val($(this).find('#wh_name').text() + " / " + $(this).find('#addr').text());
+						window.close();
+					}
+								
+			
 				
 				$('#wh_no', opener.document).val($(this).find('#wh_name').text() + " / " + $(this).find('#addr').text());
 				window.close();
