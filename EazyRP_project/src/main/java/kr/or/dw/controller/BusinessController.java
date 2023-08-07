@@ -239,7 +239,7 @@ public class BusinessController {
 			vo.add(est);	
 		}
 		vo.get(0).setFiles(filess);
-		vo.get(0).setRealfilename(fileRealName);
+		vo.get(0).setRealFileName(fileRealName);
 		System.out.println(vo);
 		
 		estimateService.insertEstimate(vo);
@@ -283,7 +283,7 @@ public class BusinessController {
 	}
 	
 	@RequestMapping("modifyForm")
-	public void estimateModify(@RequestParam("files")MultipartFile multi, String[] pr_delete, String est_no, int[] estdetail_no, int emp_no, String[] pr_no, String fc_no, String[] wh_no, int[] quantity, int[] amount,  HttpServletResponse res, HttpSession session) throws Exception {
+	public void estimateModify(@RequestParam("files")MultipartFile multi, String fileName, String[] pr_delete, String est_no, int[] estdetail_no, int emp_no, String[] pr_no, String fc_no, String[] wh_no, int[] quantity, int[] amount,  HttpServletResponse res, HttpSession session) throws Exception {
 		List<EstimateVO> modify = new ArrayList<EstimateVO>();
 		
 		String empno = session.getAttribute("emp_no").toString();
@@ -332,14 +332,14 @@ public class BusinessController {
 			est.setEstdetail_no(estdetail_no[i]);
 			est.setEst_no(est_no);
 			System.out.println(est_no);
-			
 			est.setPr_delete(pr_delete[i]);
-			
 			modify.add(est);	
+			System.out.println("dd1");
 		}
+		System.out.println("dd2");
 		modify.get(0).setFiles(filess);
-		modify.get(0).setRealfilename(fileRealName);
-		
+		modify.get(0).setRealFileName(fileRealName);
+		System.out.println("dd3");
 		
 		System.out.println("모디파이입니다 : " + modify);
 		

@@ -131,17 +131,21 @@ public class EstimateServiceImpl implements EstimateService {
 
 	@Override
 	public void modifyEstimate(List<EstimateVO> modify, String empno) throws SQLException {
-		System.out.println("1");
+		System.out.println("아");
 		String est_no =  modify.get(0).getEst_no();
 		
 		Map<String, String> modifyMap = new HashMap<>();
 		modifyMap.put("emp_no",empno);
 		modifyMap.put("est_no", est_no);
-		System.out.println("2");
+		System.out.println("왜");
 		estimateDAO.modifyEstimate(modifyMap);
-		System.out.println("3");
+		System.out.println("안");
 		String files = modify.get(0).getFiles();
+		System.out.println("되");
+		String realFileName = modify.get(0).getRealFileName();
+		System.out.println("냐");
 		String c_no = modify.get(0).getC_no();
+		System.out.println("짜증");
 		
 		System.out.println("modifyMap = " + modifyMap);
 		int a = 4;
