@@ -114,6 +114,7 @@
         </tr>
     	<tbody id="prInput">
     	<input type="hidden" value="" id="cnt">
+    	<input type="hidden" value="B" id="A">
        <c:forEach items="${siList}" var="si">
         <tr id="trChk" >    	
 	       <input type="hidden" class="rownum" value="${si.ROWNUM }">
