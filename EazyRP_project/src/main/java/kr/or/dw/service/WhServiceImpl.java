@@ -119,4 +119,27 @@ public class WhServiceImpl implements WhService{
 		return dataMap;
 	}
 
+	@Override
+	public void modifyWh(List<WhVO> whList) throws SQLException {
+		
+		System.out.println("WhServiceImpl - modifyWh");
+		
+		WhVO whVo = whList.get(0); // whList.get(0)은 wh_no 이다.
+		
+		System.out.println("whDAO.whDetail(whList.get(0)); - 전");
+		whDAO.whUpdate(whVo);
+		System.out.println("whDAO.whDetail(whList.get(0)); - 후");
+		
+		for (WhVO wh : whList) {
+			if (wh.getPr_delete() != null && wh.getPr_delete().equals("d")) {
+				whDAO.deleteWhDetail(wh);
+			} else {
+				whDAO.modifyWhDetail(wh);
+			}
+		}
+		System.out.println("for 문 끝");
+		
+		
+	}
+	
 }

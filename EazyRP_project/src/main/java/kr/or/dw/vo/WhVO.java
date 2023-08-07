@@ -31,9 +31,10 @@ public class WhVO {
 	private String pr_name;			// 제품명
 	private String fac_no;			// 공장번호
 	private int total_outprice;		// 외주비합계
-	private int dtail_no;			// 상세번호
+	private int detail_no;			// 상세번호
 	private String e_name;			// 사원이름
 	private String wh_name;			// 창고이름
 	private String wo_name;			// 작업지시서 이름
+	private String pr_delete;		// 디테일에서 tr 구분자
 	
 }

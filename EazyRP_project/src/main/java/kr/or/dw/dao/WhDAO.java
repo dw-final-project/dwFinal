@@ -31,5 +31,11 @@ public interface WhDAO {
 
 	List<Map<String, Object>> selectWhDetail(String wh_no) throws SQLException;
 
+	void whUpdate(WhVO whVo) throws SQLException;
+
+	void deleteWhDetail(WhVO wh) throws SQLException;
+
+	void modifyWhDetail(WhVO wh) throws SQLException;
+
 
 }
