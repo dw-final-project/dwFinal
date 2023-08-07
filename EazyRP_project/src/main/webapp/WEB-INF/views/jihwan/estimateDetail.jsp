@@ -109,7 +109,7 @@
             <td>
             <input type="file" name="files" style="width: 100%;" value="">
             <c:if test="${!empty est.FILES }">
-			<div><button type="button" onclick="location.href='<%=request.getContextPath()%>/erp4/getFile.do?files=${est.FILES }';">파일 다운</button>&nbsp;&nbsp;${est.FILES }</div>
+			<div><button type="button" onclick="location.href='<%=request.getContextPath()%>/erp4/getFile.do?files=${est.FILES }';">파일 다운</button>&nbsp;&nbsp;${est.REALFILENAME }</div>
 			</c:if>
 			</td> 
         </tr>

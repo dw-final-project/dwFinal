@@ -194,21 +194,20 @@ public class BusinessController {
 	}
 	
 	@RequestMapping("/insertEstimate")
-	public void insertEstimate (@RequestParam("files")MultipartFile multi, int emp_no, String[] pr_no, String fc_no, String[] wh_no, int[] quantity, int[] amount,  HttpServletResponse res) throws Exception {
+	public void insertEstimate (@RequestParam("files")MultipartFile multi, String fileName, int emp_no, String[] pr_no, String fc_no, String[] wh_no, int[] quantity, int[] amount,  HttpServletResponse res) throws Exception {
 		
 		List<EstimateVO> vo = new ArrayList<EstimateVO>();
 		
 		String filess = "";
-		
+		String fileRealName = "";
 		if(!multi.isEmpty()) {
 			UUID uuid = UUID.randomUUID();
 			String[] uuids = uuid.toString().split("-");
-			
 			String uniqueName = uuids[0];
-			
-			String fileRealName = multi.getOriginalFilename();
+			fileRealName = multi.getOriginalFilename();
 			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
 			String uploadFolder = "C:\\upload\\";
+			
 			
 			filess = uniqueName+fileExtension;
 			
@@ -236,11 +235,11 @@ public class BusinessController {
 			est.setWh_no(wh_no[i]);
 			est.setAmount(amount[i]);
 			est.setQuantity(quantity[i]);
-			est.setFiles(filess);
-			
+		
 			vo.add(est);	
 		}
-		
+		vo.get(0).setFiles(filess);
+		vo.get(0).setRealfilename(fileRealName);
 		System.out.println(vo);
 		
 		estimateService.insertEstimate(vo);
@@ -289,18 +288,21 @@ public class BusinessController {
 		
 		String empno = session.getAttribute("emp_no").toString();
 		String filess = "";
-		
+		String fileRealName = "";
 		if(!multi.isEmpty()) {
 			UUID uuid = UUID.randomUUID();
 			String[] uuids = uuid.toString().split("-");
 			
 			String uniqueName = uuids[0];
 			
-			String fileRealName = multi.getOriginalFilename();
+			fileRealName = multi.getOriginalFilename();
 			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
-			String uploadFolder = session.getServletContext().getRealPath("/resources/saveJihwan/");
+
 			
+			String uploadFolder = session.getServletContext().getRealPath("/resources/saveJihwan/");
+
 			filess = uniqueName+fileExtension;
+			
 			
 			
 			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
@@ -330,12 +332,13 @@ public class BusinessController {
 			est.setEstdetail_no(estdetail_no[i]);
 			est.setEst_no(est_no);
 			System.out.println(est_no);
-			est.setFiles(filess);
+			
 			est.setPr_delete(pr_delete[i]);
 			
 			modify.add(est);	
 		}
-		
+		modify.get(0).setFiles(filess);
+		modify.get(0).setRealfilename(fileRealName);
 		
 		
 		System.out.println("모디파이입니다 : " + modify);
