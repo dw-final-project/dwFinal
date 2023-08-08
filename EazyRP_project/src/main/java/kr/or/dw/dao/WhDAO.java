@@ -37,5 +37,7 @@ public interface WhDAO {
 
 	void modifyWhDetail(WhVO wh) throws SQLException;
 
+	void deleteWh(String whNo) throws SQLException;
+
 
 }

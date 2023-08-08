@@ -86,7 +86,7 @@ $('#searchBtn').on('click',function(){
 				
 					
 					if(gbVal == 'A'){
-						// 견적서 사용 부분		
+					// 견적서 사용 부분		
 					let parentEl = $("#" + parentInputId, opener.document);
 					parentEl.val(wh_noName);
 					parentEl.parents('tr').find('input.wh_names').val(wh_noName);

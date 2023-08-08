@@ -93,8 +93,9 @@
         </tr>
         <tr>
             <td align="center"><b>첨부파일</b></td>
-            <td><input type="file" style="width: 100%;"  name ="files" value="">
+            <td><input type="file" style="width: 100%;" id="file" name ="files" value="">
             	<input type="hidden" id="fileName" name="fileName" value=""> 
+            	<input type="hidden" id="realfilename" name="realfilename" value="">
             </td>
         </tr>
     </table>
@@ -112,7 +113,7 @@
         </thead>
         <tbody id="prInput">
         <input type="hidden" value="" id="cnt">
-        
+         <input type="hidden" value="A" id="A">
         <tr>
             <td><input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>
             <td><input type="text" id="wh_no0" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" id="wh_0" name="wh_no"></td>
@@ -131,7 +132,13 @@
 </body>
 
 <script>
+
+	$('#file').on('change', function(){
+		$('#fileName').val($('#file').val());
+	})
+	
 	let cnt = 1;
+	
 	// 파일 추가 버튼
 	$('#addPutBtn').on('click', function(){
 		cnt++;
