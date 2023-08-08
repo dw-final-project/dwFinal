@@ -91,6 +91,13 @@
 			    <option value="FC_006">동</option>
 				</select></td>
         </tr>
+<!--         <tr> -->
+<!--          <td width="40%" align="center"><b>진행상태</b></td> -->
+<!--          <td><select name="progress" id="progress"> -->
+<!-- 				<option value="처리중">처리중</option> -->
+<!-- 				<option value="완료">완료</option> -->
+<!-- 		</select></td> -->
+<!-- 		</tr> -->
         <tr>
             <td align="center"><b>첨부파일</b></td>
             <td><input type="file" style="width: 100%;" id="file" name ="files" value="">

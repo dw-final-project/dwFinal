@@ -89,9 +89,18 @@
             <td><fmt:formatDate value="${si.SYS_REGDATE }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
         </tr>
         <tr>
-            <td align="center">사원 명</td>
+            <td align="center">담당자</td>
             <td><input type="hidden" name="emp_no" id="receiver" value="${siList.get(0).EMP_NO }">
             <input type="text" style="width: 100%;" value="${siList.get(0).E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 500, 500)"></td>
+        </tr>
+        <tr>
+            <td align="center">진행상태</td>
+            <td><select name="progress" id="progress">
+            	<option value="접수중"${siList.get(0).PROGRESS eq "접수중" ? 'selected' : "" }>접수중</option>
+			    <option value="출하대기중"${siList.get(0).PROGRESS eq "출하대기중" ? 'selected' : "" }>출하대기중</option>
+			    <option value="출하완료" ${siList.get(0).PROGRESS eq "출하완료" ? 'selected' : "" }>출하완료</option>
+				</select>
+			</td>
         </tr>
          <tr>
             <td align="center">출하 창고</td>
