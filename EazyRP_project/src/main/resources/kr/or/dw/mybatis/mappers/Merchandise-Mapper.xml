@@ -87,8 +87,8 @@
 			#{sp_q},
 			#{price},
 			#{status},
-			#{startperiod},
-			#{endperiod},
+			#{startperiod, jdbcType = DATE},
+			#{endperiod, jdbcType = DATE},
 			#{sys_reg},
 			#{sys_up},
 			sysdate,
@@ -122,8 +122,8 @@
 						    sp_q 		=	#{sp_q},
 							price 		=	#{price},
 							status		=	#{status},
-							startperiod	=	#{startperiod},
-							endperiod 	=	#{endperiod},
+							startperiod	=	#{startperiod, jdbcType = DATE},
+							endperiod 	=	#{endperiod, jdbcType = DATE},
 							sys_updatedate = sysdate,
 							unitprice	=	#{unitprice}
 				WHERE sp_no = #{sp_no}

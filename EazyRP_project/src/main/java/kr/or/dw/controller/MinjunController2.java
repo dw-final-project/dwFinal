@@ -154,7 +154,7 @@ public class MinjunController2 {
 	}
 	
 	@RequestMapping("/modifyEmp.do")
-	public void modifyEmp (EmpVO empVO, HttpServletResponse res, HttpSession session, Integer emp_no, String oldPicture, String uploadPicture, @RequestParam("files")MultipartFile multi) throws SQLException , Exception {
+	public void modifyEmp (EmpVO empVO, HttpServletResponse res, HttpSession session, /*Integer emp_no,*/ String oldPicture, String uploadPicture, @RequestParam("files")MultipartFile multi) throws SQLException , Exception {
 		
 		String fileName = oldPicture;
 		
@@ -205,7 +205,7 @@ public class MinjunController2 {
 		
 		int SSemp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
 		
-		empVO.setEmp_no(emp_no);
+//		empVO.setEmp_no(emp_no);
 		empVO.setSys_up(SSemp_no + "");
 		
 		
@@ -639,16 +639,11 @@ public class MinjunController2 {
 	
 	@RequestMapping("/insertWork")
 	public void insertWork(WorkVO workVO, HttpServletResponse res, HttpSession session) throws Exception {
-		System.out.println("insertWork workVO 1번 : " + workVO);
 		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
 		workVO.setSys_reg(emp_no + "");
-		System.out.println("insertWork workVO 2번 : " + workVO);
 		workVO.setSys_up(emp_no + "");
-		System.out.println("insertWork workVO 3번 : " + workVO);
 		
 		empsalService.insertWork(workVO);
-		
-		System.out.println("insertWork workVO 4번 : " + workVO);
 		
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
@@ -673,6 +668,7 @@ public class MinjunController2 {
 	@RequestMapping("/modifyWork.do")
 	public void modifyWork (WorkVO workVO, HttpServletResponse res, HttpSession session, int w_no) throws SQLException , Exception {
 		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
+		System.out.println("modifyWork wdate : " + workVO.getWdate());
 		workVO.setSys_reg(emp_no + "");
 		workVO.setSys_up(emp_no + "");
 		workVO.setW_no(w_no);

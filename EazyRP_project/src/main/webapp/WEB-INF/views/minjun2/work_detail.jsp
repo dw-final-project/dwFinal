@@ -30,10 +30,7 @@
 								<input type="hidden" id="ep_no" name="ep_no" value="${work.EP_NO}">
 								<div class="col-sm-1"></div>
 								<label for="wdate" class="col-sm-2">근무일자</label>
-								<c:set var="wdate">
-									<fmt:formatDate value="${work.WDATE }" pattern="yyyy-MM-dd"></fmt:formatDate>
-								</c:set>
-								<input type="date" id="wdate" name="wdate" class="form-control col-sm-4 dept1 work3" value="${wdate }" placeholder="근무일자">
+								<input type="date" id="wdate" name="wdate" class="form-control col-sm-4 dept1 work3" value="<fmt:formatDate value="${work.WDATE }" pattern="yyyy-MM-dd"></fmt:formatDate>" placeholder="근무일자">
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="wtime" class="col-sm-2">근무시간</label>

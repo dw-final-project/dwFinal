@@ -264,7 +264,7 @@
 							e_account	=	#{e_account},
 							e_tenure	=	#{e_tenure},
 							dept_no		=	#{dept_no},
-							emp_no2		=	#{emp_no2},
+							emp_no2		=	#{emp_no2, jdbcType = BIGINT},
 							e_sva		=	#{e_sva, jdbcType = DATE},
 							e_eva		=	#{e_eva, jdbcType = DATE},
 							sys_up		=	#{sys_up},
@@ -480,6 +480,7 @@
 		   AND w.emp_no = e.emp_no
 		   AND w.ep_no = ex.ep_no
 		   AND c_no = #{c_no}
+		   AND w.enabled = 'YES'
 		  <include refid="worksearch"/>
 		  ORDER BY w_no desc
 	</select>
@@ -505,7 +506,8 @@
 				sys_up,
 				sys_regdate,
 				sys_updatedate,
-				sys_reg
+				sys_reg,
+				enabled
 			)
 		VALUES(
 				work_seq.nextval,
@@ -516,7 +518,8 @@
 				#{sys_up},
 				sysdate,
 				sysdate,
-				#{sys_reg}
+				#{sys_reg},
+				'YES'
 			)
 	</insert>
 	
@@ -528,18 +531,22 @@
 		   AND w.ep_no = ex.ep_no
 	</select>
 	
-	<update id="modifyWork" parameterType="work">
+	<update id="modifyWork" >
 		UPDATE work SET 
-						wdate = #{wdate jdbcType = DATE}},
+						wdate = #{wdate, jdbcType = DATE},
 						ep_no = #{ep_no}, 
 						wtime = #{wtime},
 						sys_up = #{sys_up},
-						sys_updatedate = 'sysdate'
+						sys_updatedate = sysdate
 		WHERE w_no = #{w_no}
 	</update>
 	
-	<update id="deleteWork" parameterType="work">
-		DELETE FROM work WHERE w_no = #{w_no}
+	<update id="deleteWork" >
+		UPDATE work SET 
+						enabled = 'NO',
+						sys_up = #{sys_up},
+						sys_updatedate = sysdate
+		 WHERE w_no = #{w_no}
 	</update>
 	
 	<select id="getExtrapayList" resultType="extrapay">

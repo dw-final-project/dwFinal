@@ -36,7 +36,6 @@
 									<th width="150px" style="text-align: center;">배율</th>
 									<th width="200px" style="text-align: center;">비과세유형</th>
 									<th width="150px" style="text-align: center;">지급유형</th>
-									<th width="100px" style="text-align: center;">계산식</th>
 								</tr>
 									<c:forEach items="${extrapayList}" var="extrapay" varStatus="loop">
 									<tr>
@@ -46,7 +45,6 @@
 										<td style="text-align: center;">${extrapay.MAG}</td>
 										<td style="text-align: center;">${extrapay.FREE_GB}</td>
 										<td style="text-align: center;">${extrapay.PAYMENT}</td>
-										<td style="text-align: center;">${extrapay.CALC}</td>
 									</tr>
 									</c:forEach>
 							</table>

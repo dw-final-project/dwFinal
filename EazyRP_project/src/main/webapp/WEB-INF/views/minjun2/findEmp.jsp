@@ -37,6 +37,11 @@
 				<th width="100px" style="text-align: center;">사원 이름</th>
 				<th width="100px" style="text-align: center;">부서명</th>
 			</tr>
+			<tr>
+				<td style="text-align: center;" class="emp_no">0</td>
+				<td style="text-align: center;" class="e_name">없음</td>
+				<td style="text-align: center;" class="dname">없음</td>
+			</tr>
 			<c:forEach items="${emp}" var="emp">
 				<tr>
 					<td style="text-align: center;" class="emp_no">${emp.emp_no}</td>
