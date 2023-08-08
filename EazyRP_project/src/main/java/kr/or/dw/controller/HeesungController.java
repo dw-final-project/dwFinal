@@ -498,41 +498,12 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	}
 	
 	@RequestMapping("/workorder/regist")
-	public void registWorkOrder (HttpServletResponse res, @RequestParam("files")MultipartFile multi, String wo_name, 
+	public void registWorkOrder (HttpServletResponse res, String wo_name, 
 		String[] fac_no, @DateTimeFormat(pattern="yyyy-MM-dd")Date deliverydate, String progress, String[] pr_no, int[] quantity, int emp_no, HttpSession session) throws SQLException, IOException {
 		
 		System.out.println("희성 컨트롤러 erp4/workorder/regist 진입");
 		
 		String c_no = session.getAttribute("c_no").toString();
-		
-		String filess = "";
-		
-		if(!multi.isEmpty()) {
-			UUID uuid = UUID.randomUUID();
-			String[] uuids = uuid.toString().split("-");
-			
-			String uniqueName = uuids[0];
-			
-			String fileRealName = multi.getOriginalFilename();
-			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
-			String uploadFolder = "C:\\upload\\";
-			
-			filess = uniqueName+fileExtension;
-			
-			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
-			
-			if(!saveFile.exists()) {
-				saveFile.mkdirs();
-			}
-			
-			try {
-				multi.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
 		
 		List<WorkOrderVO> woList = new ArrayList<WorkOrderVO>();
 		
@@ -548,7 +519,6 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 			wo.setEmp_no(emp_no);
 			wo.setDeliverydate(deliverydate);
 			wo.setProgress(progress);
-			wo.setFiles(filess);
 			
 			// workorderdetail 테이블
 			wo.setPr_no(pr_no[i]);
@@ -574,7 +544,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		
 	}
 	
-	@RequestMapping("workorder/detail")
+	@RequestMapping("/workorder/detail")
 	public ModelAndView workOrderDetail(ModelAndView mnv, String wo_no) throws SQLException {
 		
 		System.out.println("erp4/workorder/detail 진입");
@@ -586,6 +556,79 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		mnv.setViewName(url);
 		
 		return mnv;
+		
+	}
+	
+	@RequestMapping("/workorder/modify")
+	public void workOrderModify(HttpServletResponse res, String wo_name,
+		String[] fac_no, @DateTimeFormat(pattern="yyyy-MM-dd")Date deliverydate, 
+		String progress, String[] pr_no, int[] quantity, int emp_no, 
+		HttpSession session, String wo_no, String[] detail_no,
+		String[] pr_delete) throws SQLException, IOException {
+		
+		System.out.println("erp4/workorder/modify - 진입");
+		
+		String c_no = session.getAttribute("c_no").toString();
+		
+		List<WorkOrderVO> woList = new ArrayList<WorkOrderVO>();
+		
+		for(int i = 0; i < pr_no.length; i++) {
+			
+			WorkOrderVO wo = new WorkOrderVO();
+
+			// workorder 테이블
+			wo.setWo_no(wo_no);
+			wo.setC_no(c_no);
+			wo.setWo_name(wo_name);
+			wo.setEmp_no(emp_no);
+			wo.setDeliverydate(deliverydate);
+			wo.setProgress(progress);
+			
+			// workorderdetail 테이블
+			System.out.println(i + "번째 detail_no" + detail_no[i]);
+			wo.setDetail_no(detail_no[i]);
+			wo.setPr_no(pr_no[i]);
+			wo.setFac_no(fac_no[i]);
+			wo.setQuantity(quantity[i]);
+			wo.setPr_delete(pr_delete[i]);
+			
+			woList.add(wo);
+			
+		}
+		
+		workOrderService.workOrderModify(woList);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('수정 되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+		
+	}
+	
+	@RequestMapping("/workorder/remove")
+	public void workOrderRemove(HttpServletResponse res, String wo_no) throws SQLException, IOException {
+		
+		System.out.println("erp4/workorder/remove - 진입");
+		System.out.println("wo_no : " + wo_no);
+		System.out.println("wo_no : " + wo_no);
+		System.out.println("wo_no : " + wo_no);
+		System.out.println("wo_no : " + wo_no);
+		System.out.println("wo_no : " + wo_no);
+		System.out.println("wo_no : " + wo_no);
+		System.out.println("wo_no : " + wo_no);
+		System.out.println("wo_no : " + wo_no);
+		System.out.println("wo_no : " + wo_no);
+		workOrderService.workOrderRemove(wo_no);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("window.opener.location.reload();");
+		out.println("alert('삭제 되었습니다.')");
+		out.println("window.close();");
+		out.println("</script>");
 		
 	}
 	

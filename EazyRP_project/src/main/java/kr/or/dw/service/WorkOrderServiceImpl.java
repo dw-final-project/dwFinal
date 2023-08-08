@@ -93,4 +93,32 @@ public class WorkOrderServiceImpl implements WorkOrderService{
 
 	}
 
+	@Override
+	public void workOrderModify(List<WorkOrderVO> woList) throws SQLException {
+		
+		System.out.println("WorkOrderServiceImpl - workOrderModify 진입");
+		
+		WorkOrderVO woVo = woList.get(0);
+		
+		System.out.println("WorkOrderVO woVo = woList.get(0)는 " + woVo + " 입니다.");
+		workOrderDAO.workOrderUpdate(woVo);
+		System.out.println("현재 메소드는 workOrderModify 입니다.");
+		
+		for (WorkOrderVO wo : woList) {
+			if (wo.getPr_delete() != null && wo.getPr_delete().equals("d")) {
+				workOrderDAO.deleteWorkOrderDetail(wo);
+			} else {
+				workOrderDAO.modifyWorkOrderDetail(wo);
+			}
+		}
+		
+		System.out.println("WorkOrderServiceImpl - workOrderModify 완료");
+		
+	}
+
+	@Override
+	public void workOrderRemove(String wo_no) throws SQLException {
+		workOrderDAO.deleteWorkOrder(wo_no);
+	}
+
 }

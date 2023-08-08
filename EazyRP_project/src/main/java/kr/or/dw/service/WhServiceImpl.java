@@ -125,7 +125,7 @@ public class WhServiceImpl implements WhService{
 		System.out.println("WhServiceImpl - modifyWh");
 		
 		WhVO whVo = whList.get(0); // whList.get(0)은 wh_no 이다.
-		
+		System.out.println("whList.get(0)는 " + whVo + " 입니다.");
 		System.out.println("whDAO.whDetail(whList.get(0)); - 전");
 		whDAO.whUpdate(whVo);
 		System.out.println("whDAO.whDetail(whList.get(0)); - 후");
