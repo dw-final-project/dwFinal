@@ -107,9 +107,11 @@
         <tr>
             <td align="center">첨부파일</td>
             <td>
-            <input type="file" name="files" style="width: 100%;" value="">
+            <input type="file" id="file2" name="files" style="width: 100%;" value="${est.FILES }">
+            <input type="hidden" name="realFileName" value="${est.REALFILENAME }">
+            <input type="hidden" id="fileName" name="fileName" value="${est.FILENAME }">
             <c:if test="${!empty est.FILES }">
-			<div><button type="button" onclick="location.href='<%=request.getContextPath()%>/erp4/getFile.do?files=${est.FILES }';">파일 다운</button>&nbsp;&nbsp;${est.FILES }</div>
+			<div><button type="button" onclick="location.href='<%=request.getContextPath()%>/erp4/getFile.do?files=${est.FILES }';">파일 다운</button>&nbsp;&nbsp;${est.REALFILENAME }</div>
 			</c:if>
 			</td> 
         </tr>
@@ -223,6 +225,9 @@ let cnt = rownumList.length;
 console.log(cnt);
 let dtail_no = $('#dtail_no').val();
 
+$('#file2').on('change', function(){
+	$('#fileName').val($('#file').val());
+})
 
 // 제품 추가 버튼
 $('#addPutBtn').on('click', function(){

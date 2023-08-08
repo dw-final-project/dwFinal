@@ -17,4 +17,6 @@ public interface WhService {
 
 	void modifyWh(List<WhVO> whList) throws SQLException;
 
+	void whRemove(String whNo) throws SQLException;
+
 }
