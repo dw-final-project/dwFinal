@@ -2,6 +2,7 @@ package kr.or.dw.controller;
 
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -119,6 +120,35 @@ public class CommonController {
 		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
 		List<DraftVO> draft = menuService.getPayment(emp_no);
 		mnv.addObject("draft", draft);
+		
+		LocalDate today = LocalDate.now();
+		List<String> month = new ArrayList<>();
+		List<String> month2 = new ArrayList<>();
+		for(int i = 13; i >= 1; i--) {
+			LocalDate lastMonth = today.minusMonths(i);
+	        int lastMonthYear = lastMonth.getYear();
+	        int lastMonthMonth = lastMonth.getMonthValue();
+	        String insert = lastMonthYear + "-" + (lastMonthMonth < 10 ? "0" : "") +lastMonthMonth;
+	        month.add(insert);
+		}
+		
+		for(int i = 13; i >= 1; i--) {
+			LocalDate lastMonth = today.minusMonths(i);
+	        int lastMonthYear = lastMonth.getYear() - 1;
+	        int lastMonthMonth = lastMonth.getMonthValue();
+	        String insert = lastMonthYear + "-" + (lastMonthMonth < 10 ? "0" : "") +lastMonthMonth;
+	        month2.add(insert);
+		}
+		
+		List<Integer> profit = new ArrayList<>();
+		profit = menuService.getProfit(month);
+		List<Integer> profit2 = new ArrayList<>();
+		profit2 = menuService.getProfit(month2);
+		mnv.addObject("month", month);
+		System.out.println(month);
+		mnv.addObject("profit", profit);
+		mnv.addObject("profit2", profit2);
+		System.out.println(profit);
 		session.setAttribute("menuList", menuList);
 		session.setAttribute("subMenuList", subMenuList);
 		session.setAttribute("smallMenuList", smallMenuList);

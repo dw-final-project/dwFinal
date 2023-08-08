@@ -259,6 +259,7 @@ public class ProductServiceImpl implements ProductService {
 		map.put("order", order);
 		map.put("emp_no", emp_no);
 		map.put("quantity", quantity);
+		map.put("buy", order.getBuy_price());
 		productDAO.tr_History2(map);
 	}
 

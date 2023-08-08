@@ -119,7 +119,7 @@ public class MinjunController2 {
 			
 			String fileRealName = multi.getOriginalFilename();
 			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length());
-			String uploadFolder = "C:\\upload\\EmpStamp\\";
+			String uploadFolder = session.getServletContext().getRealPath("/resources/stamp/");
 			
 			fileName = uniqueName+fileExtension;
 			
@@ -159,7 +159,7 @@ public class MinjunController2 {
 		String fileName = oldPicture;
 		
 		empVO.setStampimg(fileName);
-		
+		System.out.println("asdfnkjasdf");
 		if(!(oldPicture.equals(uploadPicture) || uploadPicture.equals("") || uploadPicture == null) ) {	
 			if(!multi.isEmpty()) {
 				UUID uuid = UUID.randomUUID();
@@ -169,7 +169,7 @@ public class MinjunController2 {
 				
 				String fileRealName = multi.getOriginalFilename();
 				String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length());
-				String uploadFolder = "C:\\upload\\EmpStamp\\";
+				String uploadFolder = session.getServletContext().getRealPath("/resources/stamp/");
 				
 				fileName = uniqueName+fileExtension;
 				
@@ -358,10 +358,10 @@ public class MinjunController2 {
 	}
 	
 	@RequestMapping("/getPicture")
-	public ResponseEntity<byte[]> getPicture(String picture) throws Exception {
+	public ResponseEntity<byte[]> getPicture(String picture, HttpSession session) throws Exception {
 		InputStream in = null;
 		ResponseEntity<byte[]> entity = null;
-		String imgPath = "C:\\upload\\EmpStamp\\";
+		String imgPath = session.getServletContext().getRealPath("/resources/stamp/");
 		
 		if (picture != null || picture != "") {
 			try {

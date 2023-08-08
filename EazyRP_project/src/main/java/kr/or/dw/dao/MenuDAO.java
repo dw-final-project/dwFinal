@@ -26,6 +26,8 @@ public interface MenuDAO {
 
 	List<DraftVO> getPayment(int emp_no) throws SQLException;
 
+	int getAmount(String month) throws SQLException;
+
 	
 
 }

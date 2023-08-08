@@ -145,7 +145,7 @@ window.onload = function(){
 	
 	$('button#detailBtn').on('click', function(){
 		window.close();
-		window.opener.location.href = "/profitLoss/dayProfit.do?mcode=M060000&startDate=${start}&endDate${end}";
+		window.opener.location.href = "/profitLoss/dayProfit.do?mcode=M060000&startDate=${start}&endDate=${end}";
 	});
 	
 }

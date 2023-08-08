@@ -15,7 +15,7 @@
 		</if>
 		
 		<if test="cri2.startDate != ''.toString() and cri2.endDate != ''.toString()">
-			AND sys_regdate BETWEEN #{cri2.startDate} AND #{cri2.endDate}
+			AND sys_regdate BETWEEN TO_DATE(#{cri2.startDate}, 'YYYY-MM-DD') AND TO_DATE(#{cri2.endDate}, 'YYYY-MM-DD') + INTERVAL '1' DAY - INTERVAL '1' SECOND
 		</if>
 		<if test="cri2.startDate != ''.toString() and cri2.endDate == ''.toString()">
 			AND sys_regdate <![CDATA[>]]> #{cri2.startDate}

@@ -185,4 +185,9 @@ public class ManagementServiceImpl implements ManagementService{
 		return managementDAO.getDraftGb();
 	}
 
+	@Override
+	public String getImgFiles(int a) throws SQLException {
+		return managementDAO.getImgFile(a);
+	}
+
 }

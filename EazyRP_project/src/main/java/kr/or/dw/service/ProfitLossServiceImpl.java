@@ -82,10 +82,23 @@ public class ProfitLossServiceImpl implements ProfitLossService {
 			list.get(i).setSys_regdate(list.get(i).getSys_regdate().substring(0, 10));
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+		System.out.println("스타트데이트다" + cri2.getStartDate());
+		System.out.println("엔드데이트다" + cri2.getEndDate());
 		int prev = Integer.parseInt(cri2.getStartDate().substring(5, 7)) - 1;
-		String prevMonth = cri2.getStartDate().substring(0, 4) + (prev < 10 ? "0" : "") + prev + cri2.getStartDate().substring(7, 10);
-		String prevMonth2 = cri2.getEndDate().substring(0, 4) + (prev < 10 ? "0" : "") + prev + cri2.getEndDate().substring(7, 10);
+		
+		
+		System.out.println("prev다" + prev);
+		String prevMonth = "";
+		String prevMonth2 = "";
+		if(prev == 0) {
+			prev = 12;
+			prevMonth2 = (Integer.parseInt(cri2.getEndDate().substring(0, 4)) - 1) + (prev < 10 ? "0" : "") + prev + cri2.getEndDate().substring(7, 10);
+			prevMonth = (Integer.parseInt(cri2.getStartDate().substring(0, 4)) - 1) + (prev < 10 ? "0" : "") + prev + cri2.getStartDate().substring(7, 10);
+		} else {
+			prevMonth = cri2.getStartDate().substring(0, 4) + (prev < 10 ? "0" : "") + prev + cri2.getStartDate().substring(7, 10);
+			prevMonth2 = cri2.getEndDate().substring(0, 4) + (prev < 10 ? "0" : "") + prev + cri2.getEndDate().substring(7, 10);
+		}
+		System.out.println(prevMonth);
 		Map<String, String> maps = new HashMap<>();
 		maps.put("prevMonth", prevMonth);
 		maps.put("prevMonth2", prevMonth2);

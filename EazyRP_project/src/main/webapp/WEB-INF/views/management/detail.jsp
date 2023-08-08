@@ -31,7 +31,7 @@
 		<img src="<%=request.getContextPath() %>/resources/stamp/no13.jpg" style="width: 100px; height:100px; border-radius: 30px;">
 		</c:if>
 		<c:if test="${draft.pl_progress eq '1fail'}">
-		<img src="<%=request.getContextPath() %>/resources/stamp/fail2.png" style="width: 100px; height:100px; border-radius: 30px;">
+		<img src="<%=request.getContextPath() %>/resources/stamp/fail.png" style="width: 100px; height:100px; border-radius: 30px;">
 		</c:if>
 		</td>
 		<td width="100px">
@@ -39,7 +39,7 @@
 		<img src="<%=request.getContextPath() %>/resources/stamp/no14.png" style="width: 100px; height:100px; border-radius: 30px;">
 		</c:if>
 		<c:if test="${draft.pl_progress eq '2fail'}">
-		<img src="<%=request.getContextPath() %>/resources/stamp/fail2.png" style="width: 100px; height:100px; border-radius: 30px;">
+		<img src="<%=request.getContextPath() %>/resources/stamp/fail.png" style="width: 100px; height:100px; border-radius: 30px;">
 		</c:if>
 		</td>
 		<td width="100px">
@@ -47,7 +47,7 @@
 		<img src="<%=request.getContextPath() %>/resources/stamp/no15.png" style="width: 100px; height:100px; border-radius: 30px;">
 		</c:if>
 		<c:if test="${draft.pl_progress eq '3fail'}">
-		<img src="<%=request.getContextPath() %>/resources/stamp/fail2.png" style="width: 100px; height:100px; border-radius: 30px;">
+		<img src="<%=request.getContextPath() %>/resources/stamp/fail.png" style="width: 100px; height:100px; border-radius: 30px;">
 		</c:if>
 		</td>
 	</tr>
