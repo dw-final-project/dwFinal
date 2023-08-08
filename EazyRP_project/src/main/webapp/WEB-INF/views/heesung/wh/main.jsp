@@ -13,12 +13,11 @@
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm" method="post" action="/erp4/wh.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2 custom-select" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="tcw" ${searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
-								<option value="t" ${searchType eq 't' ? 'selected' : '' }>제  목</option>
-								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>보낸사람</option>
-								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>업  체</option>
+								<option value="ne" ${searchType eq 'ne' ? 'selected' : '' }>코드번호 + 담당자</option>
+								<option value="n" ${searchType eq 'n' ? 'selected' : '' }>코드번호</option>
+								<option value="e" ${searchType eq 'e' ? 'selected' : '' }>담당자</option>
 							</select>
-							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${cri.keyword}">
+							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
 								<button class="btn btn-primary" type="button" id="searchBtn">
 									<i class="fa fa-fw fa-search" style="font-size: 0.8em; padding: 0px;"></i>
@@ -39,21 +38,28 @@
 									<th style="text-align: center;">작업지시서</th>
 									<th style="text-align: center;">상태</th>
 								</tr>
-									<c:forEach items="${whList}" var="wh" varStatus="loop">
+								<c:if test="${empty whList }">
+									<tr>
+										<td colspan="7">
+											<strong>해당 게시글이 없습니다.</strong>
+										</td>
+									</tr>
+								</c:if>
+								<c:forEach items="${whList}" var="wh" varStatus="loop">
 									<tr>
 										<td style="text-align: center;"><fmt:formatDate value="${wh.sys_regdate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 										<td style="text-align: center;">
-											<a id="whDetailBtn" href="#" onclick="detailOpenWindow('erp4/wh/detail.do'), '생산입고 상세정보', 700, 1000)">
+											<a id="whDetailBtn" href="#" onclick="detailOpenWindow('/erp4/wh/detail.do?wh_no=${wh.wh_no}', '생산입고 상세정보', 700, 1000)">
 												${wh.wh_no}
 											</a>
 										</td>
-										<td style="text-align: center;">11111</td>
+										<td style="text-align: center;">${wh.wh_name }</td>
 										<td style="text-align: center;">${wh.e_name}</td>
 										<td style="text-align: center;">${wh.pr_name}</td>
-										<td style="text-align: center;">${wh.wo_no }</td>
+										<td style="text-align: center;">${wh.wo_name }</td>
 										<td style="text-align: center;">${wh.progress == '0' ? '대기중' : (wh.progress == '1' ? '진행중' : '완료')}</td>
 									</tr>
-									</c:forEach>
+								</c:forEach>
 							</table>
 							<div class="card-footer">
 								<%@ include file="/WEB-INF/views/common/pagination.jsp" %>

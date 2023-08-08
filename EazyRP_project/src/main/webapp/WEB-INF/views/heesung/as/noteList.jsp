@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <c:set var="cri" value="${pageMaker.cri }"/>
 <div style="height: 40px"></div>
 <section class="content container-fluid">
@@ -11,7 +12,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">받은 쪽지함</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/mymenu/noteList.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/asmanage/as.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="tcw" ${searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
 								<option value="t" ${searchType eq 't' ? 'selected' : '' }>제  목</option>
@@ -51,6 +52,7 @@
 									</tr>
 									</c:forEach>
 							</table>
+
 							<div class="card-footer">
 								<%@ include file="/WEB-INF/views/common/pagination.jsp" %>
 							</div>
@@ -58,7 +60,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/mymenu/communication.do', '쪽지쓰기', 700, 1000)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/asmanage/communication.do', '쪽지쓰기', 700, 1000)"
 					style="width: 100px; margin: 20px; align-self: center;">쪽지 쓰기</button>
 				</div>
 			</div>

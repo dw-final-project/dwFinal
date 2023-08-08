@@ -47,6 +47,7 @@
 		<typeAlias type="kr.or.dw.vo.DeptVO" alias="dept"/>
 
 
+		<typeAlias type="kr.or.dw.vo.AsVO" alias="as"/>
 		
 		<!-- 희성이꼬 --><!-- 즐, 똥, 엿--><!-- 맛있겠다 -->
 		<typeAlias type="kr.or.dw.vo.BsheetVO" alias="bsheet"/>

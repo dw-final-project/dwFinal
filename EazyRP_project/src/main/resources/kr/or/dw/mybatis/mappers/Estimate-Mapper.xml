@@ -42,7 +42,8 @@
 		    END p_amount_name
 		  ,TO_CHAR(SUM(ed.amount), '999,999,999,999,999') || '원' amount
 		  ,MAX(ed.PROGRESS) progress
-		  ,MAX(ed.FILES) files 
+		  ,MAX(e.FILES) files 
+		  ,MAX(e.REALFILENAME) realFileName
 	  FROM ESTIMATE e , ESTDETAIL ed, company c, emp em, product p
 	 WHERE 1=1
 	   AND e.EST_NO = ed.EST_NO
@@ -76,13 +77,14 @@
 		  ,MAX(ed.fc_no) fc_no
 		  ,MAX(e.enabled) enabled
 		  ,MAX((SELECT pr_name FROM product WHERE pr_no = ed.pr_no)) p_name
-		  ,MAX((SELECT wh_name FROM WAREHOUSE WHERE wh_no = ed.wh_no)) wh_name
-		  ,MAX((SELECT pr_exprice FROM product p WHERE p.pr_no = ed.pr_no)) || ' 원' pr_exprice
+		  ,MAX((SELECT wh_name FROM warehouse WHERE wh_no = ed.wh_no)) wh_name
+		  ,MAX((SELECT pr_exprice FROM product p WHERE p.pr_no = ed.pr_no)) pr_exprice
 		  ,MAX(ed.QUANTITY) QUANTITY
 		  ,count(ed.PR_NO) pr_no
-		  ,TO_CHAR(SUM(ed.amount), '999,999,999,999,999') || ' 원' amount
+		  ,SUM(ed.amount) amount
 		  ,MAX(ed.PROGRESS) progress
-		  ,MAX(ed.FILES) files
+		  ,MAX(e.FILES) files
+		  ,MAX(e.realFileName) realFileName
 	  FROM ESTIMATE e , ESTDETAIL ed
 	 WHERE 1=1
 	   AND e.EST_NO = ed.EST_NO
@@ -94,7 +96,7 @@
 	SELECT ROWNUM
 		  ,amount
 	  	  ,ed.quantity
-	  	  ,p.pr_exprice || ' 원' pr_exprice
+	  	  ,p.pr_exprice  pr_exprice
 	  	  ,p.pr_name p_name
 	  	  ,w.wh_name wh_name
 	  	  ,ed.estdetail_no
@@ -188,15 +190,19 @@
 		enabled,
 		sys_up,
 		sys_updatedate,
-		sys_reg
+		sys_reg,
+		files,
+		realFileName
 		)
 	VALUES(
-		  #{est_no}
-		  ,sysdate
-		  ,'y'
-		  ,#{emp_no}
-		  ,sysdate
-		  ,#{emp_no}	
+		  #{est_no},
+		  sysdate,
+		  'Y',
+		  #{emp_no},
+		  sysdate,
+		  #{emp_no},
+		  #{files},
+		  #{realFileName}	
 	)
 </insert>
 
@@ -226,7 +232,6 @@
 		amount,
 		progress,
 		quantity,
-		files,
 		pr_no,
 		regdate,
 		c_no
@@ -240,7 +245,6 @@
 		#{amount},
 		'진행중',
 		#{quantity},
-		#{files},
 		#{pr_no},
 		sysdate,
 		(SELECT p.c_no FROM product p, company c WHERE p.c_no = c.c_no AND p.pr_no = #{pr_no})
@@ -249,17 +253,20 @@
 
 <select id="selectFile" resultType="str">
 	SELECT files
-	  FROM estdetail
+	  FROM estimate
 	 WHERE files = #{files}
 </select>
 
 <update id="modifyEstimate">
-	UPDATE estimate SET sys_up = #{emp_no}, sys_updatedate = sysdate
+	UPDATE estimate SET sys_up = #{emp_no},
+						sys_updatedate = sysdate,
+						enabled = 'Y',
+						files = #{files},
+						realFileName = #{realFileName}
 	WHERE est_no = #{est_no}
 </update>
 
 <update id="modifyEstimateDetail" >
-
   MERGE 
   INTO ESTDETAIL  
   USING dual 
@@ -273,7 +280,6 @@
 		 ,PROGRESS = '진행중'
 		 ,EMP_NO = #{emp_no}
 		 ,QUANTITY = #{quantity}
-		 ,FILES = #{files}
 		 ,PR_NO = #{pr_no}
 		WHERE estdetail_no = #{estdetail_no}
 WHEN NOT MATCHED THEN 
@@ -285,10 +291,10 @@ WHEN NOT MATCHED THEN
 		amount,
 		progress,
 		quantity,
-		files,
 		pr_no,
 		regdate,
-		c_no)
+		c_no
+		 )
 	VALUES (
 		estdetail_seq.nextval,
 		#{est_no},
@@ -298,7 +304,6 @@ WHEN NOT MATCHED THEN
 		#{amount},
 		'진행중',
 		#{quantity},
-		#{files},
 		#{pr_no},
 		sysdate,
 		(SELECT p.c_no FROM product p, company c WHERE p.c_no = c.c_no AND p.pr_no = #{pr_no})		
@@ -317,7 +322,13 @@ WHEN NOT MATCHED THEN
 </delete>
 
 <update id="deletUpdateEstimate" >
-	UPDATE estimate SET ENABLED = 'n' WHERE est_no = #{est_no} 
+	UPDATE estimate SET ENABLED = 'N' WHERE est_no = #{est_no} 
 </update>
+
+<select id="selectEst" resultType="estimate">
+	SELECT *
+	  FROM estimate
+	 WHERE est_no = #{est_no}
+</select>
 
 </mapper>

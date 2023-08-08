@@ -68,3 +68,4 @@
 	
 	}; 
 </script>
+<%@ include file="../include/footer_js.jsp"%>

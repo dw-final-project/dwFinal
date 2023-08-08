@@ -2,8 +2,6 @@ package kr.or.dw.service;
 
 import java.sql.SQLException;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import kr.or.dw.dao.MemberDAO;

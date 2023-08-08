@@ -34,7 +34,6 @@
 										<td style="text-align: center;">${qna.INQ_CON } </td>
 										<td style="text-align: center;">${qna.REGDATE }</td>
 										<td style="text-align: center;">${empty qna.ANS_CON ? 'N' : 'Y' }</td>
-<!-- 										<td><button class="btn btn-primary" type="button" style="height: 30px;font-size: 0.8em;" >수정</button></td> -->
 										<td id="${qna.INQ_NO }">
 											<!-- 수정 -->
 											<svg type="button"  id="modifyBtn" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -58,12 +57,14 @@
 						</table>
 					</div>
 				</div> 
+				<!-- 등록 -->
 				 <div class="text">
                     <div class="container">
 				<div class="re_form" style="display: none;">
                         <form method="post" name ="form" action="/member/qnaRegist">
 	                        <input class="form-control" style="margin-bottom:10px;" name="inq_con" placeholder="내용입력">
 	                        <input type="hidden" name="mcode" value="${mcode }">
+	                        <input type="hidden" name="inq_no" value="">
                         </form>
                      <div style="float: right; margin-bottom:10px;">
 	                    <button class="btn btn-primary" style="width: 60px;font-size: 0.8em; height: 30px;" id="submit">등록</button>
@@ -72,6 +73,8 @@
                   </div>
                   </div>
                   </div>
+                  
+                  
 				<div class="card-footer">
 					<%@ include file="/WEB-INF/views/common/pagination.jsp"%>
 				</div>
@@ -85,11 +88,7 @@
 </section>
 	
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="<%=request.getContextPath() %>/resources/bootstrap/dist/js/adminlte.min.js"></script>
-	
+
 <script>
 
 $('.r1').hide();
@@ -107,6 +106,7 @@ $('.r1').hide();
 	$('#registBtn').on('click',function(){
   		$('.re_form').toggle();
     	$('#registBtn').toggle();
+    	$('form[name="form"]').attr('action', '/member/qnaRegist.do');
     })
 
 	 $('#cancelBtn').on('click', function(){
@@ -122,19 +122,19 @@ $('.r1').hide();
 
 	$('svg#removeBtn').on('click', function(){
 			if(confirm("정말 삭제하시겠습니까")){
-				location.href="/member/remove.do?inq_no="+ $(this).parent('td').attr('id');
+				location.href="/member/remove.do?inq_no="+ $(this).parent('td').attr('id') + "&mcode=${mcode}";
 			}
 		});	 
 
 	$('svg#modifyBtn').on('click', function(){
-			$('.re_form').toggle();
-    		$('#registBtn').toggle();
-			if(confirm("정말 수정하시겠습니까")){
-			location.href="/member/modify.do?inq_no="+ $(this).parent('td').attr('id');
-			}
-	    })
-		
-	;	
+			$('.re_form').toggle();	
+			$('#registBtn').toggle();
+			let inq_no = $(this).parent().attr('id');
+			$('input[name="inq_no"]').val(inq_no);
+			$('form[name="form"]').attr('action', '/member/modify.do');	
+	    });	
+
+	
 	
 
     

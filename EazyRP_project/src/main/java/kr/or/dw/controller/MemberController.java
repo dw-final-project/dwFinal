@@ -115,27 +115,36 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/modify")
-	public void modify (InquiryVO inquiry)throws Exception{
+	public ModelAndView modify (InquiryVO inquiry, String mcode, ModelAndView mnv)throws Exception{	
+	
+		String url = "/common/modify";
+		
 		qnaService.modifyQna(inquiry);
 		
+		mnv.addObject("mcode", mcode);
+		mnv.setViewName(url);
+		
+		return mnv;
 	}
 
 	//Q&A 삭제 
 	@RequestMapping("/remove")
-	public ModelAndView remove (int inq_no, ModelAndView mnv, String mcode) throws Exception {
+	public ModelAndView remove (int inq_no, String mcode, ModelAndView mnv) throws Exception {
 		
-
+		String url = "/common/remove";
+		
 		qnaService.remove(inq_no);
 		
 		mnv.addObject("mcode", mcode);
-		mnv.setViewName("");	
+		mnv.setViewName(url);
 		
 		return mnv;
-	};
+		
+	}
 	
 	// 아이디 중복확인
 	@RequestMapping("/idCheck") 
-	public ResponseEntity<String> idCheck(String id, HttpServletRequest req){
+	public ResponseEntity<String> idCheck(String id, HttpServletRequest req) throws Exception{
 		
 		ResponseEntity<String> entity = null;
 		
@@ -240,15 +249,23 @@ public class MemberController {
 		return mnv;
 	}
 	
+	//개인정보 수정
 	@RequestMapping("/modProfileForm")
-	public String modProfile(){		
-		return "/common/modProfile.page";
+	public ModelAndView modProfile(String mcode, ModelAndView mnv) throws Exception {		
+		String url = "/common/modProfile.page";
+		
+		mnv.addObject("mcode", mcode);		
+		mnv.setViewName(url);
+		
+		return mnv;
 	}	
 
+	// 개인정보 조회
 	@RequestMapping("/modProfile")
-	public ModelAndView Profile(MemberVO member, HttpSession session, ModelAndView mnv) throws Exception {
+	public ModelAndView Profile(MemberVO member, HttpSession session, String mcode, ModelAndView mnv) throws Exception {
 		String url = "/common/userProfile.page";
 	
+		
 		MemberVO mem = (MemberVO) session.getAttribute("loginUser");
 		String id = mem.getId();
 		member.setId(id);
@@ -258,6 +275,7 @@ public class MemberController {
 		
 		memberService.modProfile(member);
 		
+		mnv.addObject("mcode", mcode);
 		mnv.addObject("member", mem);
 		mnv.setViewName(url);
 		session.removeAttribute("loginUser");
@@ -268,15 +286,19 @@ public class MemberController {
 	
 	// 회원정보 수정에서 비밀번호 변경
 	@RequestMapping("/repwdForm")
-	public String repwdForm() {
+	public ModelAndView repwdForm(String mcode, ModelAndView mnv) throws Exception {
 		String url = "/common/repwdForm.page";
 
-		return url;
+		
+		mnv.addObject("mcode", mcode);		
+		mnv.setViewName(url);
+		
+		return mnv;
 	}
 
 	
 	@RequestMapping("/repwd")
-	public ModelAndView repwd (ModelAndView mnv, String pwd, HttpSession session) throws Exception{
+	public ModelAndView repwd (ModelAndView mnv, String mcode, String pwd, HttpSession session) throws Exception{
 		String url = "/common/userProfile.page";		
 				
 		MemberVO member = (MemberVO) session.getAttribute("loginUser");
@@ -284,7 +306,7 @@ public class MemberController {
 		
 		memberService.pwRenew(pwd, id);		
 		
-		
+		mnv.addObject("mcode", mcode);
 		mnv.addObject("member", member);
 		mnv.setViewName(url);
 		
@@ -295,8 +317,9 @@ public class MemberController {
 	//회원탈퇴 
 	@RequestMapping("/delete")
 	public String delete(String id)throws Exception {
-		
+			
 		memberService.delete(id);
+
 		return "/common/loginForm";
 	}
 

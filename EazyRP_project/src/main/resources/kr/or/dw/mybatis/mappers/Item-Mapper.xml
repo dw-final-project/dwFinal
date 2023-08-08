@@ -214,7 +214,7 @@
 						  ,pr_inprice = #{pr_exprice}
 						  ,pr_class = #{pr_class}
 						  ,img = #{img}
-						  ,exdate = #{exdate}
+						  ,exdate = #{exdate, jdbcType = DATE}
 						  ,sp_no = #{sp_no}
 						  ,sys_up = #{sys_up}
 						  ,sys_updatedate = sysdate

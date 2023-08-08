@@ -6,7 +6,6 @@
 <head>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>개인정보조회</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -84,6 +83,9 @@
           <!-- form -->
           <div class="d-flex align-items-center pb-3 mb-3 text-center link-dark text-decoration-none border-bottom">
             <span class="fs-5 fw-semibold "> 개인정보 조회 </span>
+            <form id="searchForm2" method="post"
+							action="/member/mypage.do?mcode=${mcode }"
+							style="display: contents;"></form>
           </div>
           <!-- .form-group -->
           <form action="/member/userProfile.do" method="post" style="text-align: -webkit-center; width: 100%;align-items: center; display: inline-block;">
@@ -138,11 +140,11 @@
 $(function(){
 
 	$('#repwdBtn').on('click', function(){
-		location.href = "/member/repwdForm"; 
+		location.href = "/member/repwdForm.do?mcode=${mcode }"; 
 	});
 	
 	$('#modifyBtn').on('click', function(){
-		location.href = "/member/modProfileForm"; 
+		location.href = "/member/modProfileForm.do?mcode=${mcode }"; 
 	});
 	
 	$('#deleteBtn').on('click', function(){

@@ -39,6 +39,7 @@ public class EmpVO {
 	private String sys_reg;
 	private String stampimg;
 	private String dname;
+	private String c_name;
 	
 	
 	

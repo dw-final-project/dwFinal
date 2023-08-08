@@ -107,10 +107,13 @@
         <tr>
             <td align="center">첨부파일</td>
             <td>
-            <input type="file" name="files" style="width: 100%;" value="">
+            <input type="file" id="file2" name="files" style="width: 100%;" value="${est.FILES }">
+            <input type="hidden" name="realFileName" value="${est.REALFILENAME }">
+            <input type="hidden" id="fileName" name="fileName" value="${est.FILENAME }">  
             <c:if test="${!empty est.FILES }">
-			<div><button type="button" onclick="location.href='<%=request.getContextPath()%>/erp4/getFile.do?files=${est.FILES }';">파일 다운</button>&nbsp;&nbsp;${est.FILES }</div>
+			<div id="divRemove"><button type="button" onclick="location.href='<%=request.getContextPath()%>/erp4/getFile.do?est_no=${est.EST_NO }';">파일 다운</button>&nbsp;&nbsp;${est.REALFILENAME }</div>
 			</c:if>
+			<button type="button" id="removeFileBtn" class="btn btn-danger">삭제</button>
 			</td> 
         </tr>
     </table>
@@ -125,6 +128,7 @@
         </tr>
     	<tbody id="prInput">
         <input type="hidden" value="" id="cnt">
+        <input type="hidden" value="A" id="A">
        <c:forEach items="${estPr }" var="est" varStatus="loop">
         <tr id="trChk" >    	
 	       <input type="hidden" class="rownum" value="${est.ROWNUM }">
@@ -134,7 +138,7 @@
         	<td>
         		<input type="text" id="${est.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${est.P_NAME }"><input type="hidden" name="pr_no" value="${est.PR_NO }">
         	</td>
-            <td><input type="text" id="wh_no${est.ROWNUM }" class="wh_names" name="wh_name" style="width: 100%;" value="${est.WH_NAME }"><input type="hidden" name="wh_no" value="${est.WH_NO }"></td>
+            <td><input type="text" id="wh_no${est.ROWNUM }" class="wh_names" name="wh_name" style="width: 100%;" value="${est.WH_NAME }"><input type="hidden" id="wh" name="wh_no" value="${est.WH_NO }"></td>
             <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${est.QUANTITY }"><input type="hidden" id="cost" value="${est.PR_EXPRICE }"></td>
             <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${est.AMOUNT }" readonly ></td>
             <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>
@@ -154,6 +158,10 @@
 
 <script>
 window.onload = function(){
+	
+	
+	
+	
 	
 	let fc_no = "${est.FC_NO}";
 	$('#fc-select').val(fc_no);
@@ -222,6 +230,10 @@ let cnt = rownumList.length;
 console.log(cnt);
 let dtail_no = $('#dtail_no').val();
 
+$('#file2').on('change', function(){
+	$('#fileName').val($('#file').val());
+})
+
 // 제품 추가 버튼
 $('#addPutBtn').on('click', function(){
 	cnt++;
@@ -229,14 +241,13 @@ $('#addPutBtn').on('click', function(){
 	'<input type="hidden" name="estdetail_no" value="0">'+
 	'<input type="hidden" name="pr_delete" value="n">'+
     '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
-    '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'+
+    '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" id="wh" name="wh_no"></td>'+
     '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
     '<td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>'+
     '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'+
 '</tr>');
 	
-	
-	
+
 //		$('script').append(
 //			'$("#quantity' + cnt + '").on("keyup", function(){'+
 //				'alert($(this).val())'+
@@ -275,10 +286,10 @@ $('tr').on('click', function(){
 		if($(this).parent('td').parent('tr').find("input[name='pr_delete']").val() == "n") {
 	        $(this).parent('td').parent('tr').remove();
 	    }else{
-		$(this).parents('tr').css('display', 'none');
-		$(this).parents('tr').find("input[name='pr_delete']").val("d")
+			$(this).parents('tr').css('display', 'none');
+			$(this).parents('tr').find("input[name='pr_delete']").val("d")
 	    }
-	   });
+	 });
 	
 	
 	//창고코드 이벤트
@@ -291,9 +302,22 @@ $('tr').on('click', function(){
 	// 수량 이벤트
 	$(document).on('keyup', '.quantity', function(){
 // 		let quantity = $(this).val();
-		$(this).parent().next().children().val($(this).val()*$(this).next().val());
+		console.log($(this).val());
+		console.log($(this).next().val().split(' 원')[0]);
+		console.log(typeof $(this).val());
+		console.log(typeof $(this).next().val().split(' 원')[0]);
+		$(this).parent().next().children().val($(this).val()*$(this).next().val().split(' 원')[0]);
 	})
+	
+	
+	 $( document ).ready( function() {
+        $('#removeFileBtn').on('click', function() {
+          $('#divRemove').remove();
+        } );
+      } );
+	
 
+	
 	
 	$(document).on('change, keyup', '#prInput', function(){
 		let sum = Number(0);

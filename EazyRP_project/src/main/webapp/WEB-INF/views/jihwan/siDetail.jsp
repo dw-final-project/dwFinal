@@ -95,7 +95,7 @@
         </tr>
          <tr>
             <td align="center">출하 창고</td>
-             <td><input type="text" id="0" class="wh_names" name="wh_name" style="width: 100%;" value="${siList.get(0).WH_NAME }"><input type="hidden" name="wh_no" value="${siList.get(0).WH_NO }"></td>
+             <td><input type="text" id="si_whname" class="wh_names" name="wh_name" style="width: 100%;" value="${siList.get(0).WH_NAME }"><input type="hidden" name="wh_no" value="${siList.get(0).WH_NO }"></td>
         </tr>
         <tr>
             <td align="center">출하 일자</td>
@@ -114,6 +114,7 @@
         </tr>
     	<tbody id="prInput">
     	<input type="hidden" value="" id="cnt">
+    	<input type="hidden" value="B" id="A">
        <c:forEach items="${siList}" var="si">
         <tr id="trChk" >    	
 	       <input type="hidden" class="rownum" value="${si.ROWNUM }">

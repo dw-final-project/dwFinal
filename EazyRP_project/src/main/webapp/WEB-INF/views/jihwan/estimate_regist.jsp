@@ -93,12 +93,13 @@
         </tr>
         <tr>
             <td align="center"><b>첨부파일</b></td>
-            <td><input type="file" style="width: 100%;"  name ="files" value="">
+            <td><input type="file" style="width: 100%;" id="file" name ="files" value="">
             	<input type="hidden" id="fileName" name="fileName" value=""> 
+            	<input type="hidden" id="realfilename" name="realfilename" value="">
             </td>
         </tr>
     </table>
-    <button type="button" id="addPutBtn">제품추가</button>
+    <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">제품추가</button>
     <table>
     	<thead>
         <tr>
@@ -112,10 +113,10 @@
         </thead>
         <tbody id="prInput">
         <input type="hidden" value="" id="cnt">
-        
+         <input type="hidden" value="A" id="A">
         <tr>
             <td><input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>
-            <td><input type="text" id="wh_no0" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>
+            <td><input type="text" id="wh_no0" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" id="wh_0" name="wh_no"></td>
             <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>
             <td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>
             <td style="text-align : center;"></td>
@@ -131,13 +132,19 @@
 </body>
 
 <script>
+
+	$('#file').on('change', function(){
+		$('#fileName').val($('#file').val());
+	})
+	
 	let cnt = 1;
+	
 	// 파일 추가 버튼
 	$('#addPutBtn').on('click', function(){
 		cnt++;
 		$('#prInput').append('<tr>'+
         '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
-        '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'+
+        '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" id="wh_'+ cnt+ '" name="wh_no"></td>'+
         '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
         '<td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>'+
         '<td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>'+
