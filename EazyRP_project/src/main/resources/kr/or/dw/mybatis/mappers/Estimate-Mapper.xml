@@ -325,4 +325,10 @@ WHEN NOT MATCHED THEN
 	UPDATE estimate SET ENABLED = 'N' WHERE est_no = #{est_no} 
 </update>
 
+<select id="selectEst" resultType="estimate">
+	SELECT *
+	  FROM estimate
+	 WHERE est_no = #{est_no}
+</select>
+
 </mapper>
