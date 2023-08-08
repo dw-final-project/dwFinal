@@ -19,19 +19,20 @@
 	</sql>
 
 	<select id="selectSearchWorkOrderList" resultType="workOrder">
-		SELECT	wd.wo_no,
-				MAX(wo.sys_regdate) sys_regdate,
-				MAX(wo.wo_name) wo_name,
+		SELECT	w.wo_no,
+				MAX(w.sys_regdate) sys_regdate,
+				MAX(w.wo_name) wo_name,
 				MAX(e.e_name) e_name,
-				MAX(wo.deliverydate) deliverydate,
-				MAX(wo.progress) progress
-		FROM	workorder wo, workorderdetail wd, emp e
+				MAX(w.deliverydate) deliverydate,
+				MAX(w.progress) progress
+		FROM	workorder w, workorderdetail wd, emp e
 		WHERE	1=1
-		AND		wo.emp_no = e.emp_no
-		AND		wo.wo_no = wd.wo_no
-		AND		wo.c_no = #{c_no}
+		AND		w.enabled = 'y'
+		AND		w.emp_no = e.emp_no
+		AND		w.wo_no = wd.wo_no
+		AND		w.c_no = #{c_no}
 		<include refid="search"></include>
-		GROUP BY wd.wo_no
+		GROUP BY w.wo_no
 		ORDER BY sys_regdate desc
 	</select>
 	
@@ -39,6 +40,7 @@
 		SELECT	COUNT(DISTINCT w.wo_no)
 		FROM	workorder w, emp e
 		WHERE	1=1
+		AND		w.enabled = 'y'
 		AND		w.emp_no = e.emp_no
 		AND		w.c_no = #{c_no}
 		<include refid="search"></include>
@@ -172,12 +174,21 @@
 		)
 	</update>
 	
+	<!-- detail.jsp 에서 제품 tr 삭제했을때 지워지는 쿼리이다. -->
 	<delete id="deleteWorkOrderDetail">
 		DELETE	from workorderdetail
 		WHERE	detail_no = #{detail_no}
 	</delete>
 	
-	<delete id="deleteWorkOrder">
+	<!-- 바로 위와 아래는 확실히 구분되어야 함 그 이유는 각각 위 아래에 주석을 확인하면 된다. -->
+	<delete id="deleteWorkOrder"> <!-- 실제 삭제하는것이 아닌 enabled를 n으로 하여 조회할때 나오지 않도록 조건을 걸어준다. -->
+		UPDATE	workorder
+		SET		enabled = 'n'
+		WHERE	wo_no = #{wo_no}
+	</delete>
+	
+	<!-- 위 deleteWorkOrder 와 함께 작업지시서 하나를 통째로 삭제할때 함께 삭제되는 그에 속한 디테일이다. -->
+	<delete id="deleteWorkOrderDetailList">
 		DELETE	from workorderdetail
 		WHERE	wo_no = #{wo_no}
 	</delete>

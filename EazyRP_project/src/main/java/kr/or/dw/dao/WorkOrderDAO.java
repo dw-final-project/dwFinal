@@ -38,5 +38,7 @@ public interface WorkOrderDAO {
 
 	void deleteWorkOrder(String wo_no) throws SQLException;
 
+	void deleteWorkOrderDetailList(String wo_no) throws SQLException;
+
 
 }

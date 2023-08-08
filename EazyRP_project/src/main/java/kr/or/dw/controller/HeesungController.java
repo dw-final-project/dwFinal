@@ -611,15 +611,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	public void workOrderRemove(HttpServletResponse res, String wo_no) throws SQLException, IOException {
 		
 		System.out.println("erp4/workorder/remove - 진입");
-		System.out.println("wo_no : " + wo_no);
-		System.out.println("wo_no : " + wo_no);
-		System.out.println("wo_no : " + wo_no);
-		System.out.println("wo_no : " + wo_no);
-		System.out.println("wo_no : " + wo_no);
-		System.out.println("wo_no : " + wo_no);
-		System.out.println("wo_no : " + wo_no);
-		System.out.println("wo_no : " + wo_no);
-		System.out.println("wo_no : " + wo_no);
+		
 		workOrderService.workOrderRemove(wo_no);
 		
 		res.setContentType("text/html; charset=utf-8");

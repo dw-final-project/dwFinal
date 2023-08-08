@@ -118,7 +118,11 @@ public class WorkOrderServiceImpl implements WorkOrderService{
 
 	@Override
 	public void workOrderRemove(String wo_no) throws SQLException {
+		System.out.println("WorkOrderServiceImpl - workOrderRemove - 진입");
+		workOrderDAO.deleteWorkOrderDetailList(wo_no);
+		System.out.println("workOrderDAO.deleteWorkOrderDetailList(wo_no) - 성공");
 		workOrderDAO.deleteWorkOrder(wo_no);
+		System.out.println("workOrderDAO.deleteWorkOrder(wo_no) - 성공");
 	}
 
 }
