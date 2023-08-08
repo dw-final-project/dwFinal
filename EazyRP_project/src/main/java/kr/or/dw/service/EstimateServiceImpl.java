@@ -151,10 +151,12 @@ public class EstimateServiceImpl implements EstimateService {
 		System.out.println("modifyMap = " + modifyMap);
 		int a = 4;
 		for (EstimateVO est : modify) {
-			System.out.println(a);
-			if(est.getPr_delete() != null && est.getPr_delete().equals("d")) {
+			System.out.println(est.getPr_delete());
+			if(est.getPr_delete().equals("d")) {
+				System.out.println("삭제");
 				estimateDAO.deleteEstimateDetail(est);
 			}else {
+				System.out.println("수정");
 				estimateDAO.modifyEstimateDetail(est);
 			}
 		}

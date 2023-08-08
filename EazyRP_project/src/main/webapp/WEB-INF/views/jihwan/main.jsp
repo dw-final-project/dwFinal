@@ -58,8 +58,8 @@
 									<td>${estimate.E_NAME }</td>
 									<td>${estimate.P_AMOUNT_NAME }</td>
 									<td>${estimate.AMOUNT }</td>
-									<td>${estimate.PROGRESS == null ? "진행중" : "처리중" }</td>
-									<td>${estimate.FILES != null ? "있음" : "없음"}</td>
+									<td>${estimate.PROGRESS }</td>
+									<td style="color:${estimate.FILES ne null ? 'blue' : 'red'}">${estimate.FILES != null ? "있음" : "없음"}</td>
 								</tr>
 							</c:forEach>
 						</table>
