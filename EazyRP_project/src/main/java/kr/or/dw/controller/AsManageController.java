@@ -2,6 +2,9 @@ package kr.or.dw.controller;
 
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,5 +35,14 @@ public class AsManageController {
 		
 		return mnv;
 
+	}
+	
+	@RequestMapping("/regist")
+	public ModelAndView asRegist (ModelAndView mnv, HttpSession session) throws Exception{
+		String url = "/as/registForm";
+		
+		
+		mnv.setViewName(url);
+		return mnv;
 	}
 }

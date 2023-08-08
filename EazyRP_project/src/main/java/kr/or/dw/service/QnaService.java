@@ -8,7 +8,7 @@ import kr.or.dw.vo.InquiryVO;
 
 public interface QnaService {
 
-	Map<String, Object> selectQnaList(SearchCriteria cri) throws SQLException;
+	Map<String, Object> selectQnaList(SearchCriteria cri, int u_no) throws SQLException;
 
 	void insertQna(InquiryVO qna) throws SQLException;
 

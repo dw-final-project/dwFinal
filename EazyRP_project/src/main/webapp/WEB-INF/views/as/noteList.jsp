@@ -38,15 +38,15 @@
 									<th style="text-align: center;">요청 날짜</th>
 									<th style="text-align: center;">완료 날짜</th>
 								</tr>
-									<c:forEach items="${asList}" var="as" >
+								<c:forEach items="${asList}" var="as">								
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/asmanage/detail.do?n_no=${as.as_no }&send=N', '쪽지보기', 700, 1000, '${loop.index}')">${as.as_no }</a></td>
+										<td style="text-align: center;">${as.as_no }</td>
 										<td style="text-align: center;">${as.emp_no }</td>
 										<td style="text-align: center;">${as.progress == '0' ? '대기중' : (as.progress == '1' ? '진행중' : '완료')}</td>
 										<td style="text-align: center;"><fmt:formatDate value="${as.sys_regdate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 										<td style="text-align: center;"><fmt:formatDate value="${as.compldate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 									</tr>
-									</c:forEach>
+								</c:forEach>
 							</table>
 
 							<div class="card-footer">
@@ -56,7 +56,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/asmanage/communication.do', '쪽지쓰기', 700, 1000)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/as/registForm.do', '쪽지쓰기', 700, 1000)"
 					style="width: 100px; margin: 20px; align-self: center;">A/S 접수</button>
 
 				</div>

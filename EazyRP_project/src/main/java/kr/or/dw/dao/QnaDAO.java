@@ -19,9 +19,9 @@ import kr.or.dw.vo.WareHouseVO;
 @Mapper
 public interface QnaDAO {
 
-	int selectQnaListCount(SearchCriteria cri)throws SQLException;
+	int selectQnaListCount(Map<String, Object> map)throws SQLException;
 
-	List<Map<String, Object>> selectQnaList(SearchCriteria cri, RowBounds rowBounds) throws SQLException;
+	List<Map<String, Object>> selectQnaList(RowBounds rowBounds , Map<String, Object> map) throws SQLException;
 
 	void insertQna(InquiryVO qna) throws SQLException;
 

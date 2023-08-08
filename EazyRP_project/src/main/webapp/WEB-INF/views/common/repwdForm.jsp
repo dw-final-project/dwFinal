@@ -12,6 +12,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
 
 <style>
     html{
@@ -151,11 +152,11 @@ body {
 	border-radius: 7px;
 }
 </style>
-</head>
+
 <body>
 <!-- Modal HTML -->
-	<div class="modal-dialog modal-login ">
-		<div class="modal-content " >
+	<div class="modal-dialog modal-login " style=" margin-top: -120px;">
+		<div class="modal-content " style="margin-left: -150px;" >
 			<div class="modal-header">				
 				<h4 class="modal-title">비밀번호 변경</h4>
 						<form id="searchForm2" method="post"

@@ -48,7 +48,7 @@
 									</tr>
 
 									<c:if test="${not empty qna.ANS_CON }">
-										<tr class="r1">
+										<tr class="r1" style=" background-color: whitesmoke;">
 											<td colspan="4">${qna.ANS_CON }</td>
 										</tr>
 									</c:if>
