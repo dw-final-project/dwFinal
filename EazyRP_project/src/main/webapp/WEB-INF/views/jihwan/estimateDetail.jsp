@@ -109,10 +109,11 @@
             <td>
             <input type="file" id="file2" name="files" style="width: 100%;" value="${est.FILES }">
             <input type="hidden" name="realFileName" value="${est.REALFILENAME }">
-            <input type="hidden" id="fileName" name="fileName" value="${est.FILENAME }">
+            <input type="hidden" id="fileName" name="fileName" value="${est.FILENAME }">  
             <c:if test="${!empty est.FILES }">
-			<div><button type="button" onclick="location.href='<%=request.getContextPath()%>/erp4/getFile.do?files=${est.FILES }';">파일 다운</button>&nbsp;&nbsp;${est.REALFILENAME }</div>
+			<div id="divRemove"><button type="button" onclick="location.href='<%=request.getContextPath()%>/erp4/getFile.do?est_no=${est.EST_NO }';">파일 다운</button>&nbsp;&nbsp;${est.REALFILENAME }</div>
 			</c:if>
+			<button type="button" id="removeFileBtn" class="btn btn-danger">삭제</button>
 			</td> 
         </tr>
     </table>
@@ -157,6 +158,10 @@
 
 <script>
 window.onload = function(){
+	
+	
+	
+	
 	
 	let fc_no = "${est.FC_NO}";
 	$('#fc-select').val(fc_no);
@@ -305,7 +310,12 @@ $('tr').on('click', function(){
 	})
 	
 	
-
+	 $( document ).ready( function() {
+        $('#removeFileBtn').on('click', function() {
+          $('#divRemove').remove();
+        } );
+      } );
+	
 
 	
 	

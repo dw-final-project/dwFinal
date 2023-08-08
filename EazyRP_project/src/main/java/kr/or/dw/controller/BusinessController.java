@@ -255,17 +255,21 @@ public class BusinessController {
 	}
 	
 	@RequestMapping("getFile")
-	public ResponseEntity<byte[]> getFile(String files) throws Exception{
+	public ResponseEntity<byte[]> getFile(String est_no) throws Exception{
 		InputStream in = null;
 		ResponseEntity<byte[]> entity = null;
 		
-		String estFile = estimateService.selectFile(files);
+		EstimateVO est = estimateService.selectEst(est_no);
+		
+		String estFile = est.getFiles();
 		
 		String fileUploadPath = "C:/upload";
 		
 		try {
 			String fileName = estFile;
 			in = new FileInputStream(fileUploadPath + File.separator + fileName);
+			
+			fileName = est.getRealFileName();
 			
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
