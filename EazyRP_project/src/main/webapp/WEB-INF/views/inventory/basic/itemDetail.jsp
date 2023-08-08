@@ -200,6 +200,7 @@ let form = $('form[role="form"]');
 	function preViewPicture(inputImage, target){
 		let fileFormat = inputImage.value.substr(inputImage.value.lastIndexOf('.')+1).toUpperCase();
 		
+		//파일 선택 취소
 		if(fileFormat == ""){
 			document.getElementById('inputFileName').value = "";
 
