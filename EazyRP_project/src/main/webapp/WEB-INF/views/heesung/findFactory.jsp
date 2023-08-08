@@ -67,13 +67,13 @@
 		
 		// 작업지시서 테이블에서 열었을때는 if문에서 거짓이므로 if문을 무시하고 실행한다.
 		// if문 안에 있는 코드는 생산입고에서 실행된다.
-		let sort = opener.$('b#factory');
+// 		let sort = opener.$('b#factory');
 		
 		$('tr').on('click', function(){
 			
 			let fac_noName = $(this).find('#fac_name').text();
 		
-			if (sort.text() != '생산 공장') {
+// 			if (sort.text() != '생산 공장') {
 				
 				let parentInputId = opener.$("#cnt").val();
 				
@@ -97,14 +97,14 @@
 				
 				window.close();
 				
-			} else{
+// 			} else{
 			
-				opener.$('input[name="fac_no"]').val($(this).find('#fac_no').text());
-				opener.$('#find_fac').val(fac_noName);
+// 				opener.$('input[name="fac_no"]').val($(this).find('#fac_no').text());
+// 				opener.$('#find_fac').val(fac_noName);
 				
-				window.close();
+// 				window.close();
 			
-			}
+// 			}
 		})
 		
 	})

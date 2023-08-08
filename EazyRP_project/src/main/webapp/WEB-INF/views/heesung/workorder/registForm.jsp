@@ -80,12 +80,6 @@
             <td><input type="text" name="wo_name"></td>
         </tr>
         <tr>
-        	<td width="40%" align="center" id="workorder"><b id="factory">생산 공장</b></td>
-            <td>
-            	<input type="hidden" name="fac_no" value="">
-            	<input type="text" id="find_fac" class="fac_names" value="" name="fac_name" readonly onclick="OpenWindow('/erp4/findFactory.do', '공장찾기', 400, 600)"></td>
-        </tr>
-        <tr>
             <td width="40%" align="center"><b>담당자</b></td>
             <td>
 	            <input type="hidden" name="emp_no" id="receiver" value="${empno }">
@@ -121,24 +115,34 @@
     <table>
     	<thead>
         <tr>
-            <th align="center" style="width: 20%;">품목명</th>
-            <th align="center" style="width: 20%;">수량</th>
-            <th align="center" style="width: 15%;">비고</th>
-            
+            <th align="center">품목명</th>
+            <th align="center">생산 공장</th>
+            <th align="center">수량</th>
+            <th align="center">비고</th>
         </tr>
         </thead>
         <tbody id="prInput">
         <input type="hidden" value="" id="cnt">
-        
+        <input type="hidden" value="A" id="A">
         <tr>
-            <td><input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>
-            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>
+            <td>
+            	<input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value="">
+            	<input type="hidden" name="pr_no">
+            </td>
+            <td>
+				<input type="text" id="0" class="fac_names" name="fac_name" style="width: 100%;" value="">
+				<input type="hidden" name="fac_no" id="fac_no0">
+			</td>
+            <td>
+            	<input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="">
+            	<input type="hidden" id="cost">
+            </td>
             <td style="text-align : center;"></td>
         </tr>
         </tbody>
         <tr class="total">
             <td colspan="2" align="center">총량</td>
-            <td colspan="1" align="center"><input type="text" id="woTotal" style="width: 100%;" value=""></td>
+            <td colspan="2" align="center"><input type="text" id="woTotal" style="width: 100%;" value=""></td>
         </tr>
     </table>
             <input type="button" id="registBtn" class="btn btn-primary" style="text-align : center;" value="등록">
@@ -152,6 +156,7 @@
 		cnt++;
 		$('#prInput').append('<tr>'+
         '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
+        '<td><input type="text" id="fac_no' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no" id="fac_no' + cnt + '"></td>'+
         '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
         '<td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>'+
     '</tr>');
@@ -164,12 +169,10 @@
 	});
 	
 	// 제품코드 td 클릭 이벤트
-	$(document).on('click', '.pr_names', function(){
+	$(document).on('click', '.pr_names', function() {
 		let idVal = $(this).attr('id');
 		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
-		
-// 		openWin.document.getElementById('cnt').value = cnt;
+		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 800, 600);
 	});
 	
 	// 제품 삭제 버튼
@@ -177,12 +180,18 @@
 		$(this).parent('td').parent('tr').remove();
 	});
 	
-	// 창고코드 이벤트
-	$(document).on('click', '.wh_names', function(){
-		
+	// 공장 클릭시 목록 열기 이벤트
+	$(document).on('click', '.fac_names', function() {
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
+		let openWin = OpenWindow("/erp4/findFactory.do", "공장 찾기", 800, 600);
+	})
+	
+	// 창고코드 이벤트
+	$(document).on('click', '.wh_names', function() {
+		let whVal = $(this).attr('id');
+		$('#cnt').val(whVal);
+		let openWin = OpenWindow("/erp4/findWareHouse.do", "창고 찾기", 800, 600);
 	})
 	
 	// 수량 이벤트

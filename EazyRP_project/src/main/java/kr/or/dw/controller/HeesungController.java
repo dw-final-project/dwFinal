@@ -499,7 +499,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	
 	@RequestMapping("/workorder/regist")
 	public void registWorkOrder (HttpServletResponse res, @RequestParam("files")MultipartFile multi, String wo_name, 
-		String fac_no, @DateTimeFormat(pattern="yyyy-MM-dd")Date deliverydate, String progress, String[] pr_no, int[] quantity, int emp_no, HttpSession session) throws SQLException, IOException {
+		String[] fac_no, @DateTimeFormat(pattern="yyyy-MM-dd")Date deliverydate, String progress, String[] pr_no, int[] quantity, int emp_no, HttpSession session) throws SQLException, IOException {
 		
 		System.out.println("희성 컨트롤러 erp4/workorder/regist 진입");
 		
@@ -545,15 +545,14 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 			// workorder 테이블
 			wo.setC_no(c_no);
 			wo.setWo_name(wo_name);
-			wo.setFac_no(fac_no);
 			wo.setEmp_no(emp_no);
 			wo.setDeliverydate(deliverydate);
 			wo.setProgress(progress);
 			wo.setFiles(filess);
-			wo.setC_no(c_no);
 			
 			// workorderdetail 테이블
 			wo.setPr_no(pr_no[i]);
+			wo.setFac_no(fac_no[i]);
 			wo.setQuantity(quantity[i]);
 			
 			woList.add(wo);
@@ -580,7 +579,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		
 		System.out.println("erp4/workorder/detail 진입");
 		
-		Map<String, Object> dataMap = workOrderService.selectWorkOrderDetail(wo_no);
+		Map<String, Object> dataMap = workOrderService.selectWorkOrder(wo_no);
 		String url = "heesung/workorder/detail.open";
 		
 		mnv.addAllObjects(dataMap);
