@@ -53,7 +53,7 @@
 										<td style="text-align: center;">${amount} 원</td>
 										<td style="text-align: center;">${amount3.get(var.index) }원</td>
 										<td style="text-align: center;">${b.get(var.index) }원</td>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/profitLoss/openMonth.do?month=${month.get(var.index)}', '상세 조회', 900, 700)">상세조회</a></td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/profitLoss/openMonth.do?month=${month.get(var.index)}', '상세 조회', 900, 500)">상세조회</a></td>
 									</tr>
 								</c:forEach>
 									

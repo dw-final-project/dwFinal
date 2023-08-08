@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -263,7 +266,23 @@ public class ProfitLossController {
 	
 	@RequestMapping("/openMonth")
 	public ModelAndView openMonth(String month, ModelAndView mnv) throws SQLException {
+		
 		List<Tr_historyVO> history = profitLossService.getDetail(month);
+		
+		YearMonth yearMonth = YearMonth.parse(month);
+		int year = Integer.parseInt(month.toString().substring(0, 4)) - 1;
+		int mon = Integer.parseInt(month.toString().substring(5, 7));
+        String display = yearMonth.getYear() + "년 " + yearMonth.getMonth().getDisplayName(TextStyle.FULL, Locale.KOREAN);
+        YearMonth yearMonth2 = YearMonth.of(year, mon);
+
+        // 해당 년월의 시작일 구하기
+        LocalDate startDate = yearMonth2.atDay(1);
+
+        // 해당 년월의 마지막일 구하기
+        LocalDate endDate = yearMonth2.atEndOfMonth();
+        String prevYear = year + "-" + (mon < 10 ? "0" : "") + mon;
+        List<Tr_historyVO> history2 = profitLossService.getDetail(prevYear);
+        System.out.println(prevYear);
 		int s_total = 0;
 		int w_total = 0;
 		int pb_total = 0;
@@ -302,10 +321,50 @@ public class ProfitLossController {
 		total.put("e", e_total);
 		total.put("p", p_total);
 		total.put("a", a_total);
-		
 		mnv.addObject("amount", amount);
+		
+		s_total = 0;
+		 w_total = 0;
+		 pb_total = 0;
+		 b_total = 0;
+		 o_total = 0;
+		 e_total = 0;
+		 p_total = 0;
+		 a_total = 0;
+		 amount = 0;
+		for(int i = 0; i < history2.size(); i++) {
+			if(history2.get(i).getTr_gb().equals("s")) {
+				s_total += history2.get(i).getAmount();
+			} else if(history2.get(i).getTr_gb().equals("w")) {
+				w_total+= history2.get(i).getAmount();
+			} else if(history2.get(i).getTr_gb().equals("pb")) {
+				pb_total+= history2.get(i).getAmount();
+			} else if(history2.get(i).getTr_gb().equals("b")) {
+				b_total+= history2.get(i).getAmount();
+			} else if(history2.get(i).getTr_gb().equals("o")) {
+				o_total+= history2.get(i).getAmount();
+			} else if(history2.get(i).getTr_gb().equals("e")) {
+				e_total+= history2.get(i).getAmount();
+			} else if(history2.get(i).getTr_gb().equals("p")) {
+				p_total+= history2.get(i).getAmount();
+			} else if(history2.get(i).getTr_gb().equals("a")) {
+				a_total+= history2.get(i).getAmount();
+			}
+			amount += history2.get(i).getAmount();
+		}
+		total.put("s2", s_total);
+		total.put("w2", w_total);
+		total.put("pb2", pb_total);
+		total.put("b2", b_total);
+		total.put("o2", o_total);
+		total.put("e2", e_total);
+		total.put("p2", p_total);
+		total.put("a2", a_total);
+        mnv.addObject("start", startDate);
+        mnv.addObject("end", endDate);
+		mnv.addObject("amount2", amount);
 		mnv.addAllObjects(total);
-		mnv.addObject("month", month);
+		mnv.addObject("month", display);
 		mnv.addObject("history", history);
 		mnv.setViewName("/profitLoss/detail");
 		return mnv;
