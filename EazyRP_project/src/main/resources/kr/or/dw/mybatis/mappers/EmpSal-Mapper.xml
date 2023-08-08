@@ -47,10 +47,11 @@
 	</select>
 	
 	<select id="getEmpList" resultType="emp">
-		SELECT *
-		FROM emp
+		SELECT e.*, d.dname dname
+		FROM emp e, dept d
 		WHERE 1=1
-		AND c_no = #{c_no} 
+		AND c_no = #{c_no}
+		AND e.dept_no = d.dept_no 
 	</select>
 
 	<select id="getEmp" resultType="emp">
@@ -68,7 +69,9 @@
 		ORDER BY emp_no
 	</select>
 	
-	<sql id="search">
+	<!--  emp search  -->
+	
+	<sql id="empsearch">
 		<if test="cri.searchType == 'a'.toString()">
 			AND E_NAME LIKE '%' || #{cri.keyword} || '%'
 		</if>
@@ -94,6 +97,78 @@
 		</if>
 	</sql>
 	
+	<!--  extrapay search  -->
+	
+	<sql id="expsearch">
+		<if test="searchType == 'a'.toString()">
+			AND EP_NO LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'b'.toString()">
+			AND EP_NAME LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'all'.toString()">
+			AND (
+			EP_NO LIKE '%' || #{keyword} || '%'
+			OR
+			EP_NAME LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+	</sql>
+	
+	<!--  deduction search  -->
+	
+	<sql id="dedsearch">
+		<if test="searchType == 'a'.toString()">
+			AND DED_NO LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'b'.toString()">
+			AND DED_NAME LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'all'.toString()">
+			AND (
+			DED_NO LIKE '%' || #{keyword} || '%'
+			OR
+			DED_NAME LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+	</sql>
+	
+	<!--  dept search  -->
+	
+	<sql id="deptsearch">
+		<if test="searchType == 'a'.toString()">
+			AND DEPT_NO LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'b'.toString()">
+			AND DNAME LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'all'.toString()">
+			AND (
+			DEPT_NO LIKE '%' || #{keyword} || '%'
+			OR
+			DNAME LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+	</sql>
+	
+	<!--  work search  -->
+	
+	<sql id="worksearch">
+		<if test="cri.searchType == 'a'.toString()">
+			AND E_NAME LIKE '%' || #{cri.keyword} || '%'
+		</if>
+		<if test="cri.searchType == 'b'.toString()">
+			AND EP_NAME LIKE '%' || #{cri.keyword} || '%'
+		</if>
+		<if test="cri.searchType == 'all'.toString()">
+			AND (
+			E_NAME LIKE '%' || #{cri.keyword} || '%'
+			OR
+			EP_NAME LIKE '%' || #{cri.keyword} || '%'
+			)
+		</if>
+	</sql>
+	
 	<!--  Emp  -->
 	
 	<select id="selectEmpList" resultType="Map">
@@ -103,7 +178,7 @@
 		  AND e.c_no = c.c_no
 		  AND e.enabled = 'YES'
 		  AND e.c_no = #{c_no}
-		<include refid="search"/>
+		<include refid="empsearch"/>
 		ORDER BY e.emp_no desc
 	</select>
 	
@@ -114,10 +189,10 @@
 		  AND e.c_no = c.c_no
 		  AND e.enabled = 'YES'
 		  AND e.c_no = #{c_no}
-		<include refid="search"/>
+		<include refid="empsearch"/>
 	</select>
 	
-	<select id="selectDetail" resultType="Map">
+	<select id="selectEmpDetail" resultType="Map">
 		SELECT e.*, d.*, c.*, (SELECT e_name FROM emp WHERE emp_no = e.emp_no2) daemu
 		  FROM emp e, dept d, company c
 		  WHERE e.dept_no = d.dept_no
@@ -211,11 +286,280 @@
 		SELECT *
 		  FROM extrapay
 		  WHERE 1=1
+		  <include refid="expsearch"/>
+		  ORDER BY ep_no desc
 	</select>
 	
 	<select id="selectExtrapayListCount" resultType="int">
 		SELECT COUNT(*)
 		  FROM extrapay
-		   WHERE 1=1
+		  WHERE 1=1
+		  <include refid="expsearch"/>
+	</select>
+	
+	<insert id="insertExtrapay" parameterType="extrapay">
+		
+		<selectKey keyProperty="ep_no" order="BEFORE" resultType="java.lang.String">
+				SELECT ('EP_') || CASE 
+					WHEN LENGTH(extrapay_seq.nextval) = 1
+					THEN '00' || extrapay_seq.nextval
+					WHEN LENGTH(extrapay_seq.nextval) = 2
+					THEN '0' || extrapay_seq.nextval
+					ELSE '' || extrapay_seq.nextval
+		   	    	END EP_NO
+			   FROM dual
+		</selectKey>
+		INSERT INTO extrapay (
+				ep_no,
+				ep_name,
+				ep_order,
+				mag,
+				free_gb,
+				payment,
+				calc
+			)
+		VALUES(
+				#{ep_no},
+				#{ep_name},
+				#{ep_order},
+				#{mag},
+				#{free_gb},
+				#{payment},
+				#{calc}
+			)
+	</insert>
+	
+	<select id="selectExpayDetail" resultType="Map">
+		SELECT *
+		  FROM extrapay
+		  WHERE ep_no = #{ep_no}
+	</select>
+	
+	<update id="modifyExtrapay" parameterType="extrapay">
+	UPDATE extrapay SET 		
+					ep_no	=	#{ep_no},
+					ep_name =   #{ep_name},
+					ep_order =  #{ep_order},
+					mag		=	#{mag},
+					free_gb	= 	#{free_gb},
+					payment	=	#{payment},
+					calc	=	#{calc}
+			WHERE ep_no = #{ep_no}
+	</update>
+	
+	<update id="deleteExtrapay" parameterType="extrapay">
+		DELETE FROM extrapay WHERE ep_no = #{ep_no}
+	</update>
+	
+	<!--  Deduction  -->
+	
+	<select id="selectDeductionList" resultType="Map">
+		SELECT *
+		  FROM deduction
+		  WHERE 1=1
+		  <include refid="dedsearch"/>
+		  ORDER BY ded_no desc
+	</select>
+	
+	<select id="selectDeductionListCount" resultType="int">
+		SELECT COUNT(*)
+		  FROM deduction
+		  WHERE 1=1
+		  <include refid="dedsearch"/>
+	</select>
+	
+	<insert id="insertDeduction" parameterType="deduction">
+		
+		<selectKey keyProperty="ded_no" order="BEFORE" resultType="java.lang.String">
+				SELECT ('DED_') || CASE 
+					WHEN LENGTH(extrapay_seq.nextval) = 1
+					THEN '00' || extrapay_seq.nextval
+					WHEN LENGTH(extrapay_seq.nextval) = 2
+					THEN '0' || extrapay_seq.nextval
+					ELSE '' || extrapay_seq.nextval
+		   	    	END DED_NO
+			   FROM dual
+		</selectKey>
+		INSERT INTO deduction (
+				ded_no,
+				ded_name,
+				ded_order,
+				calc
+			)
+		VALUES(
+				#{ded_no},
+				#{ded_name},
+				#{ded_order},
+				#{calc}
+			)
+	</insert>
+	
+	<select id="selectDeductionDetail" resultType="Map">
+		SELECT *
+		  FROM deduction
+		  WHERE ded_no = #{ded_no}
+	</select>
+	
+	<update id="modifyDeduction" parameterType="deduction">
+	UPDATE deduction SET 		
+					ded_no	=	#{ded_no},
+					ded_name =   #{ded_name},
+					ded_order =  #{ded_order},
+					calc	=	#{calc}
+			WHERE ded_no = #{ded_no}
+	</update>
+	
+	<update id="deleteDeduction" parameterType="deduction">
+		DELETE FROM deduction WHERE ded_no = #{ded_no}
+	</update>
+	
+	<!--  Dept  -->
+	
+	<select id="selectDeptList" resultType="Map">
+		SELECT *
+		  FROM dept
+		  WHERE 1=1
+		   AND enabled = 'YES'
+		  <include refid="deptsearch"/>
+		  ORDER BY dept_no desc
+	</select>
+	
+	<select id="selectDeptListCount" resultType="int">
+		SELECT COUNT(*)
+		  FROM dept
+		  WHERE 1=1
+		  <include refid="dedsearch"/>
+	</select>
+	
+	<insert id="insertDept" parameterType="deduction">
+		
+		<selectKey keyProperty="dept_no" order="BEFORE" resultType="java.lang.String">
+				SELECT ('D') || CASE 
+					WHEN LENGTH(extrapay_seq.nextval) = 1
+					THEN '00' || extrapay_seq.nextval
+					WHEN LENGTH(extrapay_seq.nextval) = 2
+					THEN '0' || extrapay_seq.nextval
+					ELSE '' || extrapay_seq.nextval
+		   	    	END DEPT_NO
+			   FROM dual
+		</selectKey>
+		INSERT INTO dept (
+				dept_no,
+				dname,
+				enabled
+			)
+		VALUES(
+				#{dept_no},
+				#{dname},
+				'YES'
+			)
+	</insert>
+	
+	<select id="selectDeptDetail" resultType="Map">
+		SELECT *
+		  FROM dept
+		  WHERE dept_no = #{dept_no}
+	</select>
+	
+	<update id="modifyDept" parameterType="dept">
+		UPDATE dept SET dname = #{dname} WHERE dept_no = #{dept_no}
+	</update>
+	
+	<update id="deleteDept" parameterType="dept">
+		UPDATE dept SET 		
+				enabled =   'NO'
+		WHERE dept_no = #{dept_no}
+	</update>
+	
+	<!--  Work  -->
+	
+	<select id="selectWorkList" resultType="Map">
+		SELECT w.*, e.e_name e_name, ex.ep_name ep_name
+		  FROM work w, emp e, extrapay ex
+		  WHERE 1=1
+		   AND w.emp_no = e.emp_no
+		   AND w.ep_no = ex.ep_no
+		   AND c_no = #{c_no}
+		  <include refid="worksearch"/>
+		  ORDER BY w_no desc
+	</select>
+	
+	<select id="selectWorkListCount" resultType="int">
+		SELECT count(*)
+		  FROM work w, emp e, extrapay ex
+		  WHERE 1=1
+		   AND w.emp_no = e.emp_no
+		   AND w.ep_no = ex.ep_no
+		   AND c_no = #{c_no}
+		  <include refid="worksearch"/>
+	</select>
+	
+	<insert id="insertWork" parameterType="work">
+		
+		INSERT INTO work (
+				w_no,
+				emp_no,
+				wdate,
+				ep_no,
+				wtime,
+				sys_up,
+				sys_regdate,
+				sys_updatedate,
+				sys_reg
+			)
+		VALUES(
+				work_seq.nextval,
+				#{emp_no},
+				#{wdate, jdbcType = DATE},
+				#{ep_no},
+				#{wtime},
+				#{sys_up},
+				sysdate,
+				sysdate,
+				#{sys_reg}
+			)
+	</insert>
+	
+	<select id="selectWorkDetail" resultType="Map">
+		SELECT w.*, e.e_name e_name, ex.ep_name ep_name
+		  FROM work w, emp e, extrapay ex
+		 WHERE w.w_no = #{w_no}
+		   AND w.emp_no = e.emp_no
+		   AND w.ep_no = ex.ep_no
+	</select>
+	
+	<update id="modifyWork" parameterType="work">
+		UPDATE work SET 
+						wdate = #{wdate jdbcType = DATE}},
+						ep_no = #{ep_no}, 
+						wtime = #{wtime},
+						sys_up = #{sys_up},
+						sys_updatedate = 'sysdate'
+		WHERE w_no = #{w_no}
+	</update>
+	
+	<update id="deleteWork" parameterType="work">
+		DELETE FROM work WHERE w_no = #{w_no}
+	</update>
+	
+	<select id="getExtrapayList" resultType="extrapay">
+		SELECT *
+		FROM extrapay
+		WHERE 1=1 
+	</select>
+
+	<select id="getExtrapay" resultType="extrapay">
+		SELECT * FROM extrapay WHERE 1=1
+		<if test="searchType == 'w'.toString()">
+			AND ep_no LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND ep_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'cw'.toString()">
+			AND (ep_no LIKE '%' || #{keyword} || '%'
+			OR ep_name LIKE '%' || #{keyword} || '%')
+		</if>
+		ORDER BY ep_no
 	</select>
 </mapper>

@@ -9,13 +9,13 @@
 			<div class="col-md-10" style="max-width: 1100px;">
 				<div class="card card-outline card-info">
 					<div class="card-header" style="border-bottom: none;">
-						<h2 class="card-title p-1">수당관리</h2>
+						<h2 class="card-title p-1">근태관리</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/management/extrapay.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/management/work.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
-								<option value="d" ${searchType eq 'a' ? 'selected' : '' }>수당코드</option>
-								<option value="t" ${searchType eq 'b' ? 'selected' : '' }>수당명</option>
+								<option value="a" ${searchType eq 'a' ? 'selected' : '' }>사원명</option>
+								<option value="b" ${searchType eq 'b' ? 'selected' : '' }>수당항목</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
@@ -30,23 +30,21 @@
 						<div>
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
-									<th width="200px" style="text-align: center;">수당코드</th>
-									<th width="200px" style="text-align: center;">수당명</th>
-									<th width="150px" style="text-align: center;">표시순서</th>
-									<th width="150px" style="text-align: center;">배율</th>
-									<th width="200px" style="text-align: center;">비과세유형</th>
-									<th width="150px" style="text-align: center;">지급유형</th>
-									<th width="100px" style="text-align: center;">계산식</th>
+									<th width="200px" style="text-align: center;">근태기록번호</th>
+									<th width="200px" style="text-align: center;">사원명</th>
+									<th width="200px" style="text-align: center;">수당항목코드</th>
+									<th width="200px" style="text-align: center;">근무일자</th>
+									<th width="200px" style="text-align: center;">근무시간</th>
 								</tr>
-									<c:forEach items="${extrapayList}" var="extrapay" varStatus="loop">
+									<c:forEach items="${workList}" var="work" varStatus="loop">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('extrapayDetail.do?ep_no=${extrapay.EP_NO}','수당 상세보기', 800 , 400);">${extrapay.EP_NO}</a></td>
-										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('extrapayDetail.do?ep_no=${extrapay.EP_NO}','수당 상세보기', 800 , 400);">${extrapay.EP_NAME}</a></td>
-										<td style="text-align: center;">${extrapay.EP_ORDER}</td>
-										<td style="text-align: center;">${extrapay.MAG}</td>
-										<td style="text-align: center;">${extrapay.FREE_GB}</td>
-										<td style="text-align: center;">${extrapay.PAYMENT}</td>
-										<td style="text-align: center;">${extrapay.CALC}</td>
+										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('workDetail.do?w_no=${work.W_NO}','근태 상세보기', 700, 500);">${work.W_NO}</a></td>
+										<td style="text-align: center;">${work.E_NAME}</td>
+										<td style="text-align: center;">${work.EP_NAME}</td>
+										<td style="text-align: center;">
+											<fmt:formatDate value="${work.WDATE }" pattern="yyyy-MM-dd"></fmt:formatDate>
+										</td>
+										<td style="text-align: center;">${work.WTIME}</td>
 									</tr>
 									</c:forEach>
 							</table>
@@ -57,8 +55,8 @@
 					</div>
 					</div>
 						<div style="display: flex; align-items: end; justify-content: end;">
-								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('extrapayRegistForm.do', '수당등록', 800, 400)"
-								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">수당 등록</button>
+								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('workRegistForm.do', '근태등록', 700, 500)"
+								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">근태 등록</button>
 						</div>
 			</div>
 		</div>

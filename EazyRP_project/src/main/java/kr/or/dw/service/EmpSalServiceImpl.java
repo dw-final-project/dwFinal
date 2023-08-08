@@ -16,11 +16,14 @@ import kr.or.dw.dao.MerchandiseDAO;
 import kr.or.dw.dao.ShopDAO;
 import kr.or.dw.dao.SiDAO;
 import kr.or.dw.vo.CompanyVO;
+import kr.or.dw.vo.DeductionVO;
 import kr.or.dw.vo.DeptVO;
 import kr.or.dw.vo.EmpVO;
+import kr.or.dw.vo.ExtrapayVO;
 import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.ShopVO;
 import kr.or.dw.vo.SiVO;
+import kr.or.dw.vo.WorkVO;
 
 
 @Service
@@ -28,7 +31,9 @@ public class EmpSalServiceImpl implements EmpSalService {
 
 	@Autowired
 	private EmpSalDAO empsalDAO;
-
+	
+	// EMP
+	
 	@Override
 	public Map<String, Object> selectEmpList(SearchCriteria cri, String c_no) throws SQLException {
 
@@ -54,10 +59,10 @@ public class EmpSalServiceImpl implements EmpSalService {
 	}
 
 	@Override
-	public Map<String, Object> selectDetail(int emp_no) throws SQLException {
+	public Map<String, Object> selectEmpDetail(int emp_no) throws SQLException {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		
-		Map<String, Object> emp = (Map<String, Object>) empsalDAO.selectDetail(emp_no);
+		Map<String, Object> emp = (Map<String, Object>) empsalDAO.selectEmpDetail(emp_no);
 		
 		dataMap.put("emp", emp);
 		return dataMap;
@@ -98,7 +103,7 @@ public class EmpSalServiceImpl implements EmpSalService {
 		
 		return dept;
 	}
-
+	
 	@Override
 	public void insertEmp(EmpVO empVO) throws SQLException {
 		
@@ -137,7 +142,9 @@ public class EmpSalServiceImpl implements EmpSalService {
 		empsalDAO.deleteEmp(empVO);
 		
 	}
-
+	
+	// EXTRAPAY
+	
 	@Override
 	public Map<String, Object> selectExtrapayList(SearchCriteria cri) throws SQLException {
 	
@@ -146,7 +153,6 @@ public class EmpSalServiceImpl implements EmpSalService {
 		RowBounds rowBounds = new RowBounds(offset, limit);		// RowBounds : 쿼리에서 페이징 처리된 결과를 알아서 필요한 만큼 가져온다.
 
 		// 현재 page 번호에 맞는 리스트를 perPageNum 개수 만큼 가져오기
-//		merchandiseList = merchandiseDAO.selectMerchandiseList(cri, rowBounds);
 		List<Map<String, Object>> extrapayList = empsalDAO.selectExtrapayList(cri, rowBounds);
 		// 전체 board 개수
 		int totalCount = empsalDAO.selectExtrapayListCount(cri);
@@ -162,6 +168,230 @@ public class EmpSalServiceImpl implements EmpSalService {
 		
 		return dataMap;
 	}
+
+	@Override
+	public void insertExtrapay(ExtrapayVO exVO) throws SQLException {
+
+		empsalDAO.insertExtrapay(exVO);
+		
+	}
 	
+	// DEDUCTION
+	
+	@Override
+	public Map<String, Object> selectExpayDetail(String ep_no) throws SQLException {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		Map<String, Object> expay = (Map<String, Object>) empsalDAO.selectExpayDetail(ep_no);
+		
+		dataMap.put("expay", expay);
+		return dataMap;
+	}
+
+	@Override
+	public void modifyExtrapay(ExtrapayVO exVO) throws SQLException {
+
+		empsalDAO.modifyExtrapay(exVO);
+		
+	}
+	
+	@Override
+	public void deleteExtrapay(ExtrapayVO exVO) throws SQLException {
+		
+		empsalDAO.deleteExtrapay(exVO);
+		
+	}
+	
+	// Deduction 
+
+	@Override
+	public Map<String, Object> selectDeductionList(SearchCriteria cri) throws SQLException {
+		
+		int offset = cri.getPageStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);		// RowBounds : 쿼리에서 페이징 처리된 결과를 알아서 필요한 만큼 가져온다.
+
+		// 현재 page 번호에 맞는 리스트를 perPageNum 개수 만큼 가져오기
+		List<Map<String, Object>> deductionList = empsalDAO.selectDeductionList(cri, rowBounds);
+		// 전체 board 개수
+		int totalCount = empsalDAO.selectDeductionListCount(cri);
+
+		// PageMaker 생성
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("deductionList", deductionList);
+		dataMap.put("pageMaker", pageMaker);
+		
+		return dataMap;
+	}
+
+	@Override
+	public void insertDeduction(DeductionVO dedVO) throws SQLException {
+		
+		empsalDAO.insertDeduction(dedVO);
+		
+	}
+
+	@Override
+	public Map<String, Object> selectDeductionDetail(String ded_no) throws SQLException {
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		Map<String, Object> deduction = (Map<String, Object>) empsalDAO.selectDeductionDetail(ded_no);
+		
+		dataMap.put("deduction", deduction);
+		return dataMap;
+	}
+
+	@Override
+	public void modifyDeduction(DeductionVO dedVO) throws SQLException {
+
+		empsalDAO.modifyDeduction(dedVO);
+		
+	}
+
+	@Override
+	public void deleteDeduction(String ded_no) throws SQLException {
+
+		empsalDAO.deleteDeduction(ded_no);
+		
+	}
+	
+	// DEPT
+
+	@Override
+	public Map<String, Object> selectdeptList(SearchCriteria cri) throws SQLException {
+		
+		int offset = cri.getPageStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);		// RowBounds : 쿼리에서 페이징 처리된 결과를 알아서 필요한 만큼 가져온다.
+
+		// 현재 page 번호에 맞는 리스트를 perPageNum 개수 만큼 가져오기
+		List<Map<String, Object>> deptList = empsalDAO.selectDeptList(cri, rowBounds);
+		// 전체 board 개수
+		int totalCount = empsalDAO.selectDeptListCount(cri);
+
+		// PageMaker 생성
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("deptList", deptList);
+		dataMap.put("pageMaker", pageMaker);
+		
+		return dataMap;
+	}
+
+	@Override
+	public void insertDept(DeptVO deptVO) throws SQLException {
+		
+		empsalDAO.insertDept(deptVO);
+		
+	}
+
+	@Override
+	public Map<String, Object> selectDeptDetail(String dept_no) throws SQLException {
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		Map<String, Object> dept = (Map<String, Object>) empsalDAO.selectDeptDetail(dept_no);
+		
+		dataMap.put("dept", dept);
+		return dataMap;
+	}
+
+	@Override
+	public void modifyDept(DeptVO deptVO) throws SQLException {
+
+		empsalDAO.modifyDept(deptVO);
+		
+	}
+
+	@Override
+	public void deleteDept(String dept_no) throws SQLException {
+		
+		empsalDAO.deleteDept(dept_no);
+		
+	}
+
+	// WORK
+	
+	@Override
+	public Map<String, Object> selectworkList(SearchCriteria cri, String c_no) throws SQLException {
+		
+		int offset = cri.getPageStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);		// RowBounds : 쿼리에서 페이징 처리된 결과를 알아서 필요한 만큼 가져온다.
+
+		// 현재 page 번호에 맞는 리스트를 perPageNum 개수 만큼 가져오기
+		List<Map<String, Object>> workList = empsalDAO.selectWorkList(cri, rowBounds, c_no);
+		// 전체 board 개수
+		int totalCount = empsalDAO.selectWorkListCount(cri, c_no);
+
+		// PageMaker 생성
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("workList", workList);
+		dataMap.put("pageMaker", pageMaker);
+		
+		return dataMap;
+	}
+
+	@Override
+	public void insertWork(WorkVO workVO) throws SQLException {
+		
+		empsalDAO.insertWork(workVO);
+		
+	}
+
+	@Override
+	public Map<String, Object> selectWorkDetail(int w_no) throws SQLException {
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		Map<String, Object> work = (Map<String, Object>) empsalDAO.selectWorkDetail(w_no);
+		
+		dataMap.put("work", work);
+		return dataMap;
+	}
+
+	@Override
+	public void modifyWork(WorkVO workVO) throws SQLException {
+		
+		empsalDAO.modifyWork(workVO);
+		
+	}
+
+	@Override
+	public void deleteWork(int w_no) throws SQLException {
+		
+		empsalDAO.deleteWork(w_no);
+		
+	}
+
+	@Override
+	public List<ExtrapayVO> getExtrapay(Map<String, String> dataMap) throws SQLException {
+
+		List<ExtrapayVO> exp = null;
+		exp = empsalDAO.getExtrapay(dataMap);
+		
+		return exp;
+	}
+
+	@Override
+	public List<ExtrapayVO> getExtrapayList() throws SQLException {
+
+		List<ExtrapayVO> exp = null;
+		exp = empsalDAO.getExtrapayList();
+		
+		return exp;
+	}
 	
 }

@@ -25,7 +25,7 @@
 							</div>
 							<div class="form-group col-sm-12 row " >
 								<label for="c_name" class="col-sm-2">업체명</label>
-								<input type="text" id="c_name" name="c_name" class="form-control col-sm-3 c_name emp2" value="" placeholder="업체명을 입력하세요 ">
+								<input type="text" id="c_name" name="c_name" class="form-control col-sm-3 c_name emp2" value="${c_name }" placeholder="업체명을 입력하세요 " readonly>
 								<input type="hidden" id="c_no" name="c_no" value="">								
 								<div class="col-sm-1"></div>
 								<label for="e_rank" class="col-sm-2">직급</label>
@@ -165,11 +165,11 @@
 			return win;
 		};
 
-		$(document).on('click', '.c_name', function(){
+// 		$(document).on('click', '.c_name', function(){
 			
-			let openWin = OpenWindow("/management/findCompany.do", "업체명 찾기", 500, 500);
+// 			let openWin = OpenWindow("/management/findCompany.do", "업체명 찾기", 500, 500);
 			
-		});
+// 		});
 		
 		$(document).on('click', '.dname', function(){
 			

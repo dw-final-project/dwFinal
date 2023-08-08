@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>사원 리스트</title>
+<title>수당 리스트</title>
 <style>
 	.trHover:hover{
 		background-color: #dfdfdf;
@@ -21,8 +21,8 @@
 		<form id="searchForm" method="post" action="/management/findEmp.do" style="display: contents;">
 			<select class="form-control" name="searchType" id="searchType" style="font-size: 0.8em; width: 30%;">
 				<option value="cw" ${searchType eq 'cw' ? 'selected' : '' }>전  체</option>
-				<option value="w" ${searchType eq 'w' ? 'selected' : '' }>사원 코드</option>
-				<option value="c" ${searchType eq 'c' ? 'selected' : '' }>사원 이름</option>
+				<option value="w" ${searchType eq 'w' ? 'selected' : '' }>수당코드</option>
+				<option value="c" ${searchType eq 'c' ? 'selected' : '' }>수당명</option>
 			</select>
 			<input class="form-control" type="text" name="keyword" style="width: 50%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
 			<button class="btn btn-primary" type="button" id="searchBtn">
@@ -33,15 +33,13 @@
 	<div>	
 		<table id="tab" style="font-size: 0.8em;" class="table table-borderd text-center">
 			<tr>
-				<th width="50px" style="text-align: center;">사원 코드</th>
-				<th width="100px" style="text-align: center;">사원 이름</th>
-				<th width="100px" style="text-align: center;">부서명</th>
+				<th width="50px" style="text-align: center;">수당코드</th>
+				<th width="100px" style="text-align: center;">수당명</th>
 			</tr>
-			<c:forEach items="${emp}" var="emp">
+			<c:forEach items="${exp}" var="exp">
 				<tr>
-					<td style="text-align: center;" class="emp_no">${emp.emp_no}</td>
-					<td style="text-align: center;" class="e_name">${emp.e_name}</td>
-					<td style="text-align: center;" class="dname">${emp.dname}</td>
+					<td style="text-align: center;" class="ep_no">${exp.ep_no}</td>
+					<td style="text-align: center;" class="ep_name">${exp.ep_name}</td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -63,8 +61,8 @@
 	
 		
 	$('tr').on('click', function(){
-			$('#emp_no', opener.document).val($(this).find('.emp_no').text());
-			$('#e_name', opener.document).val($(this).find('.e_name').text());
+			$('.ep_no', opener.document).val($(this).find('.ep_no').text());
+			$('.ep_name', opener.document).val($(this).find('.ep_name').text());
 			window.close();
 		})
 	
