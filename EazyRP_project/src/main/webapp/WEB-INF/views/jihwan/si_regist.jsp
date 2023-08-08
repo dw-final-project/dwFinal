@@ -100,7 +100,7 @@
         </tr>
     	<tbody id="prInput">
     	<input type="hidden" value="" id="cnt">
-       
+        <input type="hidden" value="B" id="A">
         <tr id="trChk" >    	
 	       <input type="hidden" class="rownum" value="">
 	       <input type="hidden" name="sidetail_no" id="sidtail_no" value="">
