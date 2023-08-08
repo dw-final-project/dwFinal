@@ -56,14 +56,18 @@
 </select>
 
 <select id="selectSearchEstimateListCount" resultType="int">
+		
 		SELECT COUNT(*)
-		  FROM ESTIMATE e , ESTDETAIL ed, company c, emp em, product p
-	 WHERE 1=1
-	   AND e.EST_NO = ed.EST_NO
-	   AND ed.c_no = c.c_no
-	   AND ed.emp_no = em.emp_no
-	   AND ed.pr_no = p.pr_no
-		 <include refid="search"/>
+		FROM ( SELECT COUNT(*)
+		  	   FROM ESTIMATE e , ESTDETAIL ed, company c, emp em, product p
+	 		   WHERE 1=1
+			   AND e.EST_NO = ed.EST_NO
+			   AND ed.c_no = c.c_no
+			   AND ed.emp_no = em.emp_no
+			   AND ed.pr_no = p.pr_no
+				<include refid="search"/>
+			   GROUP BY ed.est_no
+		)
 </select>
 
 
@@ -102,6 +106,7 @@
 	  	  ,ed.estdetail_no
 	  	  ,w.wh_no
 	  	  ,p.pr_no
+	  	  ,ed.progress
   	  FROM ESTDETAIL ed, product p, warehouse w
 	 where est_no = #{est_no}
 	   AND p.pr_no = ed.pr_no
@@ -243,7 +248,7 @@
 		#{emp_no},
 		#{fc_no},
 		#{amount},
-		'진행중',
+		'접수중',
 		#{quantity},
 		#{pr_no},
 		sysdate,
@@ -277,7 +282,7 @@
 		 WH_NO = #{wh_no}
 		 ,FC_NO = #{fc_no}
 		 ,AMOUNT = #{amount}
-		 ,PROGRESS = '진행중'
+		 ,PROGRESS = #{progress}
 		 ,EMP_NO = #{emp_no}
 		 ,QUANTITY = #{quantity}
 		 ,PR_NO = #{pr_no}
@@ -302,7 +307,7 @@ WHEN NOT MATCHED THEN
 		#{emp_no},
 		#{fc_no},
 		#{amount},
-		'진행중',
+		#{progress},
 		#{quantity},
 		#{pr_no},
 		sysdate,
