@@ -19,17 +19,24 @@
 	</sql>
 
 	<select id="selectSearchWorkOrderList" resultType="workOrder">
-		SELECT	w.*, e.e_name
-		FROM	workorder w, emp e
+		SELECT	wd.wo_no,
+				MAX(wo.sys_regdate) sys_regdate,
+				MAX(wo.wo_name) wo_name,
+				MAX(e.e_name) e_name,
+				MAX(wo.deliverydate) deliverydate,
+				MAX(wo.progress) progress
+		FROM	workorder wo, workorderdetail wd, emp e
 		WHERE	1=1
-		AND		w.emp_no = e.emp_no
-		AND		w.c_no = #{c_no}
+		AND		wo.emp_no = e.emp_no
+		AND		wo.wo_no = wd.wo_no
+		AND		wo.c_no = #{c_no}
 		<include refid="search"></include>
-		ORDER BY w.wo_no desc
+		GROUP BY wd.wo_no
+		ORDER BY sys_regdate desc
 	</select>
 	
 	<select id="selectSearchWorkOrderListCount" resultType="int">
-		SELECT	COUNT(*)
+		SELECT	COUNT(DISTINCT w.wo_no)
 		FROM	workorder w, emp e
 		WHERE	1=1
 		AND		w.emp_no = e.emp_no
@@ -56,7 +63,6 @@
 			c_no,
 			deliverydate,
 			progress,
-			files,
 			enabled
 		)
 		VALUES(
@@ -67,7 +73,6 @@
 			#{c_no},
 			#{deliverydate},
 			#{progress},
-			#{files},
 			'y'
 		)
 	</insert>
@@ -102,9 +107,9 @@
 	<!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 -->
 	
 	<select id="selectWorkOrder" parameterType="str" resultType="Map">
-		SELECT 	wo.wo_no, wo.wo_name, e.e_name, 
+		SELECT 	wo.wo_no, wo.wo_name, e.e_name, wo.emp_no,
 				TO_CHAR(wo.DELIVERYDATE, 'yyyy-MM-dd') DELIVERYDATE, 
-				wo.PROGRESS, wo.FILES, c.c_name,
+				wo.PROGRESS, c.c_name,
 				TO_CHAR(wo.sys_regdate, 'yyyy-MM-dd') sys_regdate
 		FROM 	workorder wo, emp e, company c
 		WHERE 	wo.emp_no = e.EMP_NO
@@ -126,5 +131,55 @@
 		AND wd.fac_no = f.fac_no
 		AND wo.wo_no = #{wo_no}				
 	</select>	
+	
+	<update id="workOrderUpdate">
+		UPDATE	workorder
+		SET		sys_up		= #{emp_no},
+				emp_no		= #{emp_no},
+				sys_updatedate = sysdate,
+				deliverydate = #{deliverydate},
+				progress 	= #{progress},
+				c_no 		= #{c_no}
+		WHERE	wo_no		= #{wo_no}
+	</update>
+	
+	<update id="modifyWorkOrderDetail">
+		MERGE 
+		INTO 	workorderdetail
+		USING	dual
+		ON		(#{detail_no} != 0)
+		WHEN MATCHED THEN
+		UPDATE 
+		SET			wo_no	= #{wo_no},
+					pr_no	= #{pr_no},
+					fac_no	= #{fac_no},
+					quantity	= #{quantity}
+		WHERE		detail_no	= #{detail_no}
+		WHEN NOT MATCHED THEN
+		INSERT (
+			detail_no,
+			wo_no,
+			pr_no,
+			fac_no,
+			quantity
+		)
+		VALUES(
+			detail_no_seq.nextval,
+			#{wo_no},
+			#{pr_no},
+			#{fac_no},
+			#{quantity}
+		)
+	</update>
+	
+	<delete id="deleteWorkOrderDetail">
+		DELETE	from workorderdetail
+		WHERE	detail_no = #{detail_no}
+	</delete>
+	
+	<delete id="deleteWorkOrder">
+		DELETE	from workorderdetail
+		WHERE	wo_no = #{wo_no}
+	</delete>
 	
 </mapper>

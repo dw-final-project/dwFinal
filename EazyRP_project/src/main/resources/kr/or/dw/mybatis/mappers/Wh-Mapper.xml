@@ -32,7 +32,7 @@
 	
 	<!-- 셀렉트할때는 리절트타입 필요하고 insert delete 등할때는 파라미터 타입이 들어감 -->
 	<select id="selectSearchWhList" resultType="wh">
-		SELECT wh.wh_no
+		SELECT wd.wh_no
 		,MAX(wh.SYS_REGDATE) sys_regdate
 	    ,MAX((SELECT wh_name FROM WAREHOUSE WHERE wh_no = wd.WH_NO2)) wh_name
 	    ,MAX((SELECT E_NAME  FROM EMP WHERE EMP_NO = wh.EMP_NO)) e_name
@@ -45,7 +45,7 @@
 		AND wh.emp_no = emp.emp_no
 		AND	wh.c_no = #{c_no}
 		<include refid="search"/>
-		GROUP BY wh.WH_NO
+		GROUP BY wd.WH_NO
 		ORDER BY sys_regdate DESC
 	</select>
 	
@@ -185,8 +185,7 @@
 				emp_no = #{emp_no},
 				sys_updatedate = sysdate,
 				progress = #{progress},
-				c_no = #{c_no},
-				files = #{files}
+				c_no = #{c_no}
 		WHERE	wh_no = #{wh_no}
 	</update>
 	

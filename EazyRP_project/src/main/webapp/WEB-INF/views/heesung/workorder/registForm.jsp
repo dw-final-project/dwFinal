@@ -104,12 +104,12 @@
 				</select>
 			</td>
         </tr>
-        <tr>
-            <td align="center"><b>첨부파일</b></td>
-            <td><input type="file" style="width: 100%;"  name ="files" value="">
-            	<input type="hidden" id="fileName" name="fileName" value=""> 
-            </td>
-        </tr>
+<!--         <tr> -->
+<!--             <td align="center"><b>첨부파일</b></td> -->
+<!--             <td><input type="file" style="width: 100%;"  name ="files" value=""> -->
+<!--             	<input type="hidden" id="fileName" name="fileName" value="">  -->
+<!--             </td> -->
+<!--         </tr> -->
     </table>
     <button type="button" id="addPutBtn">추가</button>
     <table>
