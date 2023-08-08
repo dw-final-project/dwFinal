@@ -150,8 +150,8 @@ body {
 </head>
 <body>
 <!-- Modal HTML -->
-	<div class="modal-dialog modal-login ">
-		<div class="modal-content " >
+	<div class="modal-dialog modal-login" style=" margin-top: -120px;">
+		<div class="modal-content " style="margin-left: -150px;" >
 			<div class="modal-header">				
 				<h4 class="modal-title">개인정보 수정</h4>
 					<form id="searchForm2" method="post"

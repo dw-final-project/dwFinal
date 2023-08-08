@@ -32,25 +32,21 @@
 						<div>
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
-									<th width="80px" style="text-align: center;"></th>
-									<th width="350px" style="text-align: center;">제품명</th>
-									<th width="120px" style="text-align: center;">요청 날짜</th>
-									<th width="220px" style="text-align: center;">업체명</th>
-									<th width="150px" style="text-align: center;">담당 기사</th>
-									<th width="300px" style="text-align: center;">진행 상황</th>
+									<th style="text-align: center;">A/S 코드</th>
+									<th style="text-align: center;">담당 기사</th>
+									<th style="text-align: center;">진행 상황</th>
+									<th style="text-align: center;">요청 날짜</th>
+									<th style="text-align: center;">완료 날짜</th>
 								</tr>
-									<c:forEach items="${note}" var="note" varStatus="loop">
+								<c:forEach items="${asList}" var="as">								
 									<tr>
-										<td id="read_${loop.index}" style="text-align: center; height:80%; font-weight:bold; font-size: 0.6em; color: ${note.readable == 'N' ? 'red' : 'blue' };">
-										${note.readable == 'N' ? '안읽음' : '읽음' }
-										</td>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/mymenu/detail.do?n_no=${note.n_no }&send=N', '쪽지보기', 700, 1000, '${loop.index}')">${note.title }</a></td>
-										<td style="text-align: center;">${note.callerName }</td>
-										<td style="text-align: center;">${note.c_cname }</td>
-										<td style="text-align: center;">${note.files == "" || note.files == null ? "N" : "Y" }</td>
-										<td style="text-align: center;">${note.senddate }</td>
+										<td style="text-align: center;">${as.as_no }</td>
+										<td style="text-align: center;">${as.emp_no }</td>
+										<td style="text-align: center;">${as.progress == '0' ? '대기중' : (as.progress == '1' ? '진행중' : '완료')}</td>
+										<td style="text-align: center;"><fmt:formatDate value="${as.sys_regdate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
+										<td style="text-align: center;"><fmt:formatDate value="${as.compldate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 									</tr>
-									</c:forEach>
+								</c:forEach>
 							</table>
 
 							<div class="card-footer">
@@ -60,8 +56,9 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/asmanage/communication.do', '쪽지쓰기', 700, 1000)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/as/registForm.do', '쪽지쓰기', 700, 1000)"
 					style="width: 100px; margin: 20px; align-self: center;">A/S 접수</button>
+
 				</div>
 			</div>
 		</div>

@@ -24,14 +24,16 @@ public class QnaServiceImpl implements QnaService {
 	private QnaDAO qnaDAO;
 
 	@Override
-	public Map<String, Object> selectQnaList(SearchCriteria cri) throws SQLException {
+	public Map<String, Object> selectQnaList(SearchCriteria cri, int u_no) throws SQLException {
 		
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		List<Map<String, Object>> qnaList = qnaDAO.selectQnaList(cri, rowBounds);
-		int totalCount = qnaDAO.selectQnaListCount(cri);
+		Map<String, Object> map = new HashMap<>();
+		map.put("cri", cri);
+		map.put("u_no", u_no);
+		List<Map<String, Object>> qnaList = qnaDAO.selectQnaList(rowBounds, map);
+		int totalCount = qnaDAO.selectQnaListCount(map);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);

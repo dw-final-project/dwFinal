@@ -28,6 +28,15 @@
 		   ORDER BY as_no desc
 	</select>
 	
+<!-- contact -->
+<!-- 	<select id="selectAsList" resultType="Map"> -->
+<!-- 		SELECT as.*, e.emp_ -->
+<!-- 		  FROM asmanage as, emp e -->
+<!-- 		 WHERE as.emp_no = e.emp_no -->
+<!-- 		   ORDER BY as_no desc -->
+<!-- 	</select> -->
+	
+	
 	<select id="selectAsListCount" resultType="int">
 		SELECT COUNT(*)
 		  FROM asmanage

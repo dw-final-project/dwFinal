@@ -1,28 +1,18 @@
 package kr.or.dw.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,13 +59,22 @@ public class MemberController {
 	}
 	@RequestMapping("/qna")
 	public ModelAndView qna (SearchCriteria cri, ModelAndView mnv, String mcode, HttpSession session) throws Exception {
-		String url = "/common/inquiryForm.page";
+		String url = "/common/inquiryForm.page";	
 		
-		Map<String, Object> dataMap = qnaService.selectQnaList(cri);
+		MemberVO member = (MemberVO) session.getAttribute("loginUser");
+		int u_no = member.getU_no();
+
+		Map<String, Object> dataMap = qnaService.selectQnaList(cri, u_no);
+		
+		
 		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(dataMap);
+		
 		List<InquiryVO> vo = (List<InquiryVO>) dataMap.get("qnaList");
+		
+		
 		System.out.println(vo);
+		
 		mnv.setViewName(url);
 		
 		return mnv;
