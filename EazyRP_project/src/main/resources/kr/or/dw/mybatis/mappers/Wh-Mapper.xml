@@ -235,7 +235,7 @@
 	</delete>
 	
 	<delete id="deleteWh">
-		DELETE 	from whdetail
+		DELETE 	from wh
 		WHERE	wh_no = #{whNo}
 	</delete>
 	

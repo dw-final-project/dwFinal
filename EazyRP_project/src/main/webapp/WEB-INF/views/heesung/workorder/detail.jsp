@@ -83,7 +83,7 @@
 		<table>
 	        <tr>
 	            <td width="40%" align="center"><b>코드번호</b></td>
-	            <td width="100%"><input type="text" style="width: 100%;" value="${wo.WO_NO }" name="wo_no" readonly></td>
+	            <td width="100%"><input type="text" style="width: 100%;" value="${wo.WO_NO }" readonly></td>
 	        </tr>
 	        <tr>
 	            <td width="40%" align="center"><b>제목</b></td>

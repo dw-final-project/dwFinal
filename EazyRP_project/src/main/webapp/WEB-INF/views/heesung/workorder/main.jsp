@@ -13,7 +13,7 @@
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm2" method="post" action="/erp4/workorder.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2 custom-select" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="tw" ${searchType eq 'tw' ? 'selected' : '' }>전  체</option>
+								<option value="tw" ${searchType eq 'tw' ? 'selected' : '' }>제목 + 담당자</option>
 								<option value="t" ${searchType eq 't' ? 'selected' : '' }>제목</option>
 								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>담당자</option>
 							</select>
