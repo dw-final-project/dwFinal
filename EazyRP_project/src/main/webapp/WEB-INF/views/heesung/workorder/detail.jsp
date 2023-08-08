@@ -79,7 +79,7 @@
 	<!-- card footer End -->
 <form role="form" method="post" enctype="multipart/form-data">
 
-		<input type="hidden" name="wo_no" value="">
+		<input type="hidden" name="wo_no" value="wo.WO_NO">
 		<table>
 	        <tr>
 	            <td width="40%" align="center"><b>코드번호</b></td>
@@ -90,30 +90,17 @@
 	            <td width="100%"><input type="text" style="width: 100%;" value="${wo.WO_NAME }"></td>
 	        </tr>
 	        <tr>
-	            <td width="40%" align="center"><b>생산 공장</b></td>
-	            <td width="100%"><input type="text" style="width: 100%;" value="${wo.FAC_NAME }"></td>
-	        </tr>
-	        <tr>
 	            <td width="40%" align="center"><b>담당자</b></td>
 	            <td width="100%"><input type="text" style="width: 100%;" value="${wo.C_NAME } / ${wo.E_NAME }"></td>
 	        </tr>
-	        
-<!-- 	        <div class="form-group col-sm-12 row"> -->
-<!-- 				<label for="endperiod" class="col-sm-3">판매종료일</label> -->
-<%-- 				<c:set var="endperiod"> --%>
-<%-- 					<fmt:formatDate value="${merchandise.ENDPERIOD }" pattern="yyyy-MM-dd"></fmt:formatDate> --%>
-<%-- 				</c:set> --%>
-<%-- 				<input type="date" id="endperiod" name="endperiod" class="form-control col-sm-9 mch7" value="${endperiod }" placeholder="판매종료일을 입력하세요."> --%>
-<!-- 			</div> -->
-			
 	        <tr>
 	        	<td width="40%" align="center"><b>등록일</b></td>
 	        	<td width="40%" align="center">
-					<input type="date" id="endperiod" name="deliverydate" class="form-control mch7" value="${wo.SYS_REGDATE }" placeholder="납기일을 입력하세요." disabled>
+					<input type="date" id="sys_regdate" class="form-control mch7" value="${wo.SYS_REGDATE }" placeholder="등록일" disabled>
 	        	</td>
 	        </tr>
 	        <tr>
-	        	<td width="40%" align="center"><b>납기일</b></td>
+	        	<td width="40%" align="center"><b>마감일</b></td>
 	        	<td width="40%" align="center">
 					<input type="date" id="endperiod" name="deliverydate" class="form-control mch7" value="${wo.DELIVERYDATE }" placeholder="납기일을 입력하세요.">
 	        	</td>
@@ -136,7 +123,7 @@
 	            <td align="center"><b>첨부파일</b></td>
 	            <td>
 	            <input type="file" name="files" style="width: 100%;" value="">
-	            <c:if test="${!empty est.FILES }">
+	            <c:if test="${!empty wo.FILES }">
 				<div><button type="button" onclick="location.href='<%=request.getContextPath()%>/erp4/getFile.do?files=${est.FILES }';">파일 다운</button>&nbsp;&nbsp;${est.FILES }</div>
 				</c:if>
 				</td> 
@@ -146,21 +133,27 @@
     <table>
     	
         <tr>
-            <th align="center" style="width: 20%;">품목명</th>
-            <th align="center" style="width: 20%;">수량</th>
-            <th align="center" style="width: 15%;">비고</th>
+            <th align="center">품목명</th>
+            <th align="center">생산 공장</th>
+            <th align="center">수량</th>
+            <th align="center">비고</th>
         </tr>
     	<tbody id="prInput">
         <input type="hidden" value="" id="cnt">
+        <input type="hidden" value="A" id="A">
        	<c:forEach items="${woDetail }" var="woDetail" varStatus="loop">
 	        <tr id="trChk" >    	
 				<input type="hidden" class="rownum" value="${woDetail.ROWNUM }">
 				<input type="hidden" name="detail_no" id="dtail_no" value="${woDetail.DETAIL_NO }">
 	<%-- 	       <input type="hidden" name="enabled" id="estenabled" value="${est.ENABLED }"> --%>
-	<!-- 	       <input type="hidden" name="pr_delete" value="o"> -->
+		       <input type="hidden" name="pr_delete" value="o">
 	        	<td>
 	        		<input type="text" id="${woDetail.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${woDetail.PR_NAME }"><input type="hidden" name="pr_no" value="${est.PR_NO }">
 	        	</td>
+	        	<td>	
+					<input type="text" id="fac_no${woDetail.ROWNUM }" class="fac_names" name="fac_name" style="width: 100%;" value="${woDetail.FAC_NAME }">
+					<input type="hidden" name="fac_no" value="${woDetail.FAC_NO }">
+				</td>
 	            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${woDetail.QUANTITY }"><input type="hidden" id="cost" value="${est.PR_EXPRICE }"></td>
 	            <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>
 	        </tr>
@@ -168,7 +161,7 @@
         </tbody>
         <tr class="total">
             <td colspan="2" align="center">총량</td>
-            <td colspan="1" align="center"><input type="text" id="woTotal" style="width: 100%;" value="${est.AMOUNT }" readonly></td>
+            <td colspan="2" align="center"><input type="text" id="woTotal" style="width: 100%;" value="${est.AMOUNT }" readonly></td>
         </tr>
     </table>
 </form>
@@ -250,31 +243,15 @@ $('#addPutBtn').on('click', function(){
 	cnt++;
 	$('#prInput').append(
 		'<tr>'+
+			'<input type="hidden" name="detail_no" id="" value="0">'+
+			'<input type="hidden" name="pr_delete" value="n">'+
 	        '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
+	        '<td><input type="text" id="fac_no' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no"id="fac_no' + cnt + '"></td>'+
 	        '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
 	        '<td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>'+
     	'</tr>'
     );
 	
-// 	$('#prInput').append(
-// 		'<tr id="trChk"><input type="hidden" class="rownum" value="'+ cnt + '">' +
-// 			'<input type="hidden" name="estdetail_no" value="0">'+
-// 			'<input type="hidden" name="pr_delete" value="n">'+
-// 		    '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
-// 		    '<td><input type="text" id="wh_no' + cnt +'" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'+
-// 		    '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
-// 		    '<td><input type="text" id="amount" name="amount" style="width: 100%;" value=""></td>'+
-// 		    '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'+
-// 		'</tr>'
-// 	);
-	
-	
-	
-//		$('script').append(
-//			'$("#quantity' + cnt + '").on("keyup", function(){'+
-//				'alert($(this).val())'+
-//				'$(this).parent().next().children().val($(this).val()*$(this).next().val())});'
-//		)
 });
 
 
@@ -313,6 +290,12 @@ $('tr').on('click', function(){
 	    }
 	   });
 	
+	// 공장 클릭시 목록 열기 이벤트
+	$(document).on('click', '.fac_names', function() {
+		let whVal = $(this).attr('id');
+		$('#cnt').val(whVal);
+		let openWin = OpenWindow("/erp4/findFactory.do", "공장 찾기", 800, 600);
+	})
 	
 	//창고코드 이벤트
 	$(document).on('click', '.wh_names', function(){

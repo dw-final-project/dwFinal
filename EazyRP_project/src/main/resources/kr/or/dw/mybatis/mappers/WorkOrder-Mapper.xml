@@ -52,7 +52,6 @@
 			wo_no,
 			wo_name,
 			sys_regdate,
-			fac_no,
 			emp_no,
 			c_no,
 			deliverydate,
@@ -64,7 +63,6 @@
 			#{wo_no},	<!-- 셀렉트키를 이용함으로써 이게 된다고? -->
 			#{wo_name},
 			sysdate,
-			#{fac_no},
 			#{emp_no},
 			#{c_no},
 			#{deliverydate},
@@ -90,34 +88,42 @@
 			detail_no,
 			quantity,
 			wo_no,
+			fac_no,
 			pr_no
 		)
 		VALUES (
 			workorderdetail_seq.nextval,	<!-- 하드코딩을 시퀀서로 한거라고 생각하면됨 -->
 			#{quantity},
 			#{wo_no},
+			#{fac_no},
 			#{pr_no}
 		)
 	</insert>
 	<!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 -->
 	
-	<select id="selectWorkOrderDetail" parameterType="str" resultType="Map">
-		SELECT 	wo.wo_no, wo.wo_name, f.fac_name, e.e_name, 
+	<select id="selectWorkOrder" parameterType="str" resultType="Map">
+		SELECT 	wo.wo_no, wo.wo_name, e.e_name, 
 				TO_CHAR(wo.DELIVERYDATE, 'yyyy-MM-dd') DELIVERYDATE, 
 				wo.PROGRESS, wo.FILES, c.c_name,
 				TO_CHAR(wo.sys_regdate, 'yyyy-MM-dd') sys_regdate
-		FROM workorder wo, factory f, emp e, company c
-		WHERE wo.fac_no = f.fac_no
-		AND wo.emp_no = e.EMP_NO
-		AND wo.c_no = c.c_no
-		AND wo.wo_no = #{wo_no}
+		FROM 	workorder wo, emp e, company c
+		WHERE 	wo.emp_no = e.EMP_NO
+		AND 	wo.c_no = c.c_no
+		AND 	wo.wo_no = #{wo_no}
 	</select>
 	
-	<select id="selectWorkOrderDetailList" resultType="Map">
-		SELECT ROWNUM, p.pr_name ,wd.WO_NO ,wd.QUANTITY ,wd.DETAIL_NO 
-		FROM WORKORDER wo, WORKORDERDETAIL wd, PRODUCT p 
+	<select id="selectWorkOrderDetail" resultType="Map">
+		SELECT 	ROWNUM, 
+				p.pr_name, 
+				wd.WO_NO, 
+				wd.QUANTITY, 
+				wd.DETAIL_NO, 
+				wd.fac_no, 
+				f.fac_name
+		FROM WORKORDER wo, WORKORDERDETAIL wd, PRODUCT p, factory f
 		WHERE wo.wo_no = wd.WO_NO
 		AND wd.pr_no = p.pr_no
+		AND wd.fac_no = f.fac_no
 		AND wo.wo_no = #{wo_no}				
 	</select>	
 	
