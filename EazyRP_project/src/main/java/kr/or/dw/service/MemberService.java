@@ -18,7 +18,7 @@ public interface MemberService {
 
 	void modProfile(MemberVO member) throws SQLException;
 
-	void delete(String id) throws SQLException;
+	void delete(int u_no) throws SQLException;
 
 
 

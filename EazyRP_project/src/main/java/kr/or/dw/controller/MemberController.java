@@ -315,11 +315,16 @@ public class MemberController {
 	
 	//회원탈퇴 
 	@RequestMapping("/delete")
-	public String delete(String id)throws Exception {
-			
-		memberService.delete(id);
-
-		return "/common/loginForm";
+	public String delete(HttpSession session )throws Exception {
+		String url = "/common/loginForm";
+		
+		MemberVO member = (MemberVO) session.getAttribute("loginUser");
+		int u_no = member.getU_no(); 
+		
+		memberService.delete(u_no);
+	
+	
+		return url;
 	}
 
 }

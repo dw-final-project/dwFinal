@@ -149,7 +149,8 @@ $(function(){
 	
 	$('#deleteBtn').on('click', function(){
 		if(confirm("정말 탈퇴하시겠습니까")){
-		location.href="delete.do?id=${member.id}"			
+		location.href="/member/delete.do"	
+		
 		}
 	});	
 	

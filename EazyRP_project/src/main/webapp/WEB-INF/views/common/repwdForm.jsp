@@ -164,7 +164,7 @@ body {
 							style="display: contents;"></form>
 			</div>
 			<div class="modal-body">
-				<form id="repwdForm" action="/member/repwd.do" method="post">
+				<form id="repwdForm" action="/member/repwd.do?mcode=${mcode }" method="post">
 					<input type="hidden" name="id" value="${id }">
 					
 					<div class="form-group d-flex">
