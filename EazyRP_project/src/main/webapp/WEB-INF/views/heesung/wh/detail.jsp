@@ -86,8 +86,17 @@
 	            <td width="100%"><input type="text" style="width: 100%;" value="${wh.WH_NO }" readonly></td>
 	        </tr>
 	        <tr>
-	            <td width="40%" align="center"><b>제목</b></td>
-	            <td width="100%"><input type="text" style="width: 100%;" value="${wh.WO_NAME }"></td>
+	            <td width="40%" align="center">
+	            	<b>작업지시서</b>
+	            </td>
+	            <td width="100%">
+					<input type="hidden" name="wo_no" id="wo_no" class="wo_no" value="${wh.WO_NO }">
+	            	<div style="display: flex;">
+		            	<input type="text" style="width: 78%;" value="${wh.WO_NAME }" id="wo_name" name="wo_name"
+								readonly onclick="OpenWindow('/erp4/findWorkOrder.do', '작업지시서 찾기', 400, 600)">
+						<button style="float: right" type="button" id="woDetailOpenBtn" class="btn btn-success">상세보기</button>
+					</div>
+				</td>
 	        </tr>
 	        <tr>
 	            <td width="40%" align="center"><b>담당자</b></td>
@@ -115,20 +124,6 @@
 					    <option value="2" ${wh.PROGRESS eq '2' ? 'selected' : '' }>완료</option>
 					</select>
 				</td>
-	        </tr>
-	        <tr>
-	            <td align="center"><b>첨부파일</b></td>
-	            <td>
-	            <input type="file" name="files" style="width: 100%;" value="">
-	            <c:if test="${!empty wh.FILES }">
-					<div>
-						<button type="button" onclick="location.href='<%=request.getContextPath()%>/erp4/getFile.do?files=${wh.FILES }';">
-							파일 다운
-						</button>
-						&nbsp;&nbsp;${wh.FILES }
-					</div>
-				</c:if>
-				</td> 
 	        </tr>
 	    </table>
     <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">추가</button>
@@ -187,9 +182,6 @@
     </table>
 </form>
 </body>
-
-
-	
 
 <script>
 window.onload = function(){
@@ -282,6 +274,7 @@ function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 	var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
 							+ "height=" + WinHeight + ",top="+ wintop + ",left="
 							+ winleft + ",resizable=yes,status=yes");
+	
 	win.focus();
 	return win;
 };
@@ -339,6 +332,12 @@ function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
 		let openWin = OpenWindow("/erp4/findFactory.do", "공장 찾기", 800, 600);
+	})
+	
+	// 작업지시서 상세보기 버튼 클릭 이벤트
+	$(document).on('click', '#woDetailOpenBtn', function() {
+		let wo_number = $('input[type="hidden"]#wo_no').val();
+		let openWin = OpenWindow("/erp4/selectWorkOrderDetail.do?wo_no=" + wo_number, "작업지시서 상세보기", 600, 800);
 	})
 	
 </script>
