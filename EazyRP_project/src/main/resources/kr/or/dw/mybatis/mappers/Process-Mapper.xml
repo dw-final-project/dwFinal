@@ -32,14 +32,19 @@
 	</insert>
 	
 	<sql id="search">
+		<if test="searchType == 'c'.toString()">
+			AND pc_code LIKE '%' || #{keyword} || '%'
+		</if>
 		<if test="searchType == 't'.toString()">
 			AND pc_name LIKE '%' || #{keyword} || '%'
 		</if>
 		<if test="searchType == 'o'.toString()">
 			AND pc_order LIKE '%' || #{keyword} || '%'
 		</if>
-		<if test="searchType == 'to'.toString()">
+		<if test="searchType == 'cto'.toString()">
 			AND (
+			pc_code LIKE '%' || #{keyword} || '%'
+			OR
 			pc_name LIKE '%' || #{keyword} || '%'
 			OR
 			pc_order LIKE '%' || #{keyword} || '%'
@@ -49,9 +54,10 @@
 	
 	<!-- 셀렉트할때는 리절트타입 필요하고 insert delete 등할때는 파라미터 타입이 들어감 -->
 	<select id="selectSearchProcessList" resultType="process">
-		SELECT *
-		  FROM process
-		 WHERE 1=1
+		SELECT 	*
+		  FROM 	process
+		 WHERE 	1=1
+		 AND	enabled = 'y'
 		 <include refid="search"/>
 		 ORDER BY pc_code desc
 	</select>
@@ -69,11 +75,11 @@
 		WHERE	pc_code = #{pc_code}
 	</select>
 	
-	<delete id="deleteProcess" parameterType="str">
-		DELETE
-		FROM	process
+	<update id="deleteProcess" parameterType="str">
+		UPDATE	process
+		SET		enabled = 'n'
 		WHERE	pc_code = #{pc_code}
-	</delete>
+	</update>
 	
 	<update id="updateProcess" parameterType="process">
 		UPDATE process
