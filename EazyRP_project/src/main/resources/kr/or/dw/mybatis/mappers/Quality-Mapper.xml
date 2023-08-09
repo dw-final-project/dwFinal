@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dw.dao.QualityDAO">
+
+<sql id="qcsearch">
+		<if test="cri.searchType == 'a'.toString()">
+			AND E_NAME LIKE '%' || #{cri.keyword} || '%'
+		</if>
+		<if test="cri.searchType == 'b'.toString()">
+			AND EP_NAME LIKE '%' || #{cri.keyword} || '%'
+		</if>
+		<if test="cri.searchType == 'all'.toString()">
+			AND (
+			E_NAME LIKE '%' || #{cri.keyword} || '%'
+			OR
+			EP_NAME LIKE '%' || #{cri.keyword} || '%'
+			)
+		</if>
+	</sql>
+
+
+	<select id="selectQualityList" resultType="Map">
+		 SELECT qc.QC_NO ,
+	 		MAX((SELECT pr_name FROM PRODUCT WHERE pr_no = p.PR_NO)) PR_NAME 
+	 		,MAX((SELECT e_name FROM emp WHERE emp_no = e.EMP_NO)) e_name
+	 		,MAX(qd.QUANTITY) QUANTITY 
+	 		,MAX(qc.PROGRESS) progress
+	 FROM qc qc, QCDETAIL qd , EMP e , PRODUCT p 
+	 WHERE 1=1
+	 AND qc.QC_NO = qd.QC_NO 
+	 AND qc.EMP_NO = e.EMP_NO 
+	 AND qd.PR_NO = p.PR_NO 
+	 GROUP BY qc.QC_NO 
+	</select>
+
+	<select id="selectQualityListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM qc qc,qcdetail qd,PRODUCT p ,EMP e
+		WHERE 1=1
+		AND qc.QC_NO = qd.QC_NO 
+		AND qc.EMP_NO = e.EMP_NO 
+		AND qd.PR_NO = p.PR_NO 
+		GROUP BY qc.QC_NO 
+	</select>
+
+	<select id="selectQcDetail" resultType="Map">
+		 SELECT qc.QC_NO ,
+	 		MAX((SELECT pr_name FROM PRODUCT WHERE pr_no = p.PR_NO)) PR_NAME 
+	 		,MAX((SELECT e_name FROM emp WHERE emp_no = e.EMP_NO)) e_name
+	 		,MAX(qd.QUANTITY) QUANTITY 
+	 		,MAX(qc.PROGRESS) progress
+	 		,MAX(qc.SYS_REGDATE) SYS_REGDATE
+	 FROM qc qc, QCDETAIL qd , EMP e , PRODUCT p 
+	 WHERE 1=1
+	 AND qc.QC_NO = qd.QC_NO 
+	 AND qc.EMP_NO = e.EMP_NO 
+	 AND qd.PR_NO = p.PR_NO 
+	 GROUP BY qc.QC_NO
+	</select>
+	
+	<select id="forQcList" resultType="Map">
+		SELECT ROWNUM,
+			  qd.qcdetail_no,
+			  p.pr_name,
+			  p.pr_no,
+			  qd.content,
+			  qd.quantity
+		  FROM qc qc, QCDETAIL qd , EMP e , PRODUCT p
+		  WHERE 1=1
+		  AND qc.QC_NO = qd.QC_NO 
+	 	 AND qc.EMP_NO = e.EMP_NO 
+		 AND qd.PR_NO = p.PR_NO  
+	</select>
+	
+	<select id="ename" resultType="str">
+		SELECT e_name
+		FROM emp
+		WHERE emp_no = #{emp_no}
+	</select>
+	
+	
+	
+
+</mapper>
