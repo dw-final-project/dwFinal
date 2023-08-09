@@ -85,8 +85,11 @@
 				<td width="40%" align="center"><b>작업지시서</b></td>
 				<td>
 					<input type="hidden" name="wo_no" id="wo_no" class="wo_no" value=""> 
-					<input type="text" style="width: 100%;" value="" id="wo_name" name="wo_name"
-							readonly onclick="OpenWindow('/erp4/findWorkOrder.do', '작업지시서 찾기', 400, 600)">
+					<div style="display: flex;">
+						<input type="text" style="width: 78%;" value="" id="wo_name" name="wo_name"
+								readonly onclick="OpenWindow('/erp4/findWorkOrder.do', '작업지시서 찾기', 400, 600)">
+						<button style="float: right" type="button" id="woDetailOpenBtn" class="btn btn-success">상세보기</button>
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -101,13 +104,6 @@
 				</select>
 			</td>
         </tr>
-			<tr>
-	            <td align="center"><b>첨부파일</b></td>
-	            <td>
-	            	<input type="file" style="width: 100%;"  name ="files" value="">
-	            	<input type="hidden" id="fileName" name="fileName" value=""> 
-	            </td>
-        	</tr>
 		</table>
 		<button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">추가</button>
 		<table>
@@ -127,25 +123,25 @@
 				<input type="hidden" value="A" id="A">
 				<tr>
 					<td>
-						<input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value="">
+						<input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value="" required>
 						<input type="hidden" name="pr_no">
 					</td>
 					<td>
-						<input type="text" id="0" class="fac_names" name="fac_name" style="width: 100%;" value="">
+						<input type="text" id="0" class="fac_names" name="fac_name" style="width: 100%;" value="" required>
 						<input type="hidden" name="fac_no" id="fac_no0">
 					</td>
 					<td>
-						<input type="text" id="0" class="wh_names" name="wh_name" style="width: 100%;" value="">
+						<input type="text" id="0" class="wh_names" name="wh_name" style="width: 100%;" value="" required>
 						<input type="hidden" name="wh_no">
 					</td>
 					<td>
-						<input type="text" id="outprice" class="outprice" name="outprice" style="width: 100%;" value="">
+						<input type="text" id="outprice" class="outprice" name="outprice" style="width: 100%;" value="" required>
 					</td>
 					<td>
-						<input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="">
+						<input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="" required>
 					</td>
 					<td>
-						<input type="text" id="total_outprice" name="total_outprice" style="width: 100%;" value="">
+						<input type="text" id="total_outprice" name="total_outprice" style="width: 100%;" value="" required>
 					</td>
 					<td style="text-align: center;">
 						<button type="button" id="cancelBtn" class="btn btn-danger">삭제</button>
@@ -251,6 +247,79 @@
 	$('input#closeBtn').on('click', function() {
 		window.close();							// 윈도우 창을 닫는다.
 	});
+	
+	// 작업지시서 상세보기 버튼 클릭 이벤트
+	$(document).on('click', '#woDetailOpenBtn', function() {
+		let wo_number = $('input[type="hidden"]#wo_no').val();
+		if (wo_number == "") {
+			alert('작업지시서를 선택해주세요.');
+		} else {
+			let openWin = OpenWindow("/erp4/selectWorkOrderDetail.do?wo_no=" + wo_number, "작업지시서 상세보기", 600, 800);
+		}
+	})
+	
+	
+	// 등록 버튼을 클릭할때 submit 하기전에 값이 들어가지 않은 태그는 없는지 확인하고 없을때 비로소 submit을 한다.
+	
+// 	let submitBtn = $('input[type=submit]#submitBtn');
+// 	let form = $('form[role="form"]');
+
+// 	$(document).on('click', '#submitBtn', function() {
+		
+// 		alert('클릭 이벤트 시~작!');
+	
+// 		if ($('#emp_no').val() == "") {
+			
+// 			alert("담당자를 선택하세요.");
+// 			return;
+			
+// 		} else if ($('#wo_no').val() == "") {
+			
+// 			alert("작업지시서를 선택하세요.");
+// 			return;
+			
+// 		} else if ($('input[name="pr_no"]').val() == "") {
+				
+// 			alert("품목을 선택하세요.");
+// 			return;
+			
+// 		} else if ($('input[name="fac_no"]').val() == "") {
+			
+// 			alert("생산 공장을 선택하세요.");
+// 			return;
+			
+// 		} else if ($('input[name="wh_no"]').val() == "") {
+			
+// 			alert("입고 창고를 선택하세요.");
+// 			return;
+			
+// 		} else if ($('input[name="outprice"]').val() == "") {
+			
+// 			alert("외주비 단가를 선택하세요.");
+// 			return;
+			
+// 		} else if ($('input[name="quantity"]').val() == "") {
+			
+// 			alert("수량을 선택하세요.");
+// 			return;
+			
+// 		} else if ($('input[name="total_outprice"]').val() == "") {
+			
+// 			alert("외주비 합계 선택하세요.");
+// 			return;
+			
+// 		} else if ($('input[name="wh_total"]').val() == "") {
+			
+// 			alert("품목을 선택하세요.");
+// 			return;
+		
+// 		} else {
+				
+// 			form.submit();
+				
+// 		};
+
+// 	})
 	
 </script>
 

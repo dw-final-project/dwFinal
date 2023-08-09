@@ -91,6 +91,21 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		return mnv;
 	}
 	
+	@RequestMapping("/selectWorkOrderDetail")	// 생산입고 디테일에서 선택한 작업지시서를 상세보기 할 수 있다.
+	public ModelAndView selectWorkOrderDetail(ModelAndView mnv, String wo_no) throws SQLException{
+
+		System.out.println("erp4/selectWorkOrderDetail 진입");
+		
+		Map<String, Object> dataMap = workOrderService.selectWorkOrder(wo_no);
+		String url = "heesung/workorder/readOnlyDetail.open";
+		
+		mnv.addAllObjects(dataMap);
+		mnv.setViewName(url);
+		
+		return mnv;
+	
+	}
+	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////// process
 	
 	@RequestMapping("/process")
@@ -238,42 +253,13 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	
 	@RequestMapping("/wh/regist")
 	public void whRegist(HttpServletResponse res, int emp_no,  String wo_no, int wh_total, String[] pr_no, String[] fac_no, String wh_no[], 
-		int[] outprice, int[] quantity, int[] total_outprice, @RequestParam("files")MultipartFile multi, HttpSession session, String progress) throws SQLException, IOException {
+		int[] outprice, int[] quantity, int[] total_outprice, HttpSession session, String progress) throws SQLException, IOException {
 		
 		System.out.println("erp4/wh/regist 컨트롤러 진입");
 		
 
 		List<WhVO> whList = new ArrayList<WhVO>();	// 상세 정보들을 만들기 위한 객체
 		
-		String filess = "";
-		
-		if(!multi.isEmpty()) {
-			UUID uuid = UUID.randomUUID();
-			String[] uuids = uuid.toString().split("-");
-			
-			String uniqueName = uuids[0];
-			
-			String fileRealName = multi.getOriginalFilename();
-			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
-			String uploadFolder = "C:\\upload\\";
-			
-			filess = uniqueName+fileExtension;
-			
-			
-			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
-			
-			if(!saveFile.exists()) {
-				saveFile.mkdirs();
-			}
-			
-			try {
-				multi.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
 		
 		String c_no = session.getAttribute("c_no").toString();
 		
@@ -289,7 +275,6 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 			wh.setEmp_no(emp_no);
 			wh.setWo_no(wo_no);
 			wh.setWh_total(wh_total);
-			wh.setFiles(filess);
 			wh.setC_no(c_no);
 			wh.setProgress(progress);
 			
@@ -352,41 +337,11 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	
 	@RequestMapping("/wh/modify")
 	public void whModify(HttpServletResponse res, int emp_no,  String wo_no, int wh_total, String[] pr_no, String[] fac_no, String[] wh_no, int[] detail_no,
-			int[] outprice, int[] quantity, int[] total_outprice, @RequestParam("files")MultipartFile multi, HttpSession session, String progress, String[] pr_delete, String whNo) throws SQLException, IOException {
+			int[] outprice, int[] quantity, int[] total_outprice, HttpSession session, String progress, String[] pr_delete, String whNo) throws SQLException, IOException {
 		
 		System.out.println("erp4/wh/modify - 진입");
 		
 		List<WhVO> whList = new ArrayList<WhVO>();	// 상세 정보들을 만들기 위한 객체
-		
-		String filess = "";
-		
-		if(!multi.isEmpty()) {
-			UUID uuid = UUID.randomUUID();
-			String[] uuids = uuid.toString().split("-");
-			
-			String uniqueName = uuids[0];
-			
-			String fileRealName = multi.getOriginalFilename();
-			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
-			String uploadFolder = "C:\\upload\\";
-			
-			filess = uniqueName+fileExtension;
-			
-			
-			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
-			
-			if(!saveFile.exists()) {
-				saveFile.mkdirs();
-			}
-			
-			try {
-				multi.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
 		
 		String c_no = session.getAttribute("c_no").toString();
 		
@@ -404,7 +359,6 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 			System.out.println(emp_no);
 			wh.setWo_no(wo_no);
 			wh.setWh_total(wh_total);
-			wh.setFiles(filess);
 			wh.setC_no(c_no);
 			wh.setProgress(progress);
 			
