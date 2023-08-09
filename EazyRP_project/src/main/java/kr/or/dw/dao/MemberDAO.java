@@ -24,7 +24,7 @@ public interface MemberDAO {
 
 	void modProfile(MemberVO member) throws SQLException;
 
-	void deleteUser(String id)throws SQLException;
+	void deleteUser(int u_no)throws SQLException;
 
 
 

@@ -82,6 +82,16 @@ public class CommonController {
 		out.close();
 	}
 	
+	@RequestMapping("/common/logout")
+	public String logout(HttpServletRequest req) throws Exception {
+		HttpSession session = req.getSession(false);
+	    if (session != null) {
+	        session.invalidate();
+	    }
+	    return "/common/loginForm";
+		
+	}
+	
 	@RequestMapping("/common/main")
 	public ModelAndView index (ModelAndView mnv, HttpSession session, HttpServletRequest req) throws SQLException{
 		String url = "/common/main.main";
