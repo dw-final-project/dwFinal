@@ -268,7 +268,6 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		for(int i = 0; i < pr_no.length; i++) {
 			
 			System.out.println(i + "번째 시작");
-			
 			WhVO wh = new WhVO();
 			
 			// wh 테이블

@@ -73,7 +73,6 @@
 			sys_regdate,
 			emp_no,
 			enabled,
-			files,
 			progress,
 			wo_no,
 			sys_up,
@@ -88,7 +87,6 @@
 			sysdate,
 			#{emp_no},
 			'y',
-			#{files},
 			#{progress},
 			#{wo_no},
 			#{emp_no},
@@ -187,6 +185,7 @@
 				emp_no = #{emp_no},
 				sys_updatedate = sysdate,
 				progress = #{progress},
+				wh_total = #{wh_total},
 				c_no = #{c_no}
 		WHERE	wh_no = #{wh_no}
 	</update>

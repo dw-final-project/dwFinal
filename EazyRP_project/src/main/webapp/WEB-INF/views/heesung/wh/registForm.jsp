@@ -123,25 +123,25 @@
 				<input type="hidden" value="A" id="A">
 				<tr>
 					<td>
-						<input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value="" required>
+						<input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value="">
 						<input type="hidden" name="pr_no">
 					</td>
 					<td>
-						<input type="text" id="0" class="fac_names" name="fac_name" style="width: 100%;" value="" required>
+						<input type="text" id="0" class="fac_names" name="fac_name" style="width: 100%;" value="">
 						<input type="hidden" name="fac_no" id="fac_no0">
 					</td>
 					<td>
-						<input type="text" id="0" class="wh_names" name="wh_name" style="width: 100%;" value="" required>
+						<input type="text" id="0" class="wh_names" name="wh_name" style="width: 100%;" value="">
 						<input type="hidden" name="wh_no">
 					</td>
 					<td>
-						<input type="text" id="outprice" class="outprice" name="outprice" style="width: 100%;" value="" required>
+						<input type="text" id="outprice" class="outprice" name="outprice" style="width: 100%;" value="">
 					</td>
 					<td>
-						<input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="" required>
+						<input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="">
 					</td>
 					<td>
-						<input type="text" id="total_outprice" name="total_outprice" style="width: 100%;" value="" required>
+						<input type="text" id="total_outprice" name="total_outprice" style="width: 100%;" value="" readonly>
 					</td>
 					<td style="text-align: center;">
 						<button type="button" id="cancelBtn" class="btn btn-danger">삭제</button>
@@ -153,11 +153,11 @@
 					총계
 				</td>
 				<td colspan="2" align="center">
-					<input type="text" style="width: 100%;" id="wh_total" name="wh_total" value="">
+					<input type="text" style="width: 100%;" id="wh_total" name="wh_total" value="" readonly>
 				</td>
 			</tr>
 		</table>
-		<input type="submit" id="submitBtn" class="btn btn-primary" style="text-align: center;" value="등록">
+		<input type="button" id="submitBtn" class="btn btn-primary" style="text-align: center;" value="등록">
 		<input type="button" class="btn btn-warning" id="closeBtn" value="취 소">
 	</form>
 </body>
@@ -178,7 +178,7 @@
 				+ '<td><input type="text" id="wh_no' + cnt + '" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'
 				+ '<td><input type="text" id="outprice' + cnt + '" class="outprice" name="outprice" style="width: 100%;" value=""></td>'
 				+ '<td><input type="text" id="quantity' + cnt + '" class="quantity" name="quantity" style="width: 100%;" value=""></td>'
-				+ '<td><input type="text" id="amount" name="total_outprice" style="width: 100%;" value=""></td>'
+				+ '<td><input type="text" id="amount" name="total_outprice" style="width: 100%;" value="" readonly></td>'
 				+ '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'
 			+ '</tr>'
 		);
@@ -213,9 +213,9 @@
 
 
 	// 가격 * 수량 = 합계
-	$(document).on('keyup', '.quantity', function() {
-		let quantity = $(this).parents("tr").find(".outprice").val()
-		let unitPrice = $(this).val();
+	$(document).on('change keyup', '.quantity', function() {
+		let unitPrice = $(this).parents("tr").find(".outprice").val()
+		let quantity = $(this).val();
 
 		let totalPrice = unitPrice * quantity;
 		
@@ -223,7 +223,7 @@
 	})
 	
 	// 총합계
-	$(document).on('change, keyup', '#prInput', function(){
+	$(document).on('change keyup', 'input[name="total_outprice"]', function(){
 		let sum = Number(0);
 		let inputAmount = $('input[name="total_outprice"]').get();
 		for(let i = 0; i < inputAmount.length; i++){
@@ -258,22 +258,19 @@
 		}
 	})
 	
-	
-	// 등록 버튼을 클릭할때 submit 하기전에 값이 들어가지 않은 태그는 없는지 확인하고 없을때 비로소 submit을 한다.
+// 	등록 버튼을 클릭할때 submit 하기전에 값이 들어가지 않은 태그는 없는지 확인하고 없을때 비로소 submit을 한다.
 	
 // 	let submitBtn = $('input[type=submit]#submitBtn');
 // 	let form = $('form[role="form"]');
 
 // 	$(document).on('click', '#submitBtn', function() {
 		
-// 		alert('클릭 이벤트 시~작!');
-	
-// 		if ($('#emp_no').val() == "") {
+// 		if ($('input[name=emp_no]').val() == "") {
 			
 // 			alert("담당자를 선택하세요.");
 // 			return;
 			
-// 		} else if ($('#wo_no').val() == "") {
+// 		} else if ($('input[name=wo_no]').val() == "") {
 			
 // 			alert("작업지시서를 선택하세요.");
 // 			return;
@@ -320,6 +317,42 @@
 // 		};
 
 // 	})
+
+	$(document).on('click', '#submitBtn', function() {
+		
+		let form = $('form[role="form"]');
+	    let emp_no = $('input[name="emp_no"]').val();
+	    let wo_no = $('input[name="wo_no"]').val();
+	    let valid = true;
+	
+	    if (emp_no === "") {
+	        alert("담당자를 선택하세요.");
+	        valid = false;
+	    } else if (wo_no === "") {
+	        alert("작업지시서를 선택하세요.");
+	        valid = false;
+	    } else {
+	        $('#prInput tr').each(function(index, row) {
+	            let pr_name = $(row).find('.pr_names').val();
+	            let fac_name = $(row).find('.fac_names').val();
+	            let wh_name = $(row).find('.wh_names').val();
+	            let outprice = $(row).find('.outprice').val();
+	            let quantity = $(row).find('.quantity').val();
+	            let total_outprice = $(row).find('input[name="total_outprice"]').val();
+	
+	            if (pr_name === "" || fac_name === "" || wh_name === "" ||
+	                outprice === "" || quantity === "" || total_outprice === "") {
+	                alert("빈칸을 모두 입력하세요.");
+	                valid = false;
+	                return false; // Loop 종료
+	            }
+	        });
+	    }
+	
+	    if (valid) {
+	        form.submit();
+	    }
+	});
 	
 </script>
 
