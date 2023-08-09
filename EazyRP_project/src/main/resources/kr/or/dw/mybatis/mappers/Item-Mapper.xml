@@ -170,7 +170,7 @@
 							  ,#{pr_exprice}
 							  ,#{pr_class}
 							  ,#{img}
-							  ,#{exdate}
+							  ,#{exdate, jdbcType = DATE}
 							  ,#{sp_no}
 							  ,#{sys_up}
 							  ,sysdate
