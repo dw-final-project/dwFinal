@@ -39,5 +39,7 @@ public interface WhDAO {
 
 	void deleteWh(String whNo) throws SQLException;
 
+	void deleteWhDetailList(String whNo) throws SQLException;
+
 
 }

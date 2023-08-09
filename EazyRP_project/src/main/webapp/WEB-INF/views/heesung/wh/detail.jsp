@@ -135,13 +135,13 @@
     <table>
     	<thead>
 	        <tr>
-	            <th align="center">품목</th>
-				<th align="center">생산 공장</th>
-				<th align="center">입고 창고</th>
-				<th align="center">외주비 단가</th>
-				<th align="center">수량</th>
-				<th align="center">외주비 합계</th>
-				<th align="center">삭제</th>
+	            <th align="center" style="width: 14%;">품목</th>
+				<th align="center" style="width: 14%;">생산 공장</th>
+				<th align="center" style="width: 14%;">입고 창고</th>
+				<th align="center" style="width: 14%;">외주비 단가</th>
+				<th align="center" style="width: 14%;">수량</th>
+				<th align="center" style="width: 14%;">외주비 합계</th>
+				<th align="center" style="width: 14%;">삭제</th>
 	       	</tr>
        	</thead>
     	<tbody id="prInput">
@@ -208,8 +208,6 @@ window.onload = function(){
 // 			'enctype' : 'multipart/form-ata'
 		});
 		console.log($('form[role="form"]').serializeArray());
-		
-		alert("tr은 총 " + $('tr[id="trChk"]').get().length) + "개 입니다.";
 		
 		let trCnt = 0;
 		for(let i = 0; i < $('tr[id="trChk"]').get().length; i++){

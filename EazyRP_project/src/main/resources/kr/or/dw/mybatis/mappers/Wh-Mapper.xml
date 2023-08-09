@@ -41,6 +41,7 @@
 	    ,max(wh.PROGRESS) progress
 		FROM wh wh, WHDETAIL wd, emp emp
 		WHERE 1=1 
+		AND wh.enabled = 'y'
 		AND wh.WH_NO = wd.WH_NO
 		AND wh.emp_no = emp.emp_no
 		AND	wh.c_no = #{c_no}
@@ -50,9 +51,10 @@
 	</select>
 	
 	<select id="selectSearchWhListCount" resultType="int">
-		SELECT	COUNT(DISTINCT wh.wh_no)
+		SELECT	COUNT(DISTINCT whd.wh_no)
 		FROM	wh wh, emp emp, company com, whdetail whd
 		WHERE	1=1
+		AND		wh.enabled = 'y'
 		AND		wh.emp_no = emp.emp_no
 		AND		wh.wh_no = whd.wh_no
 		AND 	wh.c_no = com.c_no 
@@ -229,13 +231,22 @@
 					
 	</update>
 	
+	<!-- detail.jsp 에서 제품 tr 삭제했을때 지워지는 쿼리이다. -->
 	<delete id="deleteWhDetail">
 		DELETE 	from whdetail
 		WHERE 	detail_no = #{detail_no}
 	</delete>
 	
-	<delete id="deleteWh">
-		DELETE 	from wh
+	<!-- 실제 삭제하는것이 아닌 enabled를 n으로 하여 조회할때 나오지 않도록 조건을 걸어준다. -->
+	<update id="deleteWh">
+		UPDATE 	wh
+		SET		enabled = 'n'
+		WHERE	wh_no = #{whNo}
+	</update>
+	
+	<!-- 위 deleteWorkOrder 와 함께 작업지시서 하나를 통째로 삭제할때 함께 삭제되는 그에 속한 디테일이다. -->
+	<delete id="deleteWhDetailList">
+		DELETE	from whdetail
 		WHERE	wh_no = #{whNo}
 	</delete>
 	

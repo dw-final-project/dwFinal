@@ -13,7 +13,8 @@
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm2" method="post" action="/erp4/process.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2 custom-select" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="to" ${searchType eq 'to' ? 'selected' : '' }>전체</option>
+								<option value="cto" ${searchType eq 'cto' ? 'selected' : '' }>전체</option>
+								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>공정코드</option>
 								<option value="t" ${searchType eq 't' ? 'selected' : '' }>공정명</option>
 								<option value="o" ${searchType eq 'o' ? 'selected' : '' }>순번</option>
 							</select>
@@ -31,6 +32,7 @@
 						<tr>
 							<th>공정코드</th>
 							<th>공정명</th>
+							<th>내용</th>
 							<th>순번</th>
 						</tr>
 						<c:if test="${empty processList }">
@@ -42,14 +44,13 @@
 						</c:if>
 						<c:forEach items="${processList }" var="process">		
 							<tr>
-								<td>
-									${process.pc_code}
-								</td>								
+								<td>${process.pc_code}</td>								
 								<td>
 									<a href="javascript:OpenWindow('/erp4/process/detail.do?pc_code=${process.pc_code}', '공정상세보기', 500, 540);">
 										${process.pc_name}
 									</a>
 								</td>
+								<td>${process.pc_content}
 								<td>${process.pc_order}</td>
 							</tr>
 						</c:forEach>
@@ -68,7 +69,8 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</div>
+</section>
 	
 	
 </body>
