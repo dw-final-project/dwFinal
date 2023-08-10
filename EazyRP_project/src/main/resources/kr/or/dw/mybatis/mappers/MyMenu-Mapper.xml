@@ -216,4 +216,17 @@ FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 			ORDER BY n.n_no DESC
 	</select>
 	
+	<select id="selectMyMenuList" resultType="myMenu">
+		SELECT *
+		  FROM mymenu
+		 WHERE u_no = #{u_no }
+	</select>
+	
+	<insert id="registMyMenu">
+		INSERT INTO mymenu 
+		VALUES (#{u_no}
+			   ,#{murl}
+				)
+	
+	</insert>
 </mapper>

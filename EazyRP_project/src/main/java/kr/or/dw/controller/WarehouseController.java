@@ -48,10 +48,11 @@ public class WarehouseController {
 	private WarehouseService warehouseService;
 	
 	@RequestMapping("/warehouse")
-	public ModelAndView warehouseMain(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
+	public ModelAndView warehouseMain(ModelAndView mnv, String mcode, String murl, SearchCriteria cri) throws SQLException{
 		String url = "inventory/basic/warehouse.page";
 		Map<String, Object> dataMap = warehouseService.selectWarehouseList(cri);
 		mnv.addObject("mcode", mcode);
+		mnv.addObject("murl", murl);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
 		

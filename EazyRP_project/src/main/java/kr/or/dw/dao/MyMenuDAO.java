@@ -9,6 +9,7 @@ import org.apache.ibatis.session.RowBounds;
 
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.vo.EmpVO;
+import kr.or.dw.vo.MyMenuVO;
 import kr.or.dw.vo.NoteVO;
 
 @Mapper
@@ -39,7 +40,10 @@ public interface MyMenuDAO {
 	public List<NoteVO> getNoteList(Map<String, Object> dataMap, RowBounds rowBounds) throws SQLException;
 
 	public int selectSearchNoteListCount(Map<String, Object> dataMap) throws SQLException;
-	
+
+	public List<MyMenuVO> selectMyMenuList(int u_no) throws SQLException;
+
+	public void registMyMenu(MyMenuVO mymenu) throws SQLException;
 	
 
 }

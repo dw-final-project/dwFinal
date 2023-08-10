@@ -19,17 +19,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.dw.command.PageMaker;
+import kr.or.dw.command.SearchCriteria;
+import kr.or.dw.dao.MyMenuDAO;
 import kr.or.dw.service.CalendarService;
 import kr.or.dw.service.ManagementService;
 import kr.or.dw.service.MemberService;
 import kr.or.dw.service.MenuService;
 import kr.or.dw.vo.CalendarVO;
 import kr.or.dw.vo.DraftVO;
+import kr.or.dw.vo.MemberVO;
 import kr.or.dw.vo.MenuVO;
+import kr.or.dw.vo.MyMenuVO;
 
 @Controller
 public class CommonController {
@@ -41,6 +47,9 @@ public class CommonController {
 	
 	@Autowired
 	private CalendarService calendarService;
+	
+	@Autowired
+	private MyMenuDAO myMenuDAO;
 	
 	@GetMapping("/common/loginForm")
 	public String loginForm(HttpServletResponse res) throws Exception {
@@ -261,6 +270,27 @@ public class CommonController {
 		
 		mnv.setViewName("redirect:" + url);
 		return mnv;
+	}
+	
+	@RequestMapping("/common/myMenuRegist")
+	public ResponseEntity<String> myMenuRegist(@RequestBody MyMenuVO mymenu, HttpSession session) throws SQLException {
+		ResponseEntity<String> entity = null;
+		
+		MemberVO member = (MemberVO)session.getAttribute("loginUser");
+		
+		int u_no = member.getU_no();
+				
+		try {
+			myMenuDAO.registMyMenu(mymenu);
+			List<MyMenuVO> myMenuList = myMenuDAO.selectMyMenuList(u_no);
+			session.setAttribute("myMenuList", myMenuList);
+			entity = new ResponseEntity<String>(HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return entity;
 	}
 	
 	

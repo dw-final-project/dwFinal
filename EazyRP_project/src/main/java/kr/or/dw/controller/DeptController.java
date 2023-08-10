@@ -62,10 +62,11 @@ public class DeptController {
 	private DeptService deptService;
 	
 	@RequestMapping("/dept")
-	public ModelAndView deptMain(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
+	public ModelAndView deptMain(ModelAndView mnv, String mcode, String murl, SearchCriteria cri) throws SQLException{
 		String url = "inventory/basic/dept.page";
 		Map<String, Object> dataMap = deptService.selectDeptList(cri);
 		mnv.addObject("mcode", mcode);
+		mnv.addObject("murl", murl);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
 		

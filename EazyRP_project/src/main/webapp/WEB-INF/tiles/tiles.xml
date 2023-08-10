@@ -53,6 +53,23 @@
 		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp"/>
 	</definition>
 	
+	<!-- widow open page / iframe page -->
+	<definition name="mymenu" template="/WEB-INF/tiles/myMenu_template.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/include/header.jsp"/>
+		<put-attribute name="sidebar" value="/WEB-INF/views/include/myMenu_sidebar.jsp"/>
+	</definition>
+	
+	<!-- 마이메뉴(헤더, 마이메뉴사이드) -->
+	<definition name="*.mymenu" extends="mymenu">
+		<put-attribute name="body" value="/WEB-INF/views/{1}.jsp"/>
+	</definition>
+	<definition name="*/*.mymenu" extends="mymenu">
+		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/>
+	</definition>
+	<definition name="*/*/*.mymenu" extends="mymenu">
+		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp"/>
+	</definition>
+	
 		
 	
 </tiles-definitions>
