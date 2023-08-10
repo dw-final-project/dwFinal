@@ -166,6 +166,9 @@ window.onload = function(){
 		for(let i = 0; i < $('tr[id="trChk"]').get().length; i++){
 			if($('tr[id="trChk"]').eq(i).css("display") != "none") {
 				for(let j = 0; j < $('tr[id="trChk"]').eq(i).find('input[type="text"]').get().length; j++) {
+					if($('input[type="text"]').eq(i).attr('name') == 'content') {
+						continue;
+					}
 					if($('tr[id="trChk"]').eq(i).find('input[type="text"]').eq(j).val() == "" || $('tr[id="trChk"]').eq(i).find('input[type="text"]').eq(j).val() == null) {
 						alert("값을 입력해 주세요.");
 						return;
@@ -184,8 +187,7 @@ window.onload = function(){
 		
 		
 		
-		formObj.submit();
-		
+		formObj.submit();	
 		
 	})
 	

@@ -16,5 +16,9 @@ public interface QualityService {
 	String ename(int empno) throws SQLException;
 
 	void insertQc(List<QualityVO> qualityVO) throws SQLException;
+
+	void modifyQc(List<QualityVO> modify, String empno) throws SQLException;
+
+	QualityVO qcFileDown(int qc_no) throws SQLException;
 	
 }

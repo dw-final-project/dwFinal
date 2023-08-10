@@ -23,8 +23,15 @@
 		 SELECT qc.QC_NO ,
 	 		MAX((SELECT pr_name FROM PRODUCT WHERE pr_no = p.PR_NO)) PR_NAME 
 	 		,MAX((SELECT e_name FROM emp WHERE emp_no = e.EMP_NO)) e_name
-	 		,MAX(qd.QUANTITY) QUANTITY 
+	 		,SUM(qd.QUANTITY) QUANTITY 
 	 		,MAX(qc.PROGRESS) progress
+	 		,CASE WHEN count(qd.PR_NO) <![CDATA[ > ]]> 1
+		  		THEN MAX((SELECT pr_name FROM product WHERE pr_no = qd.pr_no)) || ' 외 ' || (count(qd.PR_NO)-1)  || '건'
+		  		ELSE MAX((SELECT pr_name FROM product WHERE pr_no = qd.pr_no))
+			END pr_names
+			,MAX(qc.files) files
+			,MAX(qc.realfilename) realFileName
+			,MAX(e.emp_no) EMP_NO
 	 FROM qc qc, QCDETAIL qd , EMP e , PRODUCT p 
 	 WHERE 1=1
 	 AND qc.QC_NO = qd.QC_NO 
@@ -51,6 +58,9 @@
 	 		,MAX(qc.PROGRESS) progress
 	 		,MAX(qc.SYS_REGDATE) SYS_REGDATE
 	 		,MAX(qd.qcdetail_no) qcdetail_no
+	 		,MAX(qc.files) files
+			,MAX(qc.realfilename) realFileName
+			,MAX(e.emp_no) EMP_NO
 	 FROM qc qc, QCDETAIL qd , EMP e , PRODUCT p 
 	 WHERE 1=1
 	 AND qc.QC_NO = qd.QC_NO 
@@ -96,21 +106,38 @@
 		<selectKey keyProperty="qc_no" order="BEFORE" resultType="java.lang.Integer">
 			<include refid="makeQcSeq"></include>	
 		</selectKey>
-		INSERT INTO qc
-		VALUES (
+		INSERT INTO qc(
+		  qc_no,
+		  sys_regdate,
+		  emp_no,
+		  sys_updatedate,
+		  sys_up,
+		  progress,
+		  enabled,
+		  files,
+		  realfilename
+		)
+		VALUES 	(
 			#{qc_no},
 			#{sys_regdate},
 			#{emp_no},
 			sysdate,
 			#{emp_no},
-			#{progress},
+			'전수중',
 			'Y',
-			''
+			#{files},
+			#{realFileName}
 		)			
 	</insert>
 	
 	<insert id="insertQcDetail">
-		INSERT INTO qcdetail 
+		INSERT INTO qcdetail(
+			qcdetail_no,
+			qc_no,
+			pr_no,
+			quantity,
+			content			
+		)
 		VALUES (
 			qcdetail_seq.nextval,
 			#{qc_no},
@@ -120,5 +147,54 @@
 		)
 	</insert>
 	
+	<update id="modifyQc">
+		UDPATE qc SET emp_no = #{emp_no},
+					  sys_updatedate = sysdate,
+					  progress = #{progress},
+					  sys_up = #{emp_no},
+					  files = #{files},
+					  realFileName = #{realFileName}
+		WHERE qc_no = #{qc_no}
+	</update>
+	
+	<update id="modifyQcDetail">
+	MERGE 
+	  INTO QCDETAIL
+	  USING dual
+	  ON (#{qcdetail_no} != 0)
+	  WHEN MATCHED THEN
+	  UPDATE 
+	  SET 
+	  pr_no = #{pr_no},
+	  quantity = #{quantity},
+	  content = #{content}
+	WHERE qcdetail_no = #{qcdetail_no}
+	WHEN NOT MATCHED THEN
+	  INSERT (
+	    qcdetail_no,
+	    qc_no,
+	    pr_no,
+	    quantity,
+	    content
+	  )	  
+	  VALUES (
+	  	qcdetail_seq.nextval,
+	  	#{qc_no},
+	  	#{pr_no},
+	  	#{quantity},
+	  	#{content}
+	  )
+	</update>
+	
+	<delete id="deleteQcDetail">
+	 DELETE FROM qcdetail 
+	 WHERE qcdetail_no = #{qcdetail_no}
+	</delete>
+	
+	<select id="qcFileDown" resultType="ql">
+		SELECT *
+		FROM qc
+		WHERE qc_no = #{qc_no}
+	</select>
 	
 </mapper>

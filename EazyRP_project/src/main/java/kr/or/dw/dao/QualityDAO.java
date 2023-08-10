@@ -26,6 +26,14 @@ public interface QualityDAO {
 	void insertQc(QualityVO qualityVO) throws SQLException;
 
 	int insertQcDetail(QualityVO vo) throws SQLException;
+
+	void modifyQc(Map<String, String> modifyMap) throws SQLException;
+
+	void modifyQcDetail(QualityVO qv) throws SQLException;
+
+	void deleteQcDetail(QualityVO qv) throws SQLException;
+
+	QualityVO qcFileDown(int qc_no) throws SQLException;
 	
 	
 	

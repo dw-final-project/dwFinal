@@ -341,23 +341,14 @@ public class BusinessController {
 			EstimateVO est2 = new EstimateVO();
 			System.out.println(i + "번째 for - start");
 			
-			System.out.println("emp_no : " + emp_no);
 			est2.setEmp_no(emp_no);
-			System.out.println("pr_no :"  + pr_no[i]);
 			est2.setPr_no(pr_no[i]);
-			System.out.println("fc_no :" + fc_no);
 			est2.setFc_no(fc_no);
-			System.out.println("wh_no :" + wh_no[i]);
 			est2.setWh_no(wh_no[i]);
-			System.out.println("amount : " + amount[i]);
 			est2.setAmount(amount[i]);
-			System.out.println("progress :" + progress);
 			est2.setProgress(progress);
-			System.out.println("quantity : " + quantity[i]);
 			est2.setQuantity(quantity[i]);
-			System.out.println("estdetail_no : " + estdetail_no[i]);
 			est2.setEstdetail_no(estdetail_no[i]);
-			System.out.println("est_no :" + est_no );
 			est2.setEst_no(est_no);
 			est2.setPr_delete(pr_delete[i]);
 			modify.add(est2);	
@@ -366,12 +357,9 @@ public class BusinessController {
 			System.out.println(i + "번째 for - end");
 		}
 		
-		System.out.println(modify);
 		
-		System.out.println("dd2");
 		modify.get(0).setFiles(filess);
 		modify.get(0).setRealFileName(fileRealName);
-		System.out.println("dd3");
 		
 		System.out.println("모디파이입니다 : " + modify);
 		
@@ -482,7 +470,9 @@ public class BusinessController {
 			si.setQuantity(quantity[i]);
 			si.setShipdate(shipdate);
 			si.setPr_delete(pr_delete[i]);
-			si.setContent(content[i]);
+			if(content.length != 0) {
+				si.setContent(content[i]);
+			}
 			si.setProgress(progress);
 			modify.add(si);
 		}

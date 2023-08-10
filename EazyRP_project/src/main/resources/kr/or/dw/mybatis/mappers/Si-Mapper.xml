@@ -195,7 +195,7 @@ SELECT ROWNUM,
  	pr_no = #{pr_no},
  	quantity = #{quantity},
 	shipdate = #{shipdate}, 
-	content = #{content},
+	content = #{content, jdbcType = VARCHAR},
 	progress = #{progress}
 WHERE sidetail_no = #{sidetail_no}
 WHEN NOT MATCHED THEN 
@@ -219,7 +219,7 @@ WHEN NOT MATCHED THEN
 		#{wh_no},
 		#{pr_no},
 		#{quantity},
-		#{content}	
+		#{content, jdbcType = VARCHAR}	
 	)
 </update>
 	

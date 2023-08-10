@@ -33,16 +33,18 @@
 									<th width="200px" style="text-align: center;">품질번호</th>
 									<th width="200px" style="text-align: center;">담당자</th>
 									<th width="150px" style="text-align: center;">품목</th>
-									<th width="150px" style="text-align: center;">수량</th>
+									<th width="150px" style="text-align: center;">총 수량</th>
 									<th width="150px" style="text-align: center;">종결 여부</th>
+									<th width="150px" style="text-align: center;">파일 여부</th>
 								</tr>
 									<c:forEach items="${qualityList }" var="quality" varStatus="loop">
 									<tr>
 										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('qualityDetail.do?qc_no=${quality.QC_NO}','품질 상세보기', 500, 500);">${quality.QC_NO }</a></td>
 										<td style="text-align: center;">${quality.E_NAME }</td>
-										<td style="text-align: center;"><a id="aTag" href=""></a>${quality.PR_NAME }</td>
-										<td style="text-align: center;">${quality.QUANTITY }</td>
+										<td style="text-align: center;"><a id="aTag" href=""></a>${quality.PR_NAMES }</td>
+										<td style="text-align: center;">${quality.QUANTITY }개</td>
 										<td style="text-align: center;">${quality.PROGRESS }</td>
+										<td style="color:${quality.FILES ne null ? 'blue' : 'red'}">${quality.FILES != null ? "있음" : "없음"}</td>
 									</tr>
 									</c:forEach>
 							</table>
@@ -54,7 +56,7 @@
 					</div>
 						<div style="display: flex; align-items: end; justify-content: end;">
 								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('qc_regist.do', '공제등록', 500, 500)"
-								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">품질관리 등록</button>
+								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">품질 등록</button>
 						</div>
 			</div>
 		</div>
