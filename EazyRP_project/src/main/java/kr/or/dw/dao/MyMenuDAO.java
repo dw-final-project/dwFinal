@@ -41,9 +41,11 @@ public interface MyMenuDAO {
 
 	public int selectSearchNoteListCount(Map<String, Object> dataMap) throws SQLException;
 
-	public List<MyMenuVO> selectMyMenuList(int u_no) throws SQLException;
+	public List<Map<String, Object>> selectMyMenuList(int u_no) throws SQLException;
 
 	public void registMyMenu(MyMenuVO mymenu) throws SQLException;
+
+	public void deleteMyMenu(MyMenuVO mymenu) throws SQLException;
 	
 
 }

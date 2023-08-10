@@ -72,7 +72,7 @@
 <body>
     <h2>작업지시서 상세보기</h2>
 	<div class="card-footer">
-		<button type="button" id="modifyBtn" class="btn btn-warning">수정</button>
+		<button type="submit" id="modifyBtn" class="btn btn-warning">수정</button>
 		<button type="button" id="removeBtn" class="btn btn-danger">삭제</button>
 		<button type="button" id="listBtn" class="btn btn-primary">닫기</button>
 	</div>
@@ -87,7 +87,7 @@
 	        </tr>
 	        <tr>
 	            <td width="40%" align="center"><b>제목</b></td>
-	            <td width="100%"><input type="text" style="width: 100%;" value="${wo.WO_NAME }"></td>
+	            <td width="100%"><input type="text" style="width: 100%;" name="wo_name" value="${wo.WO_NAME }"></td>
 	        </tr>
 	        <tr>
 	            <td width="40%" align="center"><b>담당자</b></td>
@@ -135,6 +135,7 @@
     	<tbody id="prInput">
         <input type="hidden" value="" id="cnt">
         <input type="hidden" value="A" id="A">
+        <input type="hidden" id="sort" value="detail">
        	<c:forEach items="${woDetail }" var="woDetail" varStatus="loop">
 	        <tr id="trChk" >    	
 				<input type="hidden" class="rownum" value="${woDetail.ROWNUM }">
@@ -147,7 +148,7 @@
 	        	</td>
 	        	<td>	
 					<input type="text" id="fac_no${woDetail.ROWNUM }" class="fac_names" name="fac_name" style="width: 100%;" value="${woDetail.FAC_NAME }">
-					<input type="hidden" name="fac_no" value="${woDetail.FAC_NO }">
+					<input type="hidden" name="fac_no" id="fac_no${woDetail.ROWNUM }" value="${woDetail.FAC_NO }">
 				</td>
 	            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${woDetail.QUANTITY }"><input type="hidden" id="cost" value="${est.PR_EXPRICE }"></td>
 	            <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>
@@ -168,10 +169,16 @@
 <script>
 window.onload = function(){
 	
-	let fc_no = "${est.FC_NO}";
-	$('#fc-select').val(fc_no);
-	$('select#fc-select').find('option[value="' + fc_no + '"]').attr('selected', 'selected');
-	console.log(fc_no);
+	// detail.jsp 처음 열었을때 수량 합계 표시
+	let selectSum = Number(0);
+	let selectInputquantity = $('input[name="quantity"]').get();
+	
+	for(let i = 0; i < selectInputquantity.length; i++){
+		selectSum += Number($('input[name="quantity"]').eq(i).val());
+	}
+	
+	$('#woTotal').val(selectSum);
+	//
 	
 	let formObj = $('form[role="form"]');
 
@@ -182,27 +189,37 @@ window.onload = function(){
 			'method' : 'post'
 		});
 		
-		let trCnt = 0;
+		//
+// 		let form = $('form[role="form"]');
+		let wo_name = $('input[name="wo_name"]').val();
+		let deliverydate = $('input[name="deliverydate"]').val();
 		
-		for(let i = 0; i < $('tr[id="trChk"]').get().length; i++){
-			if($('tr[id="trChk"]').eq(i).css("display") != "none") {
-				for(let j = 0; j < $('tr[id="trChk"]').eq(i).find('input[type="text"]').get().length; j++) {
-					if($('tr[id="trChk"]').eq(i).find('input[type="text"]').eq(j).val() == "" || $('tr[id="trChk"]').eq(i).find('input[type="text"]').eq(j).val() == null) {
-						alert("값을 입력해 주세요.");
-						return;
-					}
-				}				
-			} else {
-				trCnt += 1;
-			}
+		let valid = true;
+		
+		if (wo_name == "") {
+			alert("제목을 입력하세요.");
+			valid = false;
+		} else if (deliverydate == "") {
+			alert("마감일을 선택하세요.")
+			valid = false;
+		} else {
+			$('#prInput tr').each(function(index, row){
+				let pr_name = $(row).find('.pr_names').val();
+				let fac_name = $(row).find('.fac_names').val();
+				let quantity = $(row).find('.quantity').val();
+				
+				if (pr_name == "" || fac_name == "" || quantity == "") {
+					alert("빈칸을 모두 입력하세요.");
+					valid = false;
+	                return false; // Loop 종료
+				}
+			});
 		}
 		
-		if($('tr[id="trChk"]').get().length == trCnt) {
-			alert("제품을 추가하세요.");
-			return;
-		}
+		if (valid) {
+	        formObj.submit();
+	    }
 		
-		formObj.submit();
 	});
 	
 	
@@ -298,20 +315,19 @@ $('tr').on('click', function(){
 	})
 	
 	// 수량 이벤트
-	$(document).on('keyup', '.quantity', function(){
-// 		let quantity = $(this).val();
-		$(this).parent().next().children().val($(this).val()*$(this).next().val());
-	})
+	$(document).on('keyup change', '.quantity', function(){
+	
+		let sum = Number(0);
+		let inputquantity = $('input[name="quantity"]').get();
+		
+		for(let i = 0; i < inputquantity.length; i++){
+			sum += Number($('input[name="quantity"]').eq(i).val());
+		}
+		
+		$('#woTotal').val(sum);
 
-	let sum = Number(0);
-	let inputquantity = $('input[name="quantity"]').get();
-	
-	for(let i = 0; i < inputquantity.length; i++){
-		sum += Number($('input[name="quantity"]').eq(i).val());
-	}
-	
-	$('#woTotal').val(sum);
-	
+	})
+		
 </script>
 
 

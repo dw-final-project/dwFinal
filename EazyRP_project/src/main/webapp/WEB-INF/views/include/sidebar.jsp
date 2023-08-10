@@ -24,10 +24,10 @@
 	</c:forEach>
 </nav>
 
-<div id="menutitle"></div>
+<div id="menutitle" style="margin-top: 20px; font-size: 25px; font-weight: 400; display: inline-block;"></div>
 
 <c:forEach var="myMenu" items="${myMenuList}">
-	<c:if test="${myMenu.murl eq murl}">
+	<c:if test="${myMenu.MURL eq murl}">
 		<c:set var="chk">checked</c:set>
 	</c:if>
 </c:forEach> 
@@ -38,7 +38,7 @@
 <script>
 	$(function () {
 		let micon = sessionStorage.getItem("micon");
-		$('#menutitle').html(micon);
+		$('#menutitle').html("&nbsp;&nbsp;&nbsp;&nbsp;" + micon);
 		
 	})
 	

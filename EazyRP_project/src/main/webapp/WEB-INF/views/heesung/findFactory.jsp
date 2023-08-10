@@ -65,19 +65,18 @@
 		
 	$(document).ready(function() {
 		
-		// 작업지시서 테이블에서 열었을때는 if문에서 거짓이므로 if문을 무시하고 실행한다.
-		// if문 안에 있는 코드는 생산입고에서 실행된다.
-// 		let sort = opener.$('b#factory');
+		// registForm과 detail에서 열었을때를 구분해서 사용해야 하므로 if문으로 구분해주었다.
+		let sort = opener.$('input[type=hidden]#sort');
 		
 		$('tr').on('click', function(){
 			
 			let fac_noName = $(this).find('#fac_name').text();
+			let parentInputId = opener.$("#cnt").val();
+			let parentEl = $("#" + parentInputId, opener.document);
 		
-// 			if (sort.text() != '생산 공장') {
+			if (sort.val() == 'registForm') {
 				
-				let parentInputId = opener.$("#cnt").val();
 				
-				let parentEl = $("#" + parentInputId, opener.document);
 				
 				/* 	생산입고 registForm에서 제품 추가를 하여 여러개의 td들을 추가하고 생산 공장들을 각각 선택해도
 					마지막에 선택한 생산 공장의 벨류로 모두 바뀌어서 보내지기 때문에 모두 같은 정보가 DB에 등록된다.	*/
@@ -97,14 +96,29 @@
 				
 				window.close();
 				
-// 			} else{
-			
-// 				opener.$('input[name="fac_no"]').val($(this).find('#fac_no').text());
-// 				opener.$('#find_fac').val(fac_noName);
+			} else if (sort.val() == 'detail') {
 				
-// 				window.close();
+// 				if (parentEl.attr('id') == 1) {		// 제품을 추가하지 않은 경우
+					
+// 					parentEl.parents('tr').find('input.fac_names').val(fac_noName);
+// 					parentEl.parents('tr').find('input[type="hidden"]#1').val($(this).find('#fac_no').text());
+					
+// 				} else {	// 제품을 추가한 경우
+
+					parentEl.parents('tr').find('input[type="text"]#' + parentInputId).val(fac_noName);
+					parentEl.parents('tr').find('input[type="hidden"]#' + parentInputId).val($(this).find('#fac_no').text());
+					
+// 				}
+				
+				window.close();
 			
-// 			}
+			} else {
+				
+				alert('예외 발생');
+				return;
+				
+			}
+			
 		})
 		
 	})
