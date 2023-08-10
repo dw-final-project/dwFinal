@@ -93,14 +93,23 @@
             <td><input type="hidden" name="emp_no" id="receiver" value="${qc.EMP_NO }">
             <input type="text" style="width: 100%;" value="${qc.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 500, 500)"></td>
         </tr>
+ 		<tr>
+            <td align="center">진행상태</td>
+            <td><select name="progress" id="progress">
+            	<option value="전수중"${qc.PROGRESS eq "전수중" ? 'selected' : "" }>전수중</option>
+			    <option value="완료"${qc.PROGRESS eq "완료" ? 'selected' : "" }>완료</option>
+				</select>
+			</td>
+        </tr>
         <tr>
-<!--             <td align="center">진행상태</td> -->
-<!--             <td><select name="progress" id="progress"> -->
-<!--             	<option value="">접수중</option> -->
-<!-- 			    <option value="">출하대기중</option> -->
-<!-- 			    <option value="">출하완료</option> -->
-<!-- 				</select> -->
-<!-- 			</td> -->
+            <td align="center"><b>첨부파일</b></td>
+            <td><input type="file" style="width: 100%;" id="file" name ="files" value="">
+            	<input type="hidden" id="fileName" name="fileName" value=""> 
+            	<input type="hidden" id="realfilename" name="realfilename" value="">
+ 			<c:if test="${!empty qc.FILES }">
+ 			<div id="divRemove"><button type="button" onclick="location.href='<%=request.getContextPath()%>/erp5/getFile.do?qc_no=${qc.QC_NO }';">파일 다운</button>&nbsp;&nbsp;${qc.REALFILENAME }</div>
+ 			</c:if>           	
+            </td>
         </tr>       
     </table>
     <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">버튼 추가</button>
@@ -119,10 +128,10 @@
         <tr id="trChk" >    	
 	       <input type="hidden" class="rownum" value="${qc.ROWNUM }">
 	       <input type="hidden" name="qcdetail_no" id="qcdtail_no" value="${qc.QCDETAIL_NO }">
-<!-- 	       <input type="hidden" name="enabled" id="sienabled" value=""> -->
+	       <input type="hidden" name="enabled" id="qcenabled" value="${qc.ENABLED }">
 	       <input type="hidden" name="pr_delete" value="o">
         	<td><input type="text" id="" class="pr_nos" name="pr_no" value="${qc.PR_NO }"  style="width: 100%;" readonly></td>
-        	<td><input type="text" id="" class="pr_names2" name="pr_name" style="width: 100%;" value="${qc.PR_NAME }"></td>
+        	<td><input type="text" id="${qc.ROWNUM }" class="pr_names2" name="pr_name" style="width: 100%;" value="${qc.PR_NAME }"></td>
             <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${qc.QUANTITY }">
             <td><input type="text" id="contents" class="content" name="content" style="width: 100%;" value="${qc.CONTENT }"  ></td>
             <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>
@@ -148,7 +157,7 @@ window.onload = function(){
 
 	$('button#modifyBtn').on('click', function(){
 		formObj.attr({
-			'action' : 'simodifyForm.do',
+			'action' : 'qcmodifyForm.do',
 			'method' : 'post'
 		});
 		
@@ -214,8 +223,8 @@ let dtail_no = $('#sidtail_no').val();
 $('#addPutBtn').on('click', function(){
 	cnt++;
 	$('#prInput').append('<tr id="trChk"><input type="hidden" class="rownum" value="'+ cnt + '">' +
-	'<input type="hidden" name="sidetail_no" id="sidtail_no" value="0">'+
-	'<input type="hidden" name="pr_delete" id="sienabled" value="n">'+
+	'<input type="hidden" name="qcdetail_no" id="qcdtail_no" value="0">'+
+	'<input type="hidden" name="pr_delete" id="qcenabled" value="n">'+
 	'<td><input type="text" id="" class="pr_nos" name="pr_no" value="" style="width: 100%;" readonly></td>' + 
 	'<td><input type="text" id="' + cnt + '" class="pr_names2" name="pr_name" style="width: 100%;" value=""></td>' +
     '<td><input type="text" id="quantity'+ cnt +'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
@@ -261,12 +270,6 @@ $('#addPutBtn').on('click', function(){
 		
 	});
 	
-	//창고코드 이벤트
-	$(document).on('click', '.wh_names', function(){
-		let whVal = $(this).attr('id');
-		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
-	})
 	
 	// 수량 체인지
 	$(document).on('change keyup load', '.quantity', function(){
@@ -295,15 +298,15 @@ $('#addPutBtn').on('click', function(){
 
 
 	
-	$(document).on('change, keyup', '#prInput', function(){
-		let sum = Number(0);
-		let inputAmount = $('input[name="amount"]').get();
-		for(let i = 0; i < inputAmount.length; i++){
-			sum += Number($('input[name="amount"]').eq(i).val());
-		}
+// 	$(document).on('change, keyup', '#prInput', function(){
+// 		let sum = Number(0);
+// 		let inputAmount = $('input[name="amount"]').get();
+// 		for(let i = 0; i < inputAmount.length; i++){
+// 			sum += Number($('input[name="amount"]').eq(i).val());
+// 		}
 		
-		$('#totalAmount').val(sum);
-	})
+// 		$('#totalAmount').val(sum);
+// 	})
 	
 	
 // 	let fc_no = "${si.FC_NO}";

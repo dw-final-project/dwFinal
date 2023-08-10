@@ -1,6 +1,7 @@
 package kr.or.dw.service;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import kr.or.dw.command.PageMaker;
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.dao.QualityDAO;
 import kr.or.dw.vo.QualityVO;
+import oracle.sql.DATE;
 
 @Service
 public class QualityServiceImpl implements QualityService{
@@ -81,6 +83,44 @@ public class QualityServiceImpl implements QualityService{
 		
 	}
 	
+	@Transactional
+	@Override
+	public void modifyQc(List<QualityVO> modify, String empno) throws SQLException {
+		
+		int emp_no = modify.get(0).getEmp_no();
+		int qc_no = modify.get(0).getQc_no();
+		String files = modify.get(0).getFiles();
+		String realFileName = modify.get(0).getRealFileName();
+		String progress = modify.get(0).getProgress();
+		Date sys_regdate = modify.get(0).getSys_regdate();
+		String sys_up = modify.get(0).getSys_up();
+		
+		
+		Map<String, String> modifyMap = new HashMap<>();
+		modifyMap.put("emp_no", empno);
+		modifyMap.put("qc_no", Integer.toString(qc_no));
+		modifyMap.put("files", files);
+		modifyMap.put("progress", progress);
+		modifyMap.put("realFileName", realFileName);
+		modifyMap.put("emp_no", Integer.toString(emp_no));
+		modifyMap.put("sys_up", sys_up);
+		
+		qualityDAO.modifyQc(modifyMap);
+		
+		for (QualityVO qv : modify) {
+			if(qv.getPr_delete() != null && qv.getPr_delete().equals("y")) {
+				qualityDAO.deleteQcDetail(qv);
+			}else {
+				qualityDAO.modifyQcDetail(qv);	
+			}			
+		}
 	
+	}
+
+	@Override
+	public QualityVO qcFileDown(int qc_no) throws SQLException {
+		QualityVO qv = qualityDAO.qcFileDown(qc_no);
+		return qv;
+	}
 	
 }

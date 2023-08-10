@@ -77,7 +77,7 @@
 	<table>
         <tr>
             <td align="center">등록 일자</td>
-            <td><input id="dateInput" type="date" name="sys_regdate" value=""></td>
+            <td><input type="date" id="dateInput"  name="sys_regdate" value=""></td>
         </tr>
         <tr>
             <td align="center">담당자</td>
@@ -94,7 +94,7 @@
         </tr>
         <tr>
             <td align="center"><b>첨부파일</b></td>
-            <td><input type="file" style="width: 100%;" id="file" name ="files" value="">
+            <td><input type="file" style="width: 100%;" id="file" name ="files" value="${qc.FILES }">
             	<input type="hidden" id="fileName" name="fileName" value=""> 
             	<input type="hidden" id="realfilename" name="realfilename" value="">
             </td>
@@ -117,7 +117,7 @@
 	       <input type="hidden" name="qcdetail_no" id="qcdtail_no" value="">
 	       <input type="hidden" name="enabled" id="enabled" value="">
 	       <input type="hidden" name="pr_delete" value="o">
-        	<td><input type="text" id="pr_no0" name="pr_no" value=""  style="width: 100%;" readonly></td>
+        	<td><input type="hidden" id="pr_no0" name="pr_no" value=""  style="width: 100%;" readonly></td>
         	<td><input type="text" id="0" class="pr_names4" name="pr_name" style="width: 100%;" value=""></td>
             <td><input type="text" id="quantity0" class="quantity" name="quantity" style="width: 100%;" value="">
             <td><input type="text" id="contents0" class="content" name="content" style="width: 100%;" value=""  ></td>
@@ -168,7 +168,7 @@ $('#addPutBtn').on('click', function(){
 	$('#prInput').append('<tr id="trChk"><input type="hidden" class="rownum" value="'+ cnt + '">' +
 	'<input type="hidden" name="qcdetail_no" id="qcdetail_no" value="0">'+
 	'<input type="hidden" name="pr_delete" value="n">'+
-	'<td><input type="text" id="pr_no' + cnt + '" name="pr_no" value="" style="width: 100%;" readonly></td>' + 
+	'<td><input type="hidden" id="pr_no' + cnt + '" name="pr_no" value="" style="width: 100%;" readonly></td>' + 
 	'<td><input type="text" id="' + cnt + '" class="pr_names4" name="pr_name" style="width: 100%;" value=""></td>' +
     '<td><input type="text" id="quantity'+ cnt +'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
     '<td><input type="text" id="contents' + cnt +'"class="content" name="content" style="width: 100%;" value="" ></td>' +
