@@ -141,7 +141,7 @@ public class MyMenuController {
 	
 	@RequestMapping("/noteList")
 	public ModelAndView noteList(HttpSession session, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
-		String url="/mymenu/noteList.page";
+		String url="/mymenu/noteList.mymenu";
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		Map<String, Object> note = new HashMap<String, Object>();
 		String c_no = (String) session.getAttribute("c_no");
@@ -159,7 +159,7 @@ public class MyMenuController {
     
     @RequestMapping("/sendNoteList")
     public ModelAndView sendNoteList(HttpSession session, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
-    	String url="mymenu/sendNoteList.page";
+    	String url="mymenu/sendNoteList.mymenu";
     	Map<String, Object> dataMap = new HashMap<String, Object>();
 		Map<String, Object> note = new HashMap<String, Object>();
 		String c_no = (String) session.getAttribute("c_no");

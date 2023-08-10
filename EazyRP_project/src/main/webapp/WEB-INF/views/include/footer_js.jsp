@@ -19,7 +19,7 @@
 		let modMcode = mcode.substring(0,3) + "0000";
 
 
-		location.href = murl + "?mcode=" + modMcode;
+		location.href = murl + "?mcode=" + modMcode + "&murl=" + murl;
 	};
 	
 </script>

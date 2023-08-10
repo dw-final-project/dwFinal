@@ -60,10 +60,11 @@ public class ItemController {
 	private ItemService itemService;
 	
 	@RequestMapping("/item")
-	public ModelAndView itemMain(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
+	public ModelAndView itemMain(ModelAndView mnv, String mcode, String murl, SearchCriteria cri) throws SQLException{
 		String url = "inventory/basic/item.page";
 		Map<String, Object> dataMap = itemService.selectItemList(cri);
 		mnv.addObject("mcode", mcode);
+		mnv.addObject("murl", murl);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
 		

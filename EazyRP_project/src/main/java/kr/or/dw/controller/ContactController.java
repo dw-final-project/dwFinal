@@ -49,10 +49,12 @@ public class ContactController {
 	private ContactService contactService;
 	
 	@RequestMapping("/contact")
-	public ModelAndView contactMain(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
+	public ModelAndView contactMain(ModelAndView mnv, String mcode, String murl, SearchCriteria cri) throws SQLException{
 		String url = "inventory/basic/contact.page";
 		Map<String, Object> dataMap = contactService.selectContactList(cri);
+		System.out.println("asdasd" + mcode);
 		mnv.addObject("mcode", mcode);
+		mnv.addObject("murl", murl);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
 		

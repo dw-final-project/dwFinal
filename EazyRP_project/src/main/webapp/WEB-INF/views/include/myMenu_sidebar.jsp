@@ -6,22 +6,19 @@
 	}
 </style>
 
-<c:set var="mcode">${mcode }</c:set>
-<c:set var="subMenuList2">${subMenuList[mcode] }</c:set>
 <nav id="navSideBar"class="d-flex flex-column p-3 sideMenuList" style=" float:left ; width: 15%; height: 100%; display: inline; background: linear-gradient(to bottom, #7bc4b2, #00ff72);">
-	<c:forEach items="${subMenuList[mcode]}" var="subMenu">
 		<div class="mousePoint">
-		<a class="p-2 a nav-link bold fw-bold " href="javascript:goPage('${subMenu.murl }', '${subMenu.mcode }', '${subMenu.micon }');" data-url="${subMenu.mcode }" aria-expanded="true" style="color: white; text-decoration-line: none;">${subMenu.mname }</a>
-		<c:set var="mcode2">${subMenu.mcode }</c:set>
+		<a class="p-2 a nav-link bold fw-bold " href="javascript:goPage('/mymenu/noteList.do', 'M040100', '커뮤니케이션');" data-url="M040100" aria-expanded="true" style="color: white; text-decoration-line: none;">커뮤니케이션</a>
 			<ul style="list-style-type: none;">
-			<c:forEach items="${smallMenuList[mcode2] }" var="smallMenu">
 				<li>	
-					<a class="p-2 a nav-link " href="javascript:goPage('${smallMenu.murl }', '${smallMenu.mcode }', '${smallMenu.micon }');" data-url="${smallMenu.mcode }" aria-expanded="true" style="color: white; text-decoration-line: none;">&nbsp;&nbsp;&nbsp;&nbsp;${smallMenu.mname }</a>
+					<a class="p-2 a nav-link " href="javascript:goPage('/mymenu/noteList.do', 'M040101', '쪽지함');" data-url="M040101" aria-expanded="true" style="color: white; text-decoration-line: none;">&nbsp;&nbsp;&nbsp;&nbsp;쪽지함</a>
 				</li>
-			</c:forEach>
+				<li>	
+					<a class="p-2 a nav-link " href="javascript:goPage('/mymenu/sendNoteList.do', 'M040102', '보낸쪽지');" data-url="M040102" aria-expanded="true" style="color: white; text-decoration-line: none;">&nbsp;&nbsp;&nbsp;&nbsp;보낸쪽지</a>
+				</li>
 			</ul>
+		<a class="p-2 a nav-link bold fw-bold " href="javascript:goPage('/mymenu/noteList.do', 'M040100', '커뮤니케이션');" data-url="M040100" aria-expanded="true" style="color: white; text-decoration-line: none;">테스트</a>	
 		</div>
-	</c:forEach>
 </nav>
 
 <div id="menutitle"></div>
