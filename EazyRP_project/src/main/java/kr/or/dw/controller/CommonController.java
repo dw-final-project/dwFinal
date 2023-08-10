@@ -282,7 +282,25 @@ public class CommonController {
 				
 		try {
 			myMenuDAO.registMyMenu(mymenu);
-			List<MyMenuVO> myMenuList = myMenuDAO.selectMyMenuList(u_no);
+			List<Map<String, Object>> myMenuList = myMenuDAO.selectMyMenuList(u_no);
+			session.setAttribute("myMenuList", myMenuList);
+			entity = new ResponseEntity<String>(HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return entity;
+	}
+	
+	@RequestMapping("/common/myMenuDelete")
+	public ResponseEntity<String> myMenuDelete(@RequestBody MyMenuVO mymenu, HttpSession session) throws SQLException {
+		ResponseEntity<String> entity = null;
+				
+		int u_no = mymenu.getU_no();
+		try {
+			myMenuDAO.deleteMyMenu(mymenu);
+			List<Map<String, Object>> myMenuList = myMenuDAO.selectMyMenuList(u_no);
 			session.setAttribute("myMenuList", myMenuList);
 			entity = new ResponseEntity<String>(HttpStatus.OK);
 		} catch (Exception e) {
