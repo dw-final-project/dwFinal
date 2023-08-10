@@ -287,7 +287,6 @@
 		  FROM extrapay
 		  WHERE 1=1
 		  <include refid="expsearch"/>
-		  ORDER BY ep_no desc
 	</select>
 	
 	<select id="selectExtrapayListCount" resultType="int">
@@ -358,7 +357,6 @@
 		  FROM deduction
 		  WHERE 1=1
 		  <include refid="dedsearch"/>
-		  ORDER BY ded_no desc
 	</select>
 	
 	<select id="selectDeductionListCount" resultType="int">
