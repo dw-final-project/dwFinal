@@ -173,6 +173,14 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	@RequestMapping("/process/modify")
 	public void processModify(ProcessVO process, HttpServletRequest req, HttpServletResponse res) throws IOException, SQLException {
 
+		System.out.println("erp4/process/modify - 진입");
+		
+		System.out.println("process : " + process);
+		System.out.println("process : " + process);
+		System.out.println("process : " + process);
+		System.out.println("process : " + process);
+		System.out.println("process : " + process);
+		
 		processService.processModify(process);
 		
 		res.setContentType("text/html; charset=utf-8");

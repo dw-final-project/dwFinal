@@ -121,17 +121,18 @@
 			<tbody id="prInput">
 				<input type="hidden" value="" id="cnt">
 				<input type="hidden" value="A" id="A">
+				<input type="hidden" id="sort" value="registForm">
 				<tr>
 					<td>
 						<input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value="">
 						<input type="hidden" name="pr_no">
 					</td>
 					<td>
-						<input type="text" id="0" class="fac_names" name="fac_name" style="width: 100%;" value="">
+						<input type="text" id="fac_no0" class="fac_names" name="fac_name" style="width: 100%;" value="">
 						<input type="hidden" name="fac_no" id="fac_no0">
 					</td>
 					<td>
-						<input type="text" id="0" class="wh_names" name="wh_name" style="width: 100%;" value="">
+						<input type="text" id="wh_no0" class="wh_names" name="wh_name" style="width: 100%;" value="">
 						<input type="hidden" name="wh_no">
 					</td>
 					<td>
@@ -223,14 +224,17 @@
 	})
 	
 	// 총합계
-	$(document).on('change keyup', 'input[name="total_outprice"]', function(){
+	$(document).on('change keyup', '.quantity', function(){
+		
 		let sum = Number(0);
 		let inputAmount = $('input[name="total_outprice"]').get();
+		
 		for(let i = 0; i < inputAmount.length; i++){
 			sum += Number($('input[name="total_outprice"]').eq(i).val());
 		}
 		
 		$('#wh_total').val(sum);
+
 	})
 
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight) {
@@ -325,10 +329,10 @@
 	    let wo_no = $('input[name="wo_no"]').val();
 	    let valid = true;
 	
-	    if (emp_no === "") {
+	    if (emp_no == "") {
 	        alert("담당자를 선택하세요.");
 	        valid = false;
-	    } else if (wo_no === "") {
+	    } else if (wo_no == "") {
 	        alert("작업지시서를 선택하세요.");
 	        valid = false;
 	    } else {
@@ -340,8 +344,8 @@
 	            let quantity = $(row).find('.quantity').val();
 	            let total_outprice = $(row).find('input[name="total_outprice"]').val();
 	
-	            if (pr_name === "" || fac_name === "" || wh_name === "" ||
-	                outprice === "" || quantity === "" || total_outprice === "") {
+	            if (pr_name == "" || fac_name == "" || wh_name == "" ||
+	                outprice == "" || quantity == "" || total_outprice == "") {
 	                alert("빈칸을 모두 입력하세요.");
 	                valid = false;
 	                return false; // Loop 종료

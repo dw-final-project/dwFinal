@@ -186,6 +186,7 @@
 				sys_updatedate = sysdate,
 				progress = #{progress},
 				wh_total = #{wh_total},
+				wo_no = #{wo_no},
 				c_no = #{c_no}
 		WHERE	wh_no = #{wh_no}
 	</update>
