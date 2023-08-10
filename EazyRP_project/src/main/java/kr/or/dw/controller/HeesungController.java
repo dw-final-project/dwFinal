@@ -175,12 +175,6 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 
 		System.out.println("erp4/process/modify - 진입");
 		
-		System.out.println("process : " + process);
-		System.out.println("process : " + process);
-		System.out.println("process : " + process);
-		System.out.println("process : " + process);
-		System.out.println("process : " + process);
-		
 		processService.processModify(process);
 		
 		res.setContentType("text/html; charset=utf-8");
