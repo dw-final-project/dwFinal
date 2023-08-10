@@ -3,44 +3,35 @@
 <mapper namespace="kr.or.dw.dao.AsDAO">
 
 	<!-- 셀렉트바 검색 -->
-	<!--  <sql id="search">
-		<if test="searchType == 'c'.toString()">
-			AND inq_title LIKE '%' || #{keyword} || '%'
-		</if>
+	<!--  --><sql id="search">
 		<if test="searchType == 'a'.toString()">
-			AND inq_con LIKE '%' || #{keyword} || '%'
+			AND as_no LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'p'.toString()">
+			AND progress LIKE '%' || #{keyword} || '%'
 		</if>
 		<if test="searchType == 'all'.toString()">
 			AND (
-			inq_title LIKE '%' || #{keyword} || '%'
+			as_no LIKE '%' || #{keyword} || '%'
 			OR
-			inq_con LIKE '%' || #{keyword} || '%'
+			progress LIKE '%' || #{keyword} || '%'
 			)
 		</if>
-	</sql> -->
+	</sql> 
 	
 	<!-- contact -->
 	<select id="selectAsList" resultType="Map">
-		SELECT *
-		  FROM asmanage
-		 WHERE 1 = 1	
-<!-- 		<include refid="search"/>	    -->
-		   ORDER BY as_no desc
+		SELECT a.*, e.e_name e_name
+		  FROM asmanage a, emp e
+		 WHERE a.emp_no = e.emp_no	
+	  ORDER BY a.as_no
 	</select>
-	
-<!-- contact -->
-<!-- 	<select id="selectAsList" resultType="Map"> -->
-<!-- 		SELECT as.*, e.emp_ -->
-<!-- 		  FROM asmanage as, emp e -->
-<!-- 		 WHERE as.emp_no = e.emp_no -->
-<!-- 		   ORDER BY as_no desc -->
-<!-- 	</select> -->
 	
 	
 	<select id="selectAsListCount" resultType="int">
 		SELECT COUNT(*)
-		  FROM asmanage
-		 WHERE 1 = 1
+		  FROM asmanage a, emp e
+		 WHERE a.emp_no = e.emp_no	
 <!-- 		 <include refid="search"/> -->
 	</select>
 
@@ -58,58 +49,6 @@
 	</insert>
 
 
-<!-- 	<select id="getRegistDraftCount" resultType="int"> -->
-<!-- 		SELECT COUNT(*) FROM draft d, emp e -->
-<!-- 		WHERE d.emp_no = e.emp_no -->
-<!-- 		  AND d.emp_no = #{emp_no} -->
-<!-- 		 <if test="searchType == 'd'.toString()"> -->
-<!-- 				AND d.gb LIKE '%' || #{keyword} || '%' -->
-<!-- 			</if> -->
-<!-- 			<if test="searchType == 't'.toString()"> -->
-<!-- 				AND d.title LIKE '%' || #{keyword} || '%' -->
-<!-- 			</if> -->
-<!-- 			<if test="searchType == 'w'.toString()"> -->
-<!-- 				AND e.e_name LIKE '%' || #{keyword} || '%' -->
-<!-- 			</if> -->
-<!-- 			<if test="searchType == 'p'.toString()"> -->
-<!-- 			 	AND d.PL_PROGRESS LIKE '%' || #{keyword} || '%' -->
-<!-- 			</if> -->
-<!-- 			<if test="searchType == 'all'.toString()"> -->
-<!-- 				AND (  -->
-<!-- 				d.gb LIKE '%' || #{keyword} || '%' -->
-<!-- 				OR -->
-<!-- 				d.title LIKE '%' || #{keyword} || '%' -->
-<!-- 				OR -->
-<!-- 				e.e_name LIKE '%' || #{keyword} || '%' -->
-<!-- 				OR -->
-<!-- 				d.PL_PROGRESS LIKE '%' || #{keyword} || '%' -->
-<!-- 				) -->
-<!-- 			</if> -->
-<!-- 	</select> -->
-	
-<!-- 	<insert id="documentRegist"> -->
-<!-- 		INSERT INTO draft VALUES ( -->
-<!-- 		'D'||LPAD(dr_no_seq.nextval, 4, '0'), -->
-<!-- 		#{emp_no}, -->
-<!-- 		sysdate, -->
-<!-- 		#{title}, -->
-<!-- 		#{dg_no}, -->
-<!-- 		#{gb}, -->
-<!-- 		#{files}, -->
-<!-- 		'0', -->
-<!-- 		#{con}, -->
-<!-- 		#{pl_no}, -->
-<!-- 		'', -->
-<!-- 		'', -->
-<!-- 		#{c_no}, -->
-<!-- 		#{realFileName}, -->
-<!-- 		'', -->
-<!-- 		(SELECT emp_no1 FROM pl WHERE pl_no = #{pl_no}), -->
-<!-- 		'N' -->
-<!-- 		) -->
-		
-<!-- 	</insert> -->
-	
 <!-- 	<select id="selectDraft" resultType="draft"> -->
 <!-- 		SELECT d.*, e.e_name e_name -->
 <!-- 		FROM draft d, emp e -->

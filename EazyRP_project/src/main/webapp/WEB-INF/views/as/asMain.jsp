@@ -14,10 +14,9 @@
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm2" method="post" action="/asmanage/as.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="tcw" ${searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
-								<option value="t" ${searchType eq 't' ? 'selected' : '' }>제  목</option>
-								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>보낸사람</option>
-								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>업  체</option>
+								<option value="tcw" ${searchType eq 'ap' ? 'selected' : '' }>전  체</option>
+								<option value="t" ${searchType eq 'a' ? 'selected' : '' }>제  목</option>
+								<option value="w" ${searchType eq 'p' ? 'selected' : '' }>보낸사람</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
@@ -38,13 +37,13 @@
 									<th style="text-align: center;">완료 날짜</th>
 									<th style="text-align: center;">진행 상황</th>
 								</tr>
-								<c:forEach items="${asList}" var="as">								
+								<c:forEach items="${asList}" var="as" >								
 									<tr>
-										<td style="text-align: center;">${as.as_no }</td>
-										<td style="text-align: center;">${as.emp_no }</td>
-										<td style="text-align: center;"><fmt:formatDate value="${as.sys_regdate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
-										<td style="text-align: center;"><fmt:formatDate value="${as.compldate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
-										<td style="text-align: center;">${as.progress == '0' ? '대기중' : (as.progress == '1' ? '진행중' : '완료')}</td>
+										<td style="text-align: center;">${as.AS_NO }</td>
+										<td style="text-align: center;">${as.E_NAME }</td>
+										<td style="text-align: center;"><fmt:formatDate value="${as.SYS_REGDATE }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
+										<td style="text-align: center;"><fmt:formatDate value="${as.COMPLDATE }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
+										<td style="text-align: center;">${as.PROGRESS == '0' ? '대기중' : (as.PROGRESS == '1' ? '진행중' : '완료')}</td>
 									</tr>
 								</c:forEach>
 							</table>
@@ -56,7 +55,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/as/registForm.do', '쪽지쓰기', 700, 1000)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/asmanage/registForm.do', '쪽지쓰기', 700, 1000)"
 					style="width: 100px; margin: 20px; align-self: center;">A/S 접수</button>
 
 				</div>

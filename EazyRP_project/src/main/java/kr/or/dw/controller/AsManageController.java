@@ -24,7 +24,7 @@ public class AsManageController {
 	
 	@RequestMapping("/as")
 	public ModelAndView as(ModelAndView mnv, String mcode, SearchCriteria cri ) throws Exception {
-		String url = "/as/noteList.page";
+		String url = "/as/asMain.page";
 		
 		Map<String, Object> dataMap = asService.selectAsList(cri);
 		
@@ -37,9 +37,9 @@ public class AsManageController {
 
 	}
 	
-	@RequestMapping("/regist")
+	@RequestMapping("/registForm")
 	public ModelAndView asRegist (ModelAndView mnv, HttpSession session) throws Exception{
-		String url = "/as/registForm";
+		String url = "/as/registForm.open";
 		
 		
 		mnv.setViewName(url);
