@@ -696,4 +696,24 @@ public class MinjunController2 {
 		out.println("window.opener.location.reload(true); window.close();");
 		out.println("</script>");
 	}
+	
+	// SAL(급여) CRUD -----------------------------------------------------------------------------------------
+	
+	@RequestMapping("/sal")
+	public ModelAndView salMain (ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
+		String url = "/minjun2/sal_regist.page";
+		String c_no = (String) session.getAttribute("c_no");
+		
+		Map<String, Object> dataMap = empsalService.selectExtrapayList(cri);
+		Map<String, Object> dataMap2 = empsalService.selectDeductionList(cri);
+		
+		
+		
+		mnv.addAllObjects(dataMap);
+		mnv.addAllObjects(dataMap2);
+		mnv.addObject("mcode", mcode);
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
 }
