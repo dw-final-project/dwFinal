@@ -216,10 +216,24 @@ FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 			ORDER BY n.n_no DESC
 	</select>
 	
-	<select id="selectMyMenuList" resultType="myMenu">
-		SELECT *
-		  FROM mymenu
-		 WHERE u_no = #{u_no }
+	<select id="selectMyMenuList" resultType="Map">
+		SELECT (
+				SELECT min(murl) 
+  				FROM MENU
+ 				WHERE MURL = mm.murl
+				) murl
+	   		  ,(
+		 		SELECT min(mname) 
+  		 		FROM MENU
+ 		 		WHERE MURL = mm.murl
+		 		) mname
+	   		  ,(
+		 		SELECT max(mcode) 
+  		 		FROM MENU
+ 		 		WHERE MURL = mm.murl
+		 		) mcode
+  		FROM mymenu mm
+	   WHERE u_no = #{u_no }
 	</select>
 	
 	<insert id="registMyMenu">
@@ -229,4 +243,10 @@ FROM (SELECT * FROM note n, emp e WHERE n.caller = e.emp_no) a,
 				)
 	
 	</insert>
+	
+	<delete id="deleteMyMenu">
+		DELETE FROM mymenu
+		 WHERE u_no = #{u_no}
+		   AND murl = #{murl}
+	</delete>
 </mapper>
