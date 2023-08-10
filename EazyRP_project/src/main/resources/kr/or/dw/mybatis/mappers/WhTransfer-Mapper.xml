@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dw.dao.WhTransferDAO">
+
+	<sql id="search">
+		<if test="cri.searchType == 'w'.toString()">
+			AND e.E_NAME LIKE '%' || #{cri.keyword} || '%'
+		</if>
+		<if test="cri.searchType == 't'.toString()">
+			AND w.WO_NAME LIKE '%' || #{cri.keyword} || '%'
+		</if>
+		<if test="cri.searchType == 'tw'.toString()">
+			AND (
+			w.WO_NAME LIKE '%' || #{cri.keyword} || '%'
+			OR
+			e.E_NAME LIKE '%' || #{cri.keyword} || '%'
+			)
+		</if>
+	</sql>
+	
+	<select id="selectSearchWhTransferList" resultType="whTransfer">
+		SELECT	*
+		FROM	whtransfer
+		WHERE	1=1
+		AND		c_no = #{c_no}
+		<include refid="search"></include>
+		ORDER BY sys_regdate desc
+	</select>
+	
+	<select id="selectSearchWhTransferListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM	whtransfer
+		WHERE	1=1
+		AND		c_no = #{c_no}
+		<include refid="search"></include>
+	</select>
+
+</mapper>
