@@ -79,7 +79,7 @@
 	<!-- card footer End -->
 <form role="form" method="post" enctype="multipart/form-data">
 
-		<input type="hidden" name="wo_no" value="wo.WO_NO">
+		<input type="hidden" name="wo_no" value="${wo.WO_NO}">
 		<table>
 	        <tr>
 	            <td width="40%" align="center"><b>코드번호</b></td>
@@ -91,7 +91,10 @@
 	        </tr>
 	        <tr>
 	            <td width="40%" align="center"><b>담당자</b></td>
-	            <td width="100%"><input type="text" style="width: 100%;" value="${wo.C_NAME } / ${wo.E_NAME }"></td>
+	            <td width="100%">
+	            	<input type="hidden" id="receiver" name="emp_no" value="${wo.EMP_NO }">
+	            	<input type="text" style="width: 100%;" value="${wo.C_NAME } / ${wo.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
+	            </td>
 	        </tr>
 	        <tr>
 	        	<td width="40%" align="center"><b>등록일</b></td>
@@ -119,24 +122,15 @@
 					</select>
 				</td>
 	        </tr>
-	        <tr>
-	            <td align="center"><b>첨부파일</b></td>
-	            <td>
-	            <input type="file" name="files" style="width: 100%;" value="">
-	            <c:if test="${!empty wo.FILES }">
-				<div><button type="button" onclick="location.href='<%=request.getContextPath()%>/erp4/getFile.do?files=${est.FILES }';">파일 다운</button>&nbsp;&nbsp;${est.FILES }</div>
-				</c:if>
-				</td> 
-	        </tr>
 	    </table>
-    <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">제품추가</button>
+    <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">추가</button>
     <table>
     	
         <tr>
-            <th align="center">품목명</th>
-            <th align="center">생산 공장</th>
-            <th align="center">수량</th>
-            <th align="center">비고</th>
+            <th align="center" style="width: 25%;">품목명</th>
+            <th align="center" style="width: 25%;">생산 공장</th>
+            <th align="center" style="width: 25%;">수량</th>
+            <th align="center" style="width: 25%;">비고</th>
         </tr>
     	<tbody id="prInput">
         <input type="hidden" value="" id="cnt">
@@ -146,9 +140,10 @@
 				<input type="hidden" class="rownum" value="${woDetail.ROWNUM }">
 				<input type="hidden" name="detail_no" id="dtail_no" value="${woDetail.DETAIL_NO }">
 	<%-- 	       <input type="hidden" name="enabled" id="estenabled" value="${est.ENABLED }"> --%>
-		       <input type="hidden" name="pr_delete" value="o">
+				<input type="hidden" name="pr_delete" value="o">
 	        	<td>
-	        		<input type="text" id="${woDetail.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${woDetail.PR_NAME }"><input type="hidden" name="pr_no" value="${est.PR_NO }">
+	        		<input type="text" id="${woDetail.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${woDetail.PR_NAME }">
+	        		<input type="hidden" name="pr_no" value="${woDetail.PR_NO }">
 	        	</td>
 	        	<td>	
 					<input type="text" id="fac_no${woDetail.ROWNUM }" class="fac_names" name="fac_name" style="width: 100%;" value="${woDetail.FAC_NAME }">
@@ -181,16 +176,14 @@ window.onload = function(){
 	let formObj = $('form[role="form"]');
 
 	$('button#modifyBtn').on('click', function(){
+			
 		formObj.attr({
-			'action' : 'modifyForm.do',
+			'action' : 'modify.do',
 			'method' : 'post'
-// 			'enctype' : 'multipart/form-data'
 		});
-		console.log($('form[role="form"]').serializeArray());
-		
-		alert($('tr[id="trChk"]').get().length);
 		
 		let trCnt = 0;
+		
 		for(let i = 0; i < $('tr[id="trChk"]').get().length; i++){
 			if($('tr[id="trChk"]').eq(i).css("display") != "none") {
 				for(let j = 0; j < $('tr[id="trChk"]').eq(i).find('input[type="text"]').get().length; j++) {
@@ -205,7 +198,7 @@ window.onload = function(){
 		}
 		
 		if($('tr[id="trChk"]').get().length == trCnt) {
-			alert("제품 추가하쇼");
+			alert("제품을 추가하세요.");
 			return;
 		}
 		
@@ -216,7 +209,7 @@ window.onload = function(){
 	$('button#removeBtn').on('click', function(){
 		if(confirm("정말 삭제하시겠습니까?")){
 			formObj.attr({
-				'action' : 'remove',
+				'action' : 'remove.do',
 				'method' : 'post' 
 			});
 			formObj.submit();
@@ -242,13 +235,13 @@ let dtail_no = $('#dtail_no').val();
 $('#addPutBtn').on('click', function(){
 	cnt++;
 	$('#prInput').append(
-		'<tr>'+
+		'<tr id="trChk"><input type="hidden" class="rownum" value="'+ cnt + '">'+
 			'<input type="hidden" name="detail_no" id="" value="0">'+
 			'<input type="hidden" name="pr_delete" value="n">'+
 	        '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
 	        '<td><input type="text" id="fac_no' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no"id="fac_no' + cnt + '"></td>'+
 	        '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
-	        '<td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>'+
+	        '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'+
     	'</tr>'
     );
 	

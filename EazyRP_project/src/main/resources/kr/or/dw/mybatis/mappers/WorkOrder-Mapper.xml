@@ -19,19 +19,28 @@
 	</sql>
 
 	<select id="selectSearchWorkOrderList" resultType="workOrder">
-		SELECT	w.*, e.e_name
-		FROM	workorder w, emp e
+		SELECT	w.wo_no,
+				MAX(w.sys_regdate) sys_regdate,
+				MAX(w.wo_name) wo_name,
+				MAX(e.e_name) e_name,
+				MAX(w.deliverydate) deliverydate,
+				MAX(w.progress) progress
+		FROM	workorder w, workorderdetail wd, emp e
 		WHERE	1=1
+		AND		w.enabled = 'y'
 		AND		w.emp_no = e.emp_no
+		AND		w.wo_no = wd.wo_no
 		AND		w.c_no = #{c_no}
 		<include refid="search"></include>
-		ORDER BY w.wo_no desc
+		GROUP BY w.wo_no
+		ORDER BY sys_regdate desc
 	</select>
 	
 	<select id="selectSearchWorkOrderListCount" resultType="int">
-		SELECT	COUNT(*)
+		SELECT	COUNT(DISTINCT w.wo_no)
 		FROM	workorder w, emp e
 		WHERE	1=1
+		AND		w.enabled = 'y'
 		AND		w.emp_no = e.emp_no
 		AND		w.c_no = #{c_no}
 		<include refid="search"></include>
@@ -56,7 +65,6 @@
 			c_no,
 			deliverydate,
 			progress,
-			files,
 			enabled
 		)
 		VALUES(
@@ -67,7 +75,6 @@
 			#{c_no},
 			#{deliverydate},
 			#{progress},
-			#{files},
 			'y'
 		)
 	</insert>
@@ -102,9 +109,9 @@
 	<!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 -->
 	
 	<select id="selectWorkOrder" parameterType="str" resultType="Map">
-		SELECT 	wo.wo_no, wo.wo_name, e.e_name, 
+		SELECT 	wo.wo_no, wo.wo_name, e.e_name, wo.emp_no,
 				TO_CHAR(wo.DELIVERYDATE, 'yyyy-MM-dd') DELIVERYDATE, 
-				wo.PROGRESS, wo.FILES, c.c_name,
+				wo.PROGRESS, c.c_name,
 				TO_CHAR(wo.sys_regdate, 'yyyy-MM-dd') sys_regdate
 		FROM 	workorder wo, emp e, company c
 		WHERE 	wo.emp_no = e.EMP_NO
@@ -119,12 +126,72 @@
 				wd.QUANTITY, 
 				wd.DETAIL_NO, 
 				wd.fac_no, 
-				f.fac_name
+				f.fac_name,
+				wd.pr_no
 		FROM WORKORDER wo, WORKORDERDETAIL wd, PRODUCT p, factory f
 		WHERE wo.wo_no = wd.WO_NO
 		AND wd.pr_no = p.pr_no
 		AND wd.fac_no = f.fac_no
 		AND wo.wo_no = #{wo_no}				
 	</select>	
+	
+	<update id="workOrderUpdate">
+		UPDATE	workorder
+		SET		sys_up		= #{emp_no},
+				emp_no		= #{emp_no},
+				sys_updatedate = sysdate,
+				deliverydate = #{deliverydate},
+				progress 	= #{progress},
+				c_no 		= #{c_no}
+		WHERE	wo_no		= #{wo_no}
+	</update>
+	
+	<update id="modifyWorkOrderDetail">
+		MERGE 
+		INTO 	workorderdetail
+		USING	dual
+		ON		(#{detail_no} != 0)
+		WHEN MATCHED THEN
+		UPDATE 
+		SET			wo_no	= #{wo_no},
+					pr_no	= #{pr_no},
+					fac_no	= #{fac_no},
+					quantity	= #{quantity}
+		WHERE		detail_no	= #{detail_no}
+		WHEN NOT MATCHED THEN
+		INSERT (
+			detail_no,
+			wo_no,
+			pr_no,
+			fac_no,
+			quantity
+		)
+		VALUES(
+			detail_no_seq.nextval,
+			#{wo_no},
+			#{pr_no},
+			#{fac_no},
+			#{quantity}
+		)
+	</update>
+	
+	<!-- detail.jsp 에서 제품 tr 삭제했을때 지워지는 쿼리이다. -->
+	<delete id="deleteWorkOrderDetail">
+		DELETE	from workorderdetail
+		WHERE	detail_no = #{detail_no}
+	</delete>
+	
+	<!-- 바로 위와 아래는 확실히 구분되어야 함 그 이유는 각각 위 아래에 주석을 확인하면 된다. -->
+	<update id="deleteWorkOrder"> <!-- 실제 삭제하는것이 아닌 enabled를 n으로 하여 조회할때 나오지 않도록 조건을 걸어준다. -->
+		UPDATE	workorder
+		SET		enabled = 'n'
+		WHERE	wo_no = #{wo_no}
+	</update>
+	
+	<!-- 위 deleteWorkOrder 와 함께 작업지시서 하나를 통째로 삭제할때 함께 삭제되는 그에 속한 디테일이다. -->
+	<delete id="deleteWorkOrderDetailList">
+		DELETE	from workorderdetail
+		WHERE	wo_no = #{wo_no}
+	</delete>
 	
 </mapper>

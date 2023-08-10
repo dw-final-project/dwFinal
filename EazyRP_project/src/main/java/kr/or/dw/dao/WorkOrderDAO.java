@@ -30,4 +30,15 @@ public interface WorkOrderDAO {
 
 	List<Map<String, Object>> selectWorkOrderDetail(String wo_no) throws SQLException;
 
+	void workOrderUpdate(WorkOrderVO woVo) throws SQLException;
+	
+	void deleteWorkOrderDetail(WorkOrderVO wo) throws SQLException;
+
+	void modifyWorkOrderDetail(WorkOrderVO wo) throws SQLException;
+
+	void deleteWorkOrder(String wo_no) throws SQLException;
+
+	void deleteWorkOrderDetailList(String wo_no) throws SQLException;
+
+
 }

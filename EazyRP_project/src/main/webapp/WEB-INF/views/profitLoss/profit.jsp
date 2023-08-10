@@ -50,9 +50,9 @@
 								<c:forEach items="${amount}" var="amount" varStatus="var">
 									<tr height="40px;">
 										<td style="text-align: center;">${month.get(var.index) }</td>
-										<td style="text-align: center;">${amount} 원</td>
+										<td style="text-align: center; color: ${amount > 0 ? 'blue' : 'red'}">${amount} 원</td>
 										<td style="text-align: center;">${amount3.get(var.index) }원</td>
-										<td style="text-align: center;">${b.get(var.index) }원</td>
+										<td style="text-align: center; color: ${b.get(var.index) > 0 ? 'blue' : 'red'}">${b.get(var.index) }원</td>
 										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/profitLoss/openMonth.do?month=${month.get(var.index)}', '상세 조회', 900, 500)">상세조회</a></td>
 									</tr>
 								</c:forEach>
@@ -106,11 +106,6 @@
 								+ winleft + ",resizable=yes,status=yes");
 		win.focus();
 	};
-	
-	$('input[name="startDate"]').on('change', function(){
-		
-		$('input[name="endDate"]').val($('input[name="startDate"]').val());
-	})
 	
 </script>
 <%@ include file="../include/footer_js.jsp" %>

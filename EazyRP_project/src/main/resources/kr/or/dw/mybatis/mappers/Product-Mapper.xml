@@ -320,7 +320,7 @@
 			#{sheet.sheet_no},
 			'b',
 			'Y',
-			'/product/butDetail.do?sheet_no=' || #{sheet.sheet_no},
+			'/product/buyDetail.do?sheet_no=' || #{sheet.sheet_no},
 			#{quantity},
 			'',
 			'AC_001',
@@ -345,7 +345,7 @@
 			#{order.o_no},
 			'o',
 			'Y',
-			'/product/orderDetail.do?o_no=' || #{order.o_no},
+			'/product/orderDetail.do?o_no=' || #{order.o_no} || '&amp;orders=N',
 			#{order.quantity},
 			'',
 			'AC_001',
@@ -353,7 +353,7 @@
 			'',
 			'',
 			#{order.sys_reg},
-			'',
+			#{buy},
 			''
 		)
 	</insert>

@@ -49,5 +49,7 @@ public interface ManagementService {
 
 	List<DraftGbVO> getDraftGb() throws SQLException;
 
+	String getImgFiles(int a) throws SQLException;
+
 
 }

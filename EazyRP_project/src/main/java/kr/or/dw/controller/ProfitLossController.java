@@ -73,6 +73,7 @@ public class ProfitLossController {
 	@RequestMapping("/dayProfit")
 	public ModelAndView dayProfit(ModelAndView mnv, String mcode, SearchCriteria2 cri2, SearchCriteria cri, HttpSession session) throws SQLException {
 		Map<String, Object> plVo = new HashMap<>();
+		System.out.println("컨트롤러 엔드데이트임" + cri2.getEndDate());
 		String c_no = (String) session.getAttribute("c_no");
 		if(cri2.getStartDate().equals("")) {
 			LocalDate now = LocalDate.now();
@@ -173,9 +174,9 @@ public class ProfitLossController {
 			int z = (int) (Math.random()*2);
 			int year = 0;
 			if(z == 1) {
-				year = 2022;
+				year = 2020;
 			} else {
-				year = 2023;
+				year = 2021;
 			}
 			String date1 = String.format(year + "-%02d-", random2);
 			int random1 = (int) (Math.random()*c) + 1;

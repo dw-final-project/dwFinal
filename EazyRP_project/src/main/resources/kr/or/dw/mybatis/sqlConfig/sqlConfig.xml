@@ -45,7 +45,8 @@
 		<typeAlias type="kr.or.dw.vo.ProfitLossVO" alias="profitLoss"/>
 		<typeAlias type="kr.or.dw.vo.Tr_historyVO" alias="tr_history"/>
 		<typeAlias type="kr.or.dw.vo.DeptVO" alias="dept"/>
-
+		<typeAlias type="kr.or.dw.vo.MyMenuVO" alias="myMenu"/>
+		<typeAlias type="kr.or.dw.vo.QualityVO" alias="ql"/>
 
 		<typeAlias type="kr.or.dw.vo.AsVO" alias="as"/>
 		

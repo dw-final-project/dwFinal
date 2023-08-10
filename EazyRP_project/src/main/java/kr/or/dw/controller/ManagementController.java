@@ -296,7 +296,7 @@ public class ManagementController {
 		draft = managementService.selectDraft(dr_no);
 		String fileName = draft.getFiles();  // 파일 이름
 		String uploadPath = session.getServletContext().getRealPath("/resources/documents/"); // 파일 경로
-				
+		
 		String saveFile = (uploadPath+fileName); // 파일경로 + 파일이름
         List<String> data = new ArrayList<>();
 		try {
@@ -358,6 +358,24 @@ public class ManagementController {
 			modify = "Y";
 		}
 		String ename = managementService.getE_name(draft.getEmp_no());
+		String stampPath = session.getServletContext().getRealPath("/resources/stamp/");
+		List<String> imgList = new ArrayList<>();
+		
+		for(int j = 1; j < 4; j++) {
+			int a = 0;
+			if(j == 1) {
+				a = pl.getEmp_no1();
+			} else if(j == 2) {
+				a = pl.getEmp_no2();
+			} else if(j == 3) {
+				a = pl.getEmp_no3();
+			}
+			String insert = managementService.getImgFiles(a);
+			imgList.add(stampPath + insert);
+		}
+		System.out.println("사람들 이미지 파일 목록이다 1 " + imgList.get(0));
+		System.out.println("사람들 이미지 파일 목록이다 1 " + imgList.get(1));
+		System.out.println("사람들 이미지 파일 목록이다 1 " + imgList.get(2));
 		
 		String dg_no = draft.getDg_no();
 		System.out.println("dg_no = " + dg_no);

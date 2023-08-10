@@ -194,7 +194,7 @@ public class BusinessController {
 	}
 	
 	@RequestMapping("/insertEstimate")
-	public void insertEstimate (@RequestParam("files")MultipartFile multi, String fileName, int emp_no, String[] pr_no, String fc_no, String[] wh_no, int[] quantity, int[] amount,  HttpServletResponse res) throws Exception {
+	public void insertEstimate (@RequestParam("files")MultipartFile multi,String progress, HttpSession session, String fileName, int emp_no, String[] pr_no, String fc_no, String[] wh_no, int[] quantity, int[] amount,  HttpServletResponse res) throws Exception {
 		
 		List<EstimateVO> vo = new ArrayList<EstimateVO>();
 		
@@ -206,14 +206,15 @@ public class BusinessController {
 			String uniqueName = uuids[0];
 			fileRealName = multi.getOriginalFilename();
 			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
-			String uploadFolder = "C:\\upload\\";
+			
 			
 			
 			filess = uniqueName+fileExtension;
 			
 			
-			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
+			String uploadFolder = session.getServletContext().getRealPath("/resources/saveJihwan/");
 			
+			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
 			if(!saveFile.exists()) {
 				saveFile.mkdirs();
 			}
@@ -235,9 +236,10 @@ public class BusinessController {
 			est.setWh_no(wh_no[i]);
 			est.setAmount(amount[i]);
 			est.setQuantity(quantity[i]);
-		
+			est.setProgress(progress);
 			vo.add(est);	
 		}
+		
 		vo.get(0).setFiles(filess);
 		vo.get(0).setRealFileName(fileRealName);
 		System.out.println(vo);
@@ -255,7 +257,7 @@ public class BusinessController {
 	}
 	
 	@RequestMapping("getFile")
-	public ResponseEntity<byte[]> getFile(String est_no) throws Exception{
+	public ResponseEntity<byte[]> getFile(HttpSession session ,String est_no) throws Exception{
 		InputStream in = null;
 		ResponseEntity<byte[]> entity = null;
 		
@@ -263,11 +265,11 @@ public class BusinessController {
 		
 		String estFile = est.getFiles();
 		
-		String fileUploadPath = "C:/upload";
+		String uploadFolder = session.getServletContext().getRealPath("/resources/saveJihwan/");
 		
 		try {
 			String fileName = estFile;
-			in = new FileInputStream(fileUploadPath + File.separator + fileName);
+			in = new FileInputStream(uploadFolder + File.separator + fileName);
 			
 			fileName = est.getRealFileName();
 			
@@ -286,13 +288,21 @@ public class BusinessController {
 		return entity;
 	}
 	
+	@Autowired
+	private EstimateDAO estimateDAO;
+	
 	@RequestMapping("modifyForm")
-	public void estimateModify(@RequestParam("files")MultipartFile multi, String fileName, String[] pr_delete, String est_no, int[] estdetail_no, int emp_no, String[] pr_no, String fc_no, String[] wh_no, int[] quantity, int[] amount,  HttpServletResponse res, HttpSession session) throws Exception {
+	public void estimateModify(@RequestParam("files")MultipartFile multi,String progress, String fileName, String[] pr_delete, String est_no, int[] estdetail_no, int emp_no, String[] pr_no, String fc_no, String[] wh_no, int[] quantity, int[] amount,  HttpServletResponse res, HttpSession session) throws Exception {
+
 		List<EstimateVO> modify = new ArrayList<EstimateVO>();
+		EstimateVO est = estimateService.selectEst(est_no);
 		
+		System.out.println("q1");
+		String deleteFile = est.getFiles();
 		String empno = session.getAttribute("emp_no").toString();
 		String filess = "";
 		String fileRealName = "";
+		System.out.println("q2");
 		if(!multi.isEmpty()) {
 			UUID uuid = UUID.randomUUID();
 			String[] uuids = uuid.toString().split("-");
@@ -301,12 +311,14 @@ public class BusinessController {
 			
 			fileRealName = multi.getOriginalFilename();
 			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
-
+			System.out.println("q3");
 			
 			String uploadFolder = session.getServletContext().getRealPath("/resources/saveJihwan/");
-
-			filess = uniqueName+fileExtension;
 			
+			File delete = new File(uploadFolder + deleteFile);
+			delete.delete();
+			filess = uniqueName+fileExtension;
+			System.out.println("q4");
 			
 			
 			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
@@ -326,20 +338,36 @@ public class BusinessController {
 		
 		
 		for(int i= 0; i < pr_no.length; i++) {
-			EstimateVO est = new EstimateVO();
-			est.setEmp_no(emp_no);
-			est.setPr_no(pr_no[i]);
-			est.setFc_no(fc_no);
-			est.setWh_no(wh_no[i]);
-			est.setAmount(amount[i]);
-			est.setQuantity(quantity[i]);
-			est.setEstdetail_no(estdetail_no[i]);
-			est.setEst_no(est_no);
-			System.out.println(est_no);
-			est.setPr_delete(pr_delete[i]);
-			modify.add(est);	
-			System.out.println("dd1");
+			EstimateVO est2 = new EstimateVO();
+			System.out.println(i + "번째 for - start");
+			
+			System.out.println("emp_no : " + emp_no);
+			est2.setEmp_no(emp_no);
+			System.out.println("pr_no :"  + pr_no[i]);
+			est2.setPr_no(pr_no[i]);
+			System.out.println("fc_no :" + fc_no);
+			est2.setFc_no(fc_no);
+			System.out.println("wh_no :" + wh_no[i]);
+			est2.setWh_no(wh_no[i]);
+			System.out.println("amount : " + amount[i]);
+			est2.setAmount(amount[i]);
+			System.out.println("progress :" + progress);
+			est2.setProgress(progress);
+			System.out.println("quantity : " + quantity[i]);
+			est2.setQuantity(quantity[i]);
+			System.out.println("estdetail_no : " + estdetail_no[i]);
+			est2.setEstdetail_no(estdetail_no[i]);
+			System.out.println("est_no :" + est_no );
+			est2.setEst_no(est_no);
+			est2.setPr_delete(pr_delete[i]);
+			modify.add(est2);	
+			System.out.println("est2 : " + est2);
+			
+			System.out.println(i + "번째 for - end");
 		}
+		
+		System.out.println(modify);
+		
 		System.out.println("dd2");
 		modify.get(0).setFiles(filess);
 		modify.get(0).setRealFileName(fileRealName);
@@ -407,7 +435,7 @@ public class BusinessController {
 	}
 	
 	@RequestMapping("/insertSi")
-	public void insertSi(int emp_no, String[] pr_no, String[] pr_name, int[] quantity, String wh_no, String[] content, @DateTimeFormat(pattern="yyyy-MM-dd") Date shipdate, HttpServletResponse res) throws IOException, SQLException {
+	public void insertSi(int emp_no, String[] pr_no, String[] pr_name,String progress, int[] quantity, String wh_no, String[] content, @DateTimeFormat(pattern="yyyy-MM-dd") Date shipdate, HttpServletResponse res) throws IOException, SQLException {
 		
 		List<SiVO> siVO = new ArrayList<SiVO>();
 		
@@ -420,6 +448,7 @@ public class BusinessController {
 			si.setQuantity(quantity[i]);
 			si.setContent(content[i]);
 			si.setShipdate(shipdate);
+			si.setProgress(progress);
 			siVO.add(si);	
 		}
 		
@@ -433,7 +462,7 @@ public class BusinessController {
 	}
 	
 	@RequestMapping("/simodifyForm")
-	public void siModify(String[] pr_delete,String si_no, String[] sidetail_no, int emp_no, String[] pr_no, String wh_no, int[] quantity, @DateTimeFormat(pattern="yyyy-MM-dd") Date shipdate, String[] content, HttpServletResponse res, HttpSession session) throws SQLException, IOException {
+	public void siModify(String[] pr_delete,String si_no, String progress,String[] sidetail_no, int emp_no, String[] pr_no, String wh_no, int[] quantity, @DateTimeFormat(pattern="yyyy-MM-dd") Date shipdate, String[] content, HttpServletResponse res, HttpSession session) throws SQLException, IOException {
 		
 		List<SiVO> modify = new ArrayList<SiVO>();
 		String empno = session.getAttribute("emp_no").toString();
@@ -452,7 +481,7 @@ public class BusinessController {
 			si.setShipdate(shipdate);
 			si.setPr_delete(pr_delete[i]);
 			si.setContent(content[i]);
-			
+			si.setProgress(progress);
 			modify.add(si);
 		}
 		

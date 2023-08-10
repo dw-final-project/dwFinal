@@ -1,6 +1,7 @@
 package kr.or.dw.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,6 +81,17 @@ public class MenuServiceImpl implements MenuService{
 	@Override
 	public List<DraftVO> getPayment(int emp_no) throws SQLException {
 		return menuDAO.getPayment(emp_no);
+	}
+
+	@Override
+	public List<Integer> getProfit(List<String> month) throws SQLException {
+		List<Integer> profit = new ArrayList<>();
+		for(int i = 0; i < month.size(); i++) {
+			int a = menuDAO.getAmount(month.get(i));
+			profit.add(a);
+		}
+		
+		return profit;
 	}
 
 

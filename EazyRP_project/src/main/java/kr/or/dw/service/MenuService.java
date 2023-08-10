@@ -24,4 +24,6 @@ public interface MenuService {
 
 	List<DraftVO> getPayment(int emp_no) throws SQLException;
 
+	List<Integer> getProfit(List<String> month) throws SQLException;
+ 
 }

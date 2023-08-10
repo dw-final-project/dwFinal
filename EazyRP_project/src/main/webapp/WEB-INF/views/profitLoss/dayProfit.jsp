@@ -67,7 +67,7 @@
 										<td style="text-align: center;">${gb.get(var.index) }</td>
 										<td style="text-align: center;">${list.unitprice }원</td>
 										<td style="text-align: center;">${list.saleprice }원</td>
-										<td style="text-align: center;">${list.amount}원</td>
+										<td style="text-align: center; color: ${list.amount > 0 ? 'blue' : 'red'}">${list.amount}원</td>
 										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('${list.pr_url }', '상세 조회', 700, 1000)">${list.th_no}</a></td>
 									</tr>
 									</c:forEach>
@@ -122,10 +122,6 @@
 		win.focus();
 	};
 	
-	$('input[name="startDate"]').on('change', function(){
-		
-		$('input[name="endDate"]').val($('input[name="startDate"]').val());
-	})
 	
 </script>
 <%@ include file="../include/footer_js.jsp" %>

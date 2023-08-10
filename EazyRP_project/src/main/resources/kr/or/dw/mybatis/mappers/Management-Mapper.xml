@@ -284,4 +284,8 @@
 		  FROM draft_gb
 	</select>
 	
+	<select id="getImgFile" resultType="str">
+		SELECT stampimg FROM emp WHERE emp_no = #{a}
+	</select>
+	
 </mapper>

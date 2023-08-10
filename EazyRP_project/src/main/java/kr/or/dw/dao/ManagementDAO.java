@@ -59,5 +59,7 @@ public interface ManagementDAO {
 
 	List<DraftGbVO> getDraftGb() throws SQLException;
 
+	String getImgFile(int a) throws SQLException;
+
 
 }

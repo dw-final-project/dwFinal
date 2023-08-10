@@ -52,18 +52,19 @@ import kr.or.dw.vo.WareHouseVO;
 
 @Controller
 @RequestMapping("/erp4")
-public class itemController {
+public class ItemController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(itemController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
 	
 	@Autowired
 	private ItemService itemService;
 	
 	@RequestMapping("/item")
-	public ModelAndView itemMain(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
+	public ModelAndView itemMain(ModelAndView mnv, String mcode, String murl, SearchCriteria cri) throws SQLException{
 		String url = "inventory/basic/item.page";
 		Map<String, Object> dataMap = itemService.selectItemList(cri);
 		mnv.addObject("mcode", mcode);
+		mnv.addObject("murl", murl);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
 		
@@ -111,12 +112,12 @@ public class itemController {
 			}
 		}
 		
-		if(product.getExdate() == null) {
-			String strDate = "99991231";
-			SimpleDateFormat dtFormat = new SimpleDateFormat("yyyyMMdd");
-			Date formatDate = dtFormat.parse(strDate);
-			product.setExdate(formatDate);
-		}
+//		if(product.getExdate() == null) {
+//			String strDate = "99991231";
+//			SimpleDateFormat dtFormat = new SimpleDateFormat("yyyyMMdd");
+//			Date formatDate = dtFormat.parse(strDate);
+//			product.setExdate(formatDate);
+//		}
 		
 		product.setSys_reg(emp_no + "");
 		product.setSys_up(emp_no + "");
@@ -263,6 +264,7 @@ public class itemController {
 			product.setImg("");
 		}
 		
+		System.out.println("vo입니당" + product);
 		
 		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
 

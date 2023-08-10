@@ -26,22 +26,18 @@
 
 		
     <div class="col">
-        <div class="card mb-3 rounded-3 shadow-sm border" style="height: 75%; display: block;">
+        <div class="card mb-4 rounded-3 shadow-sm border" style="height: 75%; display: block;">
             <div class="card-header py-3">
-                <h5 class="my-0 fw-normal">손익 차트</h5>
+                <h5 class="my-0 fw-normal">최근 1년 손익 차트</h5>
             </div>
-            <div style="background-color: red; display: inline-block; color: white; width: 80px; border-radius: 5px; font-size: 0.8em;">판매액</div>
-            <div style="background-color: brown; display: inline-block; color: white; width: 80px; border-radius: 5px; font-size: 0.8em;">급여</div>
-            <div style="background-color: purple; display: inline-block; color: white; width: 80px; border-radius: 5px; font-size: 0.8em;">지출비용</div>
-            <div style="background-color: blue; display: inline-block; color: white; width: 80px; border-radius: 5px; font-size: 0.8em;">총이익</div>
             <div class="card-body" id="barBody" style="margin-top: 30px;">
-                <div id="area-chart"></div>
+                <div id="line-chart"></div>
             </div>
         </div>
     </div>
 
 		<div class="col">
-			<div class="card mb-3 rounded-3 shadow-sm border" style="height: 75%;" >
+			<div class="card mb-2 rounded-3 shadow-sm border" style="height: 75%;" >
 				<div class="card-header py-3">
 					<h5 class="my-0 fw-normal">전자 결재</h5>
 				</div>
@@ -135,46 +131,55 @@ function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 							+ winleft + ",resizable=yes,status=yes");
 	win.focus();
 };
-
 var data = [
-    { y: "2021", g1: 120, g2: 144, g3: 100, g4: 180},
-    { y: "2022", g1: 100, g2: 168, g3: 112, g4: 130},
-    { y: "2023", g1: 150, g2: 128, g3: 182, g4: 160},
+    { y: "${month.get(0)}", g1: ${profit.get(0)} + '원', g2: ${profit2.get(0)} + '원'},
+    { y: "${month.get(1)}", g1: ${profit.get(1)} + '원', g2: ${profit2.get(1)} + '원'},
+    { y: "${month.get(2)}", g1: ${profit.get(2)} + '원', g2: ${profit2.get(2)} + '원'},
+    { y: "${month.get(3)}", g1: ${profit.get(3)} + '원', g2: ${profit2.get(3)} + '원'},
+    { y: "${month.get(4)}", g1: ${profit.get(4)} + '원', g2: ${profit2.get(4)} + '원'},
+    { y: "${month.get(5)}", g1: ${profit.get(5)} + '원', g2: ${profit2.get(5)} + '원'},
+    { y: "${month.get(6)}", g1: ${profit.get(6)} + '원', g2: ${profit2.get(6)} + '원'},
+    { y: "${month.get(7)}", g1: ${profit.get(7)} + '원', g2: ${profit2.get(7)} + '원'},
+    { y: "${month.get(8)}", g1: ${profit.get(8)} + '원', g2: ${profit2.get(8)} + '원'},
+    { y: "${month.get(9)}", g1: ${profit.get(9)} + '원', g2: ${profit2.get(9)} + '원'},
+    { y: "${month.get(10)}", g1: ${profit.get(10)} + '원', g2: ${profit2.get(10)} + '원'},
+    { y: "${month.get(11)}", g1: ${profit.get(11)} + '원', g2: ${profit2.get(11)} + '원'},
   ],
   config = {
     data: data,
     xkey: 'y',
-    ykeys: ['g1', 'g2', 'g3', 'g4'],
-    labels: ['판매액', '지출비용', '급여', '총이익'],
+    ykeys: ['g1', 'g2'],
+    labels: ['올해 손익', '전년 손익'],
     fillOpacity: 0.6,
     hideHover: 'auto',
     behaveLikeLine: true,
     resize: true,
     pointFillColors:['#ffffff'],
     pointStrokeColors: ['green'],
-    lineColors:['red', 'purple', 'brown', 'blue']
+    lineColors:['red', 'blue']
 };
 
 $(document).ready(function () {
-    config.element = 'area-chart';
-    Morris.Area(config);
-    /* config.element = 'line-chart';
-    Morris.Line(config);
-    config.element = 'bar-chart';
-    Morris.Bar(config); */
-    /* config.element = 'stacked';
-    config.stacked = true;
-    Morris.Bar(config);
-    Morris.Donut({
-        element: 'pie-chart',
-        data: [
-            {label: "가", value: 30},
-            {label: "나", value: 15},
-            {label: "다", value: 45},
-            {label: "라", value: 10},
-        ]
-    }); */
+//     config.element = 'area-chart';
+//     Morris.Area(config);
+     config.element = 'line-chart';
+     Morris.Line(config);
+//    config.element = 'bar-chart';
+//    Morris.Bar(config);
+//     config.element = 'stacked';
+//     config.stacked = true;
+//     Morris.Bar(config);
+//     Morris.Donut({
+//         element: 'pie-chart',
+//         data: [
+//             {label: "가", value: 30},
+//             {label: "나", value: 15},
+//             {label: "다", value: 45},
+//             {label: "라", value: 10},
+//         ]
+//     });
 });
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>

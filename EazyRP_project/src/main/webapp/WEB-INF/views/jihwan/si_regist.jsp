@@ -75,10 +75,18 @@
 <form role="form" method="post" action="/erp4/insertSi.do"enctype="multipart/form-data">
 	<table>
         <tr>
-            <td align="center">사원 명</td>
+            <td align="center">담당자</td>
             <td><input type="hidden" name="emp_no" id="receiver" value="${empno }">
             <input type="text" style="width: 100%;" value="${ename }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 500, 500)"></td>
         </tr>
+<!--         <tr> -->
+<!--          <td width="40%" align="center"><b>진행상태</b></td> -->
+<!--          <td><select name="progress" id="progress"> -->
+<!-- 				<option value="출하대기중">출하대기중</option> -->
+<!-- 				<option value="출하완료">출하완료</option> -->
+<!-- 			</select> -->
+<!-- 		</td> -->
+<!-- 		</tr> -->
          <tr>
             <td align="center">출하 창고</td>
              <td><input type="text" id="si_whname" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no" value=""></td>
