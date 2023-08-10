@@ -43,9 +43,9 @@
 	</update>
 
 
-	<delete id="deleteUser" parameterType="str">
+	<delete id="deleteUser" parameterType="member">
 		DELETE FROM member
-		WHERE id = #{id}	
+		WHERE u_no = #{u_no}	
 	</delete>
 
 	<update id="modProfile" >

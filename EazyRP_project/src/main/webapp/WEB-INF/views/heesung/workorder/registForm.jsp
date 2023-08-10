@@ -111,14 +111,14 @@
 <!--             </td> -->
 <!--         </tr> -->
     </table>
-    <button type="button" id="addPutBtn">추가</button>
+    <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">추가</button>
     <table>
     	<thead>
         <tr>
-            <th align="center">품목명</th>
-            <th align="center">생산 공장</th>
-            <th align="center">수량</th>
-            <th align="center">비고</th>
+            <th align="center" style="width: 25%;">품목명</th>
+            <th align="center" style="width: 25%;">생산 공장</th>
+            <th align="center" style="width: 25%;">수량</th>
+            <th align="center" style="width: 25%;">비고</th>
         </tr>
         </thead>
         <tbody id="prInput">
@@ -158,7 +158,7 @@
         '<td><input type="text" id="'+ cnt +'" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'+
         '<td><input type="text" id="fac_no' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no" id="fac_no' + cnt + '"></td>'+
         '<td><input type="text" id="quantity'+cnt+'" class="quantity" name="quantity" style="width: 100%;" value=""><input type="hidden" id="cost"></td>'+
-        '<td style="text-align : center;"><button type="button" id="cancelBtn">삭제</button></td>'+
+        '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'+
     '</tr>');
 		
 // 		$('script').append(

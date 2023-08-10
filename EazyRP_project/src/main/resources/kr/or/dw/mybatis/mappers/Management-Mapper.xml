@@ -285,7 +285,7 @@
 	</select>
 	
 	<select id="getImgFile" resultType="str">
-		SELECT stamping FROM emp WHERE emp_no = #{a}
+		SELECT stampimg FROM emp WHERE emp_no = #{a}
 	</select>
 	
 </mapper>

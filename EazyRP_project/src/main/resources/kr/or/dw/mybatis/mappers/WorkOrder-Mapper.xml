@@ -126,7 +126,8 @@
 				wd.QUANTITY, 
 				wd.DETAIL_NO, 
 				wd.fac_no, 
-				f.fac_name
+				f.fac_name,
+				wd.pr_no
 		FROM WORKORDER wo, WORKORDERDETAIL wd, PRODUCT p, factory f
 		WHERE wo.wo_no = wd.WO_NO
 		AND wd.pr_no = p.pr_no
@@ -181,11 +182,11 @@
 	</delete>
 	
 	<!-- 바로 위와 아래는 확실히 구분되어야 함 그 이유는 각각 위 아래에 주석을 확인하면 된다. -->
-	<delete id="deleteWorkOrder"> <!-- 실제 삭제하는것이 아닌 enabled를 n으로 하여 조회할때 나오지 않도록 조건을 걸어준다. -->
+	<update id="deleteWorkOrder"> <!-- 실제 삭제하는것이 아닌 enabled를 n으로 하여 조회할때 나오지 않도록 조건을 걸어준다. -->
 		UPDATE	workorder
 		SET		enabled = 'n'
 		WHERE	wo_no = #{wo_no}
-	</delete>
+	</update>
 	
 	<!-- 위 deleteWorkOrder 와 함께 작업지시서 하나를 통째로 삭제할때 함께 삭제되는 그에 속한 디테일이다. -->
 	<delete id="deleteWorkOrderDetailList">

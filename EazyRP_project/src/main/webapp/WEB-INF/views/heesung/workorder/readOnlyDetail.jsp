@@ -72,8 +72,6 @@
 <body>
     <h2>작업지시서 상세보기</h2>
 	<div class="card-footer">
-		<button type="button" id="modifyBtn" class="btn btn-warning">수정</button>
-		<button type="button" id="removeBtn" class="btn btn-danger">삭제</button>
 		<button type="button" id="listBtn" class="btn btn-primary">닫기</button>
 	</div>
 	<!-- card footer End -->
@@ -87,7 +85,7 @@
 	        </tr>
 	        <tr>
 	            <td width="40%" align="center"><b>제목</b></td>
-	            <td width="100%"><input type="text" style="width: 100%;" value="${wo.WO_NAME }"></td>
+	            <td width="100%"><input type="text" style="width: 100%;" value="${wo.WO_NAME }" readonly></td>
 	        </tr>
 	        <tr>
 	            <td width="40%" align="center"><b>담당자</b></td>
@@ -105,7 +103,7 @@
 	        <tr>
 	        	<td width="40%" align="center"><b>마감일</b></td>
 	        	<td width="40%" align="center">
-					<input type="date" id="endperiod" name="deliverydate" class="form-control mch7" value="${wo.DELIVERYDATE }" placeholder="납기일을 입력하세요.">
+					<input type="date" id="endperiod" name="deliverydate" class="form-control mch7" value="${wo.DELIVERYDATE }" placeholder="납기일을 입력하세요." disabled>
 	        	</td>
 	        </tr>
 	        <tr>
@@ -113,7 +111,7 @@
 	            	<b>상태</b>
 	            </td>
 	            <td>
-	            	<select name="progress" id="progress_select">
+	            	<select name="progress" id="progress_select" disabled>
 					    <option>선택</option>
 					    <option value="" ${wo.PROGRESS eq '' ? 'selected' : '' }>선택</option>
 					    <option value="0" ${wo.PROGRESS eq '0' ? 'selected' : '' }>대기중</option>
@@ -123,7 +121,6 @@
 				</td>
 	        </tr>
 	    </table>
-    <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">추가</button>
     <table>
     	
         <tr>
@@ -142,15 +139,15 @@
 	<%-- 	       <input type="hidden" name="enabled" id="estenabled" value="${est.ENABLED }"> --%>
 				<input type="hidden" name="pr_delete" value="o">
 	        	<td>
-	        		<input type="text" id="${woDetail.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${woDetail.PR_NAME }">
+	        		<input type="text" id="${woDetail.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${woDetail.PR_NAME }" readonly>
 	        		<input type="hidden" name="pr_no" value="${woDetail.PR_NO }">
 	        	</td>
 	        	<td>	
-					<input type="text" id="fac_no${woDetail.ROWNUM }" class="fac_names" name="fac_name" style="width: 100%;" value="${woDetail.FAC_NAME }">
+					<input type="text" id="fac_no${woDetail.ROWNUM }" class="fac_names" name="fac_name" style="width: 100%;" value="${woDetail.FAC_NAME }" readonly>
 					<input type="hidden" name="fac_no" value="${woDetail.FAC_NO }">
 				</td>
-	            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${woDetail.QUANTITY }"><input type="hidden" id="cost" value="${est.PR_EXPRICE }"></td>
-	            <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>
+	            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${woDetail.QUANTITY }"><input type="hidden" id="cost" value="${est.PR_EXPRICE }" readonly></td>
+	            <td style="text-align : center;"><button type="button" class="btn"></button></td>
 	        </tr>
         </c:forEach>
         </tbody>
@@ -217,7 +214,6 @@ window.onload = function(){
 	});
 	
 	$('button#listBtn').on('click', function(){
-		window.opener.location.reload(true);
 		window.close();
 	});
 	

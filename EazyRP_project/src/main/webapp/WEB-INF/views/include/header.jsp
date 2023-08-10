@@ -166,7 +166,7 @@ html {
                    
          </li>
          </c:forEach>
-         <div class="btn btn-link" style="font-size: 12px; color: white; right: 10px;top: 72px;position: absolute;" >
+         <div class="btn btn-link" id="logout" style="font-size: 12px; color: white; right: 10px;top: 72px;position: absolute;" >
 			<svg style="margin-left: 10px; display: flex;align-items: center;" xmlns="http://www.w3.org/2000/svg" width="25" height="25"
 				fill="currentColor" class="bi bi-box-arrow-right"
 				viewBox="0 0 16 16">
@@ -190,6 +190,14 @@ html {
   		if($(this).val() != 'X'){
 	  		location.href="/common/empChange.do?mcode=${mcode }&selectedEmp=" + $(this).val()
 	  		alert('설정이 모두 완료되었습니다.');
+  		}
+  	})
+  	
+ 	
+  	
+  	$('#logout').on('click', function(){
+  		if(confirm("정말 로그아웃하시겠습니까")){
+  		location.href="/common/logout.do";
   		}
   	})
   	

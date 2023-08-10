@@ -85,8 +85,11 @@
 				<td width="40%" align="center"><b>작업지시서</b></td>
 				<td>
 					<input type="hidden" name="wo_no" id="wo_no" class="wo_no" value=""> 
-					<input type="text" style="width: 100%;" value="" id="wo_name" name="wo_name"
-							readonly onclick="OpenWindow('/erp4/findWorkOrder.do', '작업지시서 찾기', 400, 600)">
+					<div style="display: flex;">
+						<input type="text" style="width: 78%;" value="" id="wo_name" name="wo_name"
+								readonly onclick="OpenWindow('/erp4/findWorkOrder.do', '작업지시서 찾기', 400, 600)">
+						<button style="float: right" type="button" id="woDetailOpenBtn" class="btn btn-success">상세보기</button>
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -101,25 +104,18 @@
 				</select>
 			</td>
         </tr>
-			<tr>
-	            <td align="center"><b>첨부파일</b></td>
-	            <td>
-	            	<input type="file" style="width: 100%;"  name ="files" value="">
-	            	<input type="hidden" id="fileName" name="fileName" value=""> 
-	            </td>
-        	</tr>
 		</table>
 		<button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">추가</button>
 		<table>
 			<thead>
 				<tr>
-					<th align="center">품목</th>
-					<th align="center">생산 공장</th>
-					<th align="center">입고 창고</th>
-					<th align="center">외주비 단가</th>
-					<th align="center">수량</th>
-					<th align="center">외주비 합계</th>
-					<th align="center">삭제</th>
+					<th align="center" style="width: 14%;">품목</th>
+					<th align="center" style="width: 14%;">생산 공장</th>
+					<th align="center" style="width: 14%;">입고 창고</th>
+					<th align="center" style="width: 14%;">외주비 단가</th>
+					<th align="center" style="width: 14%;">수량</th>
+					<th align="center" style="width: 14%;">외주비 합계</th>
+					<th align="center" style="width: 14%;">삭제</th>
 				</tr>
 			</thead>
 			<tbody id="prInput">
@@ -145,7 +141,7 @@
 						<input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="">
 					</td>
 					<td>
-						<input type="text" id="total_outprice" name="total_outprice" style="width: 100%;" value="">
+						<input type="text" id="total_outprice" name="total_outprice" style="width: 100%;" value="" readonly>
 					</td>
 					<td style="text-align: center;">
 						<button type="button" id="cancelBtn" class="btn btn-danger">삭제</button>
@@ -157,11 +153,11 @@
 					총계
 				</td>
 				<td colspan="2" align="center">
-					<input type="text" style="width: 100%;" id="wh_total" name="wh_total" value="">
+					<input type="text" style="width: 100%;" id="wh_total" name="wh_total" value="" readonly>
 				</td>
 			</tr>
 		</table>
-		<input type="submit" id="submitBtn" class="btn btn-primary" style="text-align: center;" value="등록">
+		<input type="button" id="submitBtn" class="btn btn-primary" style="text-align: center;" value="등록">
 		<input type="button" class="btn btn-warning" id="closeBtn" value="취 소">
 	</form>
 </body>
@@ -182,7 +178,7 @@
 				+ '<td><input type="text" id="wh_no' + cnt + '" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'
 				+ '<td><input type="text" id="outprice' + cnt + '" class="outprice" name="outprice" style="width: 100%;" value=""></td>'
 				+ '<td><input type="text" id="quantity' + cnt + '" class="quantity" name="quantity" style="width: 100%;" value=""></td>'
-				+ '<td><input type="text" id="amount" name="total_outprice" style="width: 100%;" value=""></td>'
+				+ '<td><input type="text" id="amount" name="total_outprice" style="width: 100%;" value="" readonly></td>'
 				+ '<td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'
 			+ '</tr>'
 		);
@@ -217,9 +213,9 @@
 
 
 	// 가격 * 수량 = 합계
-	$(document).on('keyup', '.quantity', function() {
-		let quantity = $(this).parents("tr").find(".outprice").val()
-		let unitPrice = $(this).val();
+	$(document).on('change keyup', '.quantity', function() {
+		let unitPrice = $(this).parents("tr").find(".outprice").val()
+		let quantity = $(this).val();
 
 		let totalPrice = unitPrice * quantity;
 		
@@ -227,7 +223,7 @@
 	})
 	
 	// 총합계
-	$(document).on('change, keyup', '#prInput', function(){
+	$(document).on('change keyup', 'input[name="total_outprice"]', function(){
 		let sum = Number(0);
 		let inputAmount = $('input[name="total_outprice"]').get();
 		for(let i = 0; i < inputAmount.length; i++){
@@ -250,6 +246,112 @@
 	// 취소버튼 클릭
 	$('input#closeBtn').on('click', function() {
 		window.close();							// 윈도우 창을 닫는다.
+	});
+	
+	// 작업지시서 상세보기 버튼 클릭 이벤트
+	$(document).on('click', '#woDetailOpenBtn', function() {
+		let wo_number = $('input[type="hidden"]#wo_no').val();
+		if (wo_number == "") {
+			alert('작업지시서를 선택해주세요.');
+		} else {
+			let openWin = OpenWindow("/erp4/selectWorkOrderDetail.do?wo_no=" + wo_number, "작업지시서 상세보기", 600, 800);
+		}
+	})
+	
+// 	등록 버튼을 클릭할때 submit 하기전에 값이 들어가지 않은 태그는 없는지 확인하고 없을때 비로소 submit을 한다.
+	
+// 	let submitBtn = $('input[type=submit]#submitBtn');
+// 	let form = $('form[role="form"]');
+
+// 	$(document).on('click', '#submitBtn', function() {
+		
+// 		if ($('input[name=emp_no]').val() == "") {
+			
+// 			alert("담당자를 선택하세요.");
+// 			return;
+			
+// 		} else if ($('input[name=wo_no]').val() == "") {
+			
+// 			alert("작업지시서를 선택하세요.");
+// 			return;
+			
+// 		} else if ($('input[name="pr_no"]').val() == "") {
+				
+// 			alert("품목을 선택하세요.");
+// 			return;
+			
+// 		} else if ($('input[name="fac_no"]').val() == "") {
+			
+// 			alert("생산 공장을 선택하세요.");
+// 			return;
+			
+// 		} else if ($('input[name="wh_no"]').val() == "") {
+			
+// 			alert("입고 창고를 선택하세요.");
+// 			return;
+			
+// 		} else if ($('input[name="outprice"]').val() == "") {
+			
+// 			alert("외주비 단가를 선택하세요.");
+// 			return;
+			
+// 		} else if ($('input[name="quantity"]').val() == "") {
+			
+// 			alert("수량을 선택하세요.");
+// 			return;
+			
+// 		} else if ($('input[name="total_outprice"]').val() == "") {
+			
+// 			alert("외주비 합계 선택하세요.");
+// 			return;
+			
+// 		} else if ($('input[name="wh_total"]').val() == "") {
+			
+// 			alert("품목을 선택하세요.");
+// 			return;
+		
+// 		} else {
+				
+// 			form.submit();
+				
+// 		};
+
+// 	})
+
+	$(document).on('click', '#submitBtn', function() {
+		
+		let form = $('form[role="form"]');
+	    let emp_no = $('input[name="emp_no"]').val();
+	    let wo_no = $('input[name="wo_no"]').val();
+	    let valid = true;
+	
+	    if (emp_no === "") {
+	        alert("담당자를 선택하세요.");
+	        valid = false;
+	    } else if (wo_no === "") {
+	        alert("작업지시서를 선택하세요.");
+	        valid = false;
+	    } else {
+	        $('#prInput tr').each(function(index, row) {
+	            let pr_name = $(row).find('.pr_names').val();
+	            let fac_name = $(row).find('.fac_names').val();
+	            let wh_name = $(row).find('.wh_names').val();
+	            let outprice = $(row).find('.outprice').val();
+	            let quantity = $(row).find('.quantity').val();
+	            let total_outprice = $(row).find('input[name="total_outprice"]').val();
+	
+	            if (pr_name === "" || fac_name === "" || wh_name === "" ||
+	                outprice === "" || quantity === "" || total_outprice === "") {
+	                alert("빈칸을 모두 입력하세요.");
+	                valid = false;
+	                return false; // Loop 종료
+	            }
+	        });
+	    }
+	
+	    if (valid) {
+	        form.submit();
+	    }
 	});
 	
 </script>

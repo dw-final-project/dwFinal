@@ -34,17 +34,17 @@
 								<tr>
 									<th style="text-align: center;">A/S 코드</th>
 									<th style="text-align: center;">담당 기사</th>
-									<th style="text-align: center;">진행 상황</th>
 									<th style="text-align: center;">요청 날짜</th>
 									<th style="text-align: center;">완료 날짜</th>
+									<th style="text-align: center;">진행 상황</th>
 								</tr>
 								<c:forEach items="${asList}" var="as">								
 									<tr>
 										<td style="text-align: center;">${as.as_no }</td>
 										<td style="text-align: center;">${as.emp_no }</td>
-										<td style="text-align: center;">${as.progress == '0' ? '대기중' : (as.progress == '1' ? '진행중' : '완료')}</td>
 										<td style="text-align: center;"><fmt:formatDate value="${as.sys_regdate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 										<td style="text-align: center;"><fmt:formatDate value="${as.compldate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
+										<td style="text-align: center;">${as.progress == '0' ? '대기중' : (as.progress == '1' ? '진행중' : '완료')}</td>
 									</tr>
 								</c:forEach>
 							</table>
