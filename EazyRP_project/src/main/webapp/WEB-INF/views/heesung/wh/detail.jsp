@@ -89,7 +89,7 @@
 	            <td width="100%">
 					<input type="hidden" name="wo_no" id="wo_no" class="wo_no" value="${wh.WO_NO }">
 	            	<div style="display: flex;">
-		            	<input type="text" style="width: 78%;" value="${wh.WO_NAME }" id="wo_name" name="wo_name"
+		            	<input type="text" style="width: 78%;" value="${wh.WO_NAME }" id="wo_name"
 								readonly onclick="OpenWindow('/erp4/findWorkOrder.do', '작업지시서 찾기', 400, 600)">
 						<button style="float: right" type="button" id="woDetailOpenBtn" class="btn btn-success">상세보기</button>
 					</div>
@@ -139,8 +139,9 @@
     	<tbody id="prInput">
 	        <input type="hidden" value="" id="cnt">
 	        <input type="hidden" value="A" id="A">
+	        <input type="hidden" id="sort" value="detail">
 	       	<c:forEach items="${whDetail }" var="whDetail" varStatus="loop">
-		        <tr id="trChk" >    	
+		        <tr id="trChk">
 					<input type="hidden" class="rownum" value="${whDetail.ROWNUM }">
 					<input type="hidden" name="detail_no" id="dtail_no" value="${whDetail.DETAIL_NO }">
 		<%-- 	       <input type="hidden" name="enabled" id="estenabled" value="${est.ENABLED }"> --%>
@@ -151,7 +152,7 @@
 					</td>
 					<td>	
 						<input type="text" id="fac_no${whDetail.ROWNUM }" class="fac_names" name="fac_name" style="width: 100%;" value="${whDetail.FAC_NAME }">
-						<input type="hidden" name="fac_no" id="fac_no0" value="${whDetail.FAC_NO }">
+						<input type="hidden" name="fac_no" id="fac_no${whDetail.ROWNUM }" value="${whDetail.FAC_NO }">
 					</td>
 					<td>		
 						<input type="text" id="wh_no${whDetail.ROWNUM }" class="wh_names" name="wh_name" style="width: 100%;" value="${whDetail.WH_NAME }">
@@ -191,26 +192,41 @@ window.onload = function(){
 			'method' : 'post'
 		});
 		
-// 		let trCnt = 0;
-// 		for(let i = 0; i < $('tr[id="trChk"]').get().length; i++){
-// 			if($('tr[id="trChk"]').eq(i).css("display") != "none") {
-// 				for(let j = 0; j < $('tr[id="trChk"]').eq(i).find('input[type="text"]').get().length; j++) {
-// 					if($('tr[id="trChk"]').eq(i).find('input[type="text"]').eq(j).val() == "" || $('tr[id="trChk"]').eq(i).find('input[type="text"]').eq(j).val() == null) {
-// 						alert("값을 입력해 주세요.");
-// 						return;
-// 					}
-// 				}				
-// 			} else {
-// 				trCnt += 1;
-// 			}
-// 		}
+		//
+		let form = $('form[role="form"]');
+	    let emp_no = $('input[name="emp_no"]').val();
+	    let wo_no = $('input[name="wo_no"]').val();
+	    let valid = true;
 		
-// 		if($('tr[id="trChk"]').get().length == trCnt) {
-// 			alert("제품을 추가하세요.");
-// 			return;
-// 		}
-		
-		formObj.submit();
+	    if (emp_no == "") {
+	        alert("담당자를 선택하세요.");
+	        valid = false;
+	    } else if (wo_no == "") {
+	        alert("작업지시서를 선택하세요.");
+	        valid = false;
+	    } else {
+	        $('#prInput tr').each(function(index, row) {
+	            let pr_name = $(row).find('.pr_names').val();
+	            let fac_name = $(row).find('.fac_names').val();
+	            let wh_name = $(row).find('.wh_names').val();
+	            let outprice = $(row).find('.outprice').val();
+	            let quantity = $(row).find('.quantity').val();
+	            let total_outprice = $(row).find('input[name="total_outprice"]').val();
+	
+	            if (pr_name == "" || fac_name == "" || wh_name == "" ||
+	                outprice == "" || quantity == "" || total_outprice == "") {
+	                alert("빈칸을 모두 입력하세요.");
+	                valid = false;
+	                return false; // Loop 종료
+	            }
+	        });
+	    }
+	
+	    if (valid) {
+	        form.submit();
+	    }
+	    //
+	    
 	});
 	
 	
@@ -307,14 +323,17 @@ function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 	})
 	
 	// 총합계
-	$(document).on('change keyup', 'input[name="total_outprice"]', function(){
+	$(document).on('change keyup', '.quantity', function(){
+		
 		let sum = Number(0);
 		let inputAmount = $('input[name="total_outprice"]').get();
+		
 		for(let i = 0; i < inputAmount.length; i++){
 			sum += Number($('input[name="total_outprice"]').eq(i).val());
 		}
 		
 		$('#wh_total').val(sum);
+		
 	})
 	
 	// 공장 클릭시 목록 열기 이벤트

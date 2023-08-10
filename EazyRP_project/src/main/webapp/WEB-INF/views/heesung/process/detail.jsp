@@ -6,7 +6,7 @@
 <link href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" rel="stylesheet">
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 
-<div style="margin: 1em;">
+<div style="min-height: ;">
 	<section class="content container-fluid">
 		<div class="row justify-content-center">
 			<div class="col-md-9" style="max-width: ;">
@@ -14,54 +14,58 @@
 					<div class="card-header">
 						<h3 class="card-title p-1">공정 상세보기</h3>
 					</div>
-					<div class="card-body">	<!-- card body Start -->
-					
-						<div class="form-group col-sm-12 row">
-							<label for="title" class="col-sm-3">코드</label>
-							<input type="text" class="col-sm-9 form-control" id="pc_code" name="pc_code" value="${process.pc_code }" readonly>
-						</div>
-						
-						<div class="form-group col-sm-12 row">
-							<label for="writer" class="col-sm-3">공정명</label>
-							<input type="text" class="col-sm-9 form-control" id="pc_name" name="pc_name" value="${process.pc_name }">
-						</div>
-						
-						<div class="form-group col-sm-12 row">
-							<label for="regdate" class="col-sm-3">순번</label>
-							<input type="text" class="col-sm-9 form-control" id="pc_order" name="pc_order" value="${process.pc_order }">
-						</div>
-						
-						<div class="form-group col-sm-12 row">
-							<label for="regdate" class="col-sm-3">내용</label>
-							<input type="text" class="col-sm-9 form-control" id="pc_content" name="pc_content" value="${process.pc_content }">
-						</div>
-						
-					</div>	<!-- card body End -->
+					<div class="card-body pad">
+						<form role="form" method="post" name="detail">
+							<div class="form-group col-sm-12 row">
+								<label for="title" class="col-sm-3">코드</label>
+								<input type="text" class="col-sm-9 form-control" id="pc_code" name="pc_code" value="${process.pc_code }" readonly>
+							</div>
+							
+							<div class="form-group col-sm-12 row">
+								<label for="writer" class="col-sm-3">공정명</label>
+								<input type="text" class="col-sm-9 form-control" id="pc_name" name="pc_name" value="${process.pc_name }">
+							</div>
+							
+							<div class="form-group col-sm-12 row">
+								<label for="regdate" class="col-sm-3">순번</label>
+								<input type="text" class="col-sm-9 form-control" id="pc_order" name="pc_order" value="${process.pc_order }">
+							</div>
+							
+							<div class="form-group col-sm-12 row">
+								<label for="regdate" class="col-sm-3">내용</label>
+								<input type="text" class="col-sm-9 form-control" id="pc_content" name="pc_content" value="${process.pc_content }">
+							</div>
+						</form>
+					</div>
 					<div class="card-footer card-tools">
-						<button type="button" class="btn btn-primary" id="modifyBtn">수 정</button>
+						<button type="submit" class="btn btn-primary" id="modifyBtn">수 정</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;
 						<button type="button" class="btn btn-danger" id="removeBtn">삭 제</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;
 						<button type="button" class="btn btn-warning" id="closeBtn">닫 기</button>
 					</div>
-					
 				</div>
 			</div>
-		</div>	<!-- row End -->
+		</div>
 	</section>
 </div>
 
-<form role="form">
-	<input type="hidden" name="pc_code" value="${process.pc_code }">
-</form>
+<!-- <form role="form"> -->
+<%-- 	<input type="hidden" name="pc_code" value="${process.pc_code }"> --%>
+<!-- </form> -->
 
 <script>
 window.onload = function(){
 
 	let formObj = $('form[role="form"]');
-
+	
 	// 수정 버튼 클릭
 	$('button#modifyBtn').on('click', function(){
+		
+		formObj.attr({
+			'action' : 'modify.do',
+			'method' : 'post' 
+		});
 		
 		if ($('#pc_name').val() == "") {
 			
@@ -85,11 +89,6 @@ window.onload = function(){
 		
 			if (confirm("해당 내용으로 수정하시겠습니까?")) {
 				
-				formObj.attr({
-					'action' : 'modify.do',
-					'method' : 'post' 
-				});
-			
 				formObj.submit();
 			
 			}
@@ -101,6 +100,8 @@ window.onload = function(){
 	// 삭제 버튼 클릭
 	$('button#removeBtn').on('click', function(){
 	
+		let formObj = $('form[role="form"]');
+		
 		if(confirm("정말 삭제하시겠습니까?")){
 		
 			formObj.attr({

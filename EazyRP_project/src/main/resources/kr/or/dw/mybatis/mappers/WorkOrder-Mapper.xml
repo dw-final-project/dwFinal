@@ -139,6 +139,7 @@
 		UPDATE	workorder
 		SET		sys_up		= #{emp_no},
 				emp_no		= #{emp_no},
+				wo_name		= #{wo_name},
 				sys_updatedate = sysdate,
 				deliverydate = #{deliverydate},
 				progress 	= #{progress},

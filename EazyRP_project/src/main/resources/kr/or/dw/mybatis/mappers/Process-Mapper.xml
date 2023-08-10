@@ -83,9 +83,7 @@
 	
 	<update id="updateProcess" parameterType="process">
 		UPDATE process
-		SET 
-			pc_code = #{pc_code}
-			,pc_name = #{pc_name}
+		SET pc_name = #{pc_name}
 			,pc_order = #{pc_order}
 			,pc_content = #{pc_content}
 		WHERE pc_code = #{pc_code}
