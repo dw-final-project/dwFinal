@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
 import kr.or.dw.command.SearchCriteria;
+import kr.or.dw.vo.QualityVO;
 
 @Mapper
 public interface QualityDAO {
@@ -21,6 +22,10 @@ public interface QualityDAO {
 	List<Map<String, Object>> forQcList(int qc_no) throws SQLException;
 
 	String ename(int empno) throws SQLException;
+
+	void insertQc(QualityVO qualityVO) throws SQLException;
+
+	int insertQcDetail(QualityVO vo) throws SQLException;
 	
 	
 	

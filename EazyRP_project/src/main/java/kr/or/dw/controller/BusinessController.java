@@ -446,7 +446,9 @@ public class BusinessController {
 			si.setPr_no(pr_no[i]);
 			si.setWh_no(wh_no);
 			si.setQuantity(quantity[i]);
-			si.setContent(content[i]);
+			if(content.length != 0) {				
+				si.setContent(content[i]);
+			}
 			si.setShipdate(shipdate);
 			si.setProgress(progress);
 			siVO.add(si);	

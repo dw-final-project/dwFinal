@@ -31,6 +31,7 @@
 	 AND qc.EMP_NO = e.EMP_NO 
 	 AND qd.PR_NO = p.PR_NO 
 	 GROUP BY qc.QC_NO 
+	 ORDER BY qc_no DESC
 	</select>
 
 	<select id="selectQualityListCount" resultType="int">
@@ -40,7 +41,6 @@
 		AND qc.QC_NO = qd.QC_NO 
 		AND qc.EMP_NO = e.EMP_NO 
 		AND qd.PR_NO = p.PR_NO 
-		GROUP BY qc.QC_NO 
 	</select>
 
 	<select id="selectQcDetail" resultType="Map">
@@ -50,11 +50,13 @@
 	 		,MAX(qd.QUANTITY) QUANTITY 
 	 		,MAX(qc.PROGRESS) progress
 	 		,MAX(qc.SYS_REGDATE) SYS_REGDATE
+	 		,MAX(qd.qcdetail_no) qcdetail_no
 	 FROM qc qc, QCDETAIL qd , EMP e , PRODUCT p 
 	 WHERE 1=1
 	 AND qc.QC_NO = qd.QC_NO 
 	 AND qc.EMP_NO = e.EMP_NO 
 	 AND qd.PR_NO = p.PR_NO 
+	 AND qc.QC_NO = #{QC_NO}
 	 GROUP BY qc.QC_NO
 	</select>
 	
@@ -69,7 +71,8 @@
 		  WHERE 1=1
 		  AND qc.QC_NO = qd.QC_NO 
 	 	 AND qc.EMP_NO = e.EMP_NO 
-		 AND qd.PR_NO = p.PR_NO  
+		 AND qd.PR_NO = p.PR_NO 
+		 AND qc.QC_NO = #{QC_NO} 
 	</select>
 	
 	<select id="ename" resultType="str">
@@ -78,7 +81,44 @@
 		WHERE emp_no = #{emp_no}
 	</select>
 	
+	<sql id="makeQcSeq">
+		SELECT QC_SEQ.NEXTVAL
+   		FROM DUAL
+	</sql>
 	
+<!-- 	<sql id="makeQcDetailSeq"> -->
+<!-- 		SELECT QCDETAIL_SEQ.NEXTVAL -->
+<!--    		FROM DUAL -->
+<!-- 	</sql> -->
 	
+	<insert id="insertQc">
 
+		<selectKey keyProperty="qc_no" order="BEFORE" resultType="java.lang.Integer">
+			<include refid="makeQcSeq"></include>	
+		</selectKey>
+		INSERT INTO qc
+		VALUES (
+			#{qc_no},
+			#{sys_regdate},
+			#{emp_no},
+			sysdate,
+			#{emp_no},
+			#{progress},
+			'Y',
+			''
+		)			
+	</insert>
+	
+	<insert id="insertQcDetail">
+		INSERT INTO qcdetail 
+		VALUES (
+			qcdetail_seq.nextval,
+			#{qc_no},
+			#{pr_no},
+			#{quantity},
+			#{content, jdbcType = VARCHAR}
+		)
+	</insert>
+	
+	
 </mapper>

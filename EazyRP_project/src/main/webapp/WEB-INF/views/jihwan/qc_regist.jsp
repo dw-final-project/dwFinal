@@ -77,7 +77,7 @@
 	<table>
         <tr>
             <td align="center">등록 일자</td>
-            <td><input type="date" name="sys_regdate" value=""></td>
+            <td><input id="dateInput" type="date" name="sys_regdate" value=""></td>
         </tr>
         <tr>
             <td align="center">담당자</td>
@@ -87,8 +87,8 @@
         <tr>
             <td align="center">진행상태</td>
             <td><select name="progress" id="progress">
-            	<option value="">전수중</option>
-			    <option value="">완료</option>
+            	<option value="전수중">전수중</option>
+			    <option value="완료">완료</option>
 				</select>
 			</td>
         </tr>
@@ -241,10 +241,26 @@ $('#addPutBtn').on('click', function(){
 		$('#totalAmount').val(sum);
 	})
 	
-	
-// 	let fc_no = "${si.FC_NO}";
-// 	$('#fc-select').val(fc_no);
-// 	$('select#fc-select').find('option[value="' + fc_no + '"]').attr('selected', 'selected'); 
+	$('#registBtn').on('click', function () {
+		
+		for(let i = 0; i < $('input[type="text"]').get().length; i++){
+			if($('input[type="text"]').eq(i).attr('name') == 'content') {
+				continue;
+			}
+			if($('input[type="text"]').eq(i).val() == "" || $('input[type="text"]').eq(i).val() == null) {
+				alert("값을 입력해 주세요.");
+				return;
+			}
+		}
+		
+		if($('#dateInput').val() == '' ){
+			alert('날짜를 입력해주세요!');
+			return;
+		}
+				
+		$('form[role="form"]').submit();
+		
+	})
 
 </script>
 

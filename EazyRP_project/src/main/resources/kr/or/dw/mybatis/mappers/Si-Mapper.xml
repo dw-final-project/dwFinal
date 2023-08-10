@@ -173,7 +173,7 @@ SELECT ROWNUM,
 		#{wh_no},
 		#{pr_no},
 		#{quantity},
-		#{content}	
+		#{content, jdbcType = VARCHAR}	
 	)
 </insert>
 	

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.dw.command.PageMaker;
 import kr.or.dw.command.SearchCriteria;
@@ -63,7 +64,8 @@ public class QualityServiceImpl implements QualityService{
 		String ename = qualityDAO.ename(empno);
 		return ename;
 	}
-
+	
+	@Transactional
 	@Override
 	public void insertQc(List<QualityVO> qualityVO) throws SQLException {
 		
@@ -72,6 +74,7 @@ public class QualityServiceImpl implements QualityService{
 		
 		for (QualityVO vo : qualityVO) {
 			vo.setQc_no(qc_no);
+			System.out.println("나는:" + qc_no);
 			int result = qualityDAO.insertQcDetail(vo);
 			if (result < 0) break;
 		}
