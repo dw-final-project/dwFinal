@@ -34,6 +34,7 @@ import kr.or.dw.service.MenuService;
 import kr.or.dw.service.ProcessService;
 import kr.or.dw.service.RownumService;
 import kr.or.dw.service.WhService;
+import kr.or.dw.service.WhTransferService;
 import kr.or.dw.service.WorkOrderService;
 import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.ProcessVO;
@@ -62,6 +63,8 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	private EstimateService estimateService;
 	@Autowired
 	private RownumService rownumService;
+	@Autowired
+	private WhTransferService whTransferService;
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 목록 열기
 	
@@ -576,6 +579,31 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		out.println("alert('삭제 되었습니다.')");
 		out.println("window.close();");
 		out.println("</script>");
+		
+	}
+	
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////whTransfer
+	
+	@RequestMapping("whtransfer")
+	public ModelAndView whTransfer(ModelAndView mnv, SearchCriteria cri, String mcode, HttpSession session) throws SQLException {
+		
+		System.out.println("HeesungController - erp4/whtransfer - 진입");
+		
+		String url = "heesung/whtransfer/main.page";
+		
+		String c_no = session.getAttribute("c_no").toString();
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("cri", cri);
+		map.put("c_no", c_no);
+		
+		Map<String, Object> dataMap = whTransferService.selectWhTransferList(map);
+		
+		mnv.addObject("mcode", mcode);
+		mnv.addAllObjects(dataMap);
+		mnv.setViewName(url);
+		
+		return mnv;
 		
 	}
 	

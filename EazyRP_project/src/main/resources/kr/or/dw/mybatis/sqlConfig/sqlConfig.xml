@@ -58,6 +58,7 @@
 		<typeAlias type="kr.or.dw.vo.WhVO" alias="wh"/>
 		<typeAlias type="kr.or.dw.vo.FactoryVO" alias="factory"/>
 		<typeAlias type="kr.or.dw.vo.WorkOrderVO" alias="workOrder"/>
+		<typeAlias type="kr.or.dw.vo.WhTransferVO" alias="whTransfer"/>
 		
 	</typeAliases>
 
