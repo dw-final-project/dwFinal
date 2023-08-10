@@ -83,13 +83,19 @@ public class QualityController {
 	public void insertQc(@RequestParam("files")MultipartFile multi,int[] quantity, int emp_no, String progress, String[] pr_no, String[] pr_name,String[] content, @DateTimeFormat(pattern="yyyy-MM-dd") Date sys_regdate, HttpServletResponse res) throws SQLException, IOException {
 		
 		List<QualityVO> qualityVO = new ArrayList<QualityVO>();
-		
+		System.out.println("ASDASDASD");
+		System.out.println("FFFFF " + content);
 		for(int i=0; i < pr_no.length; i++) {
 			QualityVO qc = new QualityVO();
 			qc.setEmp_no(emp_no);
 			qc.setPr_no(pr_no[i]);
 			qc.setQuantity(quantity[i]);
+			qc.setSys_regdate(sys_regdate);
+			
+			if(content.length != 0) {
 			qc.setContent(content[i]);
+			}
+			
 			qc.setProgress(progress);
 			qualityVO.add(qc);
 		}

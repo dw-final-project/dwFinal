@@ -208,6 +208,9 @@
 	$('#registBtn').on('click', function () {
 		
 		for(let i = 0; i < $('input[type="text"]').get().length; i++){
+			if($('input[type="text"]').eq(i).attr('name') == 'content') {
+				continue;
+			}
 			if($('input[type="text"]').eq(i).val() == "" || $('input[type="text"]').eq(i).val() == null) {
 				alert("값을 입력해 주세요.");
 				return;
