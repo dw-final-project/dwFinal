@@ -24,7 +24,7 @@ public class AsVO {
 	private Date sys_updatedate;	//수정일
 	private String sys_reg;	//최초등록자
 	private int asprice;	//수리비용
-
-
+	private String content;
+	private String e_name;
 	
 }
