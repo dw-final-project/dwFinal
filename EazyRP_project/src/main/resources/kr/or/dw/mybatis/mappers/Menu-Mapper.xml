@@ -17,6 +17,7 @@
 		  FROM menu
 		 WHERE upcode = #{mcode}
 		   AND isnav = 1
+		 ORDER BY mcode ASC
 	</select>
 	<select id="getURL" resultType="str">
 		SELECT murl FROM menu WHERE mcode = #{mcode}
