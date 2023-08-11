@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.dw.command.SearchCriteria;
+import kr.or.dw.vo.WhVO;
 import kr.or.dw.vo.WorkOrderVO;
 
 public interface WorkOrderService {
@@ -17,4 +18,10 @@ public interface WorkOrderService {
 	void workOrderModify(List<WorkOrderVO> woList) throws SQLException;
 
 	void workOrderRemove(String wo_no) throws SQLException;
+
+	void updateBtn(Map<String, Object> map) throws SQLException;
+
+	void insertError(List<WorkOrderVO> woList) throws SQLException;
+
+	void insertProduct(List<WhVO> whList) throws SQLException;
 }

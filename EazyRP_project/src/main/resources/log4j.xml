@@ -36,6 +36,10 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
+	
+	<logger name="jdbc.audit">
+	    <level value="off"/>
+	</logger>
 
 	<!-- Root Logger -->
 	<root>

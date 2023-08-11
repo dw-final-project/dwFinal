@@ -40,7 +40,6 @@ import kr.or.dw.vo.MyMenuVO;
 @Controller
 public class CommonController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CommonController.class);
 	
 	@Autowired
 	private MenuService menuService;

@@ -74,7 +74,7 @@
 			#{emp_no},
 			#{c_no},
 			#{deliverydate},
-			#{progress},
+			1,
 			'y'
 		)
 	</insert>
@@ -194,5 +194,83 @@
 		DELETE	from workorderdetail
 		WHERE	wo_no = #{wo_no}
 	</delete>
+
+	<update id="updateBtn">
+		UPDATE wh SET progress = #{progress} WHERE wh_no = #{wh_no}
+	</update>
+	
+	<select id="getPrice" resultType="int">
+		SELECT pr_inprice FROM product WHERE pr_no = #{pr_no}
+	</select>
+	
+	<insert id="insertError">
+		INSERT INTO error VALUES(
+			'ER_' || LPAD(ER_NO_SEQ.nextval, 4, '0'),
+			sysdate,
+			'2',
+			#{quantity},
+			#{wo_no},
+			#{amount},
+			#{c_no},
+			#{pr_no},
+			#{fac_no}
+		)
+	</insert>
+	
+	<insert id="insertTr">
+		INSERT INTO tr_history VALUES(
+			'TH_' || LPAD(th_no_seq.nextval, 4, '0'),
+			sysdate,
+			sysdate,
+			#{c_no},
+			2,
+			'FC_003',
+			#{total},
+			#{wh_no},
+			'e',
+			'Y',
+			'/erp4/wh/detail.do?wh_no=' || #{wh_no},
+			#{quantity},
+			'',
+			'AC_001',
+			'T_001',
+			'',
+			'',
+			2,
+			'',
+			#{total}
+		)
+	</insert>
+	
+	<select id="getProduct" resultType="int">
+		SELECT COUNT(*) FROM product WHERE pr_name = #{pr_name} AND wh_no = #{wh_no2}
+	</select>
+	
+	<insert id="insertProduct">
+		INSERT INTO product VALUES(
+			'PR_' || LPAD(product_seq.nextval, 3, '0'),
+			#{pr_name},
+			#{c_no},
+			(SELECT MAX(pr_gr) FROM product WHERE pr_name = #{pr_name} GROUP BY pr_name),
+			(SELECT MAX(pr_st) FROM product WHERE pr_name = #{pr_name} GROUP BY pr_name),
+			(SELECT MAX(pr_inprice) FROM product WHERE pr_name = #{pr_name} GROUP BY pr_name),
+			(SELECT MAX(pr_exprice) FROM product WHERE pr_name = #{pr_name} GROUP BY pr_name),
+			(SELECT MAX(pr_class) FROM product WHERE pr_name = #{pr_name} GROUP BY pr_name),
+			'',
+			sysdate,
+			'SP_001',
+			0,
+			sysdate,
+			sysdate,
+			0,
+			#{quantity},
+			#{wh_no2},
+			'Y'
+		)
+	</insert>
+	
+	<update id="updateProduct">
+		UPDATE product SET quantity = quantity + #{quantity} WHERE pr_name = #{pr_name} AND wh_no = #{wh_no2}
+	</update>
 	
 </mapper>

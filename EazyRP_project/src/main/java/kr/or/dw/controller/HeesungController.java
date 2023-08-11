@@ -565,6 +565,103 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		
 	}
 	
+	@RequestMapping("/updateBtn")
+	public void updateBtn(String whNo, int progress, HttpServletResponse res) throws SQLException, IOException {
+		Map<String, Object> map = new HashMap<>();
+		map.put("wh_no", whNo);
+		map.put("progress", progress + 1);
+		System.out.println(whNo);
+		System.out.println(progress);
+		workOrderService.updateBtn(map);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("window.opener.location.reload();");
+		out.println("alert('처리 완료되었습니다.')");
+		out.println("window.close();");
+		out.println("</script>");
+	}
+	
+	@RequestMapping("/insertError")
+	public ModelAndView insertError(ModelAndView mnv, HttpServletResponse res, int emp_no,  String wo_no, int wh_total, String[] pr_no, String[] fac_no, String[] wh_no, int[] detail_no,
+			String[] pr_name, int[] outprice, int[] quantity, int[] total_outprice, HttpSession session, String progress, String[] pr_delete, String whNo) throws SQLException, IOException {
+		
+		List<WhVO> whList = new ArrayList<WhVO>();
+		
+		String c_no = session.getAttribute("c_no").toString();
+		
+		System.out.println("pr_no.length : " + pr_no.length);
+		
+		for(int i = 0; i < pr_no.length; i++) {
+			WhVO wh = new WhVO();
+			
+			wh.setWh_no(whNo);
+			wh.setEmp_no(emp_no);
+			System.out.println(emp_no);
+			wh.setWo_no(wo_no);
+			wh.setWh_total(wh_total);
+			wh.setC_no(c_no);
+			wh.setProgress(progress);
+			wh.setPr_name(pr_name[i]);
+			wh.setDetail_no(detail_no[i]);
+			wh.setPr_no(pr_no[i]);
+			wh.setFac_no(fac_no[i]);
+			wh.setWh_no2(wh_no[i]);
+			wh.setOutprice(outprice[i]);
+			wh.setQuantity(quantity[i]);
+			wh.setTotal_outprice(total_outprice[i]);
+			wh.setPr_delete(pr_delete[i]);
+			
+			whList.add(wh);
+		}
+
+		session.setAttribute("whList", whList);
+		
+		Map<String, Object> dataMap = whService.selectWh(whNo);
+		
+		mnv.addAllObjects(dataMap);
+		mnv.setViewName("heesung/wh/error.open");
+		return mnv;
+	}
+	
+	@RequestMapping("/insertError2")
+	public void insertError2(HttpServletResponse res, String[] fac_no, String[] pr_no, int[] quantity, 
+			HttpSession session, String wo_no, String wh_no, String[] pr_name) throws SQLException, IOException {
+		List<WorkOrderVO> woList = new ArrayList<WorkOrderVO>();
+		String c_no = (String) session.getAttribute("c_no");
+		List<WhVO> whList = new ArrayList<WhVO>();
+		whList = (List<WhVO>) session.getAttribute("whList");
+		
+		for(int i = 0; i < pr_no.length; i++) {
+			System.out.println(c_no);
+			WorkOrderVO wo = new WorkOrderVO();
+			wo.setWh_no(wh_no);
+			wo.setWo_no(wo_no);
+			wo.setPr_name(pr_name[i]);
+			wo.setPr_no(pr_no[i]);
+			wo.setFac_no(fac_no[i]);
+			wo.setQuantity(quantity[i]);
+			wo.setC_no(c_no);
+			woList.add(wo);
+			int a = whList.get(i).getQuantity() - quantity[i];
+			whList.get(i).setQuantity(a);
+		}
+		
+		
+		workOrderService.insertError(woList);
+		workOrderService.insertProduct(whList);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('불량 등록이 완료되었습니다.')");
+		out.println("alert('생산입고 처리가 완료되었습니다.')");
+		out.println("window.opener.location.reload();");
+		out.println("window.close();");
+		out.println("</script>");
+	}
+	
 	@RequestMapping("/workorder/remove")
 	public void workOrderRemove(HttpServletResponse res, String wo_no) throws SQLException, IOException {
 		
