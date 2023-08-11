@@ -134,7 +134,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////// process
 	
 	@RequestMapping("/process")
-	public ModelAndView processMain(String mymenu, String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
+	public ModelAndView processMain(String murl, String mymenu, String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
 		String url="";
     	if(mymenu == null) {
 			url="heesung/process/main.page";
@@ -234,7 +234,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////// wh(생산입고)
 	
 	@RequestMapping("/wh")
-	public ModelAndView wh(String mymenu, String mcode, ModelAndView mnv, SearchCriteria cri, HttpSession session) throws SQLException {
+	public ModelAndView wh(String murl, String mymenu, String mcode, ModelAndView mnv, SearchCriteria cri, HttpSession session) throws SQLException {
 		
 		String url="";
     	if(mymenu == null) {
@@ -447,7 +447,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////workorder(작업지시서)
 	
 	@RequestMapping("/workorder")
-	public ModelAndView workorder(String mymenu,ModelAndView mnv, SearchCriteria cri, String mcode, HttpSession session) throws SQLException {
+	public ModelAndView workorder(String murl, String mymenu,ModelAndView mnv, SearchCriteria cri, String mcode, HttpSession session) throws SQLException {
 		
 		System.out.println("HeesungController - erp4/workorder 진입");
 		
@@ -756,7 +756,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////whTransfer
 	
 	@RequestMapping("whtransfer")
-	public ModelAndView whTransfer(String mymenu, ModelAndView mnv, SearchCriteria cri, String mcode, HttpSession session) throws SQLException {
+	public ModelAndView whTransfer(String murl, String mymenu, ModelAndView mnv, SearchCriteria cri, String mcode, HttpSession session) throws SQLException {
 		
 		System.out.println("HeesungController - erp4/whtransfer - 진입");
 		String url="";
