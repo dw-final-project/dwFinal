@@ -49,9 +49,13 @@ public class QualityController {
 	private QualityService qualityService;
 	
 	@RequestMapping("/quality")
-	public ModelAndView qualityMain(HttpSession session,ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException {
-		
-		String url = "jihwan/qulityMain.page";
+	public ModelAndView qualityMain(String mymenu, HttpSession session,ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException {
+		String url= "";
+		if(mymenu == null) {
+			url="jihwan/qulityMain.page";
+		} else {
+			url="jihwan/qulityMain.mymenu";
+		}
 		System.out.println("emp session c_no : " + session.getAttribute("c_no").toString());
 		String c_no = session.getAttribute("c_no").toString();
 		Map<String, Object> dataMap = qualityService.selectQualityList(cri,c_no);

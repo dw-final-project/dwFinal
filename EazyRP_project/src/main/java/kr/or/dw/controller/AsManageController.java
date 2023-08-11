@@ -31,8 +31,13 @@ public class AsManageController {
 	private AsService asService;
 	
 	@RequestMapping("/as")
-	public ModelAndView as(ModelAndView mnv, String mcode, SearchCriteria cri ) throws Exception {
-		String url = "/as/asMain.page";
+	public ModelAndView as(String mymenu, ModelAndView mnv, String mcode, SearchCriteria cri ) throws Exception {
+		String url="";
+    	if(mymenu == null) {
+			url="/as/asMain.page";
+		} else {
+			url="/as/asMain.mymenu";
+		}
 		
 		Map<String, Object> dataMap = asService.selectAsList(cri);
 		

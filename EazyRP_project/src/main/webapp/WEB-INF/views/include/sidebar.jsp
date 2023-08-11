@@ -23,20 +23,25 @@
 		</div>
 	</c:forEach>
 </nav>
-
-<div id="menutitle" style="margin-top: 20px; font-size: 25px; font-weight: 400; display: inline-block;"></div>
-<c:set var="chkVal">나만의 메뉴 등록 </c:set>
-<c:forEach var="myMenu" items="${myMenuList}">
-	<c:if test="${myMenu.MURL eq murl}">
-		<c:set var="chk">checked</c:set>
-		<c:set var="chkVal">나만의 메뉴 삭제 </c:set>
+<c:if test="${mcode ne 'M020400' && mcode ne 'M030600' && mcode ne 'M040100' && mcode ne 'M020401' && mcode ne 'M040101' && mcode ne 'M030601' && mcode ne 'M020000' && mcode ne 'M030000' && mcode ne 'M040000' && mcode ne 'M040102'&& mcode ne 'M030602' && mcode ne 'M020402'}">
+<div style="margin: 20px 0px 0px 17%;">
+	<c:set var="chkVal">나만의 메뉴 등록 </c:set>
+	<c:set var="star">1</c:set>
+	<c:forEach var="myMenu" items="${myMenuList}">
+		<c:if test="${myMenu.MURL eq murl}">
+			<c:set var="chkVal">나만의 메뉴 해제 </c:set>
+			<c:set var="star">2</c:set>
+		</c:if>
+	</c:forEach> 
+	<c:if test="${not empty loginUser}">	
+		<a href="#" id="myMenuChk" name="myMenuChk" style="" >
+		<img src="<%=request.getContextPath() %>/resources/img/${star }.png" style="width: 30px;">
+		</a>
+		<a id="myMenuBtn" href="#" style="color: black; font-size: 0.8em;">${chkVal } </a>
+		<input id="chkInput" type="hidden" value="${chk }">
 	</c:if>
-</c:forEach> 
-<c:if test="${not empty loginUser}">	
-	<a id="myMenuBtn" href="#">${chkVal } </a><input id="myMenuChk" type="checkbox" name="myMenuChk" value="o" ${chk }>
-	<input id="chkInput" type="hidden" value="${chk }">
+</div>
 </c:if>
-	
 <script>
 	$(function () {
 		let micon = sessionStorage.getItem("micon");
@@ -85,6 +90,7 @@
 					$('#myMenuChk').prop('checked',false);
 					$('#chkInput').val("");
 					$('#myMenuBtn').text("나만의 메뉴 등록 ");
+					$('#myMenuChk').css("color", "yellow");
 				},
 				error : function(error){
 					alert("실패 ㅠㅠ");
@@ -101,6 +107,7 @@
 					$('#myMenuChk').prop('checked',true);
 					$('#chkInput').val("checked")
 					$('#myMenuBtn').text("나만의 메뉴 해제 ");
+					$('#myMenuChk').css("color", "gray");
 				},
 				error : function(error){
 					alert("실패ㅠㅠ");
