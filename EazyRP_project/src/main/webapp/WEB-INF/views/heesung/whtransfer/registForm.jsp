@@ -129,7 +129,7 @@
 						<input type="text" id="pr_name0" class="pr_names" name="pr_name" style="width: 100%;" value="" readonly>
 					</td>
 					<td>
-						<input type="text" id="possible_quantity0" name="possible_quantity" class="pr_names" style="width: 100%;" value="" readonly>
+						<input type="text" id="possible_quantity" class="pr_names" name="possible_quantity" style="width: 100%;" value="" readonly>
 					</td>
 					<td>
 						<input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="">
@@ -172,6 +172,8 @@
 			+ '</tr>'
 		);
 	
+		calculateTotalQuantity();
+		
 	});
 	
 	// 제품코드 td 클릭 이벤트
@@ -186,6 +188,7 @@
 	// 제품 삭제 버튼
 	$('#prInput').on('click', '#cancelBtn', function() {
 		$(this).parent('td').parent('tr').remove();
+		calculateTotalQuantity();
 	});
 
 	// 공장 클릭시 목록 열기 이벤트
@@ -213,33 +216,6 @@
 // 		$(this).parent().next().children().val(totalPrice);
 // 	})
 	
-	// 총량
-	$(document).on('change keyup', '.quantity', function(){
-
-	    let sum = Number(0);
-	    let quantityList = $('.quantity').get();
-	    let possible_quantityList = $('#possible_quantity').get();
-	
-	    for(let i = 0; i < quantityList.length; i++){
-	
-	        if (Number($('.quantity').eq(i).val()) > Number($('#possible_quantity0').eq(i).val())) {
-	            // 해당 텍스트를 빨간색으로 변경
-	            $('.quantity').eq(i).css('color', 'red');
-	        } else {
-	            // 수량이 충분한 경우
-	            sum += Number($('.quantity').eq(i).val());
-	
-	            // 해당 텍스트의 색상을 초기값으로 되돌림
-	            $('.quantity').eq(i).css('color', ''); 
-	        }
-	
-	    }
-	
-	    $('#total_quantity').val(sum);
-
-	})
-	
-
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight) {
 		winleft = (screen.width - WinWidth) / 2;
 		wintop = (screen.height - WinHeight) / 2;
@@ -255,15 +231,37 @@
 		window.close();							// 윈도우 창을 닫는다.
 	});
 	
-	// null check
+	// 총량 계산
+	function calculateTotalQuantity() {
+	    let sum = 0;
+	    $('#prInput tr').each(function(index, row) {
+	        let quantity = $(row).find('input[name="quantity"]').val();
+	        let possible_quantity = $(row).find('input[name="possible_quantity"]').val();
+
+	        if (parseInt(quantity) <= parseInt(possible_quantity)) {
+	        	$(row).find('input[name="quantity"]').css('color', '');
+	        	sum += parseInt(quantity);
+	        } else {
+	        	$(row).find('input[name="quantity"]').css('color', 'red');
+	        }
+	    });
+
+	    $('#total_quantity').val(sum);
+	}
+	
+	// 수량 입력 시 총량 계산
+	$(document).on('change keyup', '.quantity', function() {
+	    calculateTotalQuantity();
+	});
+	
+	// 등록 버튼 클릭 시
 	$(document).on('click', '#submitBtn', function() {
-		
-		let form = $('form[role="form"]');
+	    let form = $('form[role="form"]');
 	    let emp_no = $('input[name="emp_no"]').val();
 	    let wh_no = $('input[name="wh_no"]').val();
 	    let wh_no2 = $('input[name="wh_no2"]').val();
 	    let valid = true;
-	
+
 	    if (emp_no == "") {
 	        alert("담당자를 선택하세요.");
 	        valid = false;
@@ -275,34 +273,24 @@
 	        valid = false;
 	    } else {
 	        $('#prInput tr').each(function(index, row) {
-	            let pr_no = $(row).find('.pr_names').val();
-	            let quantity = $(row).find('.quantity').val();
-	            let total_quantity = $(row).find('input[name="total_quantity"]').val();
-	
-	            if (pr_no == "" || quantity == "" || total_quantity == "") {
+	            let pr_no = $(row).find('input[name="pr_no"]').val();
+	            let quantity = $(row).find('input[name="quantity"]').val();
+	            let possible_quantity = $(row).find('input[name="possible_quantity"]').val();
+	    
+	            if (pr_no == "" || quantity == "" || possible_quantity == "") { 
 	                alert("빈칸을 모두 입력하세요.");
+	                valid = false;
+	                return false; // Loop 종료
+	            } else if (parseInt(quantity) > parseInt(possible_quantity)) {
+	                alert('수량이 부족합니다.');
 	                valid = false;
 	                return false; // Loop 종료
 	            }
 	        });
 	    }
-	
-	    let quantityList = $('.quantity').get();
-	    let possible_quantityList = $('#possible_quantity').get();
-	
-	    for(let i = 0; i < quantityList.length; i++){
-	
-	        if (Number($('.quantity').eq(i).val()) > Number($('#possible_quantity0').eq(i).val())) {
-				alert('수량이 부족합니다.');
-				valid = false;
-				return;
-	        } else {
-	             valid = true;
-	        }
-	
-	    }
-	    
+
 	    if (valid) {
+	        alert('전송합니다.');
 	        form.submit();
 	    }
 	});
