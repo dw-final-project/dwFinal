@@ -93,7 +93,7 @@
         </tr>
         <tr>
             <td align="center">출하 일자</td>
-            <td><input type="date" name="shipdate" value=""></td>
+            <td><input type="date" id="dateInput" name="shipdate" value=""></td>
         </tr>
        
     </table>
@@ -216,6 +216,12 @@
 				return;
 			}
 		}
+		
+		if($('#dateInput').val() == '' ){
+			alert('출하일자를 입력해주세요!');
+			return;
+		}
+			
 				
 		$('form[role="form"]').submit();
 		

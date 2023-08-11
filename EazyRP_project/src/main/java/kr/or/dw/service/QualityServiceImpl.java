@@ -123,4 +123,13 @@ public class QualityServiceImpl implements QualityService{
 		return qv;
 	}
 	
+	@Transactional
+	@Override
+	public void qcRemove(int qc_no) throws SQLException {
+		qualityDAO.deleteQc(qc_no);
+		
+		qualityDAO.deleteUpdateQc(qc_no);
+		
+	}
+	
 }

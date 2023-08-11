@@ -191,7 +191,7 @@ public class QualityController {
 	
 	
 	@RequestMapping("/qcmodifyForm")
-	public void modifyQc (@RequestParam("files")MultipartFile multi,String fileName,@DateTimeFormat(pattern="yyyy-MM-dd") Date sys_regdate, String[] pr_delete, String progress, int qc_no, int[] qcdetail_no,int emp_no, String[] pr_no, int[] qauntity, String[] content, HttpServletResponse res, HttpSession session ) throws SQLException, IOException {
+	public void modifyQc (@RequestParam("files")MultipartFile multi,String fileName,@DateTimeFormat(pattern="yyyy-MM-dd") Date sys_regdate, String[] pr_delete, String progress, int qc_no, int[] qcdetail_no,int emp_no, String[] pr_no, int[] quantity, String[] content, HttpServletResponse res, HttpSession session ) throws SQLException, IOException {
 		
 		String empno = session.getAttribute("emp_no").toString();
 		List<QualityVO> modify = new ArrayList<QualityVO>();
@@ -243,6 +243,7 @@ public class QualityController {
 			qv2.setQc_no(qc_no);
 			qv2.setQcdetail_no(qcdetail_no[i]);
 			qv2.setProgress(progress);
+			qv2.setQuantity(quantity[i]);
 			
 			modify.add(qv2);
 		}
@@ -261,7 +262,17 @@ public class QualityController {
 		
 		}
 	 
-	  	
+	  	@RequestMapping("qcremove")
+	  	public void qcRemove (HttpServletResponse res, int qc_no) throws SQLException, IOException{
+	  		
+	  		qualityService.qcRemove(qc_no);
+	  		res.setContentType("text/html; charset=utf-8");
+			PrintWriter out = res.getWriter();
+			out.println("<script>");
+			out.println("alert('삭제되었습니다.')");
+			out.println("window.opener.location.reload(true); window.close();");
+			out.println("</script>");
+	  	}
 	  
 	  
 }	

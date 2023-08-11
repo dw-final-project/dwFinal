@@ -50,18 +50,20 @@
 								<th style="text-align: center;">등록일자</th>
 								<th style="text-align: center;">사원이름</th>
 								<th style="text-align: center;">품목명</th>
+								<th style="text-align: center;">규격</th>
 								<th style="text-align: center;">총 수량</th>
 								<th style="text-align: center;">진행 상태</th>
 							</tr>
 							<c:forEach items="${siList }" var="si">
 								<tr style="font-size: 1em; text-align: center;">
 									<td><a
-										href="javascript:OpenWindow('siDetail.do?si_no=${si.SI_NO }','출하지시서 조회', 700 ,700);">${si.SI_NO }</a></td>
+										href="javascript:OpenWindow('siDetail.do?si_no=${si.SI_NO }','출하지시서 조회', 600 ,700);">${si.SI_NO }</a></td>
 									<td>${si.WH_NAME }</td>
 									<td><fmt:formatDate value="${si.SYS_REGDATE }"
 											pattern="yyyy-MM-dd"></fmt:formatDate></td>
 									<td>${si.E_NAME}</td>
 									<td>${si.PR_NAME }</td>
+									<td>${si.PR_ST }</td>
 									<td>${si.QUANTITY }</td>
 									<td>${si.PROGRESS }</td>
 								</tr>
