@@ -39,7 +39,11 @@
 								</tr>
 								<c:forEach items="${asList}" var="as" >								
 									<tr>
-										<td style="text-align: center;">${as.AS_NO }</td>
+										<td style="text-align: center;">
+											<a id="asDetailBtn" href="#" onclick="detailOpenWindow('/asmanage/detail.do?as_no=${as.AS_NO }', 'A/S 상세정보', 500, 600)">
+												${as.AS_NO }
+											</a>
+										</td>
 										<td style="text-align: center;">${as.E_NAME }</td>
 										<td style="text-align: center;"><fmt:formatDate value="${as.SYS_REGDATE }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 										<td style="text-align: center;"><fmt:formatDate value="${as.COMPLDATE }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
@@ -55,7 +59,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/asmanage/registForm.do', '쪽지쓰기', 700, 1000)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="registOpenWindow('/asmanage/registForm.do', '쪽지쓰기', 700, 1000)"
 					style="width: 100px; margin: 20px; align-self: center;">A/S 접수</button>
 
 				</div>
@@ -71,12 +75,7 @@
 		$('#searchForm2').submit();
 	})
 	
-	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight, index){
-		var selectedElement = document.getElementById("read_"+index);
-		  if (selectedElement) {
-		    selectedElement.style.color = "blue";
-		    selectedElement.innerHTML = "읽음";
-		  }
+	function detailOpenWindow(UrlStr, WinTitle, WinWidth, WinHeight, index){
 		winleft = (screen.width - WinWidth) / 2;
 		wintop = (screen.height - WinHeight) / 2;
 		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
@@ -85,7 +84,7 @@
 		win.focus();
 	};
 	
-	function OpenWindow2(UrlStr, WinTitle, WinWidth, WinHeight){
+	function registOpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 		winleft = (screen.width - WinWidth) / 2;
 		wintop = (screen.height - WinHeight) / 2;
 		var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "

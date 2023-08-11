@@ -48,6 +48,12 @@
 		#{sys_reg}
 	</insert>
 
+	<select id="selectAsDetail" resultType="Map">
+		SELECT a.*, e.e_name e_name
+		  FROM asmanage a, emp e
+		 WHERE a.emp_no = e.emp_no	
+		   AND a.as_no = #{as_no}
+	</select>
 
 <!-- 	<select id="selectDraft" resultType="draft"> -->
 <!-- 		SELECT d.*, e.e_name e_name -->

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import kr.or.dw.command.PageMaker;
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.dao.AsDAO;
+import kr.or.dw.vo.AsVO;
 
 
 
@@ -38,6 +39,22 @@ public class AsServiceImpl implements AsService {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put("asList", asList);
 		dataMap.put("pageMaker", pageMaker);
+		
+		return dataMap;
+	}
+
+	@Override
+	public void registAs(AsVO asVO) throws SQLException {
+		asDAO.asRegist(asVO);
+		
+	}
+
+	@Override
+	public Map<String, Object> selectAsDetail(String as_no) throws SQLException {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> as = asDAO.selectAsDetail(as_no);
+		
+		dataMap.put("as", as);
 		
 		return dataMap;
 	}
