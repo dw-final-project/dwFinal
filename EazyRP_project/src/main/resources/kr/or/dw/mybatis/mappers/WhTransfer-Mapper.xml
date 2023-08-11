@@ -18,21 +18,47 @@
 		</if>
 	</sql>
 	
-	<select id="selectSearchWhTransferList" resultType="whTransfer">
-		SELECT	*
-		FROM	whtransfer
-		WHERE	1=1
-		AND		c_no = #{c_no}
+	<select id="selectSearchWhTransferList" resultType="Map">
+		SELECT wht.*, pr.pr_name, wa.wh_name wh_name, wa2.wh_name wh_name2
+		FROM WHTRANSFER wht, wht_detail whtd, product pr, warehouse wa, warehouse wa2
+		WHERE 1=1
+		AND wht.wt_no = whtd.wt_no
+		AND whtd.pr_no = pr.pr_no
+		AND pr.wh_no = wa.wh_no
+		AND wht.wh_no = wa.wh_no
+		AND wht.wh_no2 = wa2.wh_no
+		AND wht.c_no = #{c_no}
 		<include refid="search"></include>
-		ORDER BY sys_regdate desc
+		ORDER BY wht.sys_regdate desc
 	</select>
 	
 	<select id="selectSearchWhTransferListCount" resultType="int">
-		SELECT COUNT(*)
+		SELECT 	COUNT(*)
 		FROM	whtransfer
 		WHERE	1=1
 		AND		c_no = #{c_no}
 		<include refid="search"></include>
 	</select>
+	
+	<!-- 보내는 창고의 재고 조회 -->
+	<select id="whtSelectWareHouseList" resultType="Map">
+		SELECT	*
+		FROM	product
+		WHERE	1=1
+		AND		wh_no = #{wh_no}
+		AND		c_no = #{c_no}
+		<include refid="search"></include>
+		ORDER BY pr_no desc
+	</select>
+	
+	<select id="whtSelectWareHouseListCount" resultType="int">
+		SELECT 	COUNT(*)
+		FROM	product
+		WHERE	1=1
+		AND		wh_no = #{wh_no}
+		AND		c_no = #{c_no}
+		<include refid="search"></include>
+	</select>
+	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 
 </mapper>

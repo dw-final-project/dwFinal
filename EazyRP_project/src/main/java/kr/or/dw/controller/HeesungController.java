@@ -109,16 +109,36 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	
 	}
 	
+	@RequestMapping("/whtSelectWareHouse")	// 창고이동 레지스트, 디테일 페이지에서 선택한 보내는 창고의 재고를 조회할 수 있다.
+	public ModelAndView whtSelectWareHouse(ModelAndView mnv, SearchCriteria cri, String wh_no, HttpSession session) throws SQLException {
+		
+		System.out.println("erp4/whtSelectWareHouse - 진입");
+		
+		String url = "heesung/whtSelectWareHouse.open";
+		
+		String c_no = session.getAttribute("c_no").toString();
+		Map<String, Object> map = new HashMap<>();
+		map.put("cri", cri);
+		map.put("c_no", c_no);
+		map.put("wh_no", wh_no);
+		Map<String, Object> dataMap = whTransferService.whtSelectWareHouse(map);
+		
+		mnv.setViewName(url);
+		mnv.addAllObjects(dataMap);
+		return mnv;
+	}
+	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////// process
 	
 	@RequestMapping("/process")
-	public ModelAndView processMain(String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
+	public ModelAndView processMain(String mcode, String murl, ModelAndView mnv, SearchCriteria cri) throws SQLException {
 		String url = "heesung/process/main.page";
 			
 		// 공정관리 목록 조회
 		Map<String, Object> dataMap = processService.selectProcessList(cri);
 		
 		mnv.addObject("mcode", mcode);
+		mnv.addObject("murl", murl);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
 
@@ -206,7 +226,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////// wh(생산입고)
 	
 	@RequestMapping("/wh")
-	public ModelAndView wh(String mcode, ModelAndView mnv, SearchCriteria cri, HttpSession session) throws SQLException {
+	public ModelAndView wh(String mcode,String murl , ModelAndView mnv, SearchCriteria cri, HttpSession session) throws SQLException {
 		
 		String url = "heesung/wh/main.page";
 		
@@ -223,6 +243,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		Map<String, Object> dataMap = whService.selectWhList(map);
 		
 		mnv.addObject("mcode", mcode);
+		mnv.addObject("murl", murl);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
 		
@@ -413,7 +434,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////workorder(작업지시서)
 	
 	@RequestMapping("/workorder")
-	public ModelAndView workorder(ModelAndView mnv, SearchCriteria cri, String mcode, HttpSession session) throws SQLException {
+	public ModelAndView workorder(ModelAndView mnv, SearchCriteria cri,String murl , String mcode, HttpSession session) throws SQLException {
 		
 		System.out.println("HeesungController - erp4/workorder 진입");
 		
@@ -427,6 +448,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		Map<String, Object> dataMap = workOrderService.selectWorkOrderList(map);
 		
 		mnv.setViewName(url);
+		mnv.addObject("murl", murl);
 		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(dataMap);
 		
@@ -585,7 +607,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////whTransfer
 	
 	@RequestMapping("whtransfer")
-	public ModelAndView whTransfer(ModelAndView mnv, SearchCriteria cri, String mcode, HttpSession session) throws SQLException {
+	public ModelAndView whTransfer(ModelAndView mnv, SearchCriteria cri,String murl , String mcode, HttpSession session) throws SQLException {
 		
 		System.out.println("HeesungController - erp4/whtransfer - 진입");
 		
@@ -600,11 +622,33 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		Map<String, Object> dataMap = whTransferService.selectWhTransferList(map);
 		
 		mnv.addObject("mcode", mcode);
+		mnv.addObject("murl", murl);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
 		
 		return mnv;
 		
+	}
+	
+	@RequestMapping("/whtransfer/registForm")
+	public ModelAndView whTransferRegistForm(ModelAndView mnv, HttpSession session) throws SQLException {
+		
+		int empno = Integer.parseInt(session.getAttribute("emp_no").toString());
+		String ename = estimateService.ename(empno);
+		
+		String c_no = session.getAttribute("c_no").toString();
+		String c_name = session.getAttribute("c_name").toString();
+		
+		String url = "heesung/whtransfer/registForm.open";
+		
+		mnv.setViewName(url);
+		mnv.addObject("empno", empno);	// 사원번호
+		mnv.addObject("ename", ename);	// 사원이름
+		mnv.addObject("c_no", c_no);	// 회사이름
+		mnv.addObject("c_name", c_name);	// 회사번호
+		
+		return mnv;
+
 	}
 	
 }
