@@ -7,13 +7,13 @@
 			AND E_NAME LIKE '%' || #{cri.keyword} || '%'
 		</if>
 		<if test="cri.searchType == 'b'.toString()">
-			AND EP_NAME LIKE '%' || #{cri.keyword} || '%'
+			AND PR_NAME LIKE '%' || #{cri.keyword} || '%'
 		</if>
 		<if test="cri.searchType == 'all'.toString()">
 			AND (
 			E_NAME LIKE '%' || #{cri.keyword} || '%'
 			OR
-			EP_NAME LIKE '%' || #{cri.keyword} || '%'
+			PR_NAME LIKE '%' || #{cri.keyword} || '%'
 			)
 		</if>
 	</sql>
@@ -37,17 +37,33 @@
 	 AND qc.QC_NO = qd.QC_NO 
 	 AND qc.EMP_NO = e.EMP_NO 
 	 AND qd.PR_NO = p.PR_NO 
+	 <include refid="qcsearch"/>
 	 GROUP BY qc.QC_NO 
 	 ORDER BY qc_no DESC
 	</select>
 
 	<select id="selectQualityListCount" resultType="int">
 		SELECT COUNT(*)
-		FROM qc qc,qcdetail qd,PRODUCT p ,EMP e
-		WHERE 1=1
-		AND qc.QC_NO = qd.QC_NO 
-		AND qc.EMP_NO = e.EMP_NO 
-		AND qd.PR_NO = p.PR_NO 
+		  FROM (SELECT qc.QC_NO ,
+	 		MAX((SELECT pr_name FROM PRODUCT WHERE pr_no = p.PR_NO)) PR_NAME 
+	 		,MAX((SELECT e_name FROM emp WHERE emp_no = e.EMP_NO)) e_name
+	 		,SUM(qd.QUANTITY) QUANTITY 
+	 		,MAX(qc.PROGRESS) progress
+	 		,CASE WHEN count(qd.PR_NO) <![CDATA[ > ]]> 1
+		  		THEN MAX((SELECT pr_name FROM product WHERE pr_no = qd.pr_no)) || ' 외 ' || (count(qd.PR_NO)-1)  || '건'
+		  		ELSE MAX((SELECT pr_name FROM product WHERE pr_no = qd.pr_no))
+			END pr_names
+			,MAX(qc.files) files
+			,MAX(qc.realfilename) realFileName
+			,MAX(e.emp_no) EMP_NO
+	 FROM qc qc, QCDETAIL qd , EMP e , PRODUCT p 
+	 WHERE 1=1
+	 AND qc.QC_NO = qd.QC_NO 
+	 AND qc.EMP_NO = e.EMP_NO 
+	 AND qd.PR_NO = p.PR_NO 
+	 <include refid="qcsearch"/>
+	 GROUP BY qc.QC_NO 
+	 ORDER BY qc_no DESC)
 	</select>
 
 	<select id="selectQcDetail" resultType="Map">
@@ -123,7 +139,7 @@
 			#{emp_no},
 			sysdate,
 			#{emp_no},
-			'전수중',
+			#{progress},
 			'Y',
 			#{files},
 			#{realFileName}
@@ -148,7 +164,7 @@
 	</insert>
 	
 	<update id="modifyQc">
-		UDPATE qc SET emp_no = #{emp_no},
+		UPDATE qc SET emp_no = #{emp_no},
 					  sys_updatedate = sysdate,
 					  progress = #{progress},
 					  sys_up = #{emp_no},
@@ -196,5 +212,14 @@
 		FROM qc
 		WHERE qc_no = #{qc_no}
 	</select>
+	
+	<delete id="deleteQc">
+		DELETE FROM qcdetail
+			WHERE qc_no = #{qc_no}
+	</delete>
+	
+	<update id="deleteUpdateQc">
+		UPDATE qc SET ENABLED = 'N' WHERE qc_no = #{qc_no}
+	</update>
 	
 </mapper>

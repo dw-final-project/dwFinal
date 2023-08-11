@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import kr.or.dw.command.SearchCriteria;
@@ -13,9 +14,9 @@ import kr.or.dw.vo.QualityVO;
 @Mapper
 public interface QualityDAO {
 
-	List<Map<String, Object>> selectQualityList(SearchCriteria cri, RowBounds rowBounds, String c_no) throws SQLException;
+	List<Map<String, Object>> selectQualityList(@Param("cri") SearchCriteria cri, RowBounds rowBounds, @Param("c_no") String c_no) throws SQLException;
 
-	int selectQualityListCount(SearchCriteria cri, String c_no) throws SQLException;
+	int selectQualityListCount(@Param("cri") SearchCriteria cri, @Param("c_no") String c_no) throws SQLException;
 
 	Map<String, Object> selectQcDetail(int qc_no) throws SQLException;
 
@@ -34,6 +35,10 @@ public interface QualityDAO {
 	void deleteQcDetail(QualityVO qv) throws SQLException;
 
 	QualityVO qcFileDown(int qc_no) throws SQLException;
+
+	void deleteQc(int qc_no) throws SQLException;
+
+	void deleteUpdateQc(int qc_no) throws SQLException;
 	
 	
 	

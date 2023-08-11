@@ -191,11 +191,10 @@ window.onload = function(){
 	
 	
 	
-
 	$('button#removeBtn').on('click', function(){
 		if(confirm("정말 삭제하시겠습니까?")){
 			formObj.attr({
-				'action' : 'siremove',
+				'action' : 'qcremove',
 				'method' : 'post' 
 			});
 			formObj.submit();

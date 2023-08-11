@@ -11,13 +11,13 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">품질관리</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/erp4/Quality.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/erp5/quality.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
-								<option value="a" ${searchType eq 'a' ? 'selected' : '' }>작성자</option>
-								<option value="b" ${searchType eq 'b' ? 'selected' : '' }>제품</option>
+								<option value="all" ${cri.searchType eq 'all' ? 'selected' : '' }>전  체</option>
+								<option value="a" ${cri.searchType eq 'a' ? 'selected' : '' }>담당자</option>
+								<option value="b" ${cri.searchType eq 'b' ? 'selected' : '' }>제품</option>
 							</select>
-							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
+							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${cri.keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
 								<button class="btn btn-primary" type="button" id="searchBtn">
 									<i class="fa fa-fw fa-search" style="font-size: 0.8em; padding: 0px;"></i>
@@ -39,7 +39,7 @@
 								</tr>
 									<c:forEach items="${qualityList }" var="quality" varStatus="loop">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('qualityDetail.do?qc_no=${quality.QC_NO}','품질 상세보기', 500, 500);">${quality.QC_NO }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('qualityDetail.do?qc_no=${quality.QC_NO}','품질 상세보기', 600, 600);">${quality.QC_NO }</a></td>
 										<td style="text-align: center;">${quality.E_NAME }</td>
 										<td style="text-align: center;"><a id="aTag" href=""></a>${quality.PR_NAMES }</td>
 										<td style="text-align: center;">${quality.QUANTITY }개</td>
@@ -55,7 +55,7 @@
 					</div>
 					</div>
 						<div style="display: flex; align-items: end; justify-content: end;">
-								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('qc_regist.do', '공제등록', 500, 500)"
+								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('qc_regist.do', '품질', 600, 600)"
 								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">품질 등록</button>
 						</div>
 			</div>
