@@ -1,8 +1,14 @@
 package kr.or.dw.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.service.AsService;
 import kr.or.dw.vo.AsVO;
+import kr.or.dw.vo.ProcessVO;
 
 
 @Controller
@@ -39,10 +46,35 @@ public class AsManageController {
 	
 	@RequestMapping("/registForm")
 	public ModelAndView asRegist (ModelAndView mnv, HttpSession session) throws Exception{
-		String url = "/as/registForm.open";
-		
-		
+		String url = "/as/asRegistForm.open";
+
 		mnv.setViewName(url);
 		return mnv;
 	}
+
+	@RequestMapping("/regist")
+	public void asRegist(AsVO asVO, HttpServletRequest req, HttpServletResponse res) throws SQLException, IOException {
+
+		
+		asService.registAs(asVO);
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 등록되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
+	
+	@RequestMapping("/detail")
+	public ModelAndView detail (String as_no ,ModelAndView mnv, HttpSession session) throws Exception{
+		String url = "/as/asDetail.open";
+		
+		Map<String, Object> dataMap = asService.selectAsDetail(as_no);
+		
+		mnv.addAllObjects(dataMap);
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+	
 }
