@@ -134,8 +134,13 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////// process
 	
 	@RequestMapping("/process")
-	public ModelAndView processMain(String mcode, String murl, ModelAndView mnv, SearchCriteria cri) throws SQLException {
-		String url = "heesung/process/main.page";
+	public ModelAndView processMain(String murl, String mymenu, String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
+		String url="";
+    	if(mymenu == null) {
+			url="heesung/process/main.page";
+		} else {
+			url="heesung/process/main.mymenu";
+		}
 			
 		// 공정관리 목록 조회
 		Map<String, Object> dataMap = processService.selectProcessList(cri);
@@ -229,9 +234,14 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////// wh(생산입고)
 	
 	@RequestMapping("/wh")
-	public ModelAndView wh(String mcode,String murl , ModelAndView mnv, SearchCriteria cri, HttpSession session) throws SQLException {
+	public ModelAndView wh(String murl, String mymenu, String mcode, ModelAndView mnv, SearchCriteria cri, HttpSession session) throws SQLException {
 		
-		String url = "heesung/wh/main.page";
+		String url="";
+    	if(mymenu == null) {
+			url="heesung/wh/main.page";
+		} else {
+			url="heesung/wh/main.mymenu";
+		}
 		
 		String c_no = session.getAttribute("c_no").toString();
 		
@@ -437,12 +447,17 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////workorder(작업지시서)
 	
 	@RequestMapping("/workorder")
-	public ModelAndView workorder(ModelAndView mnv, SearchCriteria cri,String murl , String mcode, HttpSession session) throws SQLException {
+	public ModelAndView workorder(String murl, String mymenu,ModelAndView mnv, SearchCriteria cri, String mcode, HttpSession session) throws SQLException {
 		
 		System.out.println("HeesungController - erp4/workorder 진입");
 		
 		// 페이지 정보와 작업지시서의 정보를 가지고 url에 반환할것이다 url에서는 게시판 형태로 사용자에게 보여준다.
-		String url = "heesung/workorder/main.page";
+		String url="";
+    	if(mymenu == null) {
+			url="heesung/workorder/main.page";
+		} else {
+			url="heesung/workorder/main.mymenu";
+		}
 		
 		String c_no = session.getAttribute("c_no").toString();
 		Map<String, Object> map = new HashMap<>();
@@ -705,7 +720,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	}
 	
 	@RequestMapping("/error")
-	public ModelAndView error(ModelAndView mnv, String mcode, SearchCriteria2 cri2, SearchCriteria cri, HttpSession session) throws SQLException {
+	public ModelAndView error(String mymenu, ModelAndView mnv, String mcode, SearchCriteria2 cri2, SearchCriteria cri, HttpSession session) throws SQLException {
 		String c_no = (String) session.getAttribute("c_no");
 		List<ErrorVO> error = new ArrayList<>();
 		if(cri2.getStartDate().equals("")) {
@@ -724,8 +739,13 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		for(int i = 0; i < error.size(); i++) {
 			total += error.get(i).getAmount();
 		}
-		
-		mnv.setViewName("heesung/wh/errorList.page");
+		String url="";
+    	if(mymenu == null) {
+			url="heesung/wh/errorList.page";
+		} else {
+			url="heesung/wh/errorList.mymenu";
+		}
+		mnv.setViewName(url);
 		mnv.addObject("total", total);
 		mnv.addObject("cri2", cri2);
 		mnv.addObject("error", error);
@@ -736,11 +756,15 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////whTransfer
 	
 	@RequestMapping("whtransfer")
-	public ModelAndView whTransfer(ModelAndView mnv, SearchCriteria cri,String murl , String mcode, HttpSession session) throws SQLException {
+	public ModelAndView whTransfer(String murl, String mymenu, ModelAndView mnv, SearchCriteria cri, String mcode, HttpSession session) throws SQLException {
 		
 		System.out.println("HeesungController - erp4/whtransfer - 진입");
-		
-		String url = "heesung/whtransfer/main.page";
+		String url="";
+    	if(mymenu == null) {
+			url="heesung/whtransfer/main.page";
+		} else {
+			url="heesung/whtransfer/main.mymenu";
+		}
 		
 		String c_no = session.getAttribute("c_no").toString();
 		

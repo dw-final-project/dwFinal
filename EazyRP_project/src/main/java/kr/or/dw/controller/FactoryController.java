@@ -50,8 +50,13 @@ public class FactoryController {
 	private BasicFactoryService basicFactoryService;
 	
 	@RequestMapping("/factory")
-	public ModelAndView factoryMain(ModelAndView mnv, String mcode, String murl, SearchCriteria cri) throws SQLException{
-		String url = "inventory/basic/factory.page";
+	public ModelAndView factoryMain(String mymenu, ModelAndView mnv, String mcode, String murl, SearchCriteria cri) throws SQLException{
+		String url="";
+    	if(mymenu == null) {
+			url="inventory/basic/factory.page";
+		} else {
+			url="inventory/basic/factory.mymenu";
+		}
 		Map<String, Object> dataMap = basicFactoryService.selectFactoryList(cri);
 		mnv.addObject("mcode", mcode);
 		mnv.addObject("murl", murl);

@@ -66,8 +66,13 @@ public class BusinessController {
 	private MyMenuService mymenuService;
 	
 	@RequestMapping("/estimate")
-	public ModelAndView main(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException {
-		String url = "jihwan/main.page";
+	public ModelAndView main(String mymenu, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException {
+		String url="";
+    	if(mymenu == null) {
+			url="jihwan/main.page";
+		} else {
+			url="jihwan/main.mymenu";
+		}
 		
 		Map<String, Object> dataMap = estimateService.selectEstimList(cri);
 		
@@ -390,8 +395,14 @@ public class BusinessController {
 //	----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/siSelect")
-	public ModelAndView siSel(ModelAndView mnv ,String mcode, SearchCriteria cri) throws SQLException {
-		String url = "jihwan/siSelect.page";
+	public ModelAndView siSel(String mymenu, ModelAndView mnv ,String mcode, SearchCriteria cri) throws SQLException {
+		String url="";
+    	if(mymenu == null) {
+			url="jihwan/siSelect.page";
+		} else {
+			url="jihwan/siSelect.mymenu";
+		}
+    	
 		Map<String, Object> dataMap = siService.selectSiList(cri);
 		mnv.setViewName(url);
 		mnv.addObject("cri",cri);

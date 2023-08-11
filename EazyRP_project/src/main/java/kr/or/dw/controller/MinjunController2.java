@@ -70,8 +70,13 @@ public class MinjunController2 {
 	// EMP(직원) CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/emp")
-	public ModelAndView empMain(ModelAndView mnv, String mcode, EmpVO empVO, SearchCriteria cri, HttpSession session) throws SQLException {
-		String url = "/minjun2/emp.page";
+	public ModelAndView empMain(String mymenu, ModelAndView mnv, String mcode, EmpVO empVO, SearchCriteria cri, HttpSession session) throws SQLException {
+		String url = "";
+    	if(mymenu == null) {
+			url="/minjun2/emp.page";
+		} else {
+			url="/minjun2/emp.mymenu";
+		}
 		System.out.println("emp session c_no : " + session.getAttribute("c_no").toString());
 		String c_no = session.getAttribute("c_no").toString();
 		Map<String, Object> dataMap = empsalService.selectEmpList(cri, c_no);
@@ -382,8 +387,13 @@ public class MinjunController2 {
 	// Extrapay(수당) CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/extrapay")
-	public ModelAndView extrapayMain(ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
-		String url = "/minjun2/extrapay.page";
+	public ModelAndView extrapayMain(String mymenu, ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
+		String url = "";
+    	if(mymenu == null) {
+			url="/minjun2/extrapay.page";
+		} else {
+			url="/minjun2/extrapay.mymenu";
+		}
 		
 		Map<String, Object> dataMap = empsalService.selectExtrapayList(cri);
 		
@@ -458,8 +468,13 @@ public class MinjunController2 {
 	// DEDUCTION(공제) CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/deduction")
-	public ModelAndView deductionMain(ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
-		String url = "/minjun2/deduction.page";
+	public ModelAndView deductionMain(String mymenu, ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
+		String url = "";
+    	if(mymenu == null) {
+			url="/minjun2/deduction.page";
+		} else {
+			url="/minjun2/deduction.mymenu";
+		}
 		
 		Map<String, Object> dataMap = empsalService.selectDeductionList(cri);
 		
@@ -534,8 +549,13 @@ public class MinjunController2 {
 	// DEPT(부서) CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/dept")
-	public ModelAndView deptMain(ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
-		String url = "/minjun2/dept.page";
+	public ModelAndView deptMain(String mymenu, ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
+		String url = "";
+    	if(mymenu == null) {
+			url="/minjun2/dept.page";
+		} else {
+			url="/minjun2/dept.mymenu";
+		}
 		
 		Map<String, Object> dataMap = empsalService.selectdeptList(cri);
 		
@@ -611,8 +631,13 @@ public class MinjunController2 {
 	// WORK(근태) CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/work")
-	public ModelAndView workMain(ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
-		String url = "/minjun2/work.page";
+	public ModelAndView workMain(String mymenu, ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
+		String url = "";
+    	if(mymenu == null) {
+			url="/minjun2/work.page";
+		} else {
+			url="/minjun2/work.mymenu";
+		}
 		String c_no = (String) session.getAttribute("c_no");
 		System.out.println("work c_no : " + c_no);
 		Map<String, Object> dataMap = empsalService.selectworkList(cri, c_no);
@@ -700,8 +725,13 @@ public class MinjunController2 {
 	// SAL(급여) CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/sal")
-	public ModelAndView salMain (ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
+	public ModelAndView salMain (String mymenu, ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
 		String url = "/minjun2/sal_regist.page";
+    	if(mymenu == null) {
+			url="/minjun2/sal_regist.page";
+		} else {
+			url="/minjun2/sal_regist.mymenu";
+		}
 		String c_no = (String) session.getAttribute("c_no");
 		
 		Map<String, Object> dataMap = empsalService.selectExtrapayList(cri);

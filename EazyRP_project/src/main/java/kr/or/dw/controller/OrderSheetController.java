@@ -34,8 +34,13 @@ public class OrderSheetController {
 	private static final Logger logger = LoggerFactory.getLogger(OrderSheetController.class);
 	
 	@RequestMapping("/sale")
-	public ModelAndView sale(ModelAndView mnv, String mcode, HttpSession session, SearchCriteria cri) throws SQLException  {
-		String url = "jihwan/productSale.page";
+	public ModelAndView sale(String mymenu, ModelAndView mnv, String mcode, HttpSession session, SearchCriteria cri) throws SQLException  {
+		String url = "";
+    	if(mymenu == null) {
+			url="jihwan/productSale.page";
+		} else {
+			url="jihwan/productSale.mymenu";
+		}
 		String c_no = (String) session.getAttribute("c_no");
 		Map<String, Object> dataMap = new HashMap<>();
 		Map<String, Object> map = new HashMap<>();
