@@ -48,15 +48,13 @@
 								</c:if>
 								<c:forEach items="${whtList}" var="wht" varStatus="loop">
 								<tr>
-									<td id="read_${loop.index}" style="text-align: center; height:80%; font-weight:bold; font-size: 0.6em; color: ${note.readable == 'N' ? 'red' : 'blue' };">
-									${note.readable == 'N' ? '안읽음' : '읽음' }
-									</td>
-									<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/mymenu/detail.do?n_no=${note.n_no }&send=N', '쪽지보기', 700, 1000, '${loop.index}')">${note.title }</a></td>
-									<td style="text-align: center;">${note.callerName }</td>
-									<td style="text-align: center;">${note.c_cname }</td>
-									<td style="text-align: center;">${note.files == "" || note.files == null ? "N" : "Y" }</td>
-									<td style="text-align: center;">${note.senddate }</td>
-									<td style="text-align: center;">${note.senddate }</td>
+									<td style="text-align: center;">${wht.SYS_REGDATE }</td>
+									<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/mymenu/detail.do?n_no=${note.n_no }&send=N', '쪽지보기', 700, 1000, '${loop.index}')">${wht.WT_NO }</a></td>
+									<td style="text-align: center;">${wht.WH_NAME }</td>
+									<td style="text-align: center;">${wht.WH_NAME2}</td>
+									<td style="text-align: center;">${wht.PR_NAME}</td>
+									<td style="text-align: center;">${wht.TOTAL_QUANTITY }</td>
+									<td style="text-align: center;">${wht.PROGRESS == '0' ? '대기중' : (wht.PROGRESS == '1' ? '진행중' : '완료')}</td>
 								</tr>
 								</c:forEach>
 							</table>
@@ -67,7 +65,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/mymenu/communication.do', '쪽지쓰기', 700, 1000)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/erp4/whtransfer/registForm.do', '창고이동 등록', 700, 1000)"
 					style="width: 100px; margin: 20px; align-self: center;">등록</button>
 				</div>
 			</div>

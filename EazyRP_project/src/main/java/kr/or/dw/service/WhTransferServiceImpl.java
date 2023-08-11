@@ -23,7 +23,7 @@ public class WhTransferServiceImpl implements WhTransferService{
 	@Override
 	public Map<String, Object> selectWhTransferList(Map<String, Object> map) throws SQLException {
 
-		List<WhTransferVO> whtList = null;
+		List<Map<String, Object>> whtList = null;
 		SearchCriteria cri = (SearchCriteria) map.get("cri");
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
@@ -46,6 +46,34 @@ public class WhTransferServiceImpl implements WhTransferService{
 		
 		return dataMap;
 	
+	}
+
+	@Override
+	public Map<String, Object> whtSelectWareHouse(Map<String, Object> map) throws SQLException {
+	
+		List<Map<String, Object>> whtWareHouseList = null;
+		SearchCriteria cri = (SearchCriteria) map.get("cri");
+		int offset = cri.getPageStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		// 현재 page 번호에 맞는 리스트를 perPageNum 개수 만큼 가져오기
+		whtWareHouseList = whTransferDAO.whtSelectWareHouseList(rowBounds, map);
+		
+		// 전체 board 개수
+		int totalCount = whTransferDAO.whtSelectWareHouseListCount(map);
+		
+		// PageMaker 생성
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("whtWareHouseList", whtWareHouseList);
+		dataMap.put("pageMaker", pageMaker);
+		
+		return dataMap;
+		
 	}
 
 }
