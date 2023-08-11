@@ -26,12 +26,12 @@
 		</c:forEach>
 </nav>
 
-<div id="menutitle"></div>
+<div id="menutitle" style="margin-top: 20px; font-size: 25px; font-weight: 400; display: inline-block;"></div>
 	
 <script>
 	$(function () {
 		let micon = sessionStorage.getItem("micon");
-		$('#menutitle').html(micon);
+		$('#menutitle').html("&nbsp;&nbsp;&nbsp;&nbsp;" + micon);
 		
 	})
 	
