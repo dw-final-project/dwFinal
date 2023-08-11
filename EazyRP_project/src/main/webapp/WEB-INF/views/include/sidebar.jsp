@@ -27,15 +27,17 @@
 <div style="margin: 20px 0px 0px 17%;">
 	<c:set var="chkVal">나만의 메뉴 등록 </c:set>
 	<c:set var="star">1</c:set>
+	<c:set var="chk">1</c:set>
 	<c:forEach var="myMenu" items="${myMenuList}">
 		<c:if test="${myMenu.MURL eq murl}">
 			<c:set var="chkVal">나만의 메뉴 해제 </c:set>
 			<c:set var="star">2</c:set>
+			<c:set var="chk">2</c:set>
 		</c:if>
 	</c:forEach> 
 	<c:if test="${not empty loginUser}">	
 		<a href="#" id="myMenuChk" name="myMenuChk" style="" >
-		<img src="<%=request.getContextPath() %>/resources/img/${star }.png" style="width: 30px;">
+		<img src="<%=request.getContextPath() %>/resources/img/${star }.png" id="img" style="width: 30px;">
 		</a>
 		<a id="myMenuBtn" href="#" style="color: black; font-size: 0.8em;">${chkVal } </a>
 		<input id="chkInput" type="hidden" value="${chk }">
@@ -79,7 +81,7 @@
 		
 
 		
-		if($('#chkInput').val() == "checked"){
+		if($('#chkInput').val() == "2"){
 			$.ajax({
 				url : "<%=request.getContextPath()%>/common/myMenuDelete",
 				type : "post",
@@ -90,7 +92,7 @@
 					$('#myMenuChk').prop('checked',false);
 					$('#chkInput').val("");
 					$('#myMenuBtn').text("나만의 메뉴 등록 ");
-					$('#myMenuChk').css("color", "yellow");
+					$('#img').attr('src', "<%=request.getContextPath() %>/resources/img/1.png")
 				},
 				error : function(error){
 					alert("실패 ㅠㅠ");
@@ -107,7 +109,7 @@
 					$('#myMenuChk').prop('checked',true);
 					$('#chkInput').val("checked")
 					$('#myMenuBtn').text("나만의 메뉴 해제 ");
-					$('#myMenuChk').css("color", "gray");
+					$('#img').attr('src', "<%=request.getContextPath() %>/resources/img/2.png")
 				},
 				error : function(error){
 					alert("실패ㅠㅠ");
