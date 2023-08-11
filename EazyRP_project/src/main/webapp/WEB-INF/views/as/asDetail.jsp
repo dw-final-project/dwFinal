@@ -76,7 +76,7 @@
 	<!-- card footer End -->
 <form role="form" method="post" enctype="multipart/form-data">
 
-		<input type="hidden" name="asNo" value="${as.AS_NO }">
+		<input type="hidden" name="as_no" value="${as.AS_NO }">
 		<table>
 	        <tr>
 	            <td width="40%" align="center"><b>코드번호</b></td>
@@ -127,7 +127,14 @@
 				</td>
 			</tr>
 	    </table>
- 
+ 	<table>
+ 		<tr>
+	        	<td width="40%" align="center"><b>A/S 내용</b></td>
+	        	<td width="100%">
+					<textarea row="5" cols="50" name="content">${as.CONTENT}</textarea>
+	        	</td>
+	        </tr>
+ 	</table>
 </form>
 </body>
 

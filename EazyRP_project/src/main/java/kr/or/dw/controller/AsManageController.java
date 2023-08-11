@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,10 +54,11 @@ public class AsManageController {
 	}
 
 	@RequestMapping("/regist")
-	public void asRegist(AsVO asVO, HttpServletRequest req, HttpServletResponse res) throws SQLException, IOException {
+	public void asRegist( AsVO asVO, HttpServletRequest req, HttpServletResponse res) throws SQLException, IOException {
 
-		
+		System.out.println(asVO.getEmp_no());
 		asService.registAs(asVO);
+		
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
 		out.println("<script>");
@@ -77,4 +79,27 @@ public class AsManageController {
 		return mnv;
 	}
 	
+	@RequestMapping("/modify")
+	public void modify (AsVO asVO, HttpServletResponse res) throws Exception{
+		asService.modifyAs(asVO);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('수정 되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
+	
+	@RequestMapping("/remove")
+	public void remove (AsVO asVO, HttpServletResponse res) throws Exception {
+	asService.removeAs(asVO);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('삭제 되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
 }

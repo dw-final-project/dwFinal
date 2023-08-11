@@ -37,6 +37,7 @@
 									<th style="text-align: center;">완료 날짜</th>
 									<th style="text-align: center;">진행 상황</th>
 								</tr>
+								
 								<c:forEach items="${asList}" var="as" >								
 									<tr>
 										<td style="text-align: center;">
@@ -48,6 +49,7 @@
 										<td style="text-align: center;"><fmt:formatDate value="${as.SYS_REGDATE }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 										<td style="text-align: center;"><fmt:formatDate value="${as.COMPLDATE }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 										<td style="text-align: center;">${as.PROGRESS == '0' ? '대기중' : (as.PROGRESS == '1' ? '진행중' : '완료')}</td>
+										<input type="hidden" name="emp_no "value="${as.EMP_NO }">
 									</tr>
 								</c:forEach>
 							</table>
@@ -59,7 +61,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="registOpenWindow('/asmanage/registForm.do', '쪽지쓰기', 700, 1000)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="registOpenWindow('/asmanage/registForm.do', 'A/S 접수',  500, 600)"
 					style="width: 100px; margin: 20px; align-self: center;">A/S 접수</button>
 
 				</div>
