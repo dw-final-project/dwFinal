@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.dw.command.SearchCriteria;
+import kr.or.dw.command.SearchCriteria2;
 import kr.or.dw.service.EstimateService;
 import kr.or.dw.service.FactoryService;
 import kr.or.dw.service.MenuService;
@@ -36,6 +38,7 @@ import kr.or.dw.service.RownumService;
 import kr.or.dw.service.WhService;
 import kr.or.dw.service.WhTransferService;
 import kr.or.dw.service.WorkOrderService;
+import kr.or.dw.vo.ErrorVO;
 import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.ProcessVO;
 import kr.or.dw.vo.ProductVO;
@@ -677,6 +680,35 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		out.println("window.close();");
 		out.println("</script>");
 		
+	}
+	
+	@RequestMapping("/error")
+	public ModelAndView error(ModelAndView mnv, String mcode, SearchCriteria2 cri2, SearchCriteria cri, HttpSession session) throws SQLException {
+		String c_no = (String) session.getAttribute("c_no");
+		List<ErrorVO> error = new ArrayList<>();
+		if(cri2.getStartDate().equals("")) {
+			LocalDate now = LocalDate.now();
+
+	        int year = now.getYear();
+	        int month = now.getMonthValue();
+	        int day = now.getDayOfMonth();
+
+	        String today = year + "-" + (month < 10 ? "0" : "") + month + "-" + day;
+	        cri2.setStartDate(today);
+		    cri2.setEndDate(today);
+		}
+		error = workOrderService.getErrorList(c_no, cri, cri2);
+		int total = 0;
+		for(int i = 0; i < error.size(); i++) {
+			total += error.get(i).getAmount();
+		}
+		
+		mnv.setViewName("heesung/wh/errorList.page");
+		mnv.addObject("total", total);
+		mnv.addObject("cri2", cri2);
+		mnv.addObject("error", error);
+		mnv.addObject("mcode", mcode);
+		return mnv;
 	}
 	
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////whTransfer

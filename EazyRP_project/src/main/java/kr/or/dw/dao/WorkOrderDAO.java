@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
 import kr.or.dw.command.SearchCriteria;
+import kr.or.dw.vo.ErrorVO;
 import kr.or.dw.vo.WhVO;
 import kr.or.dw.vo.WorkOrderVO;
 
@@ -54,6 +55,8 @@ public interface WorkOrderDAO {
 	int getProduct(WhVO vo) throws SQLException;
 
 	void updateProduct(WhVO vo) throws SQLException;
+
+	List<ErrorVO> getErrorList(Map<String, Object> dataMap, RowBounds rowBounds) throws SQLException;
 
 
 }

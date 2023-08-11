@@ -273,4 +273,21 @@
 		UPDATE product SET quantity = quantity + #{quantity} WHERE pr_name = #{pr_name} AND wh_no = #{wh_no2}
 	</update>
 	
+	<select id="getErrorList" resultType="error">
+		SELECT e.*, p.pr_name, p.pr_inprice, f.fac_name
+		FROM error e, product p, factory f
+		WHERE e.c_no = #{c_no}
+		  AND e.pr_no = p.pr_no
+		  AND e.fac_no = f.fac_no
+		<if test="cri2.startDate != ''.toString() and cri2.endDate != ''.toString()">
+			AND e.sys_regdate BETWEEN TO_DATE(#{cri2.startDate}, 'YYYY-MM-DD') AND TO_DATE(#{cri2.endDate}, 'YYYY-MM-DD') + INTERVAL '1' DAY - INTERVAL '1' SECOND
+		</if>
+		<if test="cri2.startDate != ''.toString() and cri2.endDate == ''.toString()">
+			AND e.sys_regdate <![CDATA[>]]> #{cri2.startDate}
+		</if>
+		<if test="cri2.startDate == ''.toString() and cri2.endDate != ''.toString()">
+			AND e.sys_regdate <![CDATA[<]]> #{cri2.endDate}
+		</if>
+	</select>
+	
 </mapper>

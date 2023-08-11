@@ -49,6 +49,7 @@
 		<typeAlias type="kr.or.dw.vo.QualityVO" alias="ql"/>
 
 		<typeAlias type="kr.or.dw.vo.AsVO" alias="as"/>
+		<typeAlias type="kr.or.dw.vo.ErrorVO" alias="error"/>
 		
 		<!-- 희성이꼬 --><!-- 즐, 똥, 엿--><!-- 맛있겠다 -->
 		<typeAlias type="kr.or.dw.vo.BsheetVO" alias="bsheet"/>

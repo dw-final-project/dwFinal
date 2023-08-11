@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import kr.or.dw.command.PageMaker;
 import kr.or.dw.command.SearchCriteria;
+import kr.or.dw.command.SearchCriteria2;
 import kr.or.dw.dao.WorkOrderDAO;
+import kr.or.dw.vo.ErrorVO;
 import kr.or.dw.vo.WhVO;
 import kr.or.dw.vo.WorkOrderVO;
 
@@ -170,6 +172,25 @@ public class WorkOrderServiceImpl implements WorkOrderService{
 				workOrderDAO.updateProduct(vo);
 			}
 		}
+	}
+
+	@Override
+	public List<ErrorVO> getErrorList(String c_no, SearchCriteria cri, SearchCriteria2 cri2) throws SQLException {
+		int offset = cri.getPageStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		dataMap.put("keyword", cri.getKeyword());
+		dataMap.put("searchType", cri.getSearchType());
+		dataMap.put("cri", cri);
+		dataMap.put("c_no", c_no);
+		dataMap.put("cri2", cri2);
+		
+		List<ErrorVO> list = workOrderDAO.getErrorList(dataMap, rowBounds);
+		
+		return list;
 	}
 
 }
