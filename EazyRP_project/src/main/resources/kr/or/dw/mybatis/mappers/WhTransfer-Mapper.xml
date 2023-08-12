@@ -60,5 +60,104 @@
 		<include refid="search"></include>
 	</select>
 	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+	
+	<sql id="makeWtNoSeq">
+		SELECT ('WT_') || CASE 
+			WHEN LENGTH(wt_no_seq.nextval) = 1
+			THEN '00' || wt_no_seq.nextval
+			WHEN LENGTH(wt_no_seq.nextval) = 2
+			THEN '0' || wt_no_seq.nextval
+			ELSE '' || wt_no_seq.nextval
+			END WT_NO
+		FROM dual
+	</sql>
+	
+	<insert id="registWhTransfer" parameterType="whTransfer">
+		<selectKey keyProperty="wt_no" order="BEFORE" resultType="java.lang.String">
+			<include refid="makeWtNoSeq"></include>
+		</selectKey>
+		INSERT INTO whtransfer(
+			wt_no,
+			wh_no2,
+			wh_no,
+			total_quantity,
+			emp_no,
+			progress,
+			sys_up,
+			sys_regdate,
+			sys_updatedate,
+			c_no
+		)
+		VALUES(
+			#{wt_no},
+			#{wh_no2},
+			#{wh_no},
+			#{total_quantity},
+			#{emp_no},
+			#{progress},
+			#{emp_no},
+			sysdate,
+			sysdate,
+			#{c_no}
+		)
+	</insert>
+	
+	<update id="registWhTransferDetail">
+		MERGE INTO product tgt
+		USING(  	
+				SELECT	#{pr_name} pr_name,
+			        	#{wh_no2} wh_no,
+			        	#{quantity} quantity,
+			        	#{c_no} c_no
+			    FROM 	dual
+		) src
+		ON(	
+				tgt.pr_name = src.pr_name 
+			AND tgt.wh_no = src.wh_no
+		)
+		WHEN MATCHED THEN
+		    UPDATE SET tgt.quantity = tgt.quantity + src.quantity
+		WHEN NOT MATCHED THEN
+		    INSERT (
+		        pr_no, 
+		        pr_name, 
+		        c_no, 
+		        pr_gr, 
+		        pr_st, 
+		        pr_inprice, 
+		        pr_exprice, 
+		        pr_class, 
+		        img,
+		        exdate, 
+		        sp_no, 
+		        sys_up, 
+		        sys_regdate, 
+		        sys_updatedate, 
+		        sys_reg, 
+		        quantity, 
+		        wh_no, 
+		        enabled
+		    )
+		    VALUES (
+		        'PR_' || LPAD(product_seq.nextval, 3, '0'), 
+		        src.pr_name, 
+		        src.c_no,
+		        (SELECT MAX(pr_gr) FROM product WHERE pr_name = src.pr_name GROUP BY pr_name),
+		        (SELECT MAX(pr_st) FROM product WHERE pr_name = src.pr_name GROUP BY pr_name),
+		        (SELECT MAX(pr_inprice) FROM product WHERE pr_name = src.pr_name GROUP BY pr_name),
+		        (SELECT MAX(pr_exprice) FROM product WHERE pr_name = src.pr_name GROUP BY pr_name),
+		        (SELECT MAX(pr_class) FROM product WHERE pr_name = src.pr_name GROUP BY pr_name),
+		        '', 
+		        sysdate, 
+		        'SP_001', 
+		        0, 
+		        sysdate, 
+		        sysdate, 
+		        0, 
+		        src.quantity, 
+		        src.wh_no, 
+		        'Y'
+		    )
+	</update>
 
 </mapper>

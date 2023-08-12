@@ -23,8 +23,8 @@ public class WhTransferVO {
 	
 	private String c_no; 
 	
-	private String wht_detail_no;
 	private String pr_no;
 	private int quantity;
+	private String pr_name;
 	
 }

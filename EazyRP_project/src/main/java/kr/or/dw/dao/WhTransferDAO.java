@@ -23,4 +23,8 @@ public interface WhTransferDAO {
 	// 보내는 창고 재고 조회
 	int whtSelectWareHouseListCount(Map<String, Object> map) throws SQLException;
 
+	void registWhTransfer(WhTransferVO whTransfer) throws SQLException;
+
+	void registWhTransferDetail(WhTransferVO whtDetail) throws SQLException;
+
 }

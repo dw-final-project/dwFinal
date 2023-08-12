@@ -76,4 +76,19 @@ public class WhTransferServiceImpl implements WhTransferService{
 		
 	}
 
+	@Override
+	public void registWhTransfer(List<WhTransferVO> whtList) throws SQLException {
+		
+		whTransferDAO.registWhTransfer(whtList.get(0));
+		
+		String wt_no = whtList.get(0).getWt_no();
+		System.out.println("whtList.get(0).getWt_no() = " + wt_no);
+		
+		for(WhTransferVO whtDetail : whtList) {
+			whtDetail.setWt_no(wt_no);
+			whTransferDAO.registWhTransferDetail(whtDetail);
+		}
+
+	}
+
 }
