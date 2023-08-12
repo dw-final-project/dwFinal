@@ -32,6 +32,10 @@
 			,MAX(qc.files) files
 			,MAX(qc.realfilename) realFileName
 			,MAX(e.emp_no) EMP_NO
+			,CASE WHEN count(qd.PR_NO) <![CDATA[ > ]]>  1
+		  		THEN MAX((SELECT pr_st FROM product WHERE pr_no = qd.pr_no)) || ' 외 ' || (count(qd.PR_NO)-1)  || '건'
+		  		ELSE MAX((SELECT pr_st FROM product WHERE pr_no = qd.pr_no))
+			END pr_st
 	 FROM qc qc, QCDETAIL qd , EMP e , PRODUCT p 
 	 WHERE 1=1
 	 AND qc.QC_NO = qd.QC_NO 
@@ -56,6 +60,10 @@
 			,MAX(qc.files) files
 			,MAX(qc.realfilename) realFileName
 			,MAX(e.emp_no) EMP_NO
+			,CASE WHEN count(qd.PR_NO) <![CDATA[ > ]]>  1
+		  		THEN MAX((SELECT pr_st FROM product WHERE pr_no = qd.pr_no)) || ' 외 ' || (count(qd.PR_NO)-1)  || '건'
+		  		ELSE MAX((SELECT pr_st FROM product WHERE pr_no = qd.pr_no))
+			END pr_st
 	 FROM qc qc, QCDETAIL qd , EMP e , PRODUCT p 
 	 WHERE 1=1
 	 AND qc.QC_NO = qd.QC_NO 

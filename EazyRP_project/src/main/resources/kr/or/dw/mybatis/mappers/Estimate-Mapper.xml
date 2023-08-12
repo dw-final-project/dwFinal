@@ -252,7 +252,7 @@
 		#{emp_no},
 		#{fc_no},
 		#{amount},
-		'접수중',
+		'0',
 		#{quantity},
 		#{pr_no},
 		sysdate,

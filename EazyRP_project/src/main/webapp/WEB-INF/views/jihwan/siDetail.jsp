@@ -96,9 +96,9 @@
         <tr>
             <td align="center">진행상태</td>
             <td><select name="progress" id="progress">
-            	<option value="접수중"${siList.get(0).PROGRESS eq "접수중" ? 'selected' : "" }>접수중</option>
-			    <option value="출하대기중"${siList.get(0).PROGRESS eq "출하대기중" ? 'selected' : "" }>출하대기중</option>
-			    <option value="출하완료" ${siList.get(0).PROGRESS eq "출하완료" ? 'selected' : "" }>출하완료</option>
+            	<option value="0"${siList.get(0).PROGRESS eq "0" ? 'selected' : "" }>접수중</option>
+			    <option value="1"${siList.get(0).PROGRESS eq "1" ? 'selected' : "" }>출하대기중</option>
+			    <option value="2" ${siList.get(0).PROGRESS eq "2" ? 'selected' : "" }>출하완료</option>
 				</select>
 			</td>
         </tr>

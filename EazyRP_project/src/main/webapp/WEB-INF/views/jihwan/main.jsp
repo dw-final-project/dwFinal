@@ -60,7 +60,9 @@
 									<td>${estimate.P_AMOUNT_NAME }</td>
 									<td>${estimate.PR_ST }</td>
 									<td>${estimate.AMOUNT }</td>
-									<td>${estimate.PROGRESS }</td>
+									<td td style="color: ${estimate.PROGRESS eq 0 ? 'red' : estimate.PROGRESS eq 1 ? 'green' : estimate.PROGRESS eq 2 ? 'blue' : '' }">
+									${estimate.PROGRESS == '0' ? '접수중' : (estimate.PROGRESS == '1' ? '처리중' : (estimate.PROGRESS == '2' ? '완료' : '' ))}
+									</td>
 									<td style="color:${estimate.FILES ne null ? 'blue' : 'red'}">${estimate.FILES != null ? "있음" : "없음"}</td>
 								</tr>
 							</c:forEach>

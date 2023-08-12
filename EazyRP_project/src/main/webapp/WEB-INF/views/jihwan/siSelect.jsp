@@ -65,7 +65,9 @@
 									<td>${si.PR_NAME }</td>
 									<td>${si.PR_ST }</td>
 									<td>${si.QUANTITY }</td>
-									<td>${si.PROGRESS }</td>
+									<td style="color: ${si.PROGRESS eq 0 ? 'red' : si.PROGRESS eq 1 ? 'green' : si.PROGRESS eq 2 ? 'blue' : '' }">
+										${si.PROGRESS == '0' ? '접수중' : (si.PROGRESS == '1' ? '출하대기중' : (si.PROGRESS == '2' ? '출하완료' : '' ))}
+									</td>
 								</tr>
 							</c:forEach>
 						</table>
