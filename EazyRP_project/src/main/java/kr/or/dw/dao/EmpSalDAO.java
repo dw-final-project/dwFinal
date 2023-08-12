@@ -1,6 +1,7 @@
 package kr.or.dw.dao;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -109,6 +110,8 @@ public interface EmpSalDAO {
 	List<ExtrapayVO> getExtrapay(Map<String, String> dataMap) throws SQLException;
 
 	List<ExtrapayVO> getExtrapayList() throws SQLException;
+
+	List<Map<String, Object>> selectExtraPay(Map<String, Object> map) throws SQLException;
 
 	
 }

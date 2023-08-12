@@ -1,8 +1,11 @@
 package kr.or.dw.service;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.http.ResponseEntity;
 
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.vo.CompanyVO;
@@ -91,6 +94,8 @@ public interface EmpSalService {
 	List<ExtrapayVO> getExtrapay(Map<String, String> dataMap) throws SQLException;
 
 	List<ExtrapayVO> getExtrapayList() throws SQLException;
+
+	List<Map<String, Object>> selectExtraPay(int emp_no, String salmonth, int e_sal) throws SQLException;
 
 
 
