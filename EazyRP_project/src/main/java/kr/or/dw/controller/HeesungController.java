@@ -43,6 +43,7 @@ import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.ProcessVO;
 import kr.or.dw.vo.ProductVO;
 import kr.or.dw.vo.RownumVO;
+import kr.or.dw.vo.WhTransferVO;
 import kr.or.dw.vo.WhVO;
 import kr.or.dw.vo.WorkOrderVO;
 
@@ -795,13 +796,57 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		String url = "heesung/whtransfer/registForm.open";
 		
 		mnv.setViewName(url);
-		mnv.addObject("empno", empno);	// 사원번호
-		mnv.addObject("ename", ename);	// 사원이름
-		mnv.addObject("c_no", c_no);	// 회사이름
+		mnv.addObject("empno", empno);		// 사원번호
+		mnv.addObject("ename", ename);		// 사원이름
+		mnv.addObject("c_no", c_no);		// 회사이름
 		mnv.addObject("c_name", c_name);	// 회사번호
 		
 		return mnv;
 
+	}
+	
+	@RequestMapping("whtransfer/regist")
+	public void whTransferRegist(HttpServletResponse res, HttpSession session, 
+					int emp_no, String wh_no, String wh_no2, String progress, 
+					int total_quantity, String[] pr_no, String[] pr_name, int[] quantity) throws SQLException, IOException {
+		
+		System.out.println("erp4/whtransfer/regist - 진입");
+		
+		String c_no = session.getAttribute("c_no").toString();
+		
+		List<WhTransferVO> whtList = new ArrayList<WhTransferVO>();
+		
+		System.out.println("pr_no.length : " + pr_no.length);
+		
+		for(int i = 0; i < pr_no.length; i++) {
+			
+			WhTransferVO wht = new WhTransferVO();
+			
+			wht.setC_no(c_no);
+			wht.setEmp_no(emp_no);
+			wht.setWh_no(wh_no);
+			wht.setWh_no2(wh_no2);
+			wht.setProgress(progress);
+			wht.setTotal_quantity(total_quantity);
+			
+			wht.setPr_no(pr_no[i]);
+			wht.setPr_name(pr_name[i]);
+			wht.setQuantity(quantity[i]);
+			
+			whtList.add(wht);
+			
+		}
+		
+		whTransferService.registWhTransfer(whtList);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("window.opener.location.reload();");
+		out.println("alert('등록 되었습니다.')");
+		out.println("window.close();");
+		out.println("</script>");
+		
 	}
 	
 }

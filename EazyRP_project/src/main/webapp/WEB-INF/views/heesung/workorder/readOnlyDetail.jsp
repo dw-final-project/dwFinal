@@ -146,7 +146,7 @@
 					<input type="text" id="fac_no${woDetail.ROWNUM }" class="fac_names" name="fac_name" style="width: 100%;" value="${woDetail.FAC_NAME }" readonly>
 					<input type="hidden" name="fac_no" value="${woDetail.FAC_NO }">
 				</td>
-	            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${woDetail.QUANTITY }"><input type="hidden" id="cost" value="${est.PR_EXPRICE }" readonly></td>
+	            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${woDetail.QUANTITY }" readonly><input type="hidden" id="cost" value="${est.PR_EXPRICE }"></td>
 	            <td style="text-align : center;"><button type="button" class="btn"></button></td>
 	        </tr>
         </c:forEach>
@@ -261,13 +261,13 @@ $('tr').on('click', function(){
 })
 
 	// 제품코드 td 클릭 이벤트
-	$(document).on('click', '.pr_names', function(){
-		let idVal = $(this).parents("tr").find(".rownum").val();
-		console.log(idVal);
-		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
+// 	$(document).on('click', '.pr_names', function(){
+// 		let idVal = $(this).parents("tr").find(".rownum").val();
+// 		console.log(idVal);
+// 		$('#cnt').val(idVal);
+// 		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
 		
-	});
+// 	});
 	
 	//제품 삭제 버튼
 	$('#prInput').on('click', '#cancelBtn', function(){
@@ -280,11 +280,11 @@ $('tr').on('click', function(){
 	   });
 	
 	// 공장 클릭시 목록 열기 이벤트
-	$(document).on('click', '.fac_names', function() {
-		let whVal = $(this).attr('id');
-		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findFactory.do", "공장 찾기", 800, 600);
-	})
+// 	$(document).on('click', '.fac_names', function() {
+// 		let whVal = $(this).attr('id');
+// 		$('#cnt').val(whVal);
+// 		let openWin = OpenWindow("/erp4/findFactory.do", "공장 찾기", 800, 600);
+// 	})
 	
 	//창고코드 이벤트
 	$(document).on('click', '.wh_names', function(){
