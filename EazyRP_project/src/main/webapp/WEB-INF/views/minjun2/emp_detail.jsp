@@ -18,11 +18,11 @@
 						<form role="form" method="post" action="modifyEmp.do" name="registForm" enctype="multipart/form-data">
 							<div class="form-group col-sm-12 row">
 								<label for="emp_no2" class="col-sm-2">사원번호</label>
-								<input type="text" id="emp_no2" name="emp_no" class="form-control col-sm-3" value="${emp.EMP_NO }" placeholder="사원번호." readonly>
+								<input type="text" id="emp_no" name="emp_no" class="form-control col-sm-3" value="${emp.EMP_NO }" placeholder="사원번호." readonly>
 								<input type="hidden" id="" name="" value="">
 								<div class="col-sm-1"></div>
 								<label for="e_name2" class="col-sm-2">사원명</label>
-								<input type="text" id="e_name2" name="e_name" class="form-control col-sm-4 emp1" value="${emp.E_NAME }" placeholder="사원명">
+								<input type="text" id="e_name" name="e_name" class="form-control col-sm-4 emp1" value="${emp.E_NAME }" placeholder="사원명">
 								<input type="hidden" id="" name="" value="">
 							</div>
 							<div class="form-group col-sm-12 row " >
@@ -51,8 +51,8 @@
 								<input type="hidden" id="dept_no" name="dept_no" value="${emp.DEPT_NO }">
 								<div class="col-sm-1"></div>
 								<label for="e_name2" class="col-sm-2">대무자</label>
-								<input type="text" id="e_name" name="e_name2" class="form-control col-sm-4 e_name2 emp5" value="${emp.DAEMU }" placeholder="대무자">
-								<input type="hidden" id="emp_no" name="emp_no2" value="${emp.EMP_NO2 }">
+								<input type="text" id="e_name2" name="e_name2" class="form-control col-sm-4 e_name2 emp5" value="${emp.DAEMU }" placeholder="대무자">
+								<input type="hidden" id="emp_no2" name="emp_no2" value="${emp.EMP_NO2 }">
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="e_email" class="col-sm-2">이메일</label>

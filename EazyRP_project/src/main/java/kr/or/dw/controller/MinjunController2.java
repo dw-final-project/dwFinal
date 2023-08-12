@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,14 +19,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.tiles.autotag.core.runtime.annotation.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,8 +48,10 @@ import kr.or.dw.vo.DeductionVO;
 import kr.or.dw.vo.DeptVO;
 import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.ExtrapayVO;
+import kr.or.dw.vo.MemberVO;
 import kr.or.dw.vo.MenuVO;
 import kr.or.dw.vo.MerchandiseVO;
+import kr.or.dw.vo.MyMenuVO;
 import kr.or.dw.vo.NoteVO;
 import kr.or.dw.vo.OrderVO;
 import kr.or.dw.vo.ProcessVO;
@@ -746,4 +753,26 @@ public class MinjunController2 {
 		
 		return mnv;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/calextrapay")
+	public ResponseEntity<List<Map<String, Object>>> calextrapayRegist(@RequestBody Map<String, Object> map, HttpSession session) throws SQLException {
+				System.out.println("map : " + map);
+				ResponseEntity<List<Map<String, Object>>> entity = null;
+				int emp_no = Integer.parseInt(map.get("emp_no").toString());
+				String salmonth = map.get("salmonth").toString();
+				int e_sal = Integer.parseInt(map.get("e_sal").toString());
+				List<Map<String, Object>> extrapayList = empsalService.selectExtraPay(emp_no, salmonth, e_sal);
+				
+				System.out.println(extrapayList);
+		try {
+			entity = new ResponseEntity<List<Map<String, Object>>>(extrapayList, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<List<Map<String, Object>>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return entity;
+	}
+	
 }

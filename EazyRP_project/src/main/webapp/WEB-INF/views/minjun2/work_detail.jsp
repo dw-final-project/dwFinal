@@ -21,8 +21,8 @@
 								<input type="text" id="w_no" name="w_no" class="form-control col-sm-3" value="${work.W_NO}" placeholder="근태기록번호" readonly>
 								<div class="col-sm-1"></div>
 								<label for="e_name" class="col-sm-2">사원명</label>
-								<input type="text" id="e_name" name="e_name" class="form-control col-sm-4 work1" value="${work.E_NAME}" placeholder="사원명">
-								<input type="hidden" id="emp_no" name="emp_no" value="${work.EMP_NO}">
+								<input type="text" id="e_name2" name="e_name" class="form-control col-sm-4 work1" value="${work.E_NAME}" placeholder="사원명">
+								<input type="hidden" id="emp_no2" name="emp_no" value="${work.EMP_NO}">
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="ep_name" class="col-sm-2">수당명</label>

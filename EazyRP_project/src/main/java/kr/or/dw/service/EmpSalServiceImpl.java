@@ -1,6 +1,8 @@
 package kr.or.dw.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -392,6 +394,29 @@ public class EmpSalServiceImpl implements EmpSalService {
 		exp = empsalDAO.getExtrapayList();
 		
 		return exp;
+	}
+
+	@Override
+	public List<Map<String, Object>> selectExtraPay(int emp_no, String salmonth, int e_sal) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("emp_no", emp_no);
+		map.put("salmonth", salmonth);
+		
+		List<Map<String, Object>> calextrapayList = empsalDAO.selectExtraPay(map);
+		
+		Double hourSal = Double.parseDouble(e_sal + "") / 365 / 24;
+		
+		List<Map<String, Object>> extrapayList = new ArrayList<Map<String, Object>>();
+		for(Map<String, Object> calextrapay : calextrapayList) {
+			System.out.println("아워샐  " + Math.ceil(hourSal));
+			
+			Double EXTRAPAY = Double.parseDouble(calextrapay.get("WTIME").toString()) * Double.parseDouble(calextrapay.get("CALC").toString()) * Math.ceil(hourSal);
+			calextrapay.put("EXTRAPAY", EXTRAPAY);
+			extrapayList.add(calextrapay);
+		}
+		
+		return extrapayList;
 	}
 	
 }

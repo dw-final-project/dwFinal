@@ -567,4 +567,24 @@
 		</if>
 		ORDER BY ep_no
 	</select>
+	
+	<select id="selectExtraPay" resultType="Map">
+		SELECT DISTINCT(SELECT SUM(wtime)
+ 						  FROM WORK
+		 				 WHERE wdate BETWEEN TO_DATE(#{salmonth}, 'YYYY-MM') AND LAST_DAY(TO_DATE('2023-08', 'YYYY-MM'))
+		   				   AND emp_no = 1
+		   				   AND ep_no = e.ep_no
+		   				   AND ENABLED = 'YES') wtime
+						,w.ep_no
+						,w.emp_no
+						,e2.e_sal
+						,e.ep_name
+						,e.calc
+		  FROM "WORK" w, EXTRAPAY e, EMP e2 
+		 WHERE w.ep_no = e.ep_no
+		   AND e2.emp_no = w.emp_no
+		   AND w.wdate BETWEEN TO_DATE(#{salmonth}, 'YYYY-MM') AND LAST_DAY(TO_DATE(#{salmonth}, 'YYYY-MM'))
+		   AND w.emp_no = #{emp_no}
+   		   AND w.ENABLED = 'YES'
+	</select>
 </mapper>

@@ -70,20 +70,69 @@
 <script>
 	$(document).ready(function() {
 		
+		let gbVal = opener.$("#A").val();
 		let parentInputId = opener.$("#cnt").val();
 		
 		$('tr').on('click', function(){
-				let parentE1 = $('#' + parentInputId, opener.document);
-				parentE1.parents('tr').find('input[name="e_name"]').val($(this).find('.e_name').text());
-				parentE1.parents('tr').find('input[name="dname"]').val($(this).find('.dname').text());
-				parentE1.parents('tr').find('input[name="e_sal"]').val($(this).find('.e_sal').text());
 				
-				parentE1.parents('tr').next('tr').find('input[name="emp_no"]').val($(this).find('.emp_no').text());
-				parentE1.parents('tr').next('tr').find('input[name="e_rank"]').val($(this).find('.e_rank').text());
+				if(gbVal == 'A'){
+					
+					if($(this).find('.emp_no').text() == opener.$('input[name="emp_no"]').val()){
+						alert("이미 있는 사람");
+						return;
+					};
+					
+					let parentE1 = $('#' + parentInputId, opener.document);
+					// 성명 부서명 기본급
+					parentE1.parents('tr').find('input[name="e_name"]').val($(this).find('.e_name').text());
+					parentE1.parents('tr').find('input[name="dname"]').val($(this).find('.dname').text());
+					parentE1.parents('tr').find('input[name="e_sal"]').val(Math.floor($(this).find('.e_sal').text() / 12));
+					// 사원번호, 직위직급명
+					parentE1.parents('tr').next('tr').find('input[name="emp_no"]').val($(this).find('.emp_no').text());
+					parentE1.parents('tr').next('tr').find('input[name="e_rank"]').val($(this).find('.e_rank').text());
+			
+					let data = {
+							"emp_no" : $(this).find('.emp_no').text(),
+							"salmonth" : opener.$("#salmonth").val(),
+							"e_sal" : $(this).find('.e_sal').text()
+							
+					};
+					
+					$.ajax({
+						url : "<%=request.getContextPath()%>/management/calextrapay",
+						type : "post",
+						data : JSON.stringify(data),
+						dataType: 'json',
+						contentType : "application/json;charset=utf-8",
+						success : function(data){
+							$.each(data, function(index, exp){
+								parentE1.parents('tr').find('input[name='+ exp.EP_NO +']').parents('td').find('input[type="text"]').val(exp.EXTRAPAY);
+								parentE1.parents('tr').next('tr').find('input[name='+ exp.EP_NO +']').parents('td').find('input[type="text"]').val(exp.EXTRAPAY);
+							});
+							
+							let sum = 0;
+							for (let i = 0; i < parentE1.parents('tr').find('input[class="sumpay"]').get().length; i++ ){
+								sum += Number(parentE1.parents('tr').find('input[class="sumpay"]').eq(i).val());
+							}
+							
+							for (let i = 0; i < parentE1.parents('tr').next('tr').find('input[class="sumpay"]').get().length; i++ ){
+								sum += Number(parentE1.parents('tr').next('tr').find('input[class="sumpay"]').eq(i).val());
+							}
+							parentE1.parents('tr').find('#sumExtrapay').text(sum);
+
+// 							window.close();
+						},
+						error : function(error){
+							alert("실패" + error.status());
+						}
+					});		
+				}else{
+					//  다른페이지 emp찾기
+					$('#emp_no2', opener.document).val($(this).find('.emp_no').text());
+					$('#e_name2', opener.document).val($(this).find('.e_name').text());
+					window.close();
+				}
 				
-				
-				
-				window.close();
 			});
 	
 		$('#searchBtn').on('click', function(){
