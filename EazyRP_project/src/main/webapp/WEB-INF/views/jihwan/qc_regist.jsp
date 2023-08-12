@@ -131,9 +131,9 @@
         </tr>
     </table>
     <input type="button" id="registBtn" class="btn btn-primary" style="text-align : center;" value="생성">
+    <input type="button" id="closeBtn" class="btn btn-warning" style="text-align : center;" value="닫기">
 </form>
 </body>
-</script>
 
 <script>
 
@@ -260,6 +260,10 @@ $('#addPutBtn').on('click', function(){
 				
 		$('form[role="form"]').submit();
 		
+	})
+	
+	$('#closeBtn').on('click', function(){
+		window.close();
 	})
 
 </script>
