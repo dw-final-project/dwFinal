@@ -19,7 +19,13 @@
 	</sql>
 	
 	<select id="selectSearchWhTransferList" resultType="Map">
-		SELECT wht.*, pr.pr_name, wa.wh_name wh_name, wa2.wh_name wh_name2
+		SELECT 	wht.wt_no,
+				MAX(wht.sys_regdate) sys_regdate,
+				MAX((SELECT pr_name FROM product WHERE pr_no = whtd.pr_no)) pr_name, 
+				MAX((SELECT wh_name FROM warehouse WHERE wh_no = wht.wh_no)) wh_name,
+				MAX((SELECT wh_name FROM warehouse WHERE wh_no = wht.wh_no2)) wh_name2,
+				MAX(wht.total_quantity) total_quantity,
+				MAX(wht.progress) progress
 		FROM WHTRANSFER wht, wht_detail whtd, product pr, warehouse wa, warehouse wa2
 		WHERE 1=1
 		AND wht.wt_no = whtd.wt_no
@@ -29,7 +35,8 @@
 		AND wht.wh_no2 = wa2.wh_no
 		AND wht.c_no = #{c_no}
 		<include refid="search"></include>
-		ORDER BY wht.sys_regdate desc
+		GROUP BY wht.wt_no
+		ORDER BY sys_regdate desc
 	</select>
 	
 	<select id="selectSearchWhTransferListCount" resultType="int">
@@ -102,7 +109,22 @@
 		)
 	</insert>
 	
-	<update id="registWhTransferDetail">
+	<insert id="registWhTransferDetail" parameterType="whTransfer">
+		INSERT INTO wht_detail (
+			wht_detail_no,
+			wt_no,
+			pr_no,
+			quantity
+		)	
+		VALUES (
+			wht_detail_no_seq.nextval,
+			#{wt_no},
+			#{pr_no},
+			#{quantity}
+		)
+	</insert>
+	
+	<update id="">
 		MERGE INTO product tgt
 		USING(  	
 				SELECT	#{pr_name} pr_name,
@@ -159,5 +181,33 @@
 		        'Y'
 		    )
 	</update>
+	
+	<select id="selectWhTransfer" parameterType="str" resultType="Map">
+		SELECT	wht.wt_no,
+				TO_CHAR(wht.SYS_REGDATE, 'yyyy-MM-dd') sys_regdate,
+				com.c_name,
+				emp.e_name,
+				wa.wh_name wh_name,
+				wa2.wh_name wh_name2,
+				wa.wh_no wh_no,
+				wa2.wh_no wh_no2,
+				wht.progress
+		FROM	whtransfer wht, emp emp, company com, warehouse wa, warehouse wa2
+		WHERE	wht.c_no = com.c_no
+		AND		wht.emp_no = emp.emp_no
+		AND		wht.wh_no = wa.wh_no
+		AND		wht.wh_no2 = wa2.wh_no
+		AND		wht.wt_no = #{wt_no}
+	</select>
+	
+	<select id="selectWhTransferDetail" resultType="Map">
+		SELECT	whtd.*, 
+				pr.pr_name,
+				ROWNUM
+		FROM	wht_detail whtd, product pr, whtransfer wht
+		WHERE	whtd.wt_no = wht.wt_no
+		AND		whtd.pr_no = pr.pr_no
+		AND		wht.wt_no = #{wt_no}
+	</select>
 
 </mapper>
