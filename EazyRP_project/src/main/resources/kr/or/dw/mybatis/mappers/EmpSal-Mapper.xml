@@ -168,6 +168,19 @@
 			)
 		</if>
 	</sql>
+
+	<!--  sal search  -->
+
+	<sql id="salsearch">
+		<if test="searchType == 'a'.toString()">
+			AND SALMONTH LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'all'.toString()">
+			AND (
+			SALMONTH LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+	</sql>
 	
 	<!--  Emp  -->
 	
@@ -571,7 +584,7 @@
 	<select id="selectExtraPay" resultType="Map">
 		SELECT DISTINCT(SELECT SUM(wtime)
  						  FROM WORK
-		 				 WHERE wdate BETWEEN TO_DATE(#{salmonth}, 'YYYY-MM') AND LAST_DAY(TO_DATE('2023-08', 'YYYY-MM'))
+		 				 WHERE wdate BETWEEN TO_DATE(#{salmonth}, 'YYYY-MM') AND LAST_DAY(TO_DATE(#{salmonth}, 'YYYY-MM'))
 		   				   AND emp_no = 1
 		   				   AND ep_no = e.ep_no
 		   				   AND ENABLED = 'YES') wtime
@@ -587,4 +600,122 @@
 		   AND w.emp_no = #{emp_no}
    		   AND w.ENABLED = 'YES'
 	</select>
+
+	<insert id="insertSal">
+		<selectKey keyProperty="sal_no" order="BEFORE" resultType="java.lang.String">
+				SELECT ('SAL_') || CASE 
+					WHEN LENGTH(sal_seq.nextval) = 1
+					THEN '00' || sal_seq.nextval
+					WHEN LENGTH(sal_seq.nextval) = 2
+					THEN '0' || sal_seq.nextval
+					ELSE '' || sal_seq.nextval
+		   	    	END SAL_NO
+			   FROM dual
+		</selectKey>
+		
+		INSERT INTO sal (
+				sal_no,
+				saldate,
+				totalamount,
+				sys_up,
+				sys_regdate,
+				sys_updatedate,
+				sys_reg,
+				salmonth,
+				paymentstatus
+			)
+		VALUES(
+				#{sal_no},
+				#{saldate, jdbcType = DATE},
+				#{totalamount},
+				#{sys_up},
+				sysdate,
+				sysdate,
+				#{sys_reg},
+				#{salmonth},
+				'미지급'
+			)
+		
+	</insert>
+	
+	<insert id="insertSalDetail">
+		<selectKey keyProperty="saldetail_no" order="BEFORE" resultType="java.lang.String">
+				SELECT ('SALDETAIL_') || CASE 
+					WHEN LENGTH(saldetail_seq.nextval) = 1
+					THEN '00' || saldetail_seq.nextval
+					WHEN LENGTH(saldetail_seq.nextval) = 2
+					THEN '0' || saldetail_seq.nextval
+					ELSE '' || saldetail_seq.nextval
+		   	    	END SALDETAIL_NO
+			   FROM dual
+		</selectKey>
+		
+		INSERT INTO saldetail (
+				saldetail_no,
+				emp_no,
+				sal_no,
+				ded_001,
+				ded_006,
+				ded_009,
+				ded_010,
+				ded_011,
+				ded_012,
+				realsumsal
+			)
+		VALUES(
+				#{saldetail_no},
+				#{emp_no},
+				#{sal_no},
+				#{DED_001},
+				#{DED_006},
+				#{DED_009},
+				#{DED_010},
+				#{DED_011},
+				#{DED_012},
+				#{realsumsal}
+			)
+	</insert>
+	
+	<select id="selectSalList" resultType="Map">
+		SELECT *
+		  FROM sal
+		 WHERE 1=1
+		  <include refid="salsearch"/>
+		ORDER BY sal_no desc
+	</select>
+	
+	<select id="selectSalListCount" resultType="int">
+		SELECT count(*)
+		  FROM sal
+		  WHERE 1=1
+		  <include refid="salsearch"/>
+		ORDER BY sal_no desc
+	</select>
+	
+	<select id="selectSalDetail" resultType="Map">
+		SELECT *
+		  FROM sal
+		 WHERE sal_no = #{sal_no}
+	</select>
+	
+	<select id="selectSalDetailDetail" resultType="Map">
+		SELECT s.*, e.e_sal, e.e_name, e.e_rank, d.dname
+		  FROM saldetail s, emp e, dept d
+		 WHERE s.emp_no = e.emp_no
+		   AND e.dept_no = d.dept_no
+		   AND sal_no = #{sal_no}
+	</select>
+	
+	<delete id="deleteSal">
+		DELETE FROM sal WHERE sal_no = #{sal_no_a}
+	</delete>
+	
+	<update id="updateStatus">
+		UPDATE sal SET paymentstatus = '지급완료' WHERE sal_no = #{sal_no}
+		<selectKey keyProperty="paymentstatus" order="AFTER" resultType="java.lang.String">
+			SELECT paymentstatus
+			  FROM sal
+			 WHERE sal_no = #{sal_no}
+		</selectKey>
+	</update>
 </mapper>
