@@ -91,4 +91,19 @@ public class WhTransferServiceImpl implements WhTransferService{
 
 	}
 
+	@Override
+	public Map<String, Object> selectWhTransfer(String wt_no) throws SQLException {
+
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		Map<String, Object> wht = (Map<String, Object>) whTransferDAO.selectWhTransfer(wt_no);
+		List<Map<String, Object>> whtDetail = whTransferDAO.selectWhTransferDetail(wt_no);
+		
+		dataMap.put("wht", wht);
+		dataMap.put("whtDetail", whtDetail);
+		
+		return dataMap;
+		
+	}
+
 }

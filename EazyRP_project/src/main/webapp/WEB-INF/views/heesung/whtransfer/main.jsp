@@ -49,7 +49,11 @@
 								<c:forEach items="${whtList}" var="wht" varStatus="loop">
 								<tr>
 									<td style="text-align: center;">${wht.SYS_REGDATE }</td>
-									<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/mymenu/detail.do?n_no=${note.n_no }&send=N', '쪽지보기', 700, 1000, '${loop.index}')">${wht.WT_NO }</a></td>
+									<td style="text-align: center;">
+										<a id="aTag" href="#" onclick="OpenWindow('/erp4/whtransfer/detail.do?wt_no=${wht.WT_NO }', '창고이동 보기', 700, 1000)">
+											${wht.WT_NO }
+										</a>
+									</td>
 									<td style="text-align: center;">${wht.WH_NAME }</td>
 									<td style="text-align: center;">${wht.WH_NAME2}</td>
 									<td style="text-align: center;">${wht.PR_NAME}</td>

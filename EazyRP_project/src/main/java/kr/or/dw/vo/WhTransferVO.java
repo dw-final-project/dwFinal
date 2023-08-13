@@ -25,6 +25,5 @@ public class WhTransferVO {
 	
 	private String pr_no;
 	private int quantity;
-	private String pr_name;
 	
 }

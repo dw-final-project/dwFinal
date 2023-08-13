@@ -808,7 +808,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	@RequestMapping("whtransfer/regist")
 	public void whTransferRegist(HttpServletResponse res, HttpSession session, 
 					int emp_no, String wh_no, String wh_no2, String progress, 
-					int total_quantity, String[] pr_no, String[] pr_name, int[] quantity) throws SQLException, IOException {
+					int total_quantity, String[] pr_no, int[] quantity) throws SQLException, IOException {
 		
 		System.out.println("erp4/whtransfer/regist - 진입");
 		
@@ -830,7 +830,6 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 			wht.setTotal_quantity(total_quantity);
 			
 			wht.setPr_no(pr_no[i]);
-			wht.setPr_name(pr_name[i]);
 			wht.setQuantity(quantity[i]);
 			
 			whtList.add(wht);
@@ -846,6 +845,19 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		out.println("alert('등록 되었습니다.')");
 		out.println("window.close();");
 		out.println("</script>");
+		
+	}
+	
+	@RequestMapping("whtransfer/detail")
+	public ModelAndView whTransferDetail(ModelAndView mnv, String wt_no) throws SQLException{
+		
+		String url = "heesung/whtransfer/detail.open";
+		Map<String, Object> dataMap = whTransferService.selectWhTransfer(wt_no);
+		
+		mnv.addAllObjects(dataMap);
+		mnv.setViewName(url);
+		
+		return mnv;
 		
 	}
 	
