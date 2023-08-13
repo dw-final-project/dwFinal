@@ -58,7 +58,7 @@
 										<td width="15%" style="text-align: center;">
 											<fmt:formatDate value="${wo.deliverydate }" pattern="yyyy-MM-dd"></fmt:formatDate>
 										</td>
-										<td width="15%" style="text-align: center;">${wo.progress == '0' ? '대기중' : (wo.progress == '1' ? '진행중' : '완료')}</td>
+										<td width="15%" style="text-align: center; color: ${wo.progress == '0' ? 'red' : wo.progress == '1' ? 'green' : 'blue'}">${wo.progress == '0' ? '대기중' : (wo.progress == '1' ? '진행중' : '완료')}</td>
 									</tr>
 								</c:forEach>
 							</table>

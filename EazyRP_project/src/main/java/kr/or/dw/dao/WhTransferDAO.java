@@ -31,4 +31,8 @@ public interface WhTransferDAO {
 
 	List<Map<String, Object>> selectWhTransferDetail(String wt_no) throws SQLException;
 
+	void registProduct(WhTransferVO whtDetail) throws SQLException;
+
+	void minusProduct(WhTransferVO whtDetail) throws SQLException;
+
 }

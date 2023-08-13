@@ -57,7 +57,7 @@
 										<td style="text-align: center;">${wh.e_name}</td>
 										<td style="text-align: center;">${wh.pr_name}</td>
 										<td style="text-align: center;">${wh.wo_name }</td>
-										<td style="text-align: center;">${wh.progress == '0' ? '대기중' : (wh.progress == '1' ? '진행중' : '완료')}</td>
+										<td style="text-align: center; color: ${wh.progress == '0' ? 'red' : wh.progress == '1' ? 'green' : 'blue'}">${wh.progress == '0' ? '대기중' : (wh.progress == '1' ? '진행중' : '완료')}</td>
 									</tr>
 								</c:forEach>
 							</table>
