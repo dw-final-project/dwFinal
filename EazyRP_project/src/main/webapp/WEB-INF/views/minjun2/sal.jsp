@@ -14,8 +14,7 @@
 						<form id="searchForm2" method="post" action="/management/sal.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
-								<option value="a" ${searchType eq 'a' ? 'selected' : '' }>사원명</option>
-								<option value="b" ${searchType eq 'b' ? 'selected' : '' }>수당항목</option>
+								<option value="a" ${searchType eq 'a' ? 'selected' : '' }>해당월</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
@@ -31,19 +30,16 @@
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
 									<th width="200px" style="text-align: center;">급여번호</th>
-									<th width="200px" style="text-align: center;">사원번호</th>
+									<th width="200px" style="text-align: center;">해당월</th>
+									<th width="200px" style="text-align: center;">지급상태</th>
 									<th width="200px" style="text-align: center;">지급일</th>
-									<th width="200px" style="text-align: center;">지급총액</th>
-									<th width="200px" style="text-align: center;">공제내역</th>
-									<th width="200px" style="text-align: center;">수당내역</th>
 								</tr>
 									<c:forEach items="${salList}" var="sal" varStatus="loop">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="">${sal.SAL_NO}</a></td>
-										<td style="text-align: center;">${sal.EMP_NO} ${sal.E_NAME}</td>
+										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('salDetail.do?sal_no=${sal.SAL_NO}','급여 상세보기', 1500 , 1500)">${sal.SAL_NO}</a></td>
+										<td style="text-align: center;"><fmt:formatDate value="${sal.SALMONTH }" pattern="yyyy-MM"></fmt:formatDate></td>
+										<td style="text-align: center;">${sal.PAYMENTSTATUS}</td>
 										<td style="text-align: center;"><fmt:formatDate value="${sal.SALDATE }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
-										<td style="text-align: center;">${work.DED}</td>
-										<td style="text-align: center;">${work.EXTRA}</td>
 									</tr>
 									</c:forEach>
 							</table>
@@ -54,8 +50,8 @@
 					</div>
 					</div>
 						<div style="display: flex; align-items: end; justify-content: end;">
-								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('salRegistForm.do', '급여등록', 700, 500)"
-								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">근태 등록</button>
+								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('salRegistForm.do', '급여등록', 1500, 1500)"
+								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">급여 등록</button>
 						</div>
 			</div>
 		</div>

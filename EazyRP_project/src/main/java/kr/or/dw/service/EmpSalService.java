@@ -1,6 +1,7 @@
 package kr.or.dw.service;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,8 @@ import kr.or.dw.vo.DeductionVO;
 import kr.or.dw.vo.DeptVO;
 import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.ExtrapayVO;
+import kr.or.dw.vo.SalDetailVO;
+import kr.or.dw.vo.SalVO;
 import kr.or.dw.vo.ShopVO;
 import kr.or.dw.vo.SiVO;
 import kr.or.dw.vo.WorkVO;
@@ -96,6 +99,18 @@ public interface EmpSalService {
 	List<ExtrapayVO> getExtrapayList() throws SQLException;
 
 	List<Map<String, Object>> selectExtraPay(int emp_no, String salmonth, int e_sal) throws SQLException;
+	
+	// 급여
+	
+	String insertSal(SalVO salVO) throws SQLException;
+
+	void insertSalDetail(SalDetailVO salDetail) throws SQLException;
+
+	Map<String, Object> selectSalList(SearchCriteria cri) throws SQLException, ParseException;
+
+	Map<String, Object> selectSalDetail(String sal_no) throws SQLException;
+
+	void deleteSal(String sal_no_a) throws SQLException;
 
 
 

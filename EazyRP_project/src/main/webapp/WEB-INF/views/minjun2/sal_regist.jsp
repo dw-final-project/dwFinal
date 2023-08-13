@@ -42,9 +42,13 @@
 			<div class="col-md-12" style="max-width: 1500px;">
 				<div class="card card-outline card-info">
 					<div class="card-body pad">
-						<form role="form" method="post" action="registWork.do" name="registForm" enctype="multipart/form-data">
-							<div class="card-header d-flex justify-content-center">
-								<h2><input type="month" id="salmonth" name="salmonth" style="width: 400px;"></h2>
+						<form role="form" method="post" action="registSal.do" name="registForm" enctype="multipart/form-data">
+							<div class="card-header d-flex justify-content-center" style="">
+								<h1><input type="month" id="salmonth" name="salmonth" style="width: 400px;"></h1>
+								<div class="d-flex" style="vertical-align:center; margin-left: auto; align-content: center; align-items: center;">
+									<label for="saldate" class="" style="vertical-align:center;  float:right; text-align: center; margin-bottom: 0px; align-content: center;">지급일</label>
+									<input class="" type="date" id="saldate" name="saldate" style="width: 120px;">
+								</div>
 							</div>
 							<table class="table">
 								<thead>
@@ -69,6 +73,7 @@
 									</c:forEach>
 										<th rowspan="2" style="vertical-align: middle; width: 8%" class="dedpay">공제총액</th>
 										<th rowspan="2" style="vertical-align: middle; width: 8% ">실지급액</th>
+										<th rowspan="2" style="vertical-align: middle; width: 6% ">비고</th>
 									</tr>
 									<tr>
 										<th style="width: 6%">사원번호</th>
@@ -108,13 +113,14 @@
 										<td id="sumExtrapay" rowspan="2" style="vertical-align: middle;"></td>
 										<c:forEach items="${deductionList }" begin="0" end="2" var="ded" varStatus="loop">
 										<td style="width: 8%">
-											<input type="text"  id="ded_name" name="ded_name" class="dedApply" value="" style="" readonly placeholder="적용하기">
-											<input type="hidden" id="ded_no" name="ded_no" value="${ded.DED_NO }">
+											<input type="text"  id="${ded.DED_NAME}" name="ded_name" class="dedApply" value="" style="" readonly placeholder="적용하기">
+											<input type="hidden" id="ded_no" name="${ded.DED_NO }" value="x">
 											<input type="hidden" id="calc" name="calc" value="${ded.CALC }">
 										</td>
 										</c:forEach>
 										<td rowspan="2" style="vertical-align: middle;" class="dedpay" id="sumDedpay"></td>
 										<td rowspan="2" style="vertical-align: middle;"><input type="text"  id="realSumSal" name="realsumsal" value="" style="" readonly></td>
+										<td rowspan="2" style="vertical-align: middle;"><button type="button" id="cancelBtn">삭제</button></td>
 									</tr>
 									<tr>
 										<td><input type="text"  id="emp_no0" name="emp_no" value="사원번호" style="" readonly></td>
@@ -130,8 +136,8 @@
 										<td></td>
 										<c:forEach items="${deductionList }" begin="3" end="5" var="ded" varStatus="loop">
 										<td style="width: 8%">
-											<input type="text"  id="ded_name" name="ded_name" class="dedApply" value="" style="" readonly placeholder="적용하기">
-											<input type="hidden" id="ded_no" name="ded_no" value="${ded.DED_NO }">
+											<input type="text"  id="${ded.DED_NAME}" name="ded_name" class="dedApply" value="" style="" readonly placeholder="적용하기">
+											<input type="hidden" id="ded_no" name="${ded.DED_NO }" value="x">
 											<input type="hidden" id="calc" name="calc" value="${ded.CALC }">
 										</td>
 										</c:forEach>
@@ -139,38 +145,38 @@
 								</tbody>
 								<tfoot>
 									<tr class="total">
-										<td rowspan="2" colspan="2" align="center">총합계</td>
-										<td ></td>
-										<td ></td>
-										<td></td>
-										<td></td>
-										<td rowspan="2"></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td rowspan="2"></td>
+										<td rowspan="2" colspan="2" align="center" style="vertical-align: middle;">총합계</td>
+										<td id="total_e_sal"></td>
+										<td id="total_야근수당"></td>
+										<td id="total_주말근무수당"></td>
+										<td id="total_연차수당"></td>
+										<td rowspan="2" id="total_지급총액" style="vertical-align: middle;"></td>
+										<td id="total_건강보험"></td>
+										<td id="total_장기요양보험"></td>
+										<td id="total_소득세"></td>
+										<td rowspan="2" id="total_sumDedpay" style="vertical-align: middle;"></td>
+										<td rowspan="2" style="vertical-align: middle;"><input type="text"  id="totalamount" name="totalamount" class="" value="" style="" readonly placeholder=""></td>
 										<td rowspan="2"></td>
 									</tr>
 									<tr class="total">
 										<td></td>
+										<td id="total_초과수당"></td>
+										<td id="total_출산보육수당"></td>
 										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
+										<td id="total_지방소득세"></td>
+										<td id="total_국민연금"></td>
+										<td id="total_고용보험"></td>
 									</tr>
 								</tfoot>
 							</table>
 								<button type="button" id="addPutBtn" class="btn btn-primary">직원 추가</button>
+								<button type="button" id="addAllPutBtn" class="btn btn-primary">직원 전체 추가</button>
 						</form>
 					</div>
 					<div class="card-footer card-tools">
-						<button type="button" class="btn btn-primary" id="modifyBtn">등 록</button>
+						<button type="button" class="btn btn-primary" id="registBtn">등 록</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;
-						<button type="button" class="btn btn-danger" id="deleteBtn">삭 제</button>
-						&nbsp;&nbsp;&nbsp;&nbsp;
-						<button type="button" class="btn btn-warning" id="cancelBtn">취 소</button>
+						<button type="button" class="btn btn-warning" id="CancelBtn">취 소</button>
 					</div>
 				</div>
 			</div>
@@ -185,31 +191,31 @@
 		
 		let form = $('form[role="form"]');
 
-		// 수정버튼 클릭
-		$('#modifyBtn').on('click', function() {
-
-			if ($('.work1').val() == "") {
-				alert("빈 항목이 있습니다.");
+		// 등록버튼 클릭
+		$('#registBtn').on('click', function() {
+			if($('#saldate').val() == ''){
+				alert("지급일을 입력해주세요.");
 				return;
 			}
-			if ($('.work2').val() == "") {
-				alert("빈 항목이 있습니다.");
+			
+			for(let i = 0; i < $('input[id="realSumSal"]').get().length; i++) {
+				if($('input[id="realSumSal"]').eq(i).val() == '') {
+					alert("공제정보를 확인해주세요.");
+					return;
+				}	
+			}
+			
+			if($('#totalamount').val() == '' || $('#totalamount').val() == 0){
+				alert('사원 정보를 입력해주세요.');
 				return;
 			}
-			if ($('.work3').val() == "") {
-				alert("빈 항목이 있습니다.");
-				return;
-			}
-			if ($('.work4').val() == "") {
-				alert("빈 항목이 있습니다.");
-				return;
-			}
-
+			
+			
 			form.submit();
 		});
 
 		// 취소버튼 클릭
-		$('#cancelBtn').on('click', function() {
+		$('#CancelBtn').on('click', function() {
 			window.opener.location.reload(true);
 			window.close(); // 윈도우 창을 닫는다.
 		});
@@ -240,6 +246,15 @@
 		}
 		;
 		
+// 		// 사원 전체 추가
+// 		$('#addAllPutBtn').on('click', function()){
+			
+// 			form.attr({
+// 				'action' : 'addAllEmp.do',
+// 				'method' : 'post'
+// 			});
+// 		};	
+		
 		let cnt = 0;
 		
 		// 사원 추가 버튼
@@ -253,28 +268,31 @@
 				+	'<td><input type="text"  id="dname' + cnt + '" name="dname" value="부서" style="" readonly></td>'
 				+	'<td><input type="text"  id="e_sal' + cnt + '" name="e_sal" value="기본급" class="sumpay" style="" readonly></td>'
 				    <c:forEach items="${extrapayList }" begin="0" end="2" var="exp" varStatus="loop">
-					+	'<td style="width: 8%"><input type="text"  id="ep_name' + cnt + '" name="${exp.EP_NAME }" value="" class="sumpay" style="color: blue; font-weight:bold;" readonly>'
+					+	'<td style="width: 8%"><input type="text"  id="ep_name' + cnt + '" name="${exp.EP_NAME }" value="" class="sumpay" style=" font-weight:bold;" readonly>'
 					+ 	'<input type="hidden" id="${exp.EP_NO }" name="${exp.EP_NO }" value="${exp.EP_NO }"></td>'
 					 </c:forEach>
 				+	'<td rowspan="2" id="sumExtrapay" style="vertical-align: middle;"></td>'
 					<c:forEach items="${deductionList }" begin="0" end="2" var="ded" varStatus="loop">
-					+	'<td style="width: 8%"><input type="text"  id="ded_name" name="ded_name" class="dedApply" value="" style="" readonly placeholder="적용하기">'
+					+	'<td style="width: 8%"><input type="text"  id="${ded.DED_NAME}" name="ded_name" class="dedApply" value="" style="" readonly placeholder="적용하기">'
+					+	'<input type="hidden" id="ded_no" name="${ded.DED_NO }" value="x">'
 					+	'<input type="hidden" id="calc" name="calc" value="${ded.CALC }"></td>'
 					 </c:forEach>
 				+	'<td rowspan="2" style="vertical-align: middle;" class="dedpay" id="sumDedpay"></td>'
 				+	'<td rowspan="2" style="vertical-align: middle;"><input type="text"  id="realSumSal" name="realsumsal" value="" style="" readonly></td>'
+				+ 	'<td rowspan="2" style="text-align : center; vertical-align: middle;"><button type="button" id="cancelBtn">삭제</button></td>'
 				+'</tr>'
 				+'<tr>'
 				+	'<td><input type="text"  id="emp_no' + cnt + '" name="emp_no" value="사원번호" style="" readonly></td>'
 				+	'<td><input type="text"  id="e_rank' + cnt + '" name="e_rank" value="직급" style="" readonly></td>'
 				+	'<td></td>'
 					<c:forEach items="${extrapayList }" begin="3" end="5" var="exp" varStatus="loop">
-					+	'<td style="width: 7%"><input type="text"  id="ep_name' + cnt + '" name="${exp.EP_NAME }" value="" class="sumpay" style="color: blue;  font-weight:bold;" readonly>'
+					+	'<td style="width: 7%"><input type="text"  id="ep_name' + cnt + '" name="${exp.EP_NAME }" value="" class="sumpay" style=""  font-weight:bold;" readonly>'
 					+	'<input type="hidden" id="${exp.EP_NO }" name="${exp.EP_NO }" value="${exp.EP_NO }"></td>'
 					</c:forEach>
 				+	'<td></td>'
 					<c:forEach items="${deductionList }" begin="3" end="5" var="ded" varStatus="loop">
-				+	'<td style="width: 8%"><input type="text"  id="ded_name" name="ded_name" class="dedApply" value="" style="" readonly placeholder="적용하기">'
+				+	'<td style="width: 8%"><input type="text"  id="${ded.DED_NAME}" name="ded_name" class="dedApply" value="" style="" readonly placeholder="적용하기">'
+				+	'<input type="hidden" id="ded_no" name="${ded.DED_NO }" value="x">'
 				+	'<input type="hidden" id="calc" name="calc" value="${ded.CALC }"></td>'
 					 </c:forEach>
 				+'</tr>'
@@ -290,7 +308,204 @@
 			let c_no = $('#c_no').val();
 			let idVal = $(this).attr("id");
 			$('#cnt').val(idVal);
-			let openWin = OpenWindow("/management/findEmp.do?c_no=" + c_no, "사원 찾기", 500, 500);
+			let openWin = OpenWindow("/management/findEmp.do?c_no=" + c_no, "사원 찾기", 600, 700);
+		});
+		
+		//첫번째 tr 사원삭제버튼
+		$('tbody').on('click', '#firstcancelBtn', function(){
+			$(this).parent('td').parent('tr').next('tr').remove();
+			$(this).parent('td').parent('tr').remove();
+			$('#addPutBtn').click();
+			
+			// 토탈금액
+			let e_sal_sum = 0;
+			for(let i = 0; i < $('tbody').find('input[name="e_sal"]').get().length; i++) {
+				e_sal_sum += Number($('tbody').find('input[name="e_sal"]').eq(i).val());
+			}			
+			$('#total_e_sal').text(e_sal_sum);
+			
+			let sum_야근수당 = 0;
+			for(let i = 0; i < $('tbody').find('input[name="야근수당"]').get().length; i++) {
+				sum_야근수당 += Number($('tbody').find('input[name="야근수당"]').eq(i).val());
+			}			
+			$('#total_야근수당').text(sum_야근수당);
+			
+			let sum_초과수당 = 0;
+			for(let i = 0; i < $('tbody').find('input[name="초과수당"]').get().length; i++) {
+				sum_초과수당 += Number($('tbody').find('input[name="초과수당"]').eq(i).val());
+			}			
+			$('#total_초과수당').text(sum_초과수당);
+
+			let sum_출산보육수당 = 0;
+			for(let i = 0; i < $('tbody').find('input[name="출산보육수당"]').get().length; i++) {
+				sum_출산보육수당 += Number($('tbody').find('input[name="출산보육수당"]').eq(i).val());
+			}			
+			$('#total_출산보육수당').text(sum_출산보육수당);
+			
+			let sum_주말근무수당 = 0;
+			for(let i = 0; i < $('tbody').find('input[name="주말근무수당"]').get().length; i++) {
+				sum_주말근무수당 += Number($('tbody').find('input[name="주말근무수당"]').eq(i).val());
+			}			
+			$('#total_주말근무수당').text(sum_주말근무수당);
+			
+			let sum_연차수당 = 0;
+			for(let i = 0; i < $('tbody').find('input[name="연차수당"]').get().length; i++) {
+				sum_연차수당 += Number($('tbody').find('input[name="연차수당"]').eq(i).val());
+			}			
+			$('#total_연차수당').text(sum_연차수당);
+
+			let sum_지급총액 = 0;
+			for(let i = 0; i < $('tbody').find('td[id="sumExtrapay"]').get().length; i++) {
+				sum_지급총액 += Number($('tbody').find('td[id="sumExtrapay"]').eq(i).text());
+			}			
+			$('#total_지급총액').text(sum_지급총액);
+			
+			let sum_건강보험 = 0;
+			for(let i = 0; i < $('tbody').find('input[id="건강보험"]').get().length; i++) {
+				sum_건강보험 += Number($('tbody').find('input[id="건강보험"]').eq(i).val());
+			}			
+			$('#total_건강보험').text(sum_건강보험);
+			
+			let sum_장기요양보험 = 0;
+			for(let i = 0; i < $('tbody').find('input[id="장기요양보험"]').get().length; i++) {
+				sum_장기요양보험 += Number($('tbody').find('input[id="장기요양보험"]').eq(i).val());
+			}			
+			$('#total_장기요양보험').text(sum_장기요양보험);
+			
+			let sum_소득세 = 0;
+			for(let i = 0; i < $('tbody').find('input[id="소득세"]').get().length; i++) {
+				sum_소득세 += Number($('tbody').find('input[id="소득세"]').eq(i).val());
+			}			
+			$('#total_소득세').text(sum_소득세);
+			
+			let sum_지방소득세 = 0;
+			for(let i = 0; i < $('tbody').find('input[id="지방소득세"]').get().length; i++) {
+				sum_지방소득세 += Number($('tbody').find('input[id="지방소득세"]').eq(i).val());
+			}			
+			$('#total_지방소득세').text(sum_지방소득세);
+			
+			let sum_국민연금 = 0;
+			for(let i = 0; i < $('tbody').find('input[id="국민연금"]').get().length; i++) {
+				sum_국민연금 += Number($('tbody').find('input[id="국민연금"]').eq(i).val());
+			}			
+			$('#total_국민연금').text(sum_국민연금);
+			
+			let sum_고용보험 = 0;
+			for(let i = 0; i < $('tbody').find('input[id="고용보험"]').get().length; i++) {
+				sum_고용보험 += Number($('tbody').find('input[id="고용보험"]').eq(i).val());
+			}			
+			$('#total_고용보험').text(sum_고용보험);
+
+			let sum_sumDedpay = 0;
+			for(let i = 0; i < $('tbody').find('td[id="sumDedpay"]').get().length; i++) {
+				sum_sumDedpay += Number($('tbody').find('td[id="sumDedpay"]').eq(i).text());
+			}			
+			$('#total_sumDedpay').text(sum_sumDedpay);
+			
+			let sum_totalamount = 0;
+			for(let i = 0; i < $('tbody').find('input[id="realSumSal"]').get().length; i++) {
+				sum_totalamount += Number($('tbody').find('input[id="realSumSal"]').eq(i).val());
+			}			
+			$('#totalamount').val(sum_totalamount);
+			
+		});
+		
+		// 사원 삭제 버튼
+		$('tbody').on('click', '#cancelBtn', function(){
+			$(this).parent('td').parent('tr').next('tr').remove();
+			$(this).parent('td').parent('tr').remove();
+			
+			// 토탈금액
+			let e_sal_sum = 0;
+			for(let i = 0; i < $('tbody').find('input[name="e_sal"]').get().length; i++) {
+				e_sal_sum += Number($('tbody').find('input[name="e_sal"]').eq(i).val());
+			}			
+			$('#total_e_sal').text(e_sal_sum);
+			
+			let sum_야근수당 = 0;
+			for(let i = 0; i < $('tbody').find('input[name="야근수당"]').get().length; i++) {
+				sum_야근수당 += Number($('tbody').find('input[name="야근수당"]').eq(i).val());
+			}			
+			$('#total_야근수당').text(sum_야근수당);
+			
+			let sum_초과수당 = 0;
+			for(let i = 0; i < $('tbody').find('input[name="초과수당"]').get().length; i++) {
+				sum_초과수당 += Number($('tbody').find('input[name="초과수당"]').eq(i).val());
+			}			
+			$('#total_초과수당').text(sum_초과수당);
+
+			let sum_출산보육수당 = 0;
+			for(let i = 0; i < $('tbody').find('input[name="출산보육수당"]').get().length; i++) {
+				sum_출산보육수당 += Number($('tbody').find('input[name="출산보육수당"]').eq(i).val());
+			}			
+			$('#total_출산보육수당').text(sum_출산보육수당);
+			
+			let sum_주말근무수당 = 0;
+			for(let i = 0; i < $('tbody').find('input[name="주말근무수당"]').get().length; i++) {
+				sum_주말근무수당 += Number($('tbody').find('input[name="주말근무수당"]').eq(i).val());
+			}			
+			$('#total_주말근무수당').text(sum_주말근무수당);
+			
+			let sum_연차수당 = 0;
+			for(let i = 0; i < $('tbody').find('input[name="연차수당"]').get().length; i++) {
+				sum_연차수당 += Number($('tbody').find('input[name="연차수당"]').eq(i).val());
+			}			
+			$('#total_연차수당').text(sum_연차수당);
+
+			let sum_지급총액 = 0;
+			for(let i = 0; i < $('tbody').find('td[id="sumExtrapay"]').get().length; i++) {
+				sum_지급총액 += Number($('tbody').find('td[id="sumExtrapay"]').eq(i).text());
+			}			
+			$('#total_지급총액').text(sum_지급총액);
+			
+			let sum_건강보험 = 0;
+			for(let i = 0; i < $('tbody').find('input[id="건강보험"]').get().length; i++) {
+				sum_건강보험 += Number($('tbody').find('input[id="건강보험"]').eq(i).val());
+			}			
+			$('#total_건강보험').text(sum_건강보험);
+			
+			let sum_장기요양보험 = 0;
+			for(let i = 0; i < $('tbody').find('input[id="장기요양보험"]').get().length; i++) {
+				sum_장기요양보험 += Number($('tbody').find('input[id="장기요양보험"]').eq(i).val());
+			}			
+			$('#total_장기요양보험').text(sum_장기요양보험);
+			
+			let sum_소득세 = 0;
+			for(let i = 0; i < $('tbody').find('input[id="소득세"]').get().length; i++) {
+				sum_소득세 += Number($('tbody').find('input[id="소득세"]').eq(i).val());
+			}			
+			$('#total_소득세').text(sum_소득세);
+			
+			let sum_지방소득세 = 0;
+			for(let i = 0; i < $('tbody').find('input[id="지방소득세"]').get().length; i++) {
+				sum_지방소득세 += Number($('tbody').find('input[id="지방소득세"]').eq(i).val());
+			}			
+			$('#total_지방소득세').text(sum_지방소득세);
+			
+			let sum_국민연금 = 0;
+			for(let i = 0; i < $('tbody').find('input[id="국민연금"]').get().length; i++) {
+				sum_국민연금 += Number($('tbody').find('input[id="국민연금"]').eq(i).val());
+			}			
+			$('#total_국민연금').text(sum_국민연금);
+			
+			let sum_고용보험 = 0;
+			for(let i = 0; i < $('tbody').find('input[id="고용보험"]').get().length; i++) {
+				sum_고용보험 += Number($('tbody').find('input[id="고용보험"]').eq(i).val());
+			}			
+			$('#total_고용보험').text(sum_고용보험);
+
+			let sum_sumDedpay = 0;
+			for(let i = 0; i < $('tbody').find('td[id="sumDedpay"]').get().length; i++) {
+				sum_sumDedpay += Number($('tbody').find('td[id="sumDedpay"]').eq(i).text());
+			}			
+			$('#total_sumDedpay').text(sum_sumDedpay);
+			
+			let sum_totalamount = 0;
+			for(let i = 0; i < $('tbody').find('input[id="realSumSal"]').get().length; i++) {
+				sum_totalamount += Number($('tbody').find('input[id="realSumSal"]').eq(i).val());
+			}			
+			$('#totalamount').val(sum_totalamount);
+			
 		});
 		
 		// 공제 적용하기
@@ -336,7 +551,56 @@
 					let realsal = Number($(this).parents('tr').prev('tr').find('td[id=sumExtrapay]').text()) - Number($(this).parents('tr').prev('tr').find('#sumDedpay').text());
 					$(this).parents('tr').prev('tr').find('#realSumSal').val(realsal)
 				}
-					
+				
+				let sum_건강보험 = 0;
+				for(let i = 0; i < $('tbody').find('input[id="건강보험"]').get().length; i++) {
+					sum_건강보험 += Number($('tbody').find('input[id="건강보험"]').eq(i).val());
+				}			
+				$('#total_건강보험').text(sum_건강보험);
+				
+				let sum_장기요양보험 = 0;
+				for(let i = 0; i < $('tbody').find('input[id="장기요양보험"]').get().length; i++) {
+					sum_장기요양보험 += Number($('tbody').find('input[id="장기요양보험"]').eq(i).val());
+				}			
+				$('#total_장기요양보험').text(sum_장기요양보험);
+				
+				let sum_소득세 = 0;
+				for(let i = 0; i < $('tbody').find('input[id="소득세"]').get().length; i++) {
+					sum_소득세 += Number($('tbody').find('input[id="소득세"]').eq(i).val());
+				}			
+				$('#total_소득세').text(sum_소득세);
+				
+				let sum_지방소득세 = 0;
+				for(let i = 0; i < $('tbody').find('input[id="지방소득세"]').get().length; i++) {
+					sum_지방소득세 += Number($('tbody').find('input[id="지방소득세"]').eq(i).val());
+				}			
+				$('#total_지방소득세').text(sum_지방소득세);
+				
+				let sum_국민연금 = 0;
+				for(let i = 0; i < $('tbody').find('input[id="국민연금"]').get().length; i++) {
+					sum_국민연금 += Number($('tbody').find('input[id="국민연금"]').eq(i).val());
+				}			
+				$('#total_국민연금').text(sum_국민연금);
+				
+				let sum_고용보험 = 0;
+				for(let i = 0; i < $('tbody').find('input[id="고용보험"]').get().length; i++) {
+					sum_고용보험 += Number($('tbody').find('input[id="고용보험"]').eq(i).val());
+				}			
+				$('#total_고용보험').text(sum_고용보험);
+
+				let sum_sumDedpay = 0;
+				for(let i = 0; i < $('tbody').find('td[id="sumDedpay"]').get().length; i++) {
+					sum_sumDedpay += Number($('tbody').find('td[id="sumDedpay"]').eq(i).text());
+				}			
+				$('#total_sumDedpay').text(sum_sumDedpay);
+				
+				let sum_totalamount = 0;
+				for(let i = 0; i < $('tbody').find('input[id="realSumSal"]').get().length; i++) {
+					sum_totalamount += Number($('tbody').find('input[id="realSumSal"]').eq(i).val());
+				}			
+				$('#totalamount').val(sum_totalamount);
+				$(this).next('input').val('o');
+				
 			}
 		});
 	}
