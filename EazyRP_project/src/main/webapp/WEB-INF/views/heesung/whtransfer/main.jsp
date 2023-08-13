@@ -37,7 +37,7 @@
 									<th style="text-align: center;">받는 창고</th>
 									<th style="text-align: center;">품목</th>
 									<th style="text-align: center;">총량</th>
-									<th style="text-align: center;">상태</th>
+<!-- 									<th style="text-align: center;">상태</th> -->
 								</tr>
 								<c:if test="${empty whtList }">
 									<tr>
@@ -56,9 +56,9 @@
 									</td>
 									<td style="text-align: center;">${wht.WH_NAME }</td>
 									<td style="text-align: center;">${wht.WH_NAME2}</td>
-									<td style="text-align: center;">${wht.PR_NAME}</td>
+									<td style="text-align: center;">${wht.PR_NAMES}</td>
 									<td style="text-align: center;">${wht.TOTAL_QUANTITY }</td>
-									<td style="text-align: center;">${wht.PROGRESS == '0' ? '대기중' : (wht.PROGRESS == '1' ? '진행중' : '완료')}</td>
+<%-- 									<td style="text-align: center;">${wht.PROGRESS == '0' ? '대기중' : (wht.PROGRESS == '1' ? '진행중' : '완료')}</td> --%>
 								</tr>
 								</c:forEach>
 							</table>

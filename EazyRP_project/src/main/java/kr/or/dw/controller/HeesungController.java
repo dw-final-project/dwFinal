@@ -807,8 +807,8 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	
 	@RequestMapping("whtransfer/regist")
 	public void whTransferRegist(HttpServletResponse res, HttpSession session, 
-					int emp_no, String wh_no, String wh_no2, String progress, 
-					int total_quantity, String[] pr_no, int[] quantity) throws SQLException, IOException {
+					int emp_no, String wh_no, String wh_no2, 
+					int total_quantity, String[] pr_no, int[] quantity, String[] pr_name) throws SQLException, IOException {
 		
 		System.out.println("erp4/whtransfer/regist - 진입");
 		
@@ -826,11 +826,11 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 			wht.setEmp_no(emp_no);
 			wht.setWh_no(wh_no);
 			wht.setWh_no2(wh_no2);
-			wht.setProgress(progress);
 			wht.setTotal_quantity(total_quantity);
 			
 			wht.setPr_no(pr_no[i]);
 			wht.setQuantity(quantity[i]);
+			wht.setPr_name(pr_name[i]);
 			
 			whtList.add(wht);
 			

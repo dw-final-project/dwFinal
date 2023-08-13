@@ -95,18 +95,18 @@
 					<input type="hidden" name="wh_no2" value="">
 				</td>
 	        </tr>
-			<tr>
-            <td width="40%" align="center">
-            	<b>상태</b>
-            </td>
-            <td>
-            	<select name="progress" id="fc-select">
-				    <option value="0">대기중</option>
-				    <option value="1">진행중</option>
-				    <option value="2">완료</option>
-				</select>
-			</td>
-        </tr>
+			<!-- <tr>
+	            <td width="40%" align="center">
+	            	<b>상태</b>
+	            </td>
+	            <td>
+	            	<select name="progress" id="fc-select">
+					    <option value="0">대기중</option>
+					    <option value="1">진행중</option>
+					    <option value="2">완료</option>
+					</select>
+				</td>
+			</tr> -->
 		</table>
 		<button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">추가</button>
 		<table>

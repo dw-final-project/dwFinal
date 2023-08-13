@@ -292,9 +292,19 @@ window.onload = function(){
 	
 }
 
+function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
+	winleft = (screen.width - WinWidth) / 2;
+	wintop = (screen.height - WinHeight) / 2;
+	var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
+							+ "height=" + WinHeight + ",top="+ wintop + ",left="
+							+ winleft + ",resizable=yes,status=yes");
+	
+	win.focus();
+	return win;
+};
+
 </script>
 <c:if test="${wh.PROGRESS eq '0'}">
-
 
 <script>
 let rownumList = $('.rownum');
@@ -320,17 +330,6 @@ $('#addPutBtn').on('click', function(){
 		);
 });
 
-
-function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
-	winleft = (screen.width - WinWidth) / 2;
-	wintop = (screen.height - WinHeight) / 2;
-	var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
-							+ "height=" + WinHeight + ",top="+ wintop + ",left="
-							+ winleft + ",resizable=yes,status=yes");
-	
-	win.focus();
-	return win;
-};
 
 	// 제품코드 td 클릭 이벤트
 	$(document).on('click', '.pr_names', function(){

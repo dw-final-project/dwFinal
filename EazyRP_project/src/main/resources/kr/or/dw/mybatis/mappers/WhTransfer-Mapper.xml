@@ -21,6 +21,11 @@
 	<select id="selectSearchWhTransferList" resultType="Map">
 		SELECT 	wht.wt_no,
 				MAX(wht.sys_regdate) sys_regdate,
+				count(whtd.PR_NO) pr_no,
+				CASE WHEN count(whtd.PR_NO) <![CDATA[ > ]]> 1
+					THEN MAX((SELECT pr_name FROM product WHERE pr_no = whtd.pr_no)) || ' 외 ' || (count(whtd.PR_NO)-1) || '건'
+					ELSE MAX((SELECT pr_name FROM product WHERE pr_no = whtd.pr_no))
+				END pr_names,
 				MAX((SELECT pr_name FROM product WHERE pr_no = whtd.pr_no)) pr_name, 
 				MAX((SELECT wh_name FROM warehouse WHERE wh_no = wht.wh_no)) wh_name,
 				MAX((SELECT wh_name FROM warehouse WHERE wh_no = wht.wh_no2)) wh_name2,
@@ -101,7 +106,7 @@
 			#{wh_no},
 			#{total_quantity},
 			#{emp_no},
-			#{progress},
+			2,
 			#{emp_no},
 			sysdate,
 			sysdate,
@@ -124,7 +129,7 @@
 		)
 	</insert>
 	
-	<update id="">
+	<update id="registProduct" parameterType="whTransfer">
 		MERGE INTO product tgt
 		USING(  	
 				SELECT	#{pr_name} pr_name,
@@ -164,11 +169,11 @@
 		        'PR_' || LPAD(product_seq.nextval, 3, '0'), 
 		        src.pr_name, 
 		        src.c_no,
-		        (SELECT MAX(pr_gr) FROM product WHERE pr_name = src.pr_name GROUP BY pr_name),
-		        (SELECT MAX(pr_st) FROM product WHERE pr_name = src.pr_name GROUP BY pr_name),
-		        (SELECT MAX(pr_inprice) FROM product WHERE pr_name = src.pr_name GROUP BY pr_name),
-		        (SELECT MAX(pr_exprice) FROM product WHERE pr_name = src.pr_name GROUP BY pr_name),
-		        (SELECT MAX(pr_class) FROM product WHERE pr_name = src.pr_name GROUP BY pr_name),
+		        (SELECT MAX(pr_gr) FROM product WHERE pr_name = #{pr_name} GROUP BY pr_name),
+		        (SELECT MAX(pr_st) FROM product WHERE pr_name = #{pr_name} GROUP BY pr_name),
+		        (SELECT MAX(pr_inprice) FROM product WHERE pr_name = #{pr_name} GROUP BY pr_name),
+		        (SELECT MAX(pr_exprice) FROM product WHERE pr_name = #{pr_name} GROUP BY pr_name),
+		        (SELECT MAX(pr_class) FROM product WHERE pr_name = #{pr_name} GROUP BY pr_name),
 		        '', 
 		        sysdate, 
 		        'SP_001', 
@@ -180,6 +185,11 @@
 		        src.wh_no, 
 		        'Y'
 		    )
+	</update>
+	
+	<update id="minusProduct" parameterType="whTransfer">
+		UPDATE 	product SET quantity = quantity - #{quantity}
+		WHERE	pr_no = #{pr_no}
 	</update>
 	
 	<select id="selectWhTransfer" parameterType="str" resultType="Map">

@@ -87,6 +87,9 @@ public class WhTransferServiceImpl implements WhTransferService{
 		for(WhTransferVO whtDetail : whtList) {
 			whtDetail.setWt_no(wt_no);
 			whTransferDAO.registWhTransferDetail(whtDetail);
+			
+			whTransferDAO.registProduct(whtDetail);	// 받는 창고에 수량 추가
+			whTransferDAO.minusProduct(whtDetail);	// 보내는 창고에 수량 차감
 		}
 
 	}
