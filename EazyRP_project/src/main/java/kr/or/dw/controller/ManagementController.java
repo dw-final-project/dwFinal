@@ -82,19 +82,29 @@ public class ManagementController {
 	private ManagementService managementService;
 	
 	@RequestMapping("/main")
-	public ModelAndView main(ModelAndView mnv, String mcode) throws SQLException {
-		String url = "/management/testMain.page";
+	public ModelAndView main(String mymenu, ModelAndView mnv, String mcode, String murl) throws SQLException {
+		String url="";
+    	if(mymenu == null) {
+			url="/management/testMain.page";
+		} else {
+			url="/management/testMain.mymenu";
+		}
 		
 		mnv.setViewName(url);
 		mnv.addObject("mcode", mcode);
-
+		mnv.addObject("murl", murl);
 		
 		return mnv;
 	}
 	
 	@RequestMapping("/payment")
-	public ModelAndView payment(HttpSession session, ModelAndView mnv, String regist, String mcode, SearchCriteria cri) throws SQLException {
+	public ModelAndView payment(String mymenu, HttpSession session, ModelAndView mnv, String regist, String murl, String mcode, SearchCriteria cri) throws SQLException {
 		String url = "";
+    	if(mymenu == null) {
+			url="/management/payment.page";
+		} else {
+			url="/management/payment.mymenu";
+		}
 		String c_no = (String) session.getAttribute("c_no");
 		int emp_no = Integer.parseInt((String) session.getAttribute("emp_no"));
 		System.out.println("컨트롤러 keyword : " + cri.getKeyword());
@@ -105,7 +115,6 @@ public class ManagementController {
 		dataMap.put("cri", cri);
 		dataMap.put("emp_no", emp_no);
 		dataMap.put("regist", "N");
-			url = "/management/payment.page";
 		draft = managementService.getAllDraft(dataMap);
 		
 		Map<String, Object> listMap = new HashMap<String, Object>();
@@ -113,6 +122,7 @@ public class ManagementController {
 		mnv.addObject("plList", plList);
 		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(draft);
+		mnv.addObject("murl", murl);
 		mnv.addObject("keyword", cri.getKeyword());
 		mnv.addObject("searchType", cri.getSearchType());
 		
@@ -120,8 +130,7 @@ public class ManagementController {
 	}
 	
 	@RequestMapping("/registPayment")
-	public ModelAndView registPayment(HttpSession session, ModelAndView mnv, String regist, String mcode, SearchCriteria cri) throws SQLException {
-		String url = "";
+	public ModelAndView registPayment(String mymenu, String murl, HttpSession session, ModelAndView mnv, String regist, String mcode, SearchCriteria cri) throws SQLException {
 		String c_no = (String) session.getAttribute("c_no");
 		int emp_no = Integer.parseInt((String) session.getAttribute("emp_no"));
 		System.out.println("컨트롤러 keyword : " + cri.getKeyword());
@@ -132,7 +141,12 @@ public class ManagementController {
 		dataMap.put("cri", cri);
 		dataMap.put("emp_no", emp_no);
 		dataMap.put("regist", "Y");
-		url = "/management/registPayment.page";
+		String url = "";
+    	if(mymenu == null) {
+			url="/management/registPayment.page";
+		} else {
+			url="/management/registPayment.mymenu";
+		}
 		draft = managementService.getAllDraft(dataMap);
 		
 		Map<String, Object> listMap = new HashMap<String, Object>();
@@ -140,6 +154,7 @@ public class ManagementController {
 		mnv.addObject("plList", plList);
 		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(draft);
+		mnv.addObject("murl", murl);
 		mnv.addObject("keyword", cri.getKeyword());
 		mnv.addObject("searchType", cri.getSearchType());
 		
@@ -562,11 +577,16 @@ public class ManagementController {
 	}
 	
 	@RequestMapping("/paymentLine")
-	public ModelAndView paymentLine(ModelAndView mnv, HttpSession session,String mcode, SearchCriteria cri) throws SQLException {
-		String url = "/management/payLine.page";
+	public ModelAndView paymentLine(String mymenu, ModelAndView mnv, HttpSession session,String mcode,String murl, SearchCriteria cri) throws SQLException {
+		String url = "";
+    	if(mymenu == null) {
+			url="/management/payLine.page";
+		} else {
+			url="/management/payLine.mymenu";
+		}
 		String c_no = (String) session.getAttribute("c_no");
 		List<PlVO> plList = managementService.getAllPl(c_no);
-		
+		mnv.addObject("murl", murl);
 		mnv.addObject("plList", plList);
 		mnv.addObject("mcode", mcode);
 		mnv.setViewName(url);
@@ -671,8 +691,6 @@ public class ManagementController {
 		
 	}
 	
-	@RequestMapping("/print")
-	public void print() {
-	}
+	
 	
 }

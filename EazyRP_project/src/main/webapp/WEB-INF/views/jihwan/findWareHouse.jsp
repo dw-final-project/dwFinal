@@ -36,7 +36,7 @@
 			<tr>
 				<th width="100px" style="text-align: center;">창고 이름</th>
 				<th width="100px" style="text-align: center;">주소 </th>
-				<th width="100px" style="text-align: center;">업체명</th>
+				<th width="100px" style="text-align: center;">소유 업체명</th>
 			</tr>
 			<c:forEach items="${warehouse }" var="wh">
 				<tr class="trHover">
@@ -80,8 +80,8 @@ $('#searchBtn').on('click',function(){
 			console.log(parentInputId);
 			
 			$('tr').on('click', function(){
-				let wh_noName = $(this).find('#wh_name').text();
-				let wh_no = $(this).find('#wh_no').val();
+				let wh_noName = $(this).find('#wh_name').text();	// 창고명
+				let wh_no = $(this).find('#wh_no').val();			// 창고번호
 				let price = $(this).find('.cost').val();
 				
 					
@@ -102,10 +102,30 @@ $('#searchBtn').on('click',function(){
 						parentElWhNo.val(wh_no)
 						$('#wh_no', opener.document).val($(this).find('#wh_name').text() + " / " + $(this).find('#addr').text());
 						window.close();
+						
+					} else if(gbVal == 'C'){
+						
+						// 창고이동 사용 부분 (희성)
+						let parentEl_give = $('#give_wh_name', opener.document);	// 보낸 창고
+						let parentEl_give_no = $('input[name=wh_no]', opener.document);
+						
+						let parentEl_take = $('#take_wh_name', opener.document);	// 받는 창고
+						let parentEl_take_no = $('input[name=wh_no2]', opener.document);
+						
+						if (parentInputId == 'give_wh_name') {	// 보낸 창고
+							parentEl_give.val(wh_noName);
+							parentEl_give_no.val(wh_no);
+						} else if (parentInputId == 'take_wh_name') {	// 받는 창고
+							parentEl_take.val(wh_noName);
+							parentEl_take_no.val(wh_no);
+						} else {
+							alert('예외 발생 (findWareHouse.jsp)');
+						}
+						
+						window.close();
+					
 					}
-								
 			
-				
 				$('#wh_no', opener.document).val($(this).find('#wh_name').text() + " / " + $(this).find('#addr').text());
 				window.close();
 				

@@ -87,7 +87,7 @@
             </td>
         </tr>
         <tr>
-        	<td width="40%" align="center"><b>납기일</b></td>
+        	<td width="40%" align="center"><b>마감일</b></td>
         	<td width="40%" align="center">
 				<input type="date" id="endperiod" name="deliverydate" class="form-control mch7" value="" placeholder="납기일을 입력하세요.">
         	</td>
@@ -124,13 +124,14 @@
         <tbody id="prInput">
         <input type="hidden" value="" id="cnt">
         <input type="hidden" value="A" id="A">
+        <input type="hidden" id="sort" value="registForm">
         <tr>
             <td>
             	<input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value="">
             	<input type="hidden" name="pr_no">
             </td>
             <td>
-				<input type="text" id="0" class="fac_names" name="fac_name" style="width: 100%;" value="">
+				<input type="text" id="fac_no0" class="fac_names" name="fac_name" style="width: 100%;" value="">
 				<input type="hidden" name="fac_no" id="fac_no0">
 			</td>
             <td>
@@ -220,16 +221,36 @@
 		$('#woTotal').val(sum);
 	})
 	
-	$('#registBtn').on('click', function () {
+	$(document).on('click', '#registBtn', function() {
 		
-		for(let i = 0; i < $('input[type="text"]').get().length; i++){
-			if($('input[type="text"]').eq(i).val() == "" || $('input[type="text"]').eq(i).val() == null) {
-				alert("값을 입력해 주세요.");
-				return;
-			}
-		}
+		let form = $('form[role="form"]');
+		let wo_name = $('input[name="wo_name"]').val();
+		let deliverydate = $('input[name="deliverydate"]').val();
+		let valid = true;
+		
+		if (wo_name == "") {
+			alert("제목을 입력하세요.");
+			valid = false;
+		} else if (deliverydate == "") {
+			alert("마감일을 선택하세요.")
+			valid = false;
+		} else {
+			$('#prInput tr').each(function(index, row){
+				let pr_name = $(row).find('.pr_names').val();
+				let fac_name = $(row).find('.fac_names').val();
+				let quantity = $(row).find('.quantity').val();
 				
-		$('form[role="form"]').submit();
+				if (pr_name == "" || fac_name == "" || quantity == "") {
+					alert("빈칸을 모두 입력하세요.");
+					valid = false;
+	                return false; // Loop 종료
+				}
+			});
+		}
+		
+		if (valid) {
+	        form.submit();
+	    }
 		
 	})
 	

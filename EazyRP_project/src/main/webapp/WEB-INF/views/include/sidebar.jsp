@@ -23,22 +23,31 @@
 		</div>
 	</c:forEach>
 </nav>
-
-<div id="menutitle"></div>
-
-<c:forEach var="myMenu" items="${myMenuList}">
-	<c:if test="${myMenu.murl eq murl}">
-		<c:set var="chk">checked</c:set>
+<c:if test="${mcode ne 'M020400' && mcode ne 'M030600' && mcode ne 'M040100' && mcode ne 'M020401' && mcode ne 'M040101' && mcode ne 'M030601' && mcode ne 'M020000' && mcode ne 'M030000' && mcode ne 'M040000' && mcode ne 'M040102'&& mcode ne 'M030602' && mcode ne 'M020402'}">
+<div style="margin: 20px 0px 0px 17%;">
+	<c:set var="chkVal">나만의 메뉴 등록 </c:set>
+	<c:set var="star">1</c:set>
+	<c:set var="chk">1</c:set>
+	<c:forEach var="myMenu" items="${myMenuList}">
+		<c:if test="${myMenu.MURL eq murl}">
+			<c:set var="chkVal">나만의 메뉴 해제 </c:set>
+			<c:set var="star">2</c:set>
+			<c:set var="chk">2</c:set>
+		</c:if>
+	</c:forEach> 
+	<c:if test="${not empty loginUser}">	
+		<a href="#" id="myMenuChk" name="myMenuChk" style="" >
+		<img src="<%=request.getContextPath() %>/resources/img/${star }.png" id="img" style="width: 30px;">
+		</a>
+		<a id="myMenuBtn" href="#" style="color: black; font-size: 0.8em;">${chkVal } </a>
+		<input id="chkInput" type="hidden" value="${chk }">
 	</c:if>
-</c:forEach> 
-<c:if test="${not empty loginUser}">
-	<button id="myMenuBtn">즐겨찾기 임시 버튼</button><input id="myMenuChk" type="checkbox" name="myMenuChk" value="o" onClick="return false;" ${chk }>
+</div>
 </c:if>
-	
 <script>
 	$(function () {
 		let micon = sessionStorage.getItem("micon");
-		$('#menutitle').html(micon);
+		$('#menutitle').html("&nbsp;&nbsp;&nbsp;&nbsp;" + micon);
 		
 	})
 	
@@ -61,8 +70,9 @@
 		  $(this).stop().slideUp(); // 위로 올라가는 애니메이션 적용
 		});
 
-	$('#myMenuBtn').on('click', function () {
+	$('#myMenuBtn, #myMenuChk').on('click', function (e) {
 		let murl = sessionStorage.getItem("murl");
+		e.preventDefault();
 		
 		let data = {
 				"murl" : murl,
@@ -71,7 +81,7 @@
 		
 
 		
-		if($('#myMenuChk').is(':checked')){
+		if($('#chkInput').val() == "2"){
 			$.ajax({
 				url : "<%=request.getContextPath()%>/common/myMenuDelete",
 				type : "post",
@@ -80,6 +90,9 @@
 				success : function(data){
 					alert("나만의 메뉴에서 삭제 되었습니다.");
 					$('#myMenuChk').prop('checked',false);
+					$('#chkInput').val("");
+					$('#myMenuBtn').text("나만의 메뉴 등록 ");
+					$('#img').attr('src', "<%=request.getContextPath() %>/resources/img/1.png")
 				},
 				error : function(error){
 					alert("실패 ㅠㅠ");
@@ -94,6 +107,9 @@
 				success : function(data){
 					alert("나만의 메뉴에 등록 되었습니다.");
 					$('#myMenuChk').prop('checked',true);
+					$('#chkInput').val("checked")
+					$('#myMenuBtn').text("나만의 메뉴 해제 ");
+					$('#img').attr('src', "<%=request.getContextPath() %>/resources/img/2.png")
 				},
 				error : function(error){
 					alert("실패ㅠㅠ");

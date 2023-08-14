@@ -66,9 +66,15 @@ public class BusinessController {
 	private MyMenuService mymenuService;
 	
 	@RequestMapping("/estimate")
-	public ModelAndView main(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException {
-		String url = "jihwan/main.page";
-		
+	public ModelAndView main(String mymenu, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException {
+		String url="";
+		System.out.println("1");
+    	if(mymenu == null) {
+			url="jihwan/main.page";
+		} else {
+			url="jihwan/main.mymenu";
+		}
+		System.out.println("22");
 		Map<String, Object> dataMap = estimateService.selectEstimList(cri);
 		
 		mnv.addObject("mcode", mcode);
@@ -341,23 +347,14 @@ public class BusinessController {
 			EstimateVO est2 = new EstimateVO();
 			System.out.println(i + "번째 for - start");
 			
-			System.out.println("emp_no : " + emp_no);
 			est2.setEmp_no(emp_no);
-			System.out.println("pr_no :"  + pr_no[i]);
 			est2.setPr_no(pr_no[i]);
-			System.out.println("fc_no :" + fc_no);
 			est2.setFc_no(fc_no);
-			System.out.println("wh_no :" + wh_no[i]);
 			est2.setWh_no(wh_no[i]);
-			System.out.println("amount : " + amount[i]);
 			est2.setAmount(amount[i]);
-			System.out.println("progress :" + progress);
 			est2.setProgress(progress);
-			System.out.println("quantity : " + quantity[i]);
 			est2.setQuantity(quantity[i]);
-			System.out.println("estdetail_no : " + estdetail_no[i]);
 			est2.setEstdetail_no(estdetail_no[i]);
-			System.out.println("est_no :" + est_no );
 			est2.setEst_no(est_no);
 			est2.setPr_delete(pr_delete[i]);
 			modify.add(est2);	
@@ -366,12 +363,9 @@ public class BusinessController {
 			System.out.println(i + "번째 for - end");
 		}
 		
-		System.out.println(modify);
 		
-		System.out.println("dd2");
 		modify.get(0).setFiles(filess);
 		modify.get(0).setRealFileName(fileRealName);
-		System.out.println("dd3");
 		
 		System.out.println("모디파이입니다 : " + modify);
 		
@@ -402,8 +396,14 @@ public class BusinessController {
 //	----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/siSelect")
-	public ModelAndView siSel(ModelAndView mnv ,String mcode, SearchCriteria cri) throws SQLException {
-		String url = "jihwan/siSelect.page";
+	public ModelAndView siSel(String mymenu, ModelAndView mnv ,String mcode, SearchCriteria cri) throws SQLException {
+		String url="";
+    	if(mymenu == null) {
+			url="jihwan/siSelect.page";
+		} else {
+			url="jihwan/siSelect.mymenu";
+		}
+    	
 		Map<String, Object> dataMap = siService.selectSiList(cri);
 		mnv.setViewName(url);
 		mnv.addObject("cri",cri);
@@ -446,7 +446,9 @@ public class BusinessController {
 			si.setPr_no(pr_no[i]);
 			si.setWh_no(wh_no);
 			si.setQuantity(quantity[i]);
-			si.setContent(content[i]);
+			if(content.length != 0) {				
+				si.setContent(content[i]);
+			}
 			si.setShipdate(shipdate);
 			si.setProgress(progress);
 			siVO.add(si);	
@@ -480,7 +482,9 @@ public class BusinessController {
 			si.setQuantity(quantity[i]);
 			si.setShipdate(shipdate);
 			si.setPr_delete(pr_delete[i]);
-			si.setContent(content[i]);
+			if(content.length != 0) {
+				si.setContent(content[i]);
+			}
 			si.setProgress(progress);
 			modify.add(si);
 		}

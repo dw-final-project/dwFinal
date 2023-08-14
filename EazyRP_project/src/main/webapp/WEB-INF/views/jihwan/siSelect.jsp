@@ -50,20 +50,24 @@
 								<th style="text-align: center;">등록일자</th>
 								<th style="text-align: center;">사원이름</th>
 								<th style="text-align: center;">품목명</th>
+								<th style="text-align: center;">규격</th>
 								<th style="text-align: center;">총 수량</th>
 								<th style="text-align: center;">진행 상태</th>
 							</tr>
 							<c:forEach items="${siList }" var="si">
 								<tr style="font-size: 1em; text-align: center;">
 									<td><a
-										href="javascript:OpenWindow('siDetail.do?si_no=${si.SI_NO }','출하지시서 조회', 700 ,700);">${si.SI_NO }</a></td>
+										href="javascript:OpenWindow('siDetail.do?si_no=${si.SI_NO }','출하지시서 조회', 600 ,700);">${si.SI_NO }</a></td>
 									<td>${si.WH_NAME }</td>
 									<td><fmt:formatDate value="${si.SYS_REGDATE }"
 											pattern="yyyy-MM-dd"></fmt:formatDate></td>
 									<td>${si.E_NAME}</td>
 									<td>${si.PR_NAME }</td>
+									<td>${si.PR_ST }</td>
 									<td>${si.QUANTITY }</td>
-									<td>${si.PROGRESS }</td>
+									<td style="color: ${si.PROGRESS eq 0 ? 'red' : si.PROGRESS eq 1 ? 'green' : si.PROGRESS eq 2 ? 'blue' : '' }">
+										${si.PROGRESS == '0' ? '접수중' : (si.PROGRESS == '1' ? '출하대기중' : (si.PROGRESS == '2' ? '출하완료' : '' ))}
+									</td>
 								</tr>
 							</c:forEach>
 						</table>
@@ -76,7 +80,7 @@
 			<div style="display: flex; align-items: end; justify-content: end;">
 				<button type="button" class="btn btn-primary" id=""
 				onclick="javascript:OpenWindow('si_regist.do','출하지시서 등록', 600 ,800);"
-					style="width: 110px; heigth: 20px; margin: 10px; font-size: 0.8em; align-self: center;">출하지시서 등록</button>
+					style="width: 110px; heigth: 20px; margin: 10px; font-size: 0.8em; align-self: center;">출하 등록</button>
 			</div>
 		</div>
 	</div>

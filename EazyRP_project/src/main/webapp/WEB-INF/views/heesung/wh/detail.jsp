@@ -13,6 +13,7 @@
 	input {
 		border: none;
 		text-size: 100%;
+		
 	}
 	
 	html {
@@ -69,9 +70,15 @@
 <body>
     <h2>생산입고 상세보기</h2>
 	<div class="card-footer">
-		<button type="submit" id="modifyBtn" class="btn btn-warning">수정</button>
-		<button type="button" id="removeBtn" class="btn btn-danger">삭제</button>
+		<button type="submit" id="modifyBtn" class="btn btn-warning" ${wh.PROGRESS ne '0' ? 'disabled' : '' }>수정</button>
+		<button type="button" id="removeBtn" class="btn btn-danger" ${wh.PROGRESS ne '0' ? 'disabled' : '' }>삭제</button>
 		<button type="button" id="closeBtn" class="btn btn-primary">닫기</button>
+		<c:if test="${wh.PROGRESS ne '2'}">
+			<button type="button" id="progressBtn" class="btn btn-primary" ${wh.PROGRESS eq '2' ? 'disabled' : '' } style="float:right;">
+				<c:if test="${wh.PROGRESS eq '0'}">진행</c:if>
+				<c:if test="${wh.PROGRESS eq '1'}">완료</c:if>
+			</button>
+		</c:if>
 	</div>
 	<!-- card footer End -->
 <form role="form" method="post" enctype="multipart/form-data">
@@ -89,8 +96,14 @@
 	            <td width="100%">
 					<input type="hidden" name="wo_no" id="wo_no" class="wo_no" value="${wh.WO_NO }">
 	            	<div style="display: flex;">
-		            	<input type="text" style="width: 78%;" value="${wh.WO_NAME }" id="wo_name" name="wo_name"
+	            		<c:if test="${wh.PROGRESS eq '0'}">
+			            	<input type="text" style="width: 78%;" value="${wh.WO_NAME }" id="wo_name"
 								readonly onclick="OpenWindow('/erp4/findWorkOrder.do', '작업지시서 찾기', 400, 600)">
+	            		</c:if>
+	            		<c:if test="${wh.PROGRESS ne '0'}">
+			            	<input type="text" style="width: 78%;" value="${wh.WO_NAME }" id="wo_name"
+								readonly>
+	            		</c:if>
 						<button style="float: right" type="button" id="woDetailOpenBtn" class="btn btn-success">상세보기</button>
 					</div>
 				</td>
@@ -99,7 +112,12 @@
 	            <td width="40%" align="center"><b>담당자</b></td>
 	            <td width="100%">
 		        	<input type="hidden" id="receiver" name="emp_no" value="${wh.EMP_NO }">
-	            	<input type="text" style="width: 100%;" value="${wh.C_NAME } / ${wh.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
+		        	<c:if test="${wh.PROGRESS eq '0'}">
+	            		<input type="text" style="width: 100%;" value="${wh.C_NAME } / ${wh.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
+	            	</c:if>
+	            	<c:if test="${wh.PROGRESS ne '0'}">
+	            		<input type="text" style="width: 100%;" value="${wh.C_NAME } / ${wh.E_NAME }" id="name" name="name" readonly>
+	            	</c:if>
 	            </td>
 	        </tr>
 	        <tr>
@@ -113,17 +131,24 @@
 	            	<b>상태</b>
 	            </td>
 	            <td>
-	            	<select name="progress" id="progress_select">
-					    <option>선택</option>
-					    <option value="" ${wh.PROGRESS eq '' ? 'selected' : '' }>선택</option>
-					    <option value="0" ${wh.PROGRESS eq '0' ? 'selected' : '' }>대기중</option>
-					    <option value="1" ${wh.PROGRESS eq '1' ? 'selected' : '' }>진행중</option>
-					    <option value="2" ${wh.PROGRESS eq '2' ? 'selected' : '' }>완료</option>
-					</select>
+	            	<c:if test="${wh.PROGRESS eq '0'}">
+		            	<input type="text" name="" value="대기중" readonly>
+		            	<input type="hidden" name="progress" value="0" readonly>
+	            	</c:if>
+	            	<c:if test="${wh.PROGRESS eq '1'}">
+		            	<input type="text" name="" value="진행중" readonly>
+		            	<input type="hidden" name="progress" value="1" readonly>
+	            	</c:if>
+	            	<c:if test="${wh.PROGRESS eq '2'}">
+		            	<input type="text" name="" value="완료" readonly>
+		            	<input type="hidden" name="progress" value="2" readonly>
+	            	</c:if>
 				</td>
 	        </tr>
 	    </table>
-    <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">추가</button>
+	    <c:if test="${wh.PROGRESS eq '0'}">
+    <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary" >추가</button>
+	    </c:if>
     <table>
     	<thead>
 	        <tr>
@@ -139,35 +164,36 @@
     	<tbody id="prInput">
 	        <input type="hidden" value="" id="cnt">
 	        <input type="hidden" value="A" id="A">
+	        <input type="hidden" id="sort" value="detail">
 	       	<c:forEach items="${whDetail }" var="whDetail" varStatus="loop">
-		        <tr id="trChk" >    	
+		        <tr id="trChk">
 					<input type="hidden" class="rownum" value="${whDetail.ROWNUM }">
 					<input type="hidden" name="detail_no" id="dtail_no" value="${whDetail.DETAIL_NO }">
 		<%-- 	       <input type="hidden" name="enabled" id="estenabled" value="${est.ENABLED }"> --%>
 					<input type="hidden" name="pr_delete" value="o">
 		        	<td>								
-						<input type="text" id="${whDetail.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${whDetail.PR_NAME }">
+						<input type="text" ${wh.PROGRESS ne '0' ? 'readonly' : ''} id="${whDetail.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${whDetail.PR_NAME }">
 						<input type="hidden" name="pr_no" value="${whDetail.PR_NO }">
 					</td>
 					<td>	
-						<input type="text" id="fac_no${whDetail.ROWNUM }" class="fac_names" name="fac_name" style="width: 100%;" value="${whDetail.FAC_NAME }">
-						<input type="hidden" name="fac_no" id="fac_no0" value="${whDetail.FAC_NO }">
+						<input type="text" id="fac_no${whDetail.ROWNUM }" readonly class="fac_names" name="fac_name" style="width: 100%;" value="${whDetail.FAC_NAME }">
+						<input type="hidden" name="fac_no" id="fac_no${whDetail.ROWNUM }" value="${whDetail.FAC_NO }">
 					</td>
 					<td>		
-						<input type="text" id="wh_no${whDetail.ROWNUM }" class="wh_names" name="wh_name" style="width: 100%;" value="${whDetail.WH_NAME }">
+						<input type="text" id="wh_no${whDetail.ROWNUM }" readonly class="wh_names" name="wh_name" style="width: 100%;" value="${whDetail.WH_NAME }">
 						<input type="hidden" id="wh" name="wh_no" value="${whDetail.WH_NO2 }">
 					</td>
 					<td>
-						<input type="text" id="outprice" class="outprice" name="outprice" style="width: 100%;" value="${whDetail.OUTPRICE }">
+						<input type="text" id="outprice"  ${wh.PROGRESS ne '0' ? 'readonly' : ''} class="outprice" name="outprice" style="width: 100%;" value="${whDetail.OUTPRICE }">
 					</td>
 					<td>
-						<input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${whDetail.QUANTITY }">
+						<input type="text" id="quantity"  ${wh.PROGRESS ne '0' ? 'readonly' : ''} class="quantity" name="quantity" style="width: 100%;" value="${whDetail.QUANTITY }">
 					</td>
 					<td>
 						<input type="text" id="total_outprice" name="total_outprice" style="width: 100%;" value="${whDetail.TOTAL_OUTPRICE }" readonly>
 					</td>
 					<td style="text-align: center;">
-						<button type="button" id="cancelBtn" class="btn btn-danger">삭제</button>
+						<button type="button" id="cancelBtn" class="btn btn-danger" ${wh.PROGRESS ne '0' ? 'disabled' : ''} >삭제</button>
 					</td>
 		        </tr>
 	        </c:forEach>
@@ -191,27 +217,57 @@ window.onload = function(){
 			'method' : 'post'
 		});
 		
-// 		let trCnt = 0;
-// 		for(let i = 0; i < $('tr[id="trChk"]').get().length; i++){
-// 			if($('tr[id="trChk"]').eq(i).css("display") != "none") {
-// 				for(let j = 0; j < $('tr[id="trChk"]').eq(i).find('input[type="text"]').get().length; j++) {
-// 					if($('tr[id="trChk"]').eq(i).find('input[type="text"]').eq(j).val() == "" || $('tr[id="trChk"]').eq(i).find('input[type="text"]').eq(j).val() == null) {
-// 						alert("값을 입력해 주세요.");
-// 						return;
-// 					}
-// 				}				
-// 			} else {
-// 				trCnt += 1;
-// 			}
-// 		}
+		//
+		let form = $('form[role="form"]');
+	    let emp_no = $('input[name="emp_no"]').val();
+	    let wo_no = $('input[name="wo_no"]').val();
+	    let valid = true;
 		
-// 		if($('tr[id="trChk"]').get().length == trCnt) {
-// 			alert("제품을 추가하세요.");
-// 			return;
-// 		}
-		
-		formObj.submit();
+	    if (emp_no == "") {
+	        alert("담당자를 선택하세요.");
+	        valid = false;
+	    } else if (wo_no == "") {
+	        alert("작업지시서를 선택하세요.");
+	        valid = false;
+	    } else {
+	        $('#prInput tr').each(function(index, row) {
+	            let pr_name = $(row).find('.pr_names').val();
+	            let fac_name = $(row).find('.fac_names').val();
+	            let wh_name = $(row).find('.wh_names').val();
+	            let outprice = $(row).find('.outprice').val();
+	            let quantity = $(row).find('.quantity').val();
+	            let total_outprice = $(row).find('input[name="total_outprice"]').val();
+	
+	            if (pr_name == "" || fac_name == "" || wh_name == "" ||
+	                outprice == "" || quantity == "" || total_outprice == "") {
+	                alert("빈칸을 모두 입력하세요.");
+	                valid = false;
+	                return false; // Loop 종료
+	            }
+	        });
+	    }
+	
+	    if (valid) {
+	        form.submit();
+	    }
+	    //
+	    
 	});
+	
+	$('#progressBtn').on('click', function(){
+		if($('input[name="progress"]').val() == '1') {
+			if(confirm('불량 등록을 하시겠습니까?')) {
+				formObj.attr('action', '/erp4/insertError.do');
+				formObj.submit();
+			} else{
+				formObj.attr('action', '/erp4/updateBtn.do');
+				formObj.submit();
+			}
+		} else{
+			formObj.attr('action', '/erp4/updateBtn.do');
+			formObj.submit();
+		}
+	})
 	
 	
 	$('button#removeBtn').on('click', function(){
@@ -228,9 +284,27 @@ window.onload = function(){
 		window.close();
 	});
 	
+	// 작업지시서 상세보기 버튼 클릭 이벤트
+	$(document).on('click', '#woDetailOpenBtn', function() {
+		let wo_number = $('input[type="hidden"]#wo_no').val();
+		let openWin = OpenWindow("/erp4/selectWorkOrderDetail.do?wo_no=" + wo_number, "작업지시서 상세보기", 600, 800);
+	})
+	
 }
 
+function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
+	winleft = (screen.width - WinWidth) / 2;
+	wintop = (screen.height - WinHeight) / 2;
+	var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
+							+ "height=" + WinHeight + ",top="+ wintop + ",left="
+							+ winleft + ",resizable=yes,status=yes");
+	
+	win.focus();
+	return win;
+};
+
 </script>
+<c:if test="${wh.PROGRESS eq '0'}">
 
 <script>
 let rownumList = $('.rownum');
@@ -256,17 +330,6 @@ $('#addPutBtn').on('click', function(){
 		);
 });
 
-
-function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
-	winleft = (screen.width - WinWidth) / 2;
-	wintop = (screen.height - WinHeight) / 2;
-	var win = window.open(UrlStr, WinTitle, "scrollbars=yes,width=" + WinWidth+", "
-							+ "height=" + WinHeight + ",top="+ wintop + ",left="
-							+ winleft + ",resizable=yes,status=yes");
-	
-	win.focus();
-	return win;
-};
 
 	// 제품코드 td 클릭 이벤트
 	$(document).on('click', '.pr_names', function(){
@@ -307,14 +370,17 @@ function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 	})
 	
 	// 총합계
-	$(document).on('change keyup', 'input[name="total_outprice"]', function(){
+	$(document).on('change keyup', '.quantity', function(){
+		
 		let sum = Number(0);
 		let inputAmount = $('input[name="total_outprice"]').get();
+		
 		for(let i = 0; i < inputAmount.length; i++){
 			sum += Number($('input[name="total_outprice"]').eq(i).val());
 		}
 		
 		$('#wh_total').val(sum);
+		
 	})
 	
 	// 공장 클릭시 목록 열기 이벤트
@@ -324,12 +390,8 @@ function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 		let openWin = OpenWindow("/erp4/findFactory.do", "공장 찾기", 800, 600);
 	})
 	
-	// 작업지시서 상세보기 버튼 클릭 이벤트
-	$(document).on('click', '#woDetailOpenBtn', function() {
-		let wo_number = $('input[type="hidden"]#wo_no').val();
-		let openWin = OpenWindow("/erp4/selectWorkOrderDetail.do?wo_no=" + wo_number, "작업지시서 상세보기", 600, 800);
-	})
+
 	
 </script>
-
+</c:if>
 </html>

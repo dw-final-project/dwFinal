@@ -16,7 +16,6 @@
 								<option value="all" ${cri.searchType eq 'all' ? 'selected' : '' }>전  체</option>
 								<option value="w" ${cri.searchType eq 'w' ? 'selected' : '' }>창고명</option>
 								<option value="a" ${cri.searchType eq 'a' ? 'selected' : '' }>주소</option>
-								<option value="g" ${cri.searchType eq 'g' ? 'selected' : '' }>가동여부</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${cri.keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">

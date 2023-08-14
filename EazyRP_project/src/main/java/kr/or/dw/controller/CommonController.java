@@ -40,7 +40,6 @@ import kr.or.dw.vo.MyMenuVO;
 @Controller
 public class CommonController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CommonController.class);
 	
 	@Autowired
 	private MenuService menuService;
@@ -185,7 +184,7 @@ public class CommonController {
 	}
 	
 	@RequestMapping("/common/change")
-	public ModelAndView change(ModelAndView mnv, String mcode, HttpSession session,String selectedC_no, HttpServletRequest req) throws SQLException{
+	public ModelAndView change(ModelAndView mnv,String murl, String mcode, HttpSession session,String selectedC_no, HttpServletRequest req) throws SQLException{
 		System.out.println("1");
 		String str = req.getRequestURI();
 		System.out.println("2");
@@ -246,13 +245,14 @@ public class CommonController {
 		}
 		
 		mnv.setViewName("redirect:" + url);
+		mnv.addObject("murl", murl);
 		
 		return mnv;
 		
 	}
 	
 	@RequestMapping("/common/empChange")
-	public ModelAndView empChange(ModelAndView mnv, String mcode, HttpSession session,String selectedEmp, HttpServletRequest req) throws SQLException{
+	public ModelAndView empChange(ModelAndView mnv, String murl, String mcode, HttpSession session,String selectedEmp, HttpServletRequest req) throws SQLException{
 		String url = "";
 		if(mcode == null || mcode.equals("")) {
 			url = "/common/main.do";
@@ -266,6 +266,7 @@ public class CommonController {
 		String e_name = menuService.selectEname(selectedEmp);
 		session.setAttribute("e_name", e_name);
 		session.setAttribute("emp_no", selectedEmp);
+		mnv.addObject("murl", murl);
 		System.out.println("emp번호다 : " + selectedEmp);
 		
 		mnv.setViewName("redirect:" + url);
@@ -282,7 +283,25 @@ public class CommonController {
 				
 		try {
 			myMenuDAO.registMyMenu(mymenu);
-			List<MyMenuVO> myMenuList = myMenuDAO.selectMyMenuList(u_no);
+			List<Map<String, Object>> myMenuList = myMenuDAO.selectMyMenuList(u_no);
+			session.setAttribute("myMenuList", myMenuList);
+			entity = new ResponseEntity<String>(HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return entity;
+	}
+	
+	@RequestMapping("/common/myMenuDelete")
+	public ResponseEntity<String> myMenuDelete(@RequestBody MyMenuVO mymenu, HttpSession session) throws SQLException {
+		ResponseEntity<String> entity = null;
+				
+		int u_no = mymenu.getU_no();
+		try {
+			myMenuDAO.deleteMyMenu(mymenu);
+			List<Map<String, Object>> myMenuList = myMenuDAO.selectMyMenuList(u_no);
 			session.setAttribute("myMenuList", myMenuList);
 			entity = new ResponseEntity<String>(HttpStatus.OK);
 		} catch (Exception e) {

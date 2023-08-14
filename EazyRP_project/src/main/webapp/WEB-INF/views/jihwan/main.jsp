@@ -43,6 +43,7 @@
 								<th style="text-align: center;">거래처명</th>
 								<th style="text-align: center;">담당자</th>
 								<th style="text-align: center;">품목명</th>
+								<th style="text-align: center;">규격</th>
 								<th style="text-align: center;">견적금액합계</th>
 								<th style="text-align: center;">진행상태</th>
 								<th style="text-align: center;">첨부파일여부</th>
@@ -57,8 +58,11 @@
 									<td>${estimate.C_NAME }</td>
 									<td>${estimate.E_NAME }</td>
 									<td>${estimate.P_AMOUNT_NAME }</td>
+									<td>${estimate.PR_ST }</td>
 									<td>${estimate.AMOUNT }</td>
-									<td>${estimate.PROGRESS }</td>
+									<td style="color: ${estimate.PROGRESS eq '0' ? 'red' : estimate.PROGRESS eq '1' ? 'green' : estimate.PROGRESS eq '2' ? 'blue' : '' }">
+									${estimate.PROGRESS == '0' ? '접수중' : (estimate.PROGRESS == '1' ? '처리중' : (estimate.PROGRESS == '2' ? '완료' : '' ))}
+									</td>
 									<td style="color:${estimate.FILES ne null ? 'blue' : 'red'}">${estimate.FILES != null ? "있음" : "없음"}</td>
 								</tr>
 							</c:forEach>

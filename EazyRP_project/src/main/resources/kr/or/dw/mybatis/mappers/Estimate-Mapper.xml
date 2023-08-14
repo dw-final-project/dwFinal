@@ -44,6 +44,10 @@
 		  ,MAX(ed.PROGRESS) progress
 		  ,MAX(e.FILES) files 
 		  ,MAX(e.REALFILENAME) realFileName
+		  ,CASE WHEN count(ed.PR_NO) <![CDATA[ > ]]> 1
+		  	THEN MAX((SELECT pr_st FROM product WHERE pr_no = ed.pr_no)) || ' 외 ' || (count(ed.PR_NO)-1)  || '건'
+		  	ELSE MAX((SELECT pr_st FROM product WHERE pr_no = ed.pr_no))
+		   END pr_st
 	  FROM ESTIMATE e , ESTDETAIL ed, company c, emp em, product p
 	 WHERE 1=1
 	   AND e.EST_NO = ed.EST_NO
@@ -248,7 +252,7 @@
 		#{emp_no},
 		#{fc_no},
 		#{amount},
-		'접수중',
+		'0',
 		#{quantity},
 		#{pr_no},
 		sysdate,

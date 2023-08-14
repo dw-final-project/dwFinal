@@ -102,9 +102,9 @@
          <tr>
             <td align="center">진행상태</td>
             <td><select name="progress" id="progress">
-            	<option value="접수중 "${est.PROGRESS eq "접수중" ? 'selected' : "" }>접수중</option>
-			    <option value="처리중 "${est.PROGRESS eq "처리중" ? 'selected' : "" }>처리중</option>
-			    <option value="완료" ${est.PROGRESS eq "완료" ? 'selected' : "" }>완료</option>
+            	<option value="0"${est.PROGRESS eq "0" ? 'selected' : "" }>접수중</option>
+			    <option value="1"${est.PROGRESS eq "1" ? 'selected' : "" }>처리중</option>
+			    <option value="2" ${est.PROGRESS eq "2" ? 'selected' : "" }>완료</option>
 				</select>
 			</td>
         </tr>

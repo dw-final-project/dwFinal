@@ -93,7 +93,7 @@
         </tr>
         <tr>
             <td align="center">출하 일자</td>
-            <td><input type="date" name="shipdate" value=""></td>
+            <td><input type="date" id="dateInput" name="shipdate" value=""></td>
         </tr>
        
     </table>
@@ -129,6 +129,7 @@
         </tr>
     </table>
     <input type="button" id="registBtn" class="btn btn-primary" style="text-align : center;" value="생성">
+    <input type="button" id="closeBtn" class="btn btn-warning" style="text-align : center;" value="닫기">
 </form>
 </body>
 <script>
@@ -208,15 +209,30 @@
 	$('#registBtn').on('click', function () {
 		
 		for(let i = 0; i < $('input[type="text"]').get().length; i++){
+			if($('input[type="text"]').eq(i).attr('name') == 'content') {
+				continue;
+			}
 			if($('input[type="text"]').eq(i).val() == "" || $('input[type="text"]').eq(i).val() == null) {
 				alert("값을 입력해 주세요.");
 				return;
 			}
 		}
+		
+		if($('#dateInput').val() == '' ){
+			alert('출하일자를 입력해주세요!');
+			return;
+		}
+			
 				
 		$('form[role="form"]').submit();
 		
 	})
+	
+	
+	$('#closeBtn').on('click', function(){
+		window.close();
+	})
+	
 	
 </script>
 

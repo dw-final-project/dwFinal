@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,14 +20,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.tiles.autotag.core.runtime.annotation.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,13 +48,18 @@ import kr.or.dw.vo.CompanyVO;
 import kr.or.dw.vo.DeductionVO;
 import kr.or.dw.vo.DeptVO;
 import kr.or.dw.vo.EmpVO;
+import kr.or.dw.vo.EstimateVO;
 import kr.or.dw.vo.ExtrapayVO;
+import kr.or.dw.vo.MemberVO;
 import kr.or.dw.vo.MenuVO;
 import kr.or.dw.vo.MerchandiseVO;
+import kr.or.dw.vo.MyMenuVO;
 import kr.or.dw.vo.NoteVO;
 import kr.or.dw.vo.OrderVO;
 import kr.or.dw.vo.ProcessVO;
 import kr.or.dw.vo.ProductVO;
+import kr.or.dw.vo.SalDetailVO;
+import kr.or.dw.vo.SalVO;
 import kr.or.dw.vo.ShopVO;
 import kr.or.dw.vo.WorkVO;
 
@@ -70,8 +81,13 @@ public class MinjunController2 {
 	// EMP(직원) CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/emp")
-	public ModelAndView empMain(ModelAndView mnv, String mcode, EmpVO empVO, SearchCriteria cri, HttpSession session) throws SQLException {
-		String url = "/minjun2/emp.page";
+	public ModelAndView empMain(String mymenu, ModelAndView mnv, String mcode, EmpVO empVO, SearchCriteria cri, HttpSession session) throws SQLException {
+		String url = "";
+    	if(mymenu == null) {
+			url="/minjun2/emp.page";
+		} else {
+			url="/minjun2/emp.mymenu";
+		}
 		System.out.println("emp session c_no : " + session.getAttribute("c_no").toString());
 		String c_no = session.getAttribute("c_no").toString();
 		Map<String, Object> dataMap = empsalService.selectEmpList(cri, c_no);
@@ -327,6 +343,22 @@ public class MinjunController2 {
 		return mnv;
 	}
 	
+//	@RequestMapping("/addAllEmp")
+//	public ModelAndView addAllEmp(ModelAndView mnv,String c_no, HttpSession session) throws SQLException {
+//		List<EmpVO> emp = null;
+//		Map<String, String> dataMap = new HashMap<>();
+//		c_no = (String) session.getAttribute("c_no");
+//		
+//		dataMap.put("c_no", c_no);
+//		
+//		
+//		
+//		mnv.addAllObjects(dataMap);
+//		mnv.addObject("emp", emp);
+//		
+//		return mnv;
+//	} 
+	
 	@RequestMapping("/findExtrapay")
 	public ModelAndView findExtrapay(ModelAndView mnv, String searchType, String keyword, HttpSession session) throws SQLException {
 		String url = "minjun2/findExtrapay";
@@ -382,8 +414,13 @@ public class MinjunController2 {
 	// Extrapay(수당) CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/extrapay")
-	public ModelAndView extrapayMain(ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
-		String url = "/minjun2/extrapay.page";
+	public ModelAndView extrapayMain(String mymenu, ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
+		String url = "";
+    	if(mymenu == null) {
+			url="/minjun2/extrapay.page";
+		} else {
+			url="/minjun2/extrapay.mymenu";
+		}
 		
 		Map<String, Object> dataMap = empsalService.selectExtrapayList(cri);
 		
@@ -458,8 +495,13 @@ public class MinjunController2 {
 	// DEDUCTION(공제) CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/deduction")
-	public ModelAndView deductionMain(ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
-		String url = "/minjun2/deduction.page";
+	public ModelAndView deductionMain(String mymenu, ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
+		String url = "";
+    	if(mymenu == null) {
+			url="/minjun2/deduction.page";
+		} else {
+			url="/minjun2/deduction.mymenu";
+		}
 		
 		Map<String, Object> dataMap = empsalService.selectDeductionList(cri);
 		
@@ -534,8 +576,13 @@ public class MinjunController2 {
 	// DEPT(부서) CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/dept")
-	public ModelAndView deptMain(ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
-		String url = "/minjun2/dept.page";
+	public ModelAndView deptMain(String mymenu, ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
+		String url = "";
+    	if(mymenu == null) {
+			url="/minjun2/dept.page";
+		} else {
+			url="/minjun2/dept.mymenu";
+		}
 		
 		Map<String, Object> dataMap = empsalService.selectdeptList(cri);
 		
@@ -611,8 +658,13 @@ public class MinjunController2 {
 	// WORK(근태) CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/work")
-	public ModelAndView workMain(ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
-		String url = "/minjun2/work.page";
+	public ModelAndView workMain(String mymenu, ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
+		String url = "";
+    	if(mymenu == null) {
+			url="/minjun2/work.page";
+		} else {
+			url="/minjun2/work.mymenu";
+		}
 		String c_no = (String) session.getAttribute("c_no");
 		System.out.println("work c_no : " + c_no);
 		Map<String, Object> dataMap = empsalService.selectworkList(cri, c_no);
@@ -696,4 +748,129 @@ public class MinjunController2 {
 		out.println("window.opener.location.reload(true); window.close();");
 		out.println("</script>");
 	}
+	
+	// SAL(급여) CRUD -----------------------------------------------------------------------------------------
+	
+	@RequestMapping("/sal")
+	public ModelAndView salMain (String mymenu, ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException, ParseException {
+		String url = "/minjun2/sal.page";
+    	if(mymenu == null) {
+			url="/minjun2/sal.page";
+		} else {
+			url="/minjun2/sal.mymenu";
+		}
+		String c_no = (String) session.getAttribute("c_no");
+		
+		Map<String, Object> dataMap = empsalService.selectSalList(cri);
+		
+		mnv.addAllObjects(dataMap);
+		mnv.addObject("mcode", mcode);
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/salDetail")
+	public ModelAndView salDetail(ModelAndView mnv ,String sal_no, SearchCriteria cri) throws SQLException {
+		
+		Map<String, Object> dataMap = empsalService.selectSalDetail(sal_no);
+		Map<String, Object> dataMap2 = empsalService.selectExtrapayList(cri);
+		Map<String, Object> dataMap3 = empsalService.selectDeductionList(cri);
+		
+		String url = "minjun2/sal_detail.open";
+		mnv.addAllObjects(dataMap);
+		mnv.addAllObjects(dataMap2);
+		mnv.addAllObjects(dataMap3);
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/salRegistForm")
+	public ModelAndView salRegistForm(ModelAndView mnv, HttpSession session,SearchCriteria cri) throws SQLException {
+		String c_no = (String) session.getAttribute("c_no");
+		String url = "minjun2/sal_regist";
+
+		Map<String, Object> dataMap = empsalService.selectExtrapayList(cri);
+		Map<String, Object> dataMap2 = empsalService.selectDeductionList(cri);
+		
+		
+		
+		mnv.addAllObjects(dataMap);
+		mnv.addAllObjects(dataMap2);
+		mnv.addObject("c_no", c_no);
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/registSal.do")
+	public void registSal (HttpSession session, HttpServletResponse res, SalVO salVO, int[] emp_no, String[] sal_no, int[] realsumsal, String[] DED_001,
+						   String[] DED_006, String[] DED_009, String[] DED_010, String[] DED_011, String[] DED_012) throws Exception {
+		int sys_reg = Integer.parseInt(session.getAttribute("emp_no").toString());
+		salVO.setSys_reg(sys_reg + "");
+		salVO.setSys_up(sys_reg + "");
+		
+		String sal_no2 = empsalService.insertSal(salVO);
+		
+		for(int i= 0; i < emp_no.length; i++) {
+			SalDetailVO salDetail = new SalDetailVO();
+			
+			salDetail.setDED_001(DED_001[i]);
+			salDetail.setDED_006(DED_006[i]);
+			salDetail.setDED_009(DED_009[i]);
+			salDetail.setDED_010(DED_010[i]);
+			salDetail.setDED_011(DED_011[i]);
+			salDetail.setDED_012(DED_012[i]);
+			salDetail.setEmp_no(emp_no[i]);
+			salDetail.setRealsumsal(realsumsal[i]);
+			salDetail.setSal_no(sal_no2);
+			
+			empsalService.insertSalDetail(salDetail);
+		}
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 등록되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+		
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping("/calextrapay")
+	public ResponseEntity<List<Map<String, Object>>> calextrapayRegist(@RequestBody Map<String, Object> map, HttpSession session) throws SQLException {
+				System.out.println("map : " + map);
+				ResponseEntity<List<Map<String, Object>>> entity = null;
+				int emp_no = Integer.parseInt(map.get("emp_no").toString());
+				String salmonth = map.get("salmonth").toString();
+				int e_sal = Integer.parseInt(map.get("e_sal").toString());
+				List<Map<String, Object>> extrapayList = empsalService.selectExtraPay(emp_no, salmonth, e_sal);
+				
+				System.out.println(extrapayList);
+		try {
+			entity = new ResponseEntity<List<Map<String, Object>>>(extrapayList, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<List<Map<String, Object>>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return entity;
+	}
+	
+	@RequestMapping("/deleteSal.do")
+	public void deleteSal (HttpServletResponse res, HttpSession session, String sal_no_a) throws SQLException , Exception {
+		
+		empsalService.deleteSal(sal_no_a);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('성공적으로 삭제되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+	}
+	
 }

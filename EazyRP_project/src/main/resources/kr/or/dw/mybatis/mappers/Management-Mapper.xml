@@ -288,4 +288,64 @@
 		SELECT stampimg FROM emp WHERE emp_no = #{a}
 	</select>
 	
+	<select id="getHistory" resultType="pa">
+		SELECT p.*, pg.pg_name
+		  FROM pa p, pa_gb pg
+		 WHERE p.pg_no = pg.pg_no
+		   AND c_no = #{c_no}
+		 <if test="searchType == 'n'.toString()">
+			AND p.emp_no IN (SELECT emp_no FROM emp WHERE e_name LIKE '%' || #{keyword} || '%')
+		</if>
+		<if test="searchType == 'd'.toString()">
+			AND (p.predept IN (SELECT dname FROM dept WHERE dname LIKE '%' || #{keyword} || '%')
+			 OR p.nextdept IN (SELECT dname FROM dept WHERE dname LIKE '%' || #{keyword} || '%'))
+		</if>
+		<if test="searchType == 'all'.toString()">
+			AND (p.emp_no IN (SELECT emp_no FROM emp WHERE e_name LIKE '%' || #{keyword} || '%')
+			 OR p.predept IN (SELECT dname FROM dept WHERE dname LIKE '%' || #{keyword} || '%')
+			 OR p.nextdept IN (SELECT dname FROM dept WHERE dname LIKE '%' || #{keyword} || '%'))
+		</if>
+		<if test="cri2.startDate != ''.toString() and cri2.endDate != ''.toString()">
+			AND p.padate BETWEEN TO_DATE(#{cri2.startDate}, 'YYYY-MM-DD') AND TO_DATE(#{cri2.endDate}, 'YYYY-MM-DD') + INTERVAL '1' DAY - INTERVAL '1' SECOND
+		</if>
+		<if test="cri2.startDate != ''.toString() and cri2.endDate == ''.toString()">
+			AND p.padate <![CDATA[>]]> #{cri2.startDate}
+		</if>
+		<if test="cri2.startDate == ''.toString() and cri2.endDate != ''.toString()">
+			AND p.padate <![CDATA[<]]> #{cri2.endDate}
+		</if>
+		
+		ORDER BY p.PA_NO DESC
+	</select>
+	
+	
+	<select id="getNames" resultType="str">
+		SELECT e.e_name
+		  FROM pa p, emp e
+		 WHERE p.emp_no = e.emp_no
+		 <if test="searchType == 'n'.toString()">
+			AND p.emp_no IN (SELECT emp_no FROM emp WHERE e_name LIKE '%' || #{keyword} || '%')
+		</if>
+		<if test="searchType == 'd'.toString()">
+			AND (p.predept IN (SELECT dname FROM dept WHERE dname LIKE '%' || #{keyword} || '%')
+			 OR p.nextdept IN (SELECT dname FROM dept WHERE dname LIKE '%' || #{keyword} || '%'))
+		</if>
+		<if test="searchType == 'all'.toString()">
+			AND (p.emp_no IN (SELECT emp_no FROM emp WHERE e_name LIKE '%' || #{keyword} || '%')
+			 OR p.predept IN (SELECT dname FROM dept WHERE dname LIKE '%' || #{keyword} || '%')
+			 OR p.nextdept IN (SELECT dname FROM dept WHERE dname LIKE '%' || #{keyword} || '%'))
+		</if>
+		<if test="cri2.startDate != ''.toString() and cri2.endDate != ''.toString()">
+			AND p.padate BETWEEN TO_DATE(#{cri2.startDate}, 'YYYY-MM-DD') AND TO_DATE(#{cri2.endDate}, 'YYYY-MM-DD') + INTERVAL '1' DAY - INTERVAL '1' SECOND
+		</if>
+		<if test="cri2.startDate != ''.toString() and cri2.endDate == ''.toString()">
+			AND p.padate <![CDATA[>]]> #{cri2.startDate}
+		</if>
+		<if test="cri2.startDate == ''.toString() and cri2.endDate != ''.toString()">
+			AND p.padate <![CDATA[<]]> #{cri2.endDate}
+		</if>
+		
+		ORDER BY p.PA_NO DESC
+	</select>
+	
 </mapper>

@@ -50,8 +50,13 @@ public class ProductController {
 	private ProductDAO productDAO;
 	
 	@RequestMapping("/productBuy")
-	public ModelAndView productBuy(ModelAndView mnv, String mcode, HttpSession session, SearchCriteria cri) throws SQLException {
-		String url = "/product/productBuy.page";
+	public ModelAndView productBuy(String mymenu, ModelAndView mnv,String murl, String mcode, HttpSession session, SearchCriteria cri) throws SQLException {
+		String url = "";
+    	if(mymenu == null) {
+			url="/product/productBuy.page";
+		} else {
+			url="/product/productBuy.mymenu";
+		}
 		String c_no = (String) session.getAttribute("c_no");
 		Map<String, Object> dataMap = new HashMap<>();
 		Map<String, Object> map = new HashMap<>();
@@ -62,6 +67,7 @@ public class ProductController {
 		mnv.addObject("searchType", cri.getSearchType());
 		mnv.addObject("keyword", cri.getKeyword());
 		mnv.addObject("mcode", mcode);
+		mnv.addObject("murl", murl);
 		mnv.addAllObjects(map);
 		mnv.setViewName(url);
 		return mnv;
@@ -133,8 +139,13 @@ public class ProductController {
 	
 	
 	@RequestMapping("/productOrder")
-	public ModelAndView productOrder(ModelAndView mnv, String mcode, SearchCriteria cri, HttpSession session) throws SQLException {
-		String url = "/product/productOrder.page";
+	public ModelAndView productOrder(String mymenu, ModelAndView mnv,String murl, String mcode, SearchCriteria cri, HttpSession session) throws SQLException {
+		String url = "";
+    	if(mymenu == null) {
+			url="/product/productOrder.page";
+		} else {
+			url="/product/productOrder.mymenu";
+		}
 		System.out.println(cri.getSearchType());
 		System.out.println(cri.getKeyword());
 		String c_no = (String) session.getAttribute("c_no");
@@ -147,6 +158,7 @@ public class ProductController {
 		map = productService.allOrderList(dataMap);
 		
 		mnv.addObject("mcode", mcode);
+		mnv.addObject("murl", murl);
 		mnv.addAllObjects(map);
 		mnv.setViewName(url);
 		return mnv;
@@ -351,7 +363,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/orderList")
-	public ModelAndView orderList(ModelAndView mnv, String mcode, HttpSession session, SearchCriteria cri) throws SQLException {
+	public ModelAndView orderList(String mymenu, ModelAndView mnv,String murl, String mcode, HttpSession session, SearchCriteria cri) throws SQLException {
 		System.out.println(cri.getSearchType());
 		System.out.println(cri.getKeyword());
 		String c_no = (String) session.getAttribute("c_no");
@@ -363,8 +375,15 @@ public class ProductController {
 		map = productService.allOrderList(dataMap);
 		
 		mnv.addAllObjects(map);
+		mnv.addObject("murl", murl);
 		mnv.addObject("mcode", mcode);
-		mnv.setViewName("/product/orderList.page");
+		String url = "";
+    	if(mymenu == null) {
+			url="/product/orderList.page";
+		} else {
+			url="/product/orderList.mymenu";
+		}
+		mnv.setViewName(url);
 		return mnv;
 	}
 	

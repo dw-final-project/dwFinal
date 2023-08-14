@@ -65,7 +65,19 @@
 	$(document).ready(function() {
 		let parentInputId = opener.$("#cnt").val();
 		
+		
+		
 		$('#tab').on('click', 'tr', function() {
+			
+			let pr_noChk = $(this).find('#pr_no').val();
+			
+			for(let i=0; i < opener.$('tbody').find('input[name="pr_no"]').get().length; i++){
+				if($('tbody', opener.document).find('input[name="pr_no"]').eq(i).val() == pr_noChk){
+					alert('입력된 제품입니다.');
+					return;
+				};
+			}
+			
 			let pr_noName = $(this).find('#pr_no').val();
 			let productName = $(this).find('.pr_name').text();
 			let companyName = $(this).find('.c_name').text();
@@ -86,6 +98,8 @@
 			$('#pr_name').parents('tr').find('input[name="pr_name"]').val(siProductName);
 			let quantity = parentEl.parents('tr').find('input[name="quantity"]').val();
 			parentEl.parents('tr').find('input[name="amount"]').val(quantity * price);
+			
+			
 			
 			let sum = Number(0);
 			let inputAmount = opener.$('input[name="amount"]').get();

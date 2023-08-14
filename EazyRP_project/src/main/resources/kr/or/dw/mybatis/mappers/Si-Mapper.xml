@@ -52,6 +52,10 @@ SELECT s2.SI_NO,
 	END pr_name
 	,MAX(s2.PROGRESS) progress
 	,SUM(s2.QUANTITY) || '개' quantity
+	,CASE WHEN count(s2.PR_NO) <![CDATA[ > ]]> 1
+		  		THEN MAX((SELECT pr_st FROM product WHERE pr_no = s2.pr_no)) || ' 외 ' || (count(s2.PR_NO)-1)  || '건'
+		  		ELSE MAX((SELECT pr_st FROM product WHERE pr_no = s2.pr_no))
+	END pr_st
   FROM si s, emp e, warehouse w,product p ,SIDETAIL s2 
  WHERE s2.emp_no = e.emp_no
   AND s2.wh_no = w.wh_no
@@ -169,11 +173,11 @@ SELECT ROWNUM,
 		#{si_no},
 		#{emp_no},
 		#{shipdate},
-		'접수중',
+		'0',
 		#{wh_no},
 		#{pr_no},
 		#{quantity},
-		#{content}	
+		#{content, jdbcType = VARCHAR}	
 	)
 </insert>
 	
@@ -195,7 +199,7 @@ SELECT ROWNUM,
  	pr_no = #{pr_no},
  	quantity = #{quantity},
 	shipdate = #{shipdate}, 
-	content = #{content},
+	content = #{content, jdbcType = VARCHAR},
 	progress = #{progress}
 WHERE sidetail_no = #{sidetail_no}
 WHEN NOT MATCHED THEN 
@@ -219,7 +223,7 @@ WHEN NOT MATCHED THEN
 		#{wh_no},
 		#{pr_no},
 		#{quantity},
-		#{content}	
+		#{content, jdbcType = VARCHAR}	
 	)
 </update>
 	

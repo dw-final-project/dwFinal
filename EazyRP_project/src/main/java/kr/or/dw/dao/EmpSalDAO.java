@@ -1,6 +1,8 @@
 package kr.or.dw.dao;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +19,8 @@ import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.ExtrapayVO;
 import kr.or.dw.vo.MerchandiseVO;
 import kr.or.dw.vo.ProductVO;
+import kr.or.dw.vo.SalDetailVO;
+import kr.or.dw.vo.SalVO;
 import kr.or.dw.vo.ShopVO;
 import kr.or.dw.vo.SiVO;
 import kr.or.dw.vo.WorkVO;
@@ -110,5 +114,22 @@ public interface EmpSalDAO {
 
 	List<ExtrapayVO> getExtrapayList() throws SQLException;
 
-	
+	List<Map<String, Object>> selectExtraPay(Map<String, Object> map) throws SQLException;
+
+	void insertSal(SalVO salVO) throws SQLException;
+
+	void insertSalDetail(SalDetailVO saldetailVO) throws SQLException;
+
+	List<Map<String, Object>> selectSalList(SearchCriteria cri, RowBounds rowBounds) throws SQLException;
+
+	int selectSalListCount(SearchCriteria cri) throws SQLException;
+
+	Map<String, Object> selectSalDetail(String sal_no) throws SQLException;
+
+	List<Map<String, Object>> selectSalDetailDetail(String sal_no) throws SQLException;
+
+	void deleteSal(String sal_no_a) throws SQLException;
+
+	void updateStatus(Map<String, Object> map) throws SQLException, ParseException;
+
 }

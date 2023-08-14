@@ -140,7 +140,30 @@ public class MyMenuController {
 	}
 	
 	@RequestMapping("/noteList")
-	public ModelAndView noteList(HttpSession session, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
+	public ModelAndView noteList(String mymenu, HttpSession session, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
+		String url="";
+		if(mymenu == null) {
+			url="/mymenu/noteList.page";
+		} else {
+			url="/mymenu/noteList.mymenu";
+		}
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> note = new HashMap<String, Object>();
+		String c_no = (String) session.getAttribute("c_no");
+		
+		dataMap.put("c_no", c_no);
+		dataMap.put("cri", cri);
+		note = mymenuService.getNoteList(dataMap);
+		
+		mnv.setViewName(url);
+		mnv.addAllObjects(note);
+		mnv.addObject("mcode", mcode);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/noteList2")
+	public ModelAndView noteList2(HttpSession session, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
 		String url="/mymenu/noteList.mymenu";
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		Map<String, Object> note = new HashMap<String, Object>();
@@ -158,7 +181,30 @@ public class MyMenuController {
 	}
     
     @RequestMapping("/sendNoteList")
-    public ModelAndView sendNoteList(HttpSession session, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
+    public ModelAndView sendNoteList(String mymenu, HttpSession session, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
+    	String url="";
+    	if(mymenu == null) {
+			url="/mymenu/sendNoteList.page";
+		} else {
+			url="/mymenu/sendNoteList.mymenu";
+		}
+    	Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> note = new HashMap<String, Object>();
+		String c_no = (String) session.getAttribute("c_no");
+		
+		dataMap.put("c_no", c_no);
+		dataMap.put("cri", cri);
+		note = mymenuService.getNoteList(dataMap);
+		
+		mnv.addAllObjects(note);
+		mnv.setViewName(url);
+		mnv.addObject("mcode", mcode);
+		
+		return mnv;
+	}
+    
+    @RequestMapping("/sendNoteList2")
+    public ModelAndView sendNoteList2(HttpSession session, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
     	String url="mymenu/sendNoteList.mymenu";
     	Map<String, Object> dataMap = new HashMap<String, Object>();
 		Map<String, Object> note = new HashMap<String, Object>();
@@ -249,8 +295,15 @@ public class MyMenuController {
 
 	
 	@RequestMapping("/search")
-	public ModelAndView search(HttpSession session, ModelAndView mnv, String mcode, String keyword, String searchType) throws SQLException {
-		String url = "/mymenu/noteList.page";
+	public ModelAndView search(String mymenu, HttpSession session, ModelAndView mnv, String mcode, String keyword, String searchType) throws SQLException {
+		String url="";
+    	if(mymenu == null) {
+			url="/mymenu/noteList.page";
+		} else {
+			url="/mymenu/noteList.mymenu";
+		}
+		
+		
 		String c_no = (String)session.getAttribute("c_no");
 		Map<String, String> valMap = new HashMap<>();
 		valMap.put("keyword", keyword);
@@ -268,8 +321,13 @@ public class MyMenuController {
 	}
 	
 	@RequestMapping("/sendSearch")
-	public ModelAndView sendSearch(HttpSession session, ModelAndView mnv, String mcode, String keyword, String searchType) throws SQLException {
-		String url = "/mymenu/sendNoteList.page";
+	public ModelAndView sendSearch(String mymenu, HttpSession session, ModelAndView mnv, String mcode, String keyword, String searchType) throws SQLException {
+		String url="";
+    	if(mymenu == null) {
+			url="/mymenu/sendNoteList.page";
+		} else {
+			url="/mymenu/sendNoteList.mymenu";
+		}
 		String c_no = (String)session.getAttribute("c_no");
 		Map<String, String> valMap = new HashMap<>();
 		valMap.put("keyword", keyword);

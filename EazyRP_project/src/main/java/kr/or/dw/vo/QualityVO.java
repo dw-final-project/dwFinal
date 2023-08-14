@@ -18,10 +18,15 @@ public class QualityVO {
 	private String pr_no;
 	private int quantity;
 	private int emp_no;
-	private int sys_updatedate;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date sys_updatedate;
 	private String sys_up;
 	private String progress;
 	private String enabled;
 	
+	private String files;
+	private String realFileName;
+	private String pr_delete;
 	
 }

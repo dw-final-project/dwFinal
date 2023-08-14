@@ -38,7 +38,7 @@ public class ProfitLossController {
 	private ProfitLossService profitLossService;
 	
 	@RequestMapping("/profit")
-	public ModelAndView profit(ModelAndView mnv, String mcode, SearchCriteria2 cri2, SearchCriteria cri, HttpSession session) throws SQLException {
+	public ModelAndView profit(String mymenu, ModelAndView mnv,String murl, String mcode, SearchCriteria2 cri2, SearchCriteria cri, HttpSession session) throws SQLException {
 		Map<String, Object> plVo = new HashMap<>();
 		String c_no = (String) session.getAttribute("c_no");
 		if(cri2.getStartDate().equals("")) {
@@ -62,16 +62,23 @@ public class ProfitLossController {
 		for(int i = 0; i < b.size(); i++) {
 			prevAmount += b.get(i);
 		}
-		mnv.setViewName("/profitLoss/profit.page");
+		String url = "";
+    	if(mymenu == null) {
+			url="/profitLoss/profit.page";
+		} else {
+			url="/profitLoss/profit.mymenu";
+		}
+		mnv.setViewName(url);
 		mnv.addObject("total", total);
 		mnv.addObject("prevAmount", prevAmount);
 		mnv.addObject("b",b);
+		mnv.addObject("murl", murl);
 		mnv.addObject("mcode", mcode);
 		return mnv;
 	}
 	
 	@RequestMapping("/dayProfit")
-	public ModelAndView dayProfit(ModelAndView mnv, String mcode, SearchCriteria2 cri2, SearchCriteria cri, HttpSession session) throws SQLException {
+	public ModelAndView dayProfit(String mymenu, String murl, ModelAndView mnv, String mcode, SearchCriteria2 cri2, SearchCriteria cri, HttpSession session) throws SQLException {
 		Map<String, Object> plVo = new HashMap<>();
 		System.out.println("컨트롤러 엔드데이트임" + cri2.getEndDate());
 		String c_no = (String) session.getAttribute("c_no");
@@ -109,13 +116,20 @@ public class ProfitLossController {
 		mnv.addObject("gb", gb);
 		mnv.addAllObjects(plVo);
 		mnv.addObject("cri2", cri2);
-		mnv.setViewName("/profitLoss/dayProfit.page");
+		String url = "";
+    	if(mymenu == null) {
+			url="/profitLoss/dayProfit.page";
+		} else {
+			url="/profitLoss/dayProfit.mymenu";
+		}
+		mnv.setViewName(url);
 		mnv.addObject("mcode", mcode);
+		mnv.addObject("murl", murl);
 		return mnv;
 	}
 	
 	@RequestMapping("/tr_history")
-	public ModelAndView tr_history(ModelAndView mnv, String mcode, SearchCriteria2 cri2, SearchCriteria cri, HttpSession session) throws SQLException {
+	public ModelAndView tr_history(String mymenu, ModelAndView mnv,String murl, String mcode, SearchCriteria2 cri2, SearchCriteria cri, HttpSession session) throws SQLException {
 		Map<String, Object> plVo = new HashMap<>();
 		String c_no = (String) session.getAttribute("c_no");
 		if(cri2.getStartDate().equals("")) {
@@ -152,8 +166,15 @@ public class ProfitLossController {
 		mnv.addObject("gb", gb);
 		mnv.addAllObjects(plVo);
 		mnv.addObject("cri2", cri2);
-		mnv.setViewName("/profitLoss/tr_history.page");
+		String url = "";
+    	if(mymenu == null) {
+			url="/profitLoss/tr_history.page";
+		} else {
+			url="/profitLoss/tr_history.mymenu";
+		}
+		mnv.setViewName(url);
 		mnv.addObject("mcode", mcode);
+		mnv.addObject("murl", murl);
 		return mnv;
 	}
 	

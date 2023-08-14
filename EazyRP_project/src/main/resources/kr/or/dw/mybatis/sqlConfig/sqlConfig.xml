@@ -38,6 +38,9 @@
 		<typeAlias type="kr.or.dw.vo.ExtrapayVO" alias="extrapay"/>
 		<typeAlias type="kr.or.dw.vo.DeductionVO" alias="deduction"/>
 		<typeAlias type="kr.or.dw.vo.WorkVO" alias="work"/>
+		<typeAlias type="kr.or.dw.vo.SalVO" alias="sal"/>
+		<typeAlias type="kr.or.dw.vo.SalDetailVO" alias="saldetail"/>
+		<typeAlias type="kr.or.dw.vo.PaVO" alias="pa"/>
 
 		<typeAlias type="kr.or.dw.vo.SsheetVO" alias="ssheet"/>
 		<typeAlias type="kr.or.dw.vo.SaleDetailVO" alias="saleDetail"/>
@@ -49,6 +52,7 @@
 		<typeAlias type="kr.or.dw.vo.QualityVO" alias="ql"/>
 
 		<typeAlias type="kr.or.dw.vo.AsVO" alias="as"/>
+		<typeAlias type="kr.or.dw.vo.ErrorVO" alias="error"/>
 		
 		<!-- 희성이꼬 --><!-- 즐, 똥, 엿--><!-- 맛있겠다 -->
 		<typeAlias type="kr.or.dw.vo.BsheetVO" alias="bsheet"/>
@@ -58,6 +62,7 @@
 		<typeAlias type="kr.or.dw.vo.WhVO" alias="wh"/>
 		<typeAlias type="kr.or.dw.vo.FactoryVO" alias="factory"/>
 		<typeAlias type="kr.or.dw.vo.WorkOrderVO" alias="workOrder"/>
+		<typeAlias type="kr.or.dw.vo.WhTransferVO" alias="whTransfer"/>
 		
 	</typeAliases>
 

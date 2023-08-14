@@ -26,9 +26,9 @@ public class WorkOrderVO {
 	private String supplier;
 	private String wo_name;
 	private String c_no;	// 회사번호
-	
+	private int amount;
 	private String e_name;
-	
+	private String pr_name;
 	// workorderdetail
 	private int quantity;	// 수량
 	private String pr_no;	// 제품번호

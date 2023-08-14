@@ -66,7 +66,11 @@ public class AsServiceImpl implements AsService {
 	@Override
 	public void modifyAs(AsVO asVO) throws SQLException {
 		asDAO.modifyAs(asVO);
-		
+		String as_no = asDAO.getAs_no();
+		asVO.setAs_no(as_no);
+		if(asVO.getProgress().equals("2")) {
+			asDAO.tr(asVO);
+		}
 	}
 
 	@Override

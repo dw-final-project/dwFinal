@@ -6,7 +6,7 @@
 <div style="height: 40px"></div>
 <section class="content container-fluid">
 		<div class="row justify-content-center">
-			<div class="col-md-10" style="max-width: 1100px;">
+			<div class="col-md-10" style="max-width: 1200px;">
 				<div class="card card-outline card-info">
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">거래처관리</h2>
@@ -32,7 +32,7 @@
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
 									<th width="150px" style="text-align: center;">거래처 코드</th>
-									<th width="150px" style="text-align: center;">거래처 명</th>
+									<th width="200px" style="text-align: center;">거래처 명</th>
 									<th width="150px" style="text-align: center;">대표자 명</th>
 									<th width="200px" style="text-align: center;">전화번호</th>
 									<th width="200px" style="text-align: center;">핸드폰 번호</th>

@@ -36,7 +36,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 		session.setAttribute("loginUser", member);
 		
 		try {
-			List<MyMenuVO> myMenuList = myMenuDAO.selectMyMenuList(member.getU_no());
+			List<Map<String, Object>> myMenuList = myMenuDAO.selectMyMenuList(member.getU_no());
 			session.setAttribute("myMenuList", myMenuList);
 		} catch (SQLException e) {
 			e.printStackTrace();

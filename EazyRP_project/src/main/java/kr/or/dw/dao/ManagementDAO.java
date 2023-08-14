@@ -10,7 +10,9 @@ import org.apache.ibatis.session.RowBounds;
 import kr.or.dw.vo.DraftGbVO;
 import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.EmpVO;
+import kr.or.dw.vo.PaVO;
 import kr.or.dw.vo.PlVO;
+import kr.or.dw.vo.Tr_historyVO;
 
 @Mapper
 public interface ManagementDAO {
@@ -60,6 +62,12 @@ public interface ManagementDAO {
 	List<DraftGbVO> getDraftGb() throws SQLException;
 
 	String getImgFile(int a) throws SQLException;
+
+	List<PaVO> getHistory(Map<String, Object> dataMap, RowBounds rowBounds) throws SQLException;
+
+	int getTotalCount(Map<String, Object> dataMap) throws SQLException;
+
+	List<String> getNames(Map<String, Object> dataMap, RowBounds rowBounds) throws SQLException;
 
 
 }

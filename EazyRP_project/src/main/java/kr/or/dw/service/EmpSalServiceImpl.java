@@ -1,6 +1,10 @@
 package kr.or.dw.service;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +25,8 @@ import kr.or.dw.vo.DeptVO;
 import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.ExtrapayVO;
 import kr.or.dw.vo.ProductVO;
+import kr.or.dw.vo.SalDetailVO;
+import kr.or.dw.vo.SalVO;
 import kr.or.dw.vo.ShopVO;
 import kr.or.dw.vo.SiVO;
 import kr.or.dw.vo.WorkVO;
@@ -331,7 +337,7 @@ public class EmpSalServiceImpl implements EmpSalService {
 		List<Map<String, Object>> workList = empsalDAO.selectWorkList(cri, rowBounds, c_no);
 		// 전체 board 개수
 		int totalCount = empsalDAO.selectWorkListCount(cri, c_no);
-
+		
 		// PageMaker 생성
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
@@ -392,6 +398,131 @@ public class EmpSalServiceImpl implements EmpSalService {
 		exp = empsalDAO.getExtrapayList();
 		
 		return exp;
+	}
+
+	@Override
+	public List<Map<String, Object>> selectExtraPay(int emp_no, String salmonth, int e_sal) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("emp_no", emp_no);
+		map.put("salmonth", salmonth);
+		List<Map<String, Object>> calextrapayList = empsalDAO.selectExtraPay(map);
+		
+		Double hourSal = Double.parseDouble(e_sal + "") / 365 / 24;
+		
+		List<Map<String, Object>> extrapayList = new ArrayList<Map<String, Object>>();
+		for(Map<String, Object> calextrapay : calextrapayList) {
+			System.out.println("아워샐  " + Math.ceil(hourSal));
+			
+			Double EXTRAPAY = Double.parseDouble(calextrapay.get("WTIME").toString()) * Double.parseDouble(calextrapay.get("CALC").toString()) * Math.ceil(hourSal);
+			calextrapay.put("EXTRAPAY", EXTRAPAY);
+			extrapayList.add(calextrapay);
+		}
+		
+		return extrapayList;
+	}
+	
+	// Sal
+	
+	@Override
+	public String insertSal(SalVO salVO) throws SQLException {
+		empsalDAO.insertSal(salVO);
+		
+		String sal_no = salVO.getSal_no();
+		return sal_no;
+	}
+
+	@Override
+	public void insertSalDetail(SalDetailVO saldetailVO) throws SQLException {
+		empsalDAO.insertSalDetail(saldetailVO);
+	}
+
+	@Override
+	public Map<String, Object> selectSalList(SearchCriteria cri) throws SQLException, ParseException {
+		
+		int offset = cri.getPageStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);		// RowBounds : 쿼리에서 페이징 처리된 결과를 알아서 필요한 만큼 가져온다.
+
+		// 현재 page 번호에 맞는 리스트를 perPageNum 개수 만큼 가져오기
+		List<Map<String, Object>> salList = empsalDAO.selectSalList(cri, rowBounds);
+		// 전체 board 개수
+		int totalCount = empsalDAO.selectSalListCount(cri);
+		
+		for(Map<String, Object> sal : salList) {
+			String saldate = sal.get("SALDATE").toString();
+			String todayfm = new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis()));
+			SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date formatDate = dtFormat.parse(saldate);
+			Date formattoday = dtFormat.parse(todayfm);
+			int compare = formatDate.compareTo(formattoday); 
+			if(compare <= 0) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("saldate", formatDate);
+				map.put("sal_no", sal.get("SAL_NO"));
+				map.put("paymentstatus", sal.get("PAYMENTSTATUS"));
+				empsalDAO.updateStatus(map);
+				sal.put("PAYMENTSTATUS", map.get("paymentstatus"));
+			}
+			
+		}
+		
+		// PageMaker 생성
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("salList", salList);
+		dataMap.put("pageMaker", pageMaker);
+		
+		return dataMap;
+	}
+
+	@Override
+	public Map<String, Object> selectSalDetail(String sal_no) throws SQLException {
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		Map<String, Object> sal = empsalDAO.selectSalDetail(sal_no);
+		List<Map<String, Object>> saldetail = empsalDAO.selectSalDetailDetail(sal_no);
+		
+		List<List<Map<String, Object>>> CalcExtrapayList = new ArrayList<List<Map<String, Object>>>();
+		String salmonth = sal.get("SALMONTH").toString().substring(0, 7);
+
+		for (Map<String, Object> detail : saldetail) {
+			int emp_no = Integer.parseInt(detail.get("EMP_NO").toString());
+			int e_sal = Integer.parseInt(detail.get("E_SAL").toString());
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("emp_no", emp_no);
+			map.put("salmonth", salmonth);
+			List<Map<String, Object>> calextrapayList = empsalDAO.selectExtraPay(map);
+			
+			Double hourSal = Double.parseDouble(e_sal + "") / 365 / 24;
+			int monthSal = e_sal / 12;
+			detail.put("E_SAL", monthSal);
+			for(Map<String, Object> calextrapay : calextrapayList) {
+				System.out.println("아워샐  " + Math.ceil(hourSal));
+				
+				int EXTRAPAY = (int)(Double.parseDouble(calextrapay.get("WTIME").toString()) * Double.parseDouble(calextrapay.get("CALC").toString()) * Math.ceil(hourSal));
+				
+				calextrapay.put("EXTRAPAY", EXTRAPAY);
+			}
+			CalcExtrapayList.add(calextrapayList);
+		}
+		
+		dataMap.put("sal", sal);
+		dataMap.put("CalcExtrapayList", CalcExtrapayList);
+		dataMap.put("saldetail", saldetail);
+		
+		return dataMap;
+	}
+
+	@Override
+	public void deleteSal(String sal_no_a) throws SQLException {
+
+		empsalDAO.deleteSal(sal_no_a);
+	
 	}
 	
 }

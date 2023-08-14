@@ -46,8 +46,13 @@ public class MemberController {
 	private MailSendService mailService;
 	
 	@RequestMapping("/mypage")
-	public ModelAndView index(ModelAndView mnv, String mcode, HttpSession session) throws SQLException{
-		String url = "/common/userProfile.page";
+	public ModelAndView index(String mymenu, ModelAndView mnv, String mcode, HttpSession session) throws SQLException{
+		String url = "";
+    	if(mymenu == null) {
+			url="/common/userProfile.page";
+		} else {
+			url="/common/userProfile.mymenu";
+		}
 		
 		MemberVO member = (MemberVO) session.getAttribute("loginUser");		
 		System.out.println(member);
@@ -58,8 +63,13 @@ public class MemberController {
 		return mnv;
 	}
 	@RequestMapping("/qna")
-	public ModelAndView qna (SearchCriteria cri, ModelAndView mnv, String mcode, HttpSession session) throws Exception {
-		String url = "/common/inquiryForm.page";	
+	public ModelAndView qna (String mymenu, SearchCriteria cri, ModelAndView mnv, String mcode, HttpSession session) throws Exception {
+		String url = "";
+    	if(mymenu == null) {
+			url="/common/inquiryForm.page";
+		} else {
+			url="/common/inquiryForm.mymenu";
+		}
 		
 		MemberVO member = (MemberVO) session.getAttribute("loginUser");
 		int u_no = member.getU_no();
@@ -250,8 +260,13 @@ public class MemberController {
 	
 	//개인정보 수정
 	@RequestMapping("/modProfileForm")
-	public ModelAndView modProfile(String mcode, ModelAndView mnv) throws Exception {		
-		String url = "/common/modProfile.page";
+	public ModelAndView modProfile(String mymenu, String mcode, ModelAndView mnv) throws Exception {		
+		String url = "";
+    	if(mymenu == null) {
+			url="/common/modProfile.page";
+		} else {
+			url="/common/modProfile.mymenu";
+		}
 		
 		mnv.addObject("mcode", mcode);		
 		mnv.setViewName(url);
@@ -261,8 +276,13 @@ public class MemberController {
 
 	// 개인정보 조회
 	@RequestMapping("/modProfile")
-	public ModelAndView Profile(MemberVO member, HttpSession session, String mcode, ModelAndView mnv) throws Exception {
-		String url = "/common/userProfile.page";
+	public ModelAndView Profile(String mymenu, MemberVO member, HttpSession session, String mcode, ModelAndView mnv) throws Exception {
+		String url = "";
+    	if(mymenu == null) {
+			url="/common/userProfile.page";
+		} else {
+			url="/common/userProfile.mymenu";
+		}
 	
 		
 		MemberVO mem = (MemberVO) session.getAttribute("loginUser");
@@ -285,9 +305,13 @@ public class MemberController {
 	
 	// 회원정보 수정에서 비밀번호 변경
 	@RequestMapping("/repwdForm")
-	public ModelAndView repwdForm(String mcode, ModelAndView mnv) throws Exception {
-		String url = "/common/repwdForm.page";
-
+	public ModelAndView repwdForm(String mymenu, String mcode, ModelAndView mnv) throws Exception {
+		String url = "";
+    	if(mymenu == null) {
+			url="/common/repwdForm.page";
+		} else {
+			url="/common/repwdForm.mymenu";
+		}
 		
 		mnv.addObject("mcode", mcode);		
 		mnv.setViewName(url);
@@ -297,8 +321,13 @@ public class MemberController {
 
 	
 	@RequestMapping("/repwd")
-	public ModelAndView repwd (ModelAndView mnv, String mcode, String pwd, HttpSession session) throws Exception{
-		String url = "/common/userProfile.page";		
+	public ModelAndView repwd (String mymenu, ModelAndView mnv, String mcode, String pwd, HttpSession session) throws Exception{
+		String url = "";
+    	if(mymenu == null) {
+			url="/common/userProfile.page";
+		} else {
+			url="/common/userProfile.mymenu";
+		}
 				
 		MemberVO member = (MemberVO) session.getAttribute("loginUser");
 		String id = member.getId(); 

@@ -62,8 +62,14 @@ public class DeptController {
 	private DeptService deptService;
 	
 	@RequestMapping("/dept")
-	public ModelAndView deptMain(ModelAndView mnv, String mcode, String murl, SearchCriteria cri) throws SQLException{
-		String url = "inventory/basic/dept.page";
+	public ModelAndView deptMain(String mymenu, ModelAndView mnv, String mcode, String murl, SearchCriteria cri) throws SQLException{
+		String url="";
+    	if(mymenu == null) {
+			url="inventory/basic/dept.page";
+		} else {
+			url="inventory/basic/dept.mymenu";
+		}
+		
 		Map<String, Object> dataMap = deptService.selectDeptList(cri);
 		mnv.addObject("mcode", mcode);
 		mnv.addObject("murl", murl);

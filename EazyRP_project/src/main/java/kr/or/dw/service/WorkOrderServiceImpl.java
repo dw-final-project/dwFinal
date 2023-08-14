@@ -11,7 +11,10 @@ import org.springframework.stereotype.Service;
 
 import kr.or.dw.command.PageMaker;
 import kr.or.dw.command.SearchCriteria;
+import kr.or.dw.command.SearchCriteria2;
 import kr.or.dw.dao.WorkOrderDAO;
+import kr.or.dw.vo.ErrorVO;
+import kr.or.dw.vo.WhVO;
 import kr.or.dw.vo.WorkOrderVO;
 
 @Service
@@ -123,6 +126,71 @@ public class WorkOrderServiceImpl implements WorkOrderService{
 		System.out.println("workOrderDAO.deleteWorkOrderDetailList(wo_no) - 성공");
 		workOrderDAO.deleteWorkOrder(wo_no);
 		System.out.println("workOrderDAO.deleteWorkOrder(wo_no) - 성공");
+	}
+
+	@Override
+	public void updateBtn(Map<String, Object> map) throws SQLException {
+		
+		workOrderDAO.updateBtn(map);
+	}
+
+	@Override
+	public void insertError(List<WorkOrderVO> woList) throws SQLException {
+		int total = 0;
+		int quantity = 0;
+		for(int i = 0; i < woList.size(); i ++) {
+			if(woList.get(i).getQuantity() != 0) {
+				int amount = workOrderDAO.getPrice(woList.get(i).getPr_no());
+				amount = amount * woList.get(i).getQuantity();
+				woList.get(i).setAmount(amount);
+				total += amount;
+				quantity += woList.get(i).getQuantity();
+				workOrderDAO.insertError(woList.get(i));
+			}
+		}
+		Map<String, Object> map = new HashMap<>();
+		map.put("wh_no", woList.get(0).getWh_no());
+		map.put("progress", 2);
+		map.put("total", total);
+		map.put("quantity", quantity);
+		map.put("c_no", woList.get(0).getC_no());
+		workOrderDAO.updateBtn(map);
+		total = total * -1;
+		map.remove("total");
+		map.put("total", total);
+		workOrderDAO.insertTr(map);
+	}
+
+	@Override
+	public void insertProduct(List<WhVO> whList) throws SQLException {
+		for(int i = 0; i < whList.size(); i++) {
+			WhVO vo = whList.get(i);
+			int a = workOrderDAO.getProduct(vo);
+			if(a == 0) {
+				workOrderDAO.insertProduct(vo);
+			} else {
+				workOrderDAO.updateProduct(vo);
+			}
+		}
+	}
+
+	@Override
+	public List<ErrorVO> getErrorList(String c_no, SearchCriteria cri, SearchCriteria2 cri2) throws SQLException {
+		int offset = cri.getPageStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		dataMap.put("keyword", cri.getKeyword());
+		dataMap.put("searchType", cri.getSearchType());
+		dataMap.put("cri", cri);
+		dataMap.put("c_no", c_no);
+		dataMap.put("cri2", cri2);
+		
+		List<ErrorVO> list = workOrderDAO.getErrorList(dataMap, rowBounds);
+		
+		return list;
 	}
 
 }

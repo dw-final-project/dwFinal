@@ -56,8 +56,13 @@ public class MinjunController {
 	// Shop CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/shop")
-	public ModelAndView shopMain(ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
-		String url = "/minjun/shop.page";
+	public ModelAndView shopMain(String mymenu, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
+		String url = "";
+    	if(mymenu == null) {
+			url="/minjun/shop.page";
+		} else {
+			url="/minjun/shop.mymenu";
+		}
 		Map<String, Object> dataMap = shopService.selectShopList(cri);
 		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(dataMap);
@@ -153,8 +158,13 @@ public class MinjunController {
 	// Merchandise CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/merchandise")
-	public ModelAndView merchandiseMain(String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
-		String url = "minjun/merchandise.page";
+	public ModelAndView merchandiseMain(String mymenu, String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
+		String url = "";
+    	if(mymenu == null) {
+			url="/minjun/merchandise.page";
+		} else {
+			url="/minjun/merchandise.mymenu";
+		}
 		
 		//상품 조회
 		Map<String, Object> dataMap = merchandiseService.selectMerchandiseList(cri);
@@ -166,8 +176,13 @@ public class MinjunController {
 	}
 	
 	@RequestMapping("/merchandiseSearch")
-	public ModelAndView search(ModelAndView mnv, String mcode, String keyword, String searchType) throws SQLException {
-		String url = "/minjun/merchandise.page";
+	public ModelAndView search(String mymenu, ModelAndView mnv, String mcode, String keyword, String searchType) throws SQLException {
+		String url = "";
+    	if(mymenu == null) {
+			url="/minjun/merchandise.page";
+		} else {
+			url="/minjun/merchandise.mymenu";
+		}
 		Map<String, String> valMap = new HashMap<>();
 		valMap.put("keyword", keyword);
 		valMap.put("searchType", searchType);
@@ -279,9 +294,13 @@ public class MinjunController {
 	// ORDER CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/order.do")
-	public ModelAndView orderMain(String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
-		String url = "minjun/order.page";
-		
+	public ModelAndView orderMain(String mymenu, String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
+		String url = "";
+    	if(mymenu == null) {
+			url="/minjun/order.page";
+		} else {
+			url="/minjun/order.mymenu";
+		}
 		
 		//주문 조회
 		Map<String, Object> dataMap = orderService.selectOrderList(cri);

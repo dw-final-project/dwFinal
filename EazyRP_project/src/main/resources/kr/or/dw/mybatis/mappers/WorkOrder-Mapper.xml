@@ -74,7 +74,7 @@
 			#{emp_no},
 			#{c_no},
 			#{deliverydate},
-			#{progress},
+			1,
 			'y'
 		)
 	</insert>
@@ -139,6 +139,7 @@
 		UPDATE	workorder
 		SET		sys_up		= #{emp_no},
 				emp_no		= #{emp_no},
+				wo_name		= #{wo_name},
 				sys_updatedate = sysdate,
 				deliverydate = #{deliverydate},
 				progress 	= #{progress},
@@ -193,5 +194,100 @@
 		DELETE	from workorderdetail
 		WHERE	wo_no = #{wo_no}
 	</delete>
+
+	<update id="updateBtn">
+		UPDATE wh SET progress = #{progress} WHERE wh_no = #{wh_no}
+	</update>
+	
+	<select id="getPrice" resultType="int">
+		SELECT pr_inprice FROM product WHERE pr_no = #{pr_no}
+	</select>
+	
+	<insert id="insertError">
+		INSERT INTO error VALUES(
+			'ER_' || LPAD(ER_NO_SEQ.nextval, 4, '0'),
+			sysdate,
+			'2',
+			#{quantity},
+			#{wo_no},
+			#{amount},
+			#{c_no},
+			#{pr_no},
+			#{fac_no}
+		)
+	</insert>
+	
+	<insert id="insertTr">
+		INSERT INTO tr_history VALUES(
+			'TH_' || LPAD(th_no_seq.nextval, 4, '0'),
+			sysdate,
+			sysdate,
+			#{c_no},
+			2,
+			'FC_003',
+			#{total},
+			#{wh_no},
+			'e',
+			'Y',
+			'/erp4/wh/detail.do?wh_no=' || #{wh_no},
+			#{quantity},
+			'',
+			'AC_001',
+			'T_001',
+			'',
+			'',
+			2,
+			'',
+			#{total}
+		)
+	</insert>
+	
+	<select id="getProduct" resultType="int">
+		SELECT COUNT(*) FROM product WHERE pr_name = #{pr_name} AND wh_no = #{wh_no2}
+	</select>
+	
+	<insert id="insertProduct">
+		INSERT INTO product VALUES(
+			'PR_' || LPAD(product_seq.nextval, 3, '0'),
+			#{pr_name},
+			#{c_no},
+			(SELECT MAX(pr_gr) FROM product WHERE pr_name = #{pr_name} GROUP BY pr_name),
+			(SELECT MAX(pr_st) FROM product WHERE pr_name = #{pr_name} GROUP BY pr_name),
+			(SELECT MAX(pr_inprice) FROM product WHERE pr_name = #{pr_name} GROUP BY pr_name),
+			(SELECT MAX(pr_exprice) FROM product WHERE pr_name = #{pr_name} GROUP BY pr_name),
+			(SELECT MAX(pr_class) FROM product WHERE pr_name = #{pr_name} GROUP BY pr_name),
+			'',
+			sysdate,
+			'SP_001',
+			0,
+			sysdate,
+			sysdate,
+			0,
+			#{quantity},
+			#{wh_no2},
+			'Y'
+		)
+	</insert>
+	
+	<update id="updateProduct">
+		UPDATE product SET quantity = quantity + #{quantity} WHERE pr_name = #{pr_name} AND wh_no = #{wh_no2}
+	</update>
+	
+	<select id="getErrorList" resultType="error">
+		SELECT e.*, p.pr_name, p.pr_inprice, f.fac_name
+		FROM error e, product p, factory f
+		WHERE e.c_no = #{c_no}
+		  AND e.pr_no = p.pr_no
+		  AND e.fac_no = f.fac_no
+		<if test="cri2.startDate != ''.toString() and cri2.endDate != ''.toString()">
+			AND e.sys_regdate BETWEEN TO_DATE(#{cri2.startDate}, 'YYYY-MM-DD') AND TO_DATE(#{cri2.endDate}, 'YYYY-MM-DD') + INTERVAL '1' DAY - INTERVAL '1' SECOND
+		</if>
+		<if test="cri2.startDate != ''.toString() and cri2.endDate == ''.toString()">
+			AND e.sys_regdate <![CDATA[>]]> #{cri2.startDate}
+		</if>
+		<if test="cri2.startDate == ''.toString() and cri2.endDate != ''.toString()">
+			AND e.sys_regdate <![CDATA[<]]> #{cri2.endDate}
+		</if>
+	</select>
 	
 </mapper>
