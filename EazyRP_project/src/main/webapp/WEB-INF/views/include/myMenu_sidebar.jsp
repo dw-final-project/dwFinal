@@ -26,6 +26,8 @@
 		</c:forEach>
 </nav>
 
+
+
 <script>
 	$(function () {
 		let micon = sessionStorage.getItem("micon");
