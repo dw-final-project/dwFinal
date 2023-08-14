@@ -41,7 +41,9 @@
 				<tr>
 					<td style="text-align: center;" class="pr_name">${pro.pr_name}</td>
 					<td style="text-align: center;" class="pr_no">${pro.pr_no }</td>
-					<td style="text-align: center;" class="c_name">${pro.c_name}</td>
+					<td style="text-align: center;" class="c_name">${pro.c_name}
+						<input type="hidden" class="pr_inprice" value="${pro.pr_inprice }">
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -66,6 +68,7 @@
 			$('#name', opener.document).val($(this).find('.pr_name').text());
 			$('#pr_no_receiver', opener.document).val($(this).find('.pr_no').text());
 			$('#sp_no_receiver', opener.document).val($(this).find('.sp_no').text());
+			$('.pr_inprice_receiver', opener.document).val($(this).find('.pr_inprice').val());
 			window.close();
 		})
 	

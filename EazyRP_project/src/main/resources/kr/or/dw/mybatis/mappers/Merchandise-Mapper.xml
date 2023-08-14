@@ -145,7 +145,6 @@
 		 WHERE sp.pr_no = p.pr_no
 		   AND sp.s_no = sh.s_no
 		   AND sp.status = '판매중'
-		   AND sp.endperiod &lt; sysdate
 	  ORDER BY sp.sp_no 
 	</select>
 
@@ -155,7 +154,6 @@
 		 WHERE sp.pr_no = p.pr_no
 		   AND sp.s_no = sh.s_no
 		   AND sp.status = '판매중'
-		   AND sp.endperiod &lt; sysdate
 		<if test="searchType == 'w'.toString()">
 			AND sp.sp_no LIKE '%' || #{keyword} || '%'
 		</if>
