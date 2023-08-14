@@ -384,7 +384,6 @@ public class MinjunController {
 	public ModelAndView orderDetail (ModelAndView mnv ,String sp_no, String pr_no, String so_no) throws SQLException {
 		
 		Map<String, Object> dataMap = orderService.selectDetail(so_no);
-		System.out.println("orderDetail dataMap : " + dataMap);
 		String url = "minjun/order_detail.open";
 		
 		mnv.addAllObjects(dataMap);
@@ -395,16 +394,20 @@ public class MinjunController {
 	
 	@RequestMapping("/modifyOrder.do")
 	public void modifyOrder (OrderVO orderVO, HttpServletResponse res, HttpSession session, String so_no, String sp_no, String oldprogress) throws SQLException , Exception {
-		System.out.println("modifyOrder 진입");
-		
-		
+		String todayfm = new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis()));
+		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date formattoday = dtFormat.parse(todayfm);
+
 		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
-		System.out.println(emp_no);
 
 		orderVO.setSys_up(emp_no + "");
 		orderVO.setSo_no(so_no);
 		orderVO.setSp_no(sp_no);
-		System.out.println(orderVO.getQuantity());
+		
+		if(orderVO.getProgress().equals("배송완료")) {
+			orderVO.setDelenddate(formattoday);
+		}
+		
 		String c_no = (String) session.getAttribute("c_no");
 		if(orderVO.getProgress().equals("배송완료")) {
 			orderService.minusQuantity(orderVO, c_no);

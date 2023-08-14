@@ -47,7 +47,7 @@
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="unitprice" class="col-sm-3">단가</label>
-								<input type="text" id="unitprice" name="unitprice" class="form-control col-sm-9 mch8" value="${merchandise.UNITPRICE}" placeholder="단가를 입력하세요.">
+								<input type="text" id="unitprice" name="unitprice" readonly class="form-control col-sm-9 pr_inprice_receiver" value="${merchandise.UNITPRICE}" placeholder="단가를 입력하세요.">
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="status" class="col-sm-3">판매상태</label>
@@ -116,11 +116,6 @@
 				alert("빈 항목이 있습니다.");
 				return;
 			}
-			if($('.mch8').val() == "") {
-				alert("빈 항목이 있습니다.");
-				return;
-			}
-			
 			form.submit();
 		});
 		

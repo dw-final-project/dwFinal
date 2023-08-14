@@ -39,14 +39,14 @@
 									<th width="150px" style="text-align: center;">배송방법</th>
 									<th width="150px" style="text-align: center;">송장번호</th>
 									<th width="200px" style="text-align: center;">배송시작일</th>
-									<th width="200px" style="text-align: center;">배송종료일</th>
+									<th width="200px" style="text-align: center;">배송완료일</th>
 									<th width="200px" style="text-align: center;">진행상태</th>
 								</tr>
 									<c:forEach items="${orderList}" var="order" varStatus="loop">
 									<tr>
 										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('orderDetail.do?so_no=${order.SO_NO}','상품 상세보기', 1000 , 800);">${order.SO_NO }</a></td>
 										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('merchandiseDetail.do?sp_no=${order.SP_NO}','상품 상세보기', 800 , 600);">${order.SP_NO }</a></td>
-										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('merchandiseDetail.do?sp_no=${order.SP_NO}','상품 상세보기', 800 , 600);">${order.PR_NAME }</a></td>
+										<td style="text-align: center;">${order.PR_NAME }</td>
 										<td style="text-align: center;">${order.QUANTITY}</td>
 										<td style="text-align: center;">
 											<fmt:formatDate value="${order.ORDERDATE }"
