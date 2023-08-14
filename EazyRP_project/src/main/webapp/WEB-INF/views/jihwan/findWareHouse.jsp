@@ -36,7 +36,7 @@
 			<tr>
 				<th width="100px" style="text-align: center;">창고 이름</th>
 				<th width="100px" style="text-align: center;">주소 </th>
-				<th width="100px" style="text-align: center;">업체명</th>
+				<th width="100px" style="text-align: center;">소유 업체명</th>
 			</tr>
 			<c:forEach items="${warehouse }" var="wh">
 				<tr class="trHover">

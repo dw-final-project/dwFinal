@@ -760,6 +760,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	public ModelAndView whTransfer(String murl, String mymenu, ModelAndView mnv, SearchCriteria cri, String mcode, HttpSession session) throws SQLException {
 		
 		System.out.println("HeesungController - erp4/whtransfer - 진입");
+		System.out.println(cri.getPage());
 		String url="";
     	if(mymenu == null) {
 			url="heesung/whtransfer/main.page";

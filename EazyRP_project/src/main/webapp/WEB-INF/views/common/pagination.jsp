@@ -47,7 +47,7 @@
 </form>
 <script>
 	function searchList_go(page, url){
-		
+
 		let mcode = sessionStorage.getItem("mcode");
 		let murl = sessionStorage.getItem("murl");
 		
