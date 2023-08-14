@@ -83,15 +83,25 @@ public class WhTransferServiceImpl implements WhTransferService{
 		
 		String wt_no = whtList.get(0).getWt_no();
 		System.out.println("whtList.get(0).getWt_no() = " + wt_no);
-		
+		int amount = 0;
+		int quantity = 0;
 		for(WhTransferVO whtDetail : whtList) {
 			whtDetail.setWt_no(wt_no);
+			int a = 0;
 			whTransferDAO.registWhTransferDetail(whtDetail);
 			
 			whTransferDAO.registProduct(whtDetail);	// 받는 창고에 수량 추가
 			whTransferDAO.minusProduct(whtDetail);	// 보내는 창고에 수량 차감
+			a += whtDetail.getQuantity() * whTransferDAO.getAmount(whtDetail.getPr_no());
+			quantity += whtDetail.getQuantity();
+			amount += a;
 		}
-
+		Map<String, Object> map = new HashMap<>();
+		map.put("wht", whtList.get(0));
+		map.put("quantity", quantity);
+		map.put("amount", (amount * -1));
+		map.put("wt_no", wt_no);
+		whTransferDAO.insertTr_history(map);
 	}
 
 	@Override

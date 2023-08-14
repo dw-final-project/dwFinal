@@ -34,14 +34,12 @@
 	<div>	
 		<table id="tab" style="font-size: 0.8em;" class="table table-borderd text-center">
 			<tr>
-				<th width="50px" style="text-align: center;">선택하기</th>
 				<th width="50px" style="text-align: center;">사원 코드</th>
 				<th width="50px" style="text-align: center;">사원 이름</th>
 				<th width="50px" style="text-align: center;">직급</th>
 				<th width="50px" style="text-align: center;">부서명</th>
 			</tr>
 			<tr>
-				<td style="text-align: center;" class=""><input type="checkbox"></td>
 				<td style="text-align: center;" class="emp_no">0</td>
 				<td style="text-align: center;" class="e_name">없음</td>
 				<td style="text-align: center;" class="e_rank">없음</td>
@@ -49,7 +47,6 @@
 			</tr>
 			<c:forEach items="${emp}" var="emp">
 				<tr>
-					<td style="text-align: center;" class="empchk"><input type="checkbox"></td>
 					<td style="text-align: center;" class="emp_no">${emp.emp_no}</td>
 					<td style="text-align: center;" class="e_name">${emp.e_name}</td>
 					<td style="text-align: center;" class="e_rank">${emp.e_rank}</td>

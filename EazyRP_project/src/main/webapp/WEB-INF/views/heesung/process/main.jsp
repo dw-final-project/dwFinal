@@ -13,7 +13,7 @@
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm2" method="post" action="/erp4/process.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2 custom-select" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="cto" ${searchType eq 'cto' ? 'selected' : '' }>전체</option>
+								<option value="cto" ${searchType eq 'cto' ? 'selected' : '' }>코드 + 공정명 + 순번</option>
 								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>공정코드</option>
 								<option value="t" ${searchType eq 't' ? 'selected' : '' }>공정명</option>
 								<option value="o" ${searchType eq 'o' ? 'selected' : '' }>순번</option>

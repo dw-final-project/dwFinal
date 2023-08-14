@@ -71,7 +71,7 @@
 								<c:set var="endperiod">
 									<fmt:formatDate value="${merchandise.ENDPERIOD }" pattern="yyyy-MM-dd"></fmt:formatDate>
 								</c:set>
-								<input type="date" id="endperiod" name="endperiod" class="form-control col-sm-9 mch7" value="${endperiod }" placeholder="판매종료일을 입력하세요.">
+								<input type="date" id="endperiod" name="endperiod" readonly class="form-control col-sm-9 " value="${endperiod }" placeholder="판매종료일을 입력하세요.">
 							</div>
 						</form>
 					</div>
@@ -113,10 +113,6 @@
 				return;
 			}
 			if($('.mch6').val() == "") {
-				alert("빈 항목이 있습니다.");
-				return;
-			}
-			if($('.mch7').val() == "") {
 				alert("빈 항목이 있습니다.");
 				return;
 			}

@@ -175,9 +175,13 @@
 		UPDATE qc SET emp_no = #{emp_no},
 					  sys_updatedate = sysdate,
 					  progress = #{progress},
-					  sys_up = #{emp_no},
-					  files = #{files},
-					  realFileName = #{realFileName}
+					  sys_up = #{emp_no}
+					  <if test="files != ''.toString()">
+							,files = #{files}
+					 </if>
+					 <if test="realFileName != ''.toString()">
+							,realFileName = #{realFileName}
+					</if>
 		WHERE qc_no = #{qc_no}
 	</update>
 	

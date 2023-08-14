@@ -26,5 +26,6 @@ public class AsVO {
 	private int asprice;	//수리비용
 	private String content;
 	private String e_name;
+	private String c_no;
 	
 }

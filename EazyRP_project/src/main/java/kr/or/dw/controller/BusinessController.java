@@ -68,12 +68,13 @@ public class BusinessController {
 	@RequestMapping("/estimate")
 	public ModelAndView main(String mymenu, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException {
 		String url="";
+		System.out.println("1");
     	if(mymenu == null) {
 			url="jihwan/main.page";
 		} else {
 			url="jihwan/main.mymenu";
 		}
-		
+		System.out.println("22");
 		Map<String, Object> dataMap = estimateService.selectEstimList(cri);
 		
 		mnv.addObject("mcode", mcode);
@@ -341,6 +342,7 @@ public class BusinessController {
 			}
 		}
 		
+		System.out.println(fc_no);
 		
 		for(int i= 0; i < pr_no.length; i++) {
 			EstimateVO est2 = new EstimateVO();

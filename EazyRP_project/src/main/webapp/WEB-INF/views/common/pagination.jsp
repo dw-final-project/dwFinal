@@ -47,7 +47,7 @@
 </form>
 <script>
 	function searchList_go(page, url){
-		
+
 		let mcode = sessionStorage.getItem("mcode");
 		let murl = sessionStorage.getItem("murl");
 		
@@ -74,6 +74,7 @@
 		}else{
 			searchForm.attr("action", murl + "?mcode=" + modMcode);
 		}
+		debugger;
 		console.log(searchForm)
 		searchForm.submit();
 	}

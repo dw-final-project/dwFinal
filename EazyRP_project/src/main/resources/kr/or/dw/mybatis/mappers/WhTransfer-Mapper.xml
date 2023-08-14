@@ -3,24 +3,32 @@
 <mapper namespace="kr.or.dw.dao.WhTransferDAO">
 
 	<sql id="search">
-		<if test="cri.searchType == 'w'.toString()">
-			AND e.E_NAME LIKE '%' || #{cri.keyword} || '%'
+		<if test="cri.searchType == 's'.toString()">
+			AND wht.SYS_REGDATE LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="cri.searchType == 't'.toString()">
-			AND w.WO_NAME LIKE '%' || #{cri.keyword} || '%'
+		<if test="cri.searchType == 'c'.toString()">
+			AND wht.WT_NO LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="cri.searchType == 'tw'.toString()">
+		<if test="cri.searchType == 'n'.toString()">
+			AND (wa.WH_NAME LIKE '%' || #{cri.keyword} || '%'
+			OR wa2.WH_NAME LIKE '%' || #{cri.keyword} || '%')
+		</if>
+		<if test="cri.searchType == 'scn'.toString()">
 			AND (
-			w.WO_NAME LIKE '%' || #{cri.keyword} || '%'
+			wht.SYS_REGDATE LIKE '%' || #{cri.keyword} || '%'
 			OR
-			e.E_NAME LIKE '%' || #{cri.keyword} || '%'
+			wht.WT_NO LIKE '%' || #{cri.keyword} || '%'
+			OR
+			wa.WH_NAME LIKE '%' || #{cri.keyword} || '%'
+			OR
+			wa2.WH_NAME LIKE '%' || #{cri.keyword} || '%'
 			)
 		</if>
 	</sql>
 	
 	<select id="selectSearchWhTransferList" resultType="Map">
 		SELECT 	wht.wt_no,
-				MAX(wht.sys_regdate) sys_regdate,
+				MAX(TO_CHAR(wht.sys_regdate, 'yyyy-MM-dd')) sys_regdate,
 				count(whtd.PR_NO) pr_no,
 				CASE WHEN count(whtd.PR_NO) <![CDATA[ > ]]> 1
 					THEN MAX((SELECT pr_name FROM product WHERE pr_no = whtd.pr_no)) || ' 외 ' || (count(whtd.PR_NO)-1) || '건'
@@ -46,10 +54,22 @@
 	
 	<select id="selectSearchWhTransferListCount" resultType="int">
 		SELECT 	COUNT(*)
-		FROM	whtransfer
-		WHERE	1=1
-		AND		c_no = #{c_no}
-		<include refid="search"></include>
+		FROM(	SELECT	COUNT(*)
+				FROM	WHTRANSFER wht, 
+						wht_detail whtd, 
+						product pr, 
+						warehouse wa, 
+						warehouse wa2
+				WHERE	1=1
+				AND wht.wt_no = whtd.wt_no
+				AND whtd.pr_no = pr.pr_no
+				AND pr.wh_no = wa.wh_no
+				AND wht.wh_no = wa.wh_no
+				AND wht.wh_no2 = wa2.wh_no
+				AND wht.c_no = #{c_no}
+				<include refid="search"></include>
+				GROUP BY wht.wt_no
+		)
 	</select>
 	
 	<!-- 보내는 창고의 재고 조회 -->
@@ -219,5 +239,34 @@
 		AND		whtd.pr_no = pr.pr_no
 		AND		wht.wt_no = #{wt_no}
 	</select>
+	
+	<select id="getAmount" resultType="int">
+		SELECT p.pr_inprice FROM product p WHERE p.pr_no = #{pr_no}
+	</select>
+
+	<insert id="insertTr_history">
+		INSERT INTO tr_history VALUES(
+			'TH_' || LPAD(th_no_seq.nextval, 4, '0'),
+			sysdate,
+			sysdate,
+			#{wht.c_no},
+			1,
+			'FC_003',
+			#{amount},
+			'X',
+			'w',
+			'Y',
+			'/erp4/whtransfer/detail.do?wt_no=' || #{wt_no},
+			#{quantity},
+			'',
+			'AC_001',
+			'T_001',
+			'',
+			'',
+			'추가',
+			'',
+			#{amount}
+		)
+	</insert>
 
 </mapper>

@@ -54,10 +54,10 @@
 								<label for="stperiod" class="col-sm-3">판매시작일</label>
 								<input type="date" id="stperiod" name="startperiod" class="form-control col-sm-9 mch6" value="" placeholder="판매시작일을 입력하세요.">
 							</div>
-							<div class="form-group col-sm-12 row">
-								<label for="endperiod" class="col-sm-3">판매종료일</label>
-								<input type="date" id="endperiod" name="endperiod" class="form-control col-sm-9 mch7" value="" placeholder="판매종료일을 입력하세요.">
-							</div>
+<!-- 							<div class="form-group col-sm-12 row"> -->
+<!-- 								<label for="endperiod" class="col-sm-3">판매종료일</label> -->
+<!-- 								<input type="date" id="endperiod" name="endperiod" class="form-control col-sm-9 " value="" placeholder="판매종료일을 입력하세요."> -->
+<!-- 							</div> -->
 						</form>
 					</div>
 				</div>
@@ -94,10 +94,6 @@
 				return;
 			}
 			if($('.mch6').val() == "") {
-				alert("빈 항목이 있습니다.");
-				return;
-			}
-			if($('.mch7').val() == "") {
 				alert("빈 항목이 있습니다.");
 				return;
 			}

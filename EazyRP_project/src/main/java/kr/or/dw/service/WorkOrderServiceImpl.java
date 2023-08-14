@@ -130,7 +130,6 @@ public class WorkOrderServiceImpl implements WorkOrderService{
 
 	@Override
 	public void updateBtn(Map<String, Object> map) throws SQLException {
-		
 		workOrderDAO.updateBtn(map);
 	}
 
@@ -191,6 +190,11 @@ public class WorkOrderServiceImpl implements WorkOrderService{
 		List<ErrorVO> list = workOrderDAO.getErrorList(dataMap, rowBounds);
 		
 		return list;
+	}
+
+	@Override
+	public void updateWorkOrderProgress(Map<String, Object> map) throws SQLException {
+		workOrderDAO.updateWorkOrderProgress(map);
 	}
 
 }

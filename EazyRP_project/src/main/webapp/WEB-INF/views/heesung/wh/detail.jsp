@@ -200,7 +200,7 @@
         </tbody>
         <tr class="total">
             <td colspan="5" align="center">총액</td>
-            <td colspan="2" align="center"><input type="text" id="wh_total" name="wh_total" style="width: 100%;" value="${wh.WH_TOTAL }"></td>
+            <td colspan="2" align="center"><input type="text" id="wh_total" name="wh_total" style="width: 100%;" value="${wh.WH_TOTAL }" readonly></td>
         </tr>
     </table>
 </form>

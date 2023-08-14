@@ -74,4 +74,33 @@
 		WHERE as_no = #{as_no} 
 	</delete>
 	
+	<insert id="tr">
+		INSERT INTO tr_history VALUES(
+			'TH_' || LPAD(th_no_seq.nextval, 4, '0'),
+			sysdate,
+			sysdate,
+			#{c_no},
+			1,
+			'FC_003',
+			#{asprice},
+			'X',
+			'a',
+			'Y',
+			'/asmanage/detail.do?as_no=' || #{as_no},
+			1,
+			'',
+			'AC_001',
+			'T_001',
+			'',
+			'',
+			(SELECT e_name FROM emp WHERE emp_no = #{emp_no}),
+			'',
+			#{asprice}
+		)
+	</insert>
+	
+	<select id="getAs_no" resultType="str">
+		SELECT a.as_no, rownum FROM (SELECT * FROM ASMANAGE ORDER BY sys_regdate desc) a WHERE rownum = 1
+	</select>
+	
 </mapper>

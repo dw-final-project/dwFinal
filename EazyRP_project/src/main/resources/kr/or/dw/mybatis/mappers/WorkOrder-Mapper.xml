@@ -290,4 +290,10 @@
 		</if>
 	</select>
 	
+	<update id="updateWorkOrderProgress">
+		UPDATE	workorder
+		SET		progress = #{progress}
+		WHERE	wo_no = #{wo_no}
+	</update>
+	
 </mapper>

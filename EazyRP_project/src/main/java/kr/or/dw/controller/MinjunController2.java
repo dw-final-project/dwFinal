@@ -343,22 +343,6 @@ public class MinjunController2 {
 		return mnv;
 	}
 	
-//	@RequestMapping("/addAllEmp")
-//	public ModelAndView addAllEmp(ModelAndView mnv,String c_no, HttpSession session) throws SQLException {
-//		List<EmpVO> emp = null;
-//		Map<String, String> dataMap = new HashMap<>();
-//		c_no = (String) session.getAttribute("c_no");
-//		
-//		dataMap.put("c_no", c_no);
-//		
-//		
-//		
-//		mnv.addAllObjects(dataMap);
-//		mnv.addObject("emp", emp);
-//		
-//		return mnv;
-//	} 
-	
 	@RequestMapping("/findExtrapay")
 	public ModelAndView findExtrapay(ModelAndView mnv, String searchType, String keyword, HttpSession session) throws SQLException {
 		String url = "minjun2/findExtrapay";
@@ -859,6 +843,27 @@ public class MinjunController2 {
 		
 		return entity;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/addAllEmp")
+	public ResponseEntity<List<Map<String, Object>>> addAllEmp(@RequestBody Map<String, Object> map, HttpSession session) throws SQLException {
+		ResponseEntity<List<Map<String, Object>>> entity = null;
+		
+		List<Map<String, Object>> empList = null;
+		String c_no = (String) session.getAttribute("c_no");
+		String salmonth = map.get("salmonth").toString();
+		empList = empsalService.allEmpList(c_no, salmonth);		
+		
+		try {
+			entity = new ResponseEntity<List<Map<String, Object>>>(empList, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<List<Map<String, Object>>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		
+		return entity;
+	} 
 	
 	@RequestMapping("/deleteSal.do")
 	public void deleteSal (HttpServletResponse res, HttpSession session, String sal_no_a) throws SQLException , Exception {

@@ -246,19 +246,148 @@
 		}
 		;
 		
-// 		// 사원 전체 추가
-// 		$('#addAllPutBtn').on('click', function()){
+		// 사원 전체 추가
+		$('#addAllPutBtn').on('click', function(){
+			if(confirm("전체 직원을 추가하시겠습니까?")){
+				
+				$('tbody').find('tr').remove();
+				
+				let data = {
+						"salmonth" : $("#salmonth").val()
+				};
+				
+				$.ajax({
+					url : "<%=request.getContextPath()%>/management/addAllEmp",
+					type : "post",
+					data : JSON.stringify(data),
+					dataType: 'json',
+					contentType : "application/json;charset=utf-8",
+					success : function(data){
+						$.each(data, function(index, emp){
+							let cnt = 0;
+							addEmp();
+							
+							$('input[name="e_name"]').eq(index).val(emp.E_NAME);
+							$('input[name="emp_no"]').eq(index).val(emp.EMP_NO);
+							$('input[name="e_rank"]').eq(index).val(emp.E_RANK);
+							$('input[name="e_name"]').eq(index).val(emp.E_NAME);
+							$('input[name="e_sal"]').eq(index).val(Math.floor(emp.E_SAL / 12));
+							
+							$.each(emp.extrapayList, function(index1, exp){
+								$('input[name="e_name"]').eq(index).parents('tr').find('input[name='+ exp.EP_NO +']').parents('td').find('input[type="text"]').val(exp.EXTRAPAY);
+								$('input[name="e_name"]').eq(index).parents('tr').next('tr').find('input[name='+ exp.EP_NO +']').parents('td').find('input[type="text"]').val(exp.EXTRAPAY);								
+							
+							});
+							
+							let sum = 0;
+							for (let i = 0; i < $('input[name="e_name"]').eq(index).parents('tr').find('input[class="sumpay"]').get().length; i++ ){
+								sum += Number($('input[name="e_name"]').eq(index).parents('tr').find('input[class="sumpay"]').eq(i).val());
+							}
+							
+							for (let i = 0; i < $('input[name="e_name"]').eq(index).parents('tr').next('tr').find('input[class="sumpay"]').get().length; i++ ){
+								sum += Number($('input[name="e_name"]').eq(index).parents('tr').next('tr').find('input[class="sumpay"]').eq(i).val());
+							}
+							$('input[name="e_name"]').eq(index).parents('tr').find('#sumExtrapay').text(sum);
+							
+							// 토탈금액
+							let e_sal_sum = 0;
+							for(let i = 0; i < $('tbody').find('input[name="e_sal"]').get().length; i++) {
+								e_sal_sum += Number($('tbody').find('input[name="e_sal"]').eq(i).val());
+							}			
+							$('#total_e_sal').text(e_sal_sum);
+							
+							let sum_야근수당 = 0;
+							for(let i = 0; i < $('tbody').find('input[name="야근수당"]').get().length; i++) {
+								sum_야근수당 += Number($('tbody').find('input[name="야근수당"]').eq(i).val());
+							}			
+							$('#total_야근수당').text(sum_야근수당);
+							
+							let sum_초과수당 = 0;
+							for(let i = 0; i < $('tbody').find('input[name="초과수당"]').get().length; i++) {
+								sum_초과수당 += Number($('tbody').find('input[name="초과수당"]').eq(i).val());
+							}			
+							$('#total_초과수당').text(sum_초과수당);
+
+							let sum_출산보육수당 = 0;
+							for(let i = 0; i < $('tbody').find('input[name="출산보육수당"]').get().length; i++) {
+								sum_출산보육수당 += Number($('tbody').find('input[name="출산보육수당"]').eq(i).val());
+							}			
+							$('#total_출산보육수당').text(sum_출산보육수당);
+							
+							let sum_주말근무수당 = 0;
+							for(let i = 0; i < $('tbody').find('input[name="주말근무수당"]').get().length; i++) {
+								sum_주말근무수당 += Number($('tbody').find('input[name="주말근무수당"]').eq(i).val());
+							}			
+							$('#total_주말근무수당').text(sum_주말근무수당);
+							
+							let sum_연차수당 = 0;
+							for(let i = 0; i < $('tbody').find('input[name="연차수당"]').get().length; i++) {
+								sum_연차수당 += Number($('tbody').find('input[name="연차수당"]').eq(i).val());
+							}			
+							$('#total_연차수당').text(sum_연차수당);
+
+							let sum_지급총액 = 0;
+							for(let i = 0; i < $('tbody').find('td[id="sumExtrapay"]').get().length; i++) {
+								sum_지급총액 += Number($('tbody').find('td[id="sumExtrapay"]').eq(i).text());
+							}			
+							$('#total_지급총액').text(sum_지급총액);
+						});
+					},
+					error : function(error){
+						alert("실패" + error.status);
+					}
+				});
 			
-// 			form.attr({
-// 				'action' : 'addAllEmp.do',
-// 				'method' : 'post'
-// 			});
-// 		};	
+			
+			
+			};
+			
+		});	
 		
 		let cnt = 0;
 		
+		function addEmp(){
+			cnt++;
+			
+			$('tbody').append(
+			'<tr>'
+			+	'<td><input type="text" id="e_name' + cnt + '" name="e_name" value="직원" style="" readonly></td>'
+			+	'<td><input type="text"  id="dname' + cnt + '" name="dname" value="부서" style="" readonly></td>'
+			+	'<td><input type="text"  id="e_sal' + cnt + '" name="e_sal" value="기본급" class="sumpay" style="" readonly></td>'
+			    <c:forEach items="${extrapayList }" begin="0" end="2" var="exp" varStatus="loop">
+				+	'<td style="width: 8%"><input type="text"  id="ep_name' + cnt + '" name="${exp.EP_NAME }" value="" class="sumpay" style=" font-weight:bold;" readonly>'
+				+ 	'<input type="hidden" id="${exp.EP_NO }" name="${exp.EP_NO }" value="${exp.EP_NO }"></td>'
+				 </c:forEach>
+			+	'<td rowspan="2" id="sumExtrapay" style="vertical-align: middle;"></td>'
+				<c:forEach items="${deductionList }" begin="0" end="2" var="ded" varStatus="loop">
+				+	'<td style="width: 8%"><input type="text"  id="${ded.DED_NAME}" name="ded_name" class="dedApply" value="" style="" readonly placeholder="적용하기">'
+				+	'<input type="hidden" id="ded_no" name="${ded.DED_NO }" value="x">'
+				+	'<input type="hidden" id="calc" name="calc" value="${ded.CALC }"></td>'
+				 </c:forEach>
+			+	'<td rowspan="2" style="vertical-align: middle;" class="dedpay" id="sumDedpay"></td>'
+			+	'<td rowspan="2" style="vertical-align: middle;"><input type="text"  id="realSumSal" name="realsumsal" value="" style="" readonly></td>'
+			+ 	'<td rowspan="2" style="text-align : center; vertical-align: middle;"><button type="button" id="cancelBtn">삭제</button></td>'
+			+'</tr>'
+			+'<tr>'
+			+	'<td><input type="text"  id="emp_no' + cnt + '" name="emp_no" value="사원번호" style="" readonly></td>'
+			+	'<td><input type="text"  id="e_rank' + cnt + '" name="e_rank" value="직급" style="" readonly></td>'
+			+	'<td></td>'
+				<c:forEach items="${extrapayList }" begin="3" end="5" var="exp" varStatus="loop">
+				+	'<td style="width: 7%"><input type="text"  id="ep_name' + cnt + '" name="${exp.EP_NAME }" value="" class="sumpay" style=""  font-weight:bold;" readonly>'
+				+	'<input type="hidden" id="${exp.EP_NO }" name="${exp.EP_NO }" value="${exp.EP_NO }"></td>'
+				</c:forEach>
+			+	'<td></td>'
+				<c:forEach items="${deductionList }" begin="3" end="5" var="ded" varStatus="loop">
+			+	'<td style="width: 8%"><input type="text"  id="${ded.DED_NAME}" name="ded_name" class="dedApply" value="" style="" readonly placeholder="적용하기">'
+			+	'<input type="hidden" id="ded_no" name="${ded.DED_NO }" value="x">'
+			+	'<input type="hidden" id="calc" name="calc" value="${ded.CALC }"></td>'
+				 </c:forEach>
+			+'</tr>'
+			);
+		}
+		
 		// 사원 추가 버튼
-		$('#addPutBtn').on('click', function(){
+		$('#addPutBtn').on('click',  function (){
 				
 				cnt++;
 			

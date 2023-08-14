@@ -40,6 +40,7 @@
 		<typeAlias type="kr.or.dw.vo.WorkVO" alias="work"/>
 		<typeAlias type="kr.or.dw.vo.SalVO" alias="sal"/>
 		<typeAlias type="kr.or.dw.vo.SalDetailVO" alias="saldetail"/>
+		<typeAlias type="kr.or.dw.vo.PaVO" alias="pa"/>
 
 		<typeAlias type="kr.or.dw.vo.SsheetVO" alias="ssheet"/>
 		<typeAlias type="kr.or.dw.vo.SaleDetailVO" alias="saleDetail"/>
