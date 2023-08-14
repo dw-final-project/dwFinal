@@ -3,18 +3,24 @@
 <mapper namespace="kr.or.dw.dao.AsDAO">
 
 	<!-- 셀렉트바 검색 -->
-	<!--  --><sql id="search">
-		<if test="searchType == 'a'.toString()">
-			AND as_no LIKE '%' || #{keyword} || '%'
-		</if>
+	<sql id="search">
 		<if test="searchType == 'p'.toString()">
 			AND progress LIKE '%' || #{keyword} || '%'
 		</if>
+		<if test="searchType == 'c'.toString()">
+			AND content LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'n'.toString()">
+			AND e_name LIKE '%' || #{keyword} || '%'
+		</if>
 		<if test="searchType == 'all'.toString()">
 			AND (
-			as_no LIKE '%' || #{keyword} || '%'
-			OR
 			progress LIKE '%' || #{keyword} || '%'
+			OR
+			content LIKE '%' || #{keyword} || '%'
+			)
+			OR
+			e_name LIKE '%' || #{keyword} || '%'
 			)
 		</if>
 	</sql> 

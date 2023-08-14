@@ -85,8 +85,8 @@
 	        <tr>
 	            <td width="40%" align="center"><b>담당자</b></td>
 	            <td width="100%">
-		        	<input type="hidden" id="receiver" name="emp_no" value="${as.EMP_NO }">
-	            	<input type="text" style="width: 100%;" value="${as.C_NAME } / ${as.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
+		        	<input type="hidden" id="receiver" name="emp_no" value="${as.EMP_NO }" ${as.PROGRESS ne '0' ? 'readonly' : ''}>
+	            	<input type="text" style="width: 100%;" value="${as.C_NAME }  ${as.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
 	            </td>
 	        </tr>
 	        <tr>
@@ -98,13 +98,13 @@
 	        <tr>
 				<td width="40%" align="center"><b>수리예정일</b></td>
 				<td width="100%">
-					<input type="date" id="repairdate" name="repairdate" class="form-control col-sm-9 mch6" value="<fmt:formatDate value="${as.REPAIRDATE}" pattern="yyyy-MM-dd"></fmt:formatDate>" placeholder="요청날짜를 입력하세요.">
+					<input type="date" id="repairdate" name="repairdate" class="form-control col-sm-9 mch6" value="<fmt:formatDate value="${as.REPAIRDATE}" pattern="yyyy-MM-dd"></fmt:formatDate>" ${as.PROGRESS ne '0' ? 'readonly' : ''} placeholder="요청날짜를 입력하세요.">
 				</td>
 			</tr>
 			<tr>
 				<td width="40%" align="center"><b>완료일</b></td>
 				<td width="100%">	
-					<input type="date" id="compldate" name="compldate" class="form-control col-sm-9 mch7" value="<fmt:formatDate value="${as.COMPLDATE}" pattern="yyyy-MM-dd"></fmt:formatDate>" placeholder="완료일을 입력하세요.">
+					<input type="date" id="compldate" name="compldate" class="form-control col-sm-9 mch7" value="<fmt:formatDate value="${as.COMPLDATE}" pattern="yyyy-MM-dd"></fmt:formatDate>" placeholder="완료일을 입력하세요." disabled>
 				</td>
 			</tr>
 	        <tr>
@@ -112,7 +112,7 @@
 	            	<b>상태</b>
 	            </td>
 	            <td>
-	            	<select name="progress" id="progress_select">
+	            	<select name="progress" id="progress_select"  ${as.PROGRESS ne '0' ? 'disabled' : ''}>
 					    <option>선택</option>
 					    <option value="0" ${as.PROGRESS eq '0' ? 'selected' : '' }>대기중</option>
 					    <option value="1" ${as.PROGRESS eq '1' ? 'selected' : '' }>진행중</option>
@@ -123,7 +123,7 @@
 	        <tr>
 				<td width="40%" align="center"><b>AS비용</b></td>
 				<td width="100%">	
-					<input type="text" id="asprice" name="asprice" style="width: 100%;" value="${as.ASPRICE }">
+					<input type="text" id="asprice" name="asprice" style="width: 100%;" value="${as.ASPRICE }" ${as.PROGRESS ne '0' ? 'readonly' : ''}>
 				</td>
 			</tr>
 	    </table>
@@ -131,7 +131,7 @@
  		<tr>
 	        	<td width="40%" align="center"><b>A/S 내용</b></td>
 	        	<td width="100%">
-					<textarea row="5" cols="50" name="content">${as.CONTENT}</textarea>
+					<textarea row="5" cols="50" name="content" ${as.PROGRESS ne '0' ? 'readonly' : ''}>${as.CONTENT}</textarea>
 	        	</td>
 	        </tr>
  	</table>
@@ -170,6 +170,8 @@ window.onload = function(){
 
 </script>
 
+<c:if test="${as.PROGRESS eq '0'}" >
+
 <script>
 let rownumList = $('.rownum');
 let cnt = rownumList.length; 
@@ -190,5 +192,5 @@ function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 
 	
 </script>
-
+</c:if>
 </html>

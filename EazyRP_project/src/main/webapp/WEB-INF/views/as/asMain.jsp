@@ -14,9 +14,10 @@
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm2" method="post" action="/asmanage/as.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="tcw" ${searchType eq 'ap' ? 'selected' : '' }>전  체</option>
-								<option value="t" ${searchType eq 'a' ? 'selected' : '' }>제  목</option>
-								<option value="w" ${searchType eq 'p' ? 'selected' : '' }>보낸사람</option>
+								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
+								<option value="p" ${searchType eq 'p' ? 'selected' : '' }>진행상황</option>
+								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>내  용</option>
+								<option value="n" ${searchType eq 'n' ? 'selected' : '' }>담당기사</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
@@ -48,7 +49,7 @@
 										<td style="text-align: center;">${as.E_NAME }</td>
 										<td style="text-align: center;"><fmt:formatDate value="${as.SYS_REGDATE }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 										<td style="text-align: center;"><fmt:formatDate value="${as.COMPLDATE }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
-										<td style="text-align: center;">${as.PROGRESS == '0' ? '대기중' : (as.PROGRESS == '1' ? '진행중' : '완료')}</td>
+										<td style="color: ${as.PROGRESS eq '0' ? 'red' : as.PROGRESS eq '1' ? 'green' : as.PROGRESS eq '2' ? 'blue' : '' }"; "text-align: center;" > ${as.PROGRESS == '0' ? '대기중' : (as.PROGRESS == '1' ? '진행중' : '완료')}</td>
 										<input type="hidden" name="emp_no "value="${as.EMP_NO }">
 									</tr>
 								</c:forEach>
