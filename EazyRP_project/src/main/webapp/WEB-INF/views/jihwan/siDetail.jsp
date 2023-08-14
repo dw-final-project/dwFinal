@@ -73,7 +73,9 @@
     <h2>DW 출하지시서 상세</h2>
 	<div class="card-footer">
 		<button type="button" id="modifyBtn" class="btn btn-warning">수정</button>
+		<c:if test="${siList.get(0).PROGRESS eq 0 }">
 		<button type="button" id="removeBtn" class="btn btn-danger">삭제</button>
+		</c:if>
 		<button type="button" id="listBtn" class="btn btn-primary">닫기</button>
 	</div>
 	<!-- card footer End -->
@@ -90,7 +92,7 @@
         </tr>
         <tr>
             <td align="center">담당자</td>
-            <td><input type="hidden" name="emp_no" id="receiver" value="${siList.get(0).EMP_NO }">
+            <td><input type="hidden" name="emp_no" id="receiver" value="${siList.get(0).EMP_NO }" ${siList.get(0).PROGRESS ne '0' ? 'readonly' : '' }>
             <input type="text" style="width: 100%;" value="${siList.get(0).E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 500, 500)"></td>
         </tr>
         <tr>
@@ -98,7 +100,7 @@
             <td><select name="progress" id="progress">
             	<option value="0"${siList.get(0).PROGRESS eq "0" ? 'selected' : "" }>접수중</option>
 			    <option value="1"${siList.get(0).PROGRESS eq "1" ? 'selected' : "" }>출하대기중</option>
-			    <option value="2" ${siList.get(0).PROGRESS eq "2" ? 'selected' : "" }>출하완료</option>
+			    <option value="2"${siList.get(0).PROGRESS eq "2" ? 'selected' : "" }>출하완료</option>
 				</select>
 			</td>
         </tr>
@@ -112,7 +114,9 @@
         </tr>
        
     </table>
+    <c:if test="${siList.get(0).PROGRESS eq 0 }">
     <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">버튼 추가</button>
+    </c:if>
     <table>
         <tr>
             <th align="center" style="width: 20%;">제품코드</th>
@@ -131,10 +135,13 @@
 	       <input type="hidden" name="enabled" id="sienabled" value="${si.ENABLED }">
 	       <input type="hidden" name="pr_delete" value="o">
         	<td><input type="text" id="" class="pr_nos" name="pr_no" value="${si.PR_NO }"  style="width: 100%;" readonly></td>
-        	<td><input type="text" id="${si.ROWNUM }" class="pr_names2" name="pr_name" style="width: 100%;" value="${si.PR_NAME }"></td>
-            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${si.QUANTITY }">
-            <td><input type="text" id="contents" class="content" name="content" style="width: 100%;" value="${si.CONTENT }"  ></td>
-            <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>
+        	<td><input type="text" id="${si.ROWNUM }" class="pr_names2" name="pr_name" style="width: 100%;" value="${si.PR_NAME }"  ${siList.get(0).PROGRESS ne '0' ? 'readonly' : '' }></td>
+            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${si.QUANTITY }"  ${siList.get(0).PROGRESS ne '0' ? 'readonly' : '' }>
+            <td><input type="text" id="contents" class="content" name="content" style="width: 100%;" value="${si.CONTENT }" ${siList.get(0).PROGRESS ne '0' ? 'readonly' : '' }></td>
+            <td style="text-align : center;">
+            <c:if test="${siList.get(0).PROGRESS eq 0 }">
+            <button type="button" id="cancelBtn" class="btn btn-danger">삭제</button>
+            </c:if></td>
         </tr>
         </c:forEach>
         </tbody>
@@ -146,7 +153,6 @@
     </table>
 </form>
 </body>
-</script>
 
 <script>
 
@@ -210,9 +216,22 @@ window.onload = function(){
 	});
 	
 	
+	let totalQuantity = 0;
+	 
+	$('.quantity').each(function(){
+		totalQuantity += parseInt($(this).val());
+	});
+	$('#totalQuantity').val(totalQuantity);
+
+	
 	
 }
 
+</script>
+
+<c:if test="${siList.get(0).PROGRESS eq 0 }">
+
+<script>
 let rownumList = $('.rownum');
 let cnt = rownumList.length; 
 console.log(cnt);
@@ -236,13 +255,7 @@ $('#addPutBtn').on('click', function(){
 });
 
 
-	 let totalQuantity = 0;
 	 
-	$('.quantity').each(function(){
-		totalQuantity += parseInt($(this).val());
-	});
-	$('#totalQuantity').val(totalQuantity);
-
 
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 		winleft = (screen.width - WinWidth) / 2;
@@ -316,13 +329,10 @@ $('#addPutBtn').on('click', function(){
 		$('#totalAmount').val(sum);
 	})
 	
-	
-// 	let fc_no = "${si.FC_NO}";
-// 	$('#fc-select').val(fc_no);
-// 	$('select#fc-select').find('option[value="' + fc_no + '"]').attr('selected', 'selected'); 
+ 
 
 </script>
-
+</c:if>
 
 
 </html>

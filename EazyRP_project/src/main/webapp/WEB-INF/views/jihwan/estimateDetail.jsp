@@ -71,9 +71,12 @@
 
 <body>
     <h2>DW 견적서 상세</h2>
+    <input type="hidden" id="gb" value="${est.PROGRESS}">
 	<div class="card-footer">
 		<button type="button" id="modifyBtn" class="btn btn-warning">수정</button>
+		<c:if test="${est.PROGRESS eq '0'}">
 		<button type="button" id="removeBtn" class="btn btn-danger">삭제</button>
+		</c:if>
 		<button type="button" id="listBtn" class="btn btn-primary">닫기</button>
 	</div>
 	<!-- card footer End -->
@@ -90,7 +93,7 @@
         </tr>
         <tr>
             <td align="center">외화 명</td>
-            <td><select name="fc_no" id="fc-select">
+            <td><select name="fc_no" id="fc-select" ${est.PROGRESS ne 0 ? 'disabled' : '' }>
 			    <option value="FC_001">달러</option>
 			    <option value="FC_002">한화</option>
 			    <option value="FC_003">위안화</option>
@@ -110,23 +113,27 @@
         </tr>
         <tr>
             <td align="center">담당자</td>
-            <td><input type="hidden" name="emp_no" id="receiver" value="${est.EMP_NO }">
+            <td><input type="hidden" name="emp_no" id="receiver" value="${est.EMP_NO }" ${est.PROGRESS ne '0' ? 'readonly' : '' }>
             <input type="text" style="width: 100%;" value="${est.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 500, 500)"></td>
         </tr>
         <tr>
             <td align="center">첨부파일</td>
             <td>
-            <input type="file" id="file2" name="files" style="width: 100%;" value="${est.FILES }">
+            
+            <input type="file" id="file2" name="files" style="width: 100%;" value="${est.FILES }" ${est.PROGRESS ne 0 ? 'disabled' : '' }>
             <input type="hidden" name="realFileName" value="${est.REALFILENAME }">
             <input type="hidden" id="fileName" name="fileName" value="${est.FILENAME }">  
+            
             <c:if test="${!empty est.FILES }">
 			<div id="divRemove"><button type="button" onclick="location.href='<%=request.getContextPath()%>/erp4/getFile.do?est_no=${est.EST_NO }';">파일 다운</button>&nbsp;&nbsp;${est.REALFILENAME }</div>
 			</c:if>
-			<button type="button" id="removeFileBtn" class="btn btn-danger">삭제</button>
+<!-- 			<button type="button" id="removeFileBtn" class="btn btn-danger">삭제</button> -->
 			</td> 
         </tr>
     </table>
+    <c:if test="${est.PROGRESS eq 0 }">
     <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">제품추가</button>
+    </c:if>
     <table>
         <tr>
             <th align="center" style="width: 20%;">제품명</th>
@@ -138,6 +145,7 @@
     	<tbody id="prInput">
         <input type="hidden" value="" id="cnt">
         <input type="hidden" value="A" id="A">
+        
        <c:forEach items="${estPr }" var="est" varStatus="loop">
         <tr id="trChk" >    	
 	       <input type="hidden" class="rownum" value="${est.ROWNUM }">
@@ -145,12 +153,14 @@
 	       <input type="hidden" name="enabled" id="estenabled" value="${est.ENABLED }">
 	       <input type="hidden" name="pr_delete" value="o">
         	<td>
-        		<input type="text" id="${est.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${est.P_NAME }"><input type="hidden" name="pr_no" value="${est.PR_NO }">
+        		<input type="text" id="${est.ROWNUM }" class="pr_names" name="pr_name" style="width: 100%;" value="${est.P_NAME }" ${est.PROGRESS ne '0' ? 'readonly' : '' }><input type="hidden" name="pr_no" value="${est.PR_NO }">
         	</td>
-            <td><input type="text" id="wh_no${est.ROWNUM }" class="wh_names" name="wh_name" style="width: 100%;" value="${est.WH_NAME }"><input type="hidden" id="wh" name="wh_no" value="${est.WH_NO }"></td>
-            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${est.QUANTITY }"><input type="hidden" id="cost" value="${est.PR_EXPRICE }"></td>
+            <td><input type="text" id="wh_no${est.ROWNUM }" class="wh_names" name="wh_name" style="width: 100%;" value="${est.WH_NAME }" ${est.PROGRESS ne '0' ? 'readonly' : '' }><input type="hidden" id="wh" name="wh_no" value="${est.WH_NO }"></td>
+            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${est.QUANTITY }" ${est.PROGRESS ne '0' ? 'readonly' : '' }><input type="hidden" id="cost" value="${est.PR_EXPRICE }"></td>
             <td><input type="text" id="amount" name="amount" style="width: 100%;" value="${est.AMOUNT }" readonly ></td>
-            <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>
+            <td style="text-align : center;"><c:if test="${est.PROGRESS eq '0' }">
+            <button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></c:if>
+            </td>
         </tr>
         </c:forEach>
         </tbody>
@@ -162,8 +172,6 @@
 </form>
 </body>
 
-
-	
 
 <script>
 window.onload = function(){
@@ -180,6 +188,7 @@ window.onload = function(){
 	let formObj = $('form[role="form"]');
 
 	$('button#modifyBtn').on('click', function(){
+		alert($('#fc-select').val())
 		formObj.attr({
 			'action' : 'modifyForm.do',
 			'method' : 'post'
@@ -208,6 +217,11 @@ window.onload = function(){
 			return;
 		}
 		
+		if($('#gb').val() != '0'){
+			$('#fc-select').removeAttr('disabled');
+			$('#file2').removeAttr('disabled');
+		}
+		
 		formObj.submit();
 	});
 	
@@ -232,6 +246,8 @@ window.onload = function(){
 }
 
 </script>
+
+<c:if test="${est.PROGRESS eq '0'}">
 
 <script>
 let rownumList = $('.rownum');
@@ -331,9 +347,6 @@ $('tr').on('click', function(){
 	})
 	
 	
-	
-	
-	
 	$(document).on('change, keyup', '#prInput', function(){
 		let sum = Number(0);
 		let inputAmount = $('input[name="amount"]').get();
@@ -346,7 +359,7 @@ $('tr').on('click', function(){
 	
 </script>
 
-
+</c:if>
 
 
 </html>
