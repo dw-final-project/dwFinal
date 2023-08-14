@@ -95,6 +95,8 @@ public interface ProductDAO {
 
 	void tr_History2(Map<String, Object> map) throws SQLException;
 
+	List<Order2VO> getOrderList(String c_no) throws SQLException;
+
 
 	
 }

@@ -69,5 +69,15 @@ public interface ManagementDAO {
 
 	List<String> getNames(Map<String, Object> dataMap, RowBounds rowBounds) throws SQLException;
 
+	List<String> getDept() throws SQLException;
+
+	String getDname(int emp_no) throws SQLException;
+
+	void paRegist(PaVO paVO) throws SQLException;
+
+	void updateDept(PaVO paVO) throws SQLException;
+
+	void updateRank(PaVO paVO) throws SQLException;
+
 
 }

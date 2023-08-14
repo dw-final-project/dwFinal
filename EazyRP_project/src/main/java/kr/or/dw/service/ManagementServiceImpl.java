@@ -1,6 +1,7 @@
 package kr.or.dw.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -226,6 +227,35 @@ public class ManagementServiceImpl implements ManagementService{
 		map2.put("pageMaker", pageMaker);
 		
 		return map2;
+	}
+
+	@Override
+	public List<String> getDept() throws SQLException {
+		return managementDAO.getDept();
+	}
+
+	@Override
+	public List<String> getDeptList(List<EmpVO> emp) throws SQLException {
+		List<String> dept = new ArrayList<>();
+		for(int i = 0; i < emp.size(); i++) {
+			String dname = managementDAO.getDname(emp.get(i).getEmp_no());
+			dept.add(dname);
+		}
+		
+		return dept;
+	}
+
+	@Override
+	public void paRegist(List<PaVO> paList) throws SQLException {
+		for(int i = 0; i < paList.size(); i++) {
+			managementDAO.paRegist(paList.get(i));
+			if(paList.get(i).getPg_no().equals("pa_001")) {
+				managementDAO.updateDept(paList.get(i));
+			} else {
+				managementDAO.updateRank(paList.get(i));
+			}
+		}
+		
 	}
 
 

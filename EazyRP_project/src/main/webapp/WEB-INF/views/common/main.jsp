@@ -103,16 +103,58 @@
 		
 		
 	</div>
-		<div class="" style="width:59%; height:20%; right: 10px; bottom: 10%; position: absolute; z-index: 2">
+		<div class="" style="width:59%; height:20%; right: 10px; bottom: 10%; position: absolute; z-index: 1">
 			<div class="card rounded-3 shadow-sm border" style="height: 110%;">
 				<div class="card-header">
-					<h5 class="my-0 fw-normal" style="font-size: 1em">오더관리진행단계</h5>
+					<h5 class="my-0 fw-normal" style="font-size: 1em">발주 요청 내역</h5>
 				</div>
 				<div class="card-body">
-					<div>
-						asedlkfnwelkr<br>
-						asdfkhasdf
-					</div>
+					<table class="table table-striped table-sm text-center" style="font-size: 0.8em;">
+						<thead>
+							<tr>
+								<th class="p-2 mb-2 align-middle scope=">
+								<font style="vertical-align: inherit; vertical-align: inherit; color: black;">발주 품목</font>
+								</th>
+								<th class="p-2 mb-2 align-middle scope="><font
+									style="vertical-align: inherit; vertical-align: inherit; color: black;">발주 요청 날짜</font>
+								</th>
+								<th class="p-2 mb-2 align-middle scope="><font
+									style="vertical-align: inherit; vertical-align: inherit; color: black;">진행 상황</font>
+								</th>
+								<th class="p-2 mb-2 align-middle scope="><font
+									style="vertical-align: inherit; vertical-align: inherit; color: black;">배송 업체</font>
+								</th>
+								<th class="p-2 mb-2 align-middle scope="><font
+									style="vertical-align: inherit; vertical-align: inherit; color: black;">제품 금액</font>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+						<c:forEach items="${list }" var="list">
+							<tr>
+								<td><font style="vertical-align: inherit;"> <font
+										style="vertical-align: inherit;">${list.o_name }</font>
+								</font></td>
+								<td><font style="vertical-align: inherit;"> <font
+										style="vertical-align: inherit;">${list.sys_regdate }</font>
+								</font></td>
+								<td>
+									<font style="vertical-align: inherit;"> 
+										<font style="vertical-align: inherit;">
+											${list.progress }
+										</font>
+									</font>
+								</td>
+								<td><font style="vertical-align: inherit;"> <font
+										style="vertical-align: inherit;">${list.con_c_name }</font>
+								</font></td>
+								<td><font style="vertical-align: inherit;"> <font
+										style="vertical-align: inherit;">${list.unit_price }</font>
+								</font></td>
+							</tr>
+						</c:forEach>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

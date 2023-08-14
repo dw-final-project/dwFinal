@@ -281,6 +281,11 @@ public class ProductServiceImpl implements ProductService {
 		map.put("quantity", quantity);
 		System.out.println("quantity = " + quantity);
 		productDAO.tr_History(map);
+	}
+
+	@Override
+	public List<Order2VO> getOrderList(String c_no) throws SQLException {
+		return productDAO.getOrderList(c_no);
 	} 
 	
 	

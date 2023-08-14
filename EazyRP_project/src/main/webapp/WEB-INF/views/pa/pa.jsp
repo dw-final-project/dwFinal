@@ -74,7 +74,7 @@
 					<div style="display: flex; align-items: end; justify-content: end;">
 				</div>
 				<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/pa/paInsert.do', '인사발령 등록', 700, 600)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/pa/paInsert.do', '인사발령 등록', 900, 600)"
 					style="width: 120px; font-size: 0.8em; margin: 20px; align-self: center;">인사발령 등록</button>
 				</div>
 			</div>

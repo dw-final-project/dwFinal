@@ -348,4 +348,43 @@
 		ORDER BY p.PA_NO DESC
 	</select>
 	
+	<select id="getDept" resultType="str">
+		SELECT dname FROM dept WHERE enabled = 'YES'
+	</select>
+	
+	<select id="getDname" resultType="str">
+		SELECT dname
+		FROM dept
+		WHERE dept_no = 
+		(SELECT dept_no FROM emp WHERE emp_no = #{emp_no})
+	</select>
+	
+	<insert id="paRegist">
+		INSERT INTO pa VALUES(
+			pa_no_seq.nextval,
+			sysdate,
+			#{padate},
+			#{emp_no},
+			#{prerank},
+			#{nextrank},
+			'N',
+			#{predept},
+			#{nextdept},
+			'',
+			'',
+			'',
+			#{pg_no},
+			#{c_no}
+		)
+	</insert>
+	
+	<update id="updateDept">
+		UPDATE emp SET dept_no = #{nextdept} WHERE emp_no = #{emp_no}
+	</update>
+	
+	<update id="updateRank">
+		UPDATE emp SET e_rank = #{nextrank} WHERE emp_no = #{emp_no}
+	</update>
+	
+	
 </mapper>

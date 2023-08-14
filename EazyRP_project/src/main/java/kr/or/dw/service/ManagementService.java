@@ -54,5 +54,11 @@ public interface ManagementService {
 
 	Map<String, Object> getPaList(Map<String, Object> map) throws SQLException;
 
+	List<String> getDept() throws SQLException;
+
+	List<String> getDeptList(List<EmpVO> emp) throws SQLException;
+
+	void paRegist(List<PaVO> paList) throws SQLException;
+
 
 }

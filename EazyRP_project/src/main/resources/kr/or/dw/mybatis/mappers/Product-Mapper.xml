@@ -358,4 +358,14 @@
 		)
 	</insert>
 	
+	<select id="getOrderList" resultType="order2">
+		SELECT rownum, a.*
+		FROM (
+		SELECT o.*, c.c_name con_c_name
+		 FROM ordermanage o, company c
+		WHERE o.con_c_no = c.c_no
+		  AND o.buy_c_no = #{c_no}) a
+		 WHERE rownum <![CDATA[<]]> 4
+	</select>
+	
 </mapper>

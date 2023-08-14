@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -138,10 +139,10 @@ public class ProfitLossServiceImpl implements ProfitLossService {
             YearMonth prevYearMonth = yearMonth.minusYears(1);
             
             LocalDate startOfMonth = yearMonth.atDay(1);
-            LocalDate endOfMonth = yearMonth.atEndOfMonth();
+            LocalDate endOfMonth = startOfMonth.with(TemporalAdjusters.lastDayOfMonth());
             
             LocalDate startOfPrevYearMonth = prevYearMonth.atDay(1);
-            LocalDate endOfPrevYearMonth = prevYearMonth.atEndOfMonth();
+            LocalDate endOfPrevYearMonth = startOfPrevYearMonth.with(TemporalAdjusters.lastDayOfMonth());
             
             // 날짜 범위를 이용하여 월별 데이터를 가져오는 작업
             Map<String, String> day = new HashMap<>();

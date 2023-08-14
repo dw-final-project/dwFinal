@@ -125,10 +125,10 @@ html {
 </style>
 
 <body class="bg-light" style="padding: 0px;">
-
+	<div id="cover" style="width: 100%; height: 93%; background-color: gray; opacity: 0.7; position: absolute; z-index: 2; top: 7%;"></div>
     <nav class="navbar navbar-expand-lg bg-light">
     	<c:if test="${empty c_no || emp_no eq 0}">
-		    <div style="position: absolute; z-index: 2; right: 40px; top: 55px; font-weight: bold;" id="animation">
+		    <div style="position: absolute; z-index: 3; right: 40px; top: 55px; font-weight: bold;" id="animation">
 		        체험하실 업체와 직원을 먼저 선택해주세요.
 		    </div>
 		</c:if>
@@ -181,6 +181,9 @@ html {
 			
   </nav>
   <script>
+		if($('#selectOp').val() != 'X'){
+			$('#cover').css('display', 'none');
+		}
 	console.log('${c_no}')
   	$('#selectOp2').on('change', function(){
   		if($(this).val() != 'X'){

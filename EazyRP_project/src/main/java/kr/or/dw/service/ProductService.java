@@ -61,5 +61,7 @@ public interface ProductService {
 
 	void Tr_History(int sheet_no, List<BuyDetailVO> detail) throws SQLException;
 
+	List<Order2VO> getOrderList(String c_no) throws SQLException;
+
 	
 }
