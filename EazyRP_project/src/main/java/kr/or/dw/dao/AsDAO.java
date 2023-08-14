@@ -26,5 +26,9 @@ public interface AsDAO {
 
 	void removeAs(AsVO asVO)throws SQLException;
 
+	void tr(AsVO asVO) throws SQLException;
+
+	String getAs_no() throws SQLException;
+
 	
 }

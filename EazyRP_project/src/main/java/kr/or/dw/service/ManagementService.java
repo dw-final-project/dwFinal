@@ -7,6 +7,7 @@ import java.util.Map;
 import kr.or.dw.vo.DraftGbVO;
 import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.EmpVO;
+import kr.or.dw.vo.PaVO;
 import kr.or.dw.vo.PlVO;
 
 public interface ManagementService {
@@ -50,6 +51,8 @@ public interface ManagementService {
 	List<DraftGbVO> getDraftGb() throws SQLException;
 
 	String getImgFiles(int a) throws SQLException;
+
+	Map<String, Object> getPaList(Map<String, Object> map) throws SQLException;
 
 
 }

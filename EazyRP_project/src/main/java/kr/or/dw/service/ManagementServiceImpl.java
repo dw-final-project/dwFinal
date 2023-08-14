@@ -11,11 +11,14 @@ import org.springframework.stereotype.Service;
 
 import kr.or.dw.command.PageMaker;
 import kr.or.dw.command.SearchCriteria;
+import kr.or.dw.command.SearchCriteria2;
 import kr.or.dw.dao.ManagementDAO;
 import kr.or.dw.vo.DraftGbVO;
 import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.EmpVO;
+import kr.or.dw.vo.PaVO;
 import kr.or.dw.vo.PlVO;
+import kr.or.dw.vo.Tr_historyVO;
 
 @Service
 public class ManagementServiceImpl implements ManagementService{
@@ -189,5 +192,41 @@ public class ManagementServiceImpl implements ManagementService{
 	public String getImgFiles(int a) throws SQLException {
 		return managementDAO.getImgFile(a);
 	}
+
+	@Override
+	public Map<String, Object> getPaList(Map<String, Object> map) throws SQLException {
+		SearchCriteria cri = (SearchCriteria) map.get("cri");
+		SearchCriteria2 cri2 = (SearchCriteria2) map.get("cri2");
+		String c_no = (String) map.get("c_no");
+		int offset = cri.getPageStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		dataMap.put("keyword", cri.getKeyword());
+		dataMap.put("searchType", cri.getSearchType());
+		dataMap.put("cri", cri);
+		dataMap.put("c_no", c_no);
+		dataMap.put("cri2", cri2);
+		List<PaVO> list = managementDAO.getHistory(dataMap, rowBounds);
+		List<String> name = managementDAO.getNames(dataMap, rowBounds);
+		int totalCount = list.size();
+				
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+		for(int i = 0; i < list.size(); i++) {
+			list.get(i).setSys_regdate(list.get(i).getSys_regdate().substring(0, 10));
+		}
+		
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		map2.put("name", name);
+		map2.put("list", list);
+		map2.put("pageMaker", pageMaker);
+		
+		return map2;
+	}
+
 
 }

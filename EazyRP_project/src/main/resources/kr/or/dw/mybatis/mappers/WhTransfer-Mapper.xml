@@ -219,5 +219,34 @@
 		AND		whtd.pr_no = pr.pr_no
 		AND		wht.wt_no = #{wt_no}
 	</select>
+	
+	<select id="getAmount" resultType="int">
+		SELECT p.pr_inprice FROM product p WHERE p.pr_no = #{pr_no}
+	</select>
+
+	<insert id="insertTr_history">
+		INSERT INTO tr_history VALUES(
+			'TH_' || LPAD(th_no_seq.nextval, 4, '0'),
+			sysdate,
+			sysdate,
+			#{wht.c_no},
+			1,
+			'FC_003',
+			#{amount},
+			'X',
+			'w',
+			'Y',
+			'/erp4/whtransfer/detail.do?wt_no=' || #{wt_no},
+			#{quantity},
+			'',
+			'AC_001',
+			'T_001',
+			'',
+			'',
+			'추가',
+			'',
+			#{amount}
+		)
+	</insert>
 
 </mapper>

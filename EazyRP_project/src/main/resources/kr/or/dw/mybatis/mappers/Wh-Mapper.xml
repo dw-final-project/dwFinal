@@ -250,4 +250,6 @@
 		WHERE	wh_no = #{whNo}
 	</delete>
 	
+	
+	
 </mapper>

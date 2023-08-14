@@ -35,4 +35,10 @@ public interface WhTransferDAO {
 
 	void minusProduct(WhTransferVO whtDetail) throws SQLException;
 
+	int getAmount(String pr_no) throws SQLException;
+
+	String getWt_no() throws SQLException;
+
+	void insertTr_history(Map<String, Object> map) throws SQLException;
+
 }

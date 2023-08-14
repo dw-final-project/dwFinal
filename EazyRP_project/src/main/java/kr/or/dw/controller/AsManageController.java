@@ -85,7 +85,9 @@ public class AsManageController {
 	}
 	
 	@RequestMapping("/modify")
-	public void modify (AsVO asVO, HttpServletResponse res) throws Exception{
+	public void modify (AsVO asVO, HttpServletResponse res, HttpSession session) throws Exception{
+		String c_no = (String) session.getAttribute("c_no");
+		asVO.setC_no(c_no);
 		asService.modifyAs(asVO);
 		
 		res.setContentType("text/html; charset=utf-8");
