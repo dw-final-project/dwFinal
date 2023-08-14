@@ -11,6 +11,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">창고관리</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
+						<input id="cnoChk" type="hidden" value="${c_no }">
 						<form id="searchForm2" method="post" action="/erp4/warehouse.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${cri.searchType eq 'all' ? 'selected' : '' }>전  체</option>
@@ -51,19 +52,26 @@
 					</div>
 					</div>
 						<div style="display: flex; align-items: end; justify-content: end;">
-								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('warehouseRegistForm.do', '창고 등록', 700, 400)"
-								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">창고 등록</button>
+								<button type="button" class="btn btn-primary" id="registBtn" style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">창고 등록</button>
 						</div>
 			</div>
 		</div>
 	</section>
-	
+
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 	
 <script>
 		
 	$('#searchBtn').on('click', function(){
 		$('#searchForm2').submit();
+	})
+	
+	$('#registBtn').on('click', function () {
+		if($('#cnoChk').val() == null || $('#cnoChk').val() == ''){
+			alert('페이지 상단의 업체와 직원을 선택해주세요.');
+			return;
+		}
+		OpenWindow('warehouseRegistForm.do', '창고 등록', 700, 400);
 	})
 	
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight, index){

@@ -27,14 +27,14 @@ public class WarehouseServiceImpl implements WarehouseService {
 	private WarehouseDAO warehouseDAO;
 
 	@Override
-	public Map<String, Object> selectWarehouseList(SearchCriteria cri) throws SQLException {
+	public Map<String, Object> selectWarehouseList(SearchCriteria cri, String c_no) throws SQLException {
 		
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		List<Map<String, Object>> warehouseList = warehouseDAO.selectWarehouseList(cri, rowBounds);
-		int totalCount = warehouseDAO.selectWarehouseListCount(cri);
+		List<Map<String, Object>> warehouseList = warehouseDAO.selectWarehouseList(cri, rowBounds, c_no);
+		int totalCount = warehouseDAO.selectWarehouseListCount(cri, c_no);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);

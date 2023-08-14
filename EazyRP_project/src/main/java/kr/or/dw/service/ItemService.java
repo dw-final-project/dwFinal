@@ -11,7 +11,7 @@ import kr.or.dw.vo.WareHouseVO;
 
 public interface ItemService {
 
-	Map<String, Object> selectItemList(SearchCriteria cri) throws SQLException;
+	Map<String, Object> selectItemList(SearchCriteria cri, String c_no) throws SQLException;
 
 	List<Map<String, Object>> getWarehouse(Map<String, String> dataMap) throws SQLException;
 

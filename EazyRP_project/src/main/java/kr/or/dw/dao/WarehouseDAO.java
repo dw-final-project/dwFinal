@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import kr.or.dw.command.SearchCriteria;
@@ -18,9 +19,9 @@ import kr.or.dw.vo.WareHouseVO;
 @Mapper
 public interface WarehouseDAO {
 
-	List<Map<String, Object>> selectWarehouseList(SearchCriteria cri, RowBounds rowBounds) throws SQLException;
+	List<Map<String, Object>> selectWarehouseList(@Param("cri") SearchCriteria cri, @Param("rowBounds") RowBounds rowBounds, @Param("c_no") String c_no) throws SQLException;
 
-	int selectWarehouseListCount(SearchCriteria cri) throws SQLException;
+	int selectWarehouseListCount(@Param("cri") SearchCriteria cri, @Param("c_no") String c_no) throws SQLException;
 
 	Map<String, Object> selectWarehouseDetail(String wh_no) throws SQLException;
 

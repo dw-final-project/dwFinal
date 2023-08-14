@@ -29,14 +29,17 @@ public class ItemServiceImpl implements ItemService {
 	private ItemDAO itemDAO;
 
 	@Override
-	public Map<String, Object> selectItemList(SearchCriteria cri) throws SQLException {
+	public Map<String, Object> selectItemList(SearchCriteria cri, String c_no) throws SQLException {
 		
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		List<Map<String, Object>> itemList = itemDAO.selectItemList(cri, rowBounds);
-		int totalCount = itemDAO.selectItemListCount(cri);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("cri", cri);
+		map.put("c_no", c_no);
+		map.put("rowBounds", rowBounds);
+		List<Map<String, Object>> itemList = itemDAO.selectItemList(map);
+		int totalCount = itemDAO.selectItemListCount(map);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
