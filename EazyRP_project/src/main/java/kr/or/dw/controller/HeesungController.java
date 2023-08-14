@@ -606,6 +606,26 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		
 	}
 	
+	@RequestMapping("/updateWorkOrderProgress")
+	public void updateWorkOrderProgress(String wo_no, int progress, HttpServletResponse res) throws SQLException, IOException {
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("wo_no", wo_no);
+		map.put("progress", progress + 1);
+		
+		workOrderService.updateWorkOrderProgress(map);
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("window.opener.location.reload();");
+		out.println("alert('처리 완료되었습니다.')");
+		out.println("window.close();");
+		out.println("</script>");
+		
+	}
+	
 	@RequestMapping("/updateBtn")
 	public void updateBtn(String whNo, int progress, HttpServletResponse res) throws SQLException, IOException {
 		Map<String, Object> map = new HashMap<>();

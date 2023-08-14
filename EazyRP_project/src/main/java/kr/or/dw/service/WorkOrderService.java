@@ -28,4 +28,6 @@ public interface WorkOrderService {
 	void insertProduct(List<WhVO> whList) throws SQLException;
 
 	List<ErrorVO> getErrorList(String c_no, SearchCriteria cri, SearchCriteria2 cri2) throws SQLException;
+
+	void updateWorkOrderProgress(Map<String, Object> map) throws SQLException;
 }
