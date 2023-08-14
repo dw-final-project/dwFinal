@@ -13,10 +13,10 @@
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm" method="post" action="/erp4/whtransfer.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2 custom-select" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="tcw" ${searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
-								<option value="t" ${searchType eq 't' ? 'selected' : '' }>제  목</option>
-								<option value="w" ${searchType eq 'w' ? 'selected' : '' }>보낸사람</option>
-								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>업  체</option>
+								<option value="scn" ${searchType eq 'scn' ? 'selected' : '' }>등록일+번호+창고명</option>
+								<option value="s" ${searchType eq 's' ? 'selected' : '' }>등록일</option>
+								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>이동번호</option>
+								<option value="n" ${searchType eq 'n' ? 'selected' : '' }>창고명</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
