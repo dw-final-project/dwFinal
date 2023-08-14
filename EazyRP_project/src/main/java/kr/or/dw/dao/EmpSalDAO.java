@@ -132,4 +132,6 @@ public interface EmpSalDAO {
 
 	void updateStatus(Map<String, Object> map) throws SQLException, ParseException;
 
+	List<Map<String, Object>> allEmpList(String c_no) throws SQLException;
+
 }

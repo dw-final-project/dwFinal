@@ -3,7 +3,9 @@ package kr.or.dw.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -233,11 +235,20 @@ public class MinjunController {
 	
 	@RequestMapping("/modifyMerchandise.do")
 	public void modifyMerchandise (MerchandiseVO mchVO, HttpServletResponse res, HttpSession session, String sp_no, String s_no, String pr_no) throws SQLException , Exception {
-
+		
+		String todayfm = new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis()));
+		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date formattoday = dtFormat.parse(todayfm);
 		mchVO.setSp_no(sp_no);
 		mchVO.setS_no(s_no);
 		mchVO.setPr_no(pr_no);
+		if(mchVO.getStatus().equals("판매중지")) {
+			mchVO.setEndperiod(formattoday);
+		}
+		
 		merchandiseService.modifyMerchandise(mchVO);
+		
+		
 		
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
