@@ -58,7 +58,7 @@ public class ContactController {
 		}
     	
 		Map<String, Object> dataMap = contactService.selectContactList(cri);
-		System.out.println("asdasd" + mcode);
+		
 		mnv.addObject("mcode", mcode);
 		mnv.addObject("murl", murl);
 		mnv.addAllObjects(dataMap);

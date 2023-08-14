@@ -11,9 +11,16 @@
 <script>
 
 	function goPage(murl, mcode, micon){
-
+		
+		
+		if(murl.indexOf('?') != -1) {
+			let modMurl = murl.substring(0, murl.indexOf('?'));	
+			sessionStorage.setItem("murl", modMurl);		
+		}else {
+			sessionStorage.setItem("murl", murl);		
+		}
+		
 		sessionStorage.setItem("mcode", mcode);
-		sessionStorage.setItem("murl", murl);
 		sessionStorage.setItem("micon", micon);
 		
 		let modMcode = mcode.substring(0,3) + "0000";
