@@ -4,16 +4,16 @@
 	
 	<!-- 셀렉트바 검색 -->
 	<sql id="search">
-		<if test="searchType == 'w'.toString()">
+		<if test="cri.searchType == 'w'.toString()">
 			AND wh_name LIKE '%' || #{keyword} || '%'
 		</if>
-		<if test="searchType == 'a'.toString()">
+		<if test="cri.searchType == 'a'.toString()">
 			AND w.addr LIKE '%' || #{keyword} || '%'
 		</if>
-		<if test="searchType == 'g'.toString()">
+		<if test="cri.searchType == 'g'.toString()">
 			AND wh_gb LIKE '%' || #{keyword} || '%'
 		</if>
-		<if test="searchType == 'all'.toString()">
+		<if test="cri.searchType == 'all'.toString()">
 			AND (
 			wh_name LIKE '%' || #{keyword} || '%'
 			OR
@@ -35,6 +35,7 @@
 		  FROM warehouse w, company c
 		 WHERE w.c_no = c.c_no
 		   AND w.enabled = 'Y'
+		   AND w.c_no = #{c_no, jdbcType = VARCHAR}
 		   <include refid="search"/>
 		   ORDER BY wh_no
 	</select>
@@ -45,6 +46,7 @@
 		  FROM warehouse w, company c
 		 WHERE w.c_no = c.c_no
 		   AND w.enabled = 'Y'
+		   AND w.c_no = #{c_no, jdbcType = VARCHAR}
 		   <include refid="search"/>
 	</select>
 	

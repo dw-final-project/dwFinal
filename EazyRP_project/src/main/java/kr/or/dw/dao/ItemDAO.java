@@ -18,9 +18,9 @@ import kr.or.dw.vo.WareHouseVO;
 @Mapper
 public interface ItemDAO {
 
-	List<Map<String, Object>> selectItemList(SearchCriteria cri, RowBounds rowBounds) throws SQLException;
+	List<Map<String, Object>> selectItemList(Map<String, Object> map) throws SQLException;
 
-	int selectItemListCount(SearchCriteria cri) throws SQLException;
+	int selectItemListCount(Map<String, Object> map) throws SQLException;
 
 	List<Map<String, Object>> selectFindSearchWarehouseList(Map<String, String> dataMap) throws SQLException;
 
@@ -37,6 +37,8 @@ public interface ItemDAO {
 	void updateProduct(ProductVO product) throws SQLException;
 
 	void deleteProduct(ProductVO product) throws SQLException;
+
+	
 	
 	
 }

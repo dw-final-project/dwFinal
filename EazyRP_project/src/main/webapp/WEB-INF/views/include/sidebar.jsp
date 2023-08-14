@@ -90,7 +90,7 @@
 				success : function(data){
 					alert("나만의 메뉴에서 삭제 되었습니다.");
 					$('#myMenuChk').prop('checked',false);
-					$('#chkInput').val("");
+					$('#chkInput').val("1");
 					$('#myMenuBtn').text("나만의 메뉴 등록 ");
 					$('#img').attr('src', "<%=request.getContextPath() %>/resources/img/1.png")
 				},
@@ -107,7 +107,7 @@
 				success : function(data){
 					alert("나만의 메뉴에 등록 되었습니다.");
 					$('#myMenuChk').prop('checked',true);
-					$('#chkInput').val("checked")
+					$('#chkInput').val("2")
 					$('#myMenuBtn').text("나만의 메뉴 해제 ");
 					$('#img').attr('src', "<%=request.getContextPath() %>/resources/img/2.png")
 				},
