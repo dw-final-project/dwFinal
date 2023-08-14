@@ -49,12 +49,8 @@
 									<label for="saldate" class="" style="vertical-align:center;  float:right; text-align: center; margin-bottom: 0px; align-content: center;">지급일</label>
 									<input class="" type="date" id="saldate" name="saldate" style="width: 120px;" readonly value="<fmt:formatDate value="${sal.SALDATE }" pattern="yyyy-MM-dd"/>">
 								</div>
-								<div class="d-flex" style="vertical-align:center; align-content: center; align-items: center;">
-									<select name="paymentstatus" disabled>
-										<option value="">지급상태</option>
-										<option value="지급완료" ${sal.PAYMENTSTATUS eq "지급완료" ? 'selected' : "" }>지급완료</option>
-										<option value="미지급" ${sal.PAYMENTSTATUS eq "미지급" ? 'selected' : "" }>미지급</option>
-									</select>
+								<div class="d-flex" style="vertical-align:center; align-content: center; align-items: center; font-weight:bold;">
+									${sal.PAYMENTSTATUS eq "지급완료" ? '지급완료' : "미지급" }
 								</div>
 								<input type="hidden" value="${sal.SAL_NO }" name="sal_no_a">
 							</div>
