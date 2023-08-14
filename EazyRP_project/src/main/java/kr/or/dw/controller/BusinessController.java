@@ -342,6 +342,7 @@ public class BusinessController {
 			}
 		}
 		
+		System.out.println(fc_no);
 		
 		for(int i= 0; i < pr_no.length; i++) {
 			EstimateVO est2 = new EstimateVO();
