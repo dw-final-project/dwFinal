@@ -85,14 +85,6 @@
             <input type="text" style="width: 100%;" value="${ename }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 500, 500)"></td>
         </tr>
         <tr>
-            <td align="center">진행상태</td>
-            <td><select name="progress" id="progress">
-            	<option value="전수중">전수중</option>
-			    <option value="완료">완료</option>
-				</select>
-			</td>
-        </tr>
-        <tr>
             <td align="center"><b>첨부파일</b></td>
             <td><input type="file" style="width: 100%;" id="file" name ="files" value="${qc.FILES }">
             	<input type="hidden" id="fileName" name="fileName" value=""> 

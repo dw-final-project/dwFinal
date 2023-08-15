@@ -110,7 +110,7 @@
         </tr>
         <tr>
             <td align="center">출하 일자</td>
-            <td><input type="date" name= "shipdate" value="<fmt:formatDate value="${siList.get(0).SHIPDATE }" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
+            <td><input type="date" id="ship" name= "shipdate" value="<fmt:formatDate value="${siList.get(0).SHIPDATE }" pattern="yyyy-MM-dd"></fmt:formatDate>" ${siList.get(0).PROGRESS ne '0' ? 'disabled' : '' }></td>
         </tr>
        
     </table>
@@ -186,10 +186,13 @@ window.onload = function(){
 		}
 		
 		if($('tr[id="trChk"]').get().length == trCnt) {
-			alert("제품 추가하쇼");
+			alert("제품을 추가해주세요");
 			return;
 		}
 		
+		if($('input[name="shipdate"]').val() != '0'){
+			$('#ship').removeAttr('disabled');
+		}
 		
 		
 		
