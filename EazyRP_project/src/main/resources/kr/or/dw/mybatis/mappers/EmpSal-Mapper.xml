@@ -726,4 +726,41 @@
 			 WHERE sal_no = #{sal_no}
 		</selectKey>
 	</update>
+	
+	<select id="getSal_no" resultType="str">
+		SELECT sal_no
+		from(
+			SELECT rownum, a.*
+			from(
+				SELECT *
+				FROM sal
+				ORDER BY SYS_REGDATE DESC) a
+		WHERE rownum = 1)
+	</select>
+	
+	<insert id="tr">
+		INSERT INTO tr_history VALUES(
+			'TH_' || LPAD(th_no_seq.nextval, 4, '0'),
+			sysdate,
+			sysdate,
+			#{c_no},
+			#{emp_no},
+			'FC_003',
+			#{amount},
+			#{sal_no},
+			'p',
+			'Y',
+			'/management/salDetail.do?sal_no=' || #{sal_no},
+			1,
+			'',
+			'AC_001',
+			'T_001',
+			'',
+			'',
+			(SELECT e_name FROM emp WHERE emp_no = #{emp_no}),
+			'',
+			''
+		)
+	</insert>
+	
 </mapper>

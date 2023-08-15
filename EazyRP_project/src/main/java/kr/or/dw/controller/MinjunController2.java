@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
 import org.apache.commons.io.IOUtils;
 import org.apache.tiles.autotag.core.runtime.annotation.Parameter;
 import org.slf4j.Logger;
@@ -792,11 +793,12 @@ public class MinjunController2 {
 	public void registSal (HttpSession session, HttpServletResponse res, SalVO salVO, int[] emp_no, String[] sal_no, int[] realsumsal, String[] DED_001,
 						   String[] DED_006, String[] DED_009, String[] DED_010, String[] DED_011, String[] DED_012) throws Exception {
 		int sys_reg = Integer.parseInt(session.getAttribute("emp_no").toString());
+		String c_no = (String) session.getAttribute("c_no");
 		salVO.setSys_reg(sys_reg + "");
 		salVO.setSys_up(sys_reg + "");
-		
+		int amount = 0;
 		String sal_no2 = empsalService.insertSal(salVO);
-		
+		Map<String, Object> map = new HashMap<>();
 		for(int i= 0; i < emp_no.length; i++) {
 			SalDetailVO salDetail = new SalDetailVO();
 			
@@ -809,10 +811,13 @@ public class MinjunController2 {
 			salDetail.setEmp_no(emp_no[i]);
 			salDetail.setRealsumsal(realsumsal[i]);
 			salDetail.setSal_no(sal_no2);
-			
+			amount += realsumsal[i];
 			empsalService.insertSalDetail(salDetail);
 		}
-		
+		map.put("amount", amount);
+		map.put("c_no", c_no);
+		map.put("emp_no", sys_reg);
+		empsalService.tr(map);
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
 		out.println("<script>");
