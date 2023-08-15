@@ -34,6 +34,7 @@ import kr.or.dw.service.EstimateService;
 import kr.or.dw.service.FactoryService;
 import kr.or.dw.service.MenuService;
 import kr.or.dw.service.ProcessService;
+import kr.or.dw.service.ProductService;
 import kr.or.dw.service.RownumService;
 import kr.or.dw.service.WhService;
 import kr.or.dw.service.WhTransferService;
@@ -69,6 +70,8 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	private RownumService rownumService;
 	@Autowired
 	private WhTransferService whTransferService;
+	@Autowired
+	private ProductService productService;
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 목록 열기
 	
@@ -129,6 +132,36 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		
 		mnv.setViewName(url);
 		mnv.addAllObjects(dataMap);
+		return mnv;
+	}
+	
+	@RequestMapping("/findMakeProduct")	// 생산과 관련된 메뉴에서 만들어질 제품을 선택하는것
+	public ModelAndView findProduct(ModelAndView mnv, String pr_name, String c_name, String searchType, String keyword) throws SQLException {
+		String url = "heesung/findMakeProduct";
+		if(searchType == "") {
+			searchType = null;
+		}
+		if(keyword == "") {
+			keyword = null;
+		}
+		List<ProductVO> product = null;
+		Map<String, String> dataMap = new HashMap<>();
+		dataMap.put("pr_name", pr_name);
+		dataMap.put("c_name", c_name);
+		dataMap.put("searchType", searchType);
+		dataMap.put("keyword", keyword);
+		if(keyword != null){
+			product = productService.getMakeProduct(dataMap);
+		} else {
+			product = productService.getMakeProductList();
+		}
+		mnv.setViewName(url);
+		mnv.addObject("product", product);
+		mnv.addObject("pr_name", pr_name);
+		mnv.addObject("c_name", c_name);
+		mnv.addObject("searchType", searchType);
+		mnv.addObject("keyword", keyword);
+		
 		return mnv;
 	}
 	

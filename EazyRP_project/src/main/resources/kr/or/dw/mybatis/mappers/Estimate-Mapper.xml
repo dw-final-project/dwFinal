@@ -140,9 +140,9 @@
 <!-- 	WHERE est_no = #{est_no} -->
 <!-- </select> -->
 <select id="getProductList" resultType="product">
-	SELECT p.*, c.*
-	FROM product p, company c
-	WHERE p.c_no = c.c_no
+	SELECT 	p.*, c.*
+	FROM 	product p, company c
+	WHERE 	p.c_no = c.c_no
 </select>
 
 
