@@ -213,7 +213,7 @@ window.onload = function(){
 		}
 		
 		if($('tr[id="trChk"]').get().length == trCnt) {
-			alert("제품 추가하쇼");
+			alert("제품을 추가해주세요");
 			return;
 		}
 		

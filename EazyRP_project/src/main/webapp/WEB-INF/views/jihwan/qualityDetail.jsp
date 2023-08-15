@@ -73,7 +73,9 @@
     <h2>DW 품질관리 상세</h2>
 	<div class="card-footer">
 		<button type="button" id="modifyBtn" class="btn btn-warning">수정</button>
+		<c:if test="${qc.PROGRESS eq 0 }">
 		<button type="button" id="removeBtn" class="btn btn-danger">삭제</button>
+		</c:if>
 		<button type="button" id="listBtn" class="btn btn-primary">닫기</button>
 	</div>
 	<!-- card footer End -->
@@ -90,20 +92,20 @@
         </tr>
         <tr>
             <td align="center">담당자</td>
-            <td><input type="hidden" name="emp_no" id="receiver" value="${qc.EMP_NO }">
+            <td><input type="hidden" name="emp_no" id="receiver" value="${qc.EMP_NO }" ${qc.PROGRESS ne '0' ? 'readonly' : '' }>
             <input type="text" style="width: 100%;" value="${qc.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 500, 500)"></td>
         </tr>
  		<tr>
             <td align="center">진행상태</td>
             <td><select name="progress" id="progress">
-            	<option value="전수중"${qc.PROGRESS eq "전수중" ? 'selected' : "" }>전수중</option>
-			    <option value="완료"${qc.PROGRESS eq "완료" ? 'selected' : "" }>완료</option>
+            	<option value="0"${qc.PROGRESS eq "0" ? 'selected' : "" }>전수중</option>
+			    <option value="1"${qc.PROGRESS eq "1" ? 'selected' : "" }>완료</option>
 				</select>
 			</td>
         </tr>
         <tr>
             <td align="center"><b>첨부파일</b></td>
-            <td><input type="file" style="width: 100%;" id="file" name ="files" value="">
+            <td><input type="file" style="width: 100%;" id="file2" name ="files" value="${qc.FILES }" ${qc.PROGRESS ne '0' ? 'disabled' : '' }>
             	<input type="hidden" id="fileName" name="fileName" value=""> 
             	<input type="hidden" id="realfilename" name="realfilename" value="">
  			<c:if test="${!empty qc.FILES }">
@@ -112,7 +114,9 @@
             </td>
         </tr>       
     </table>
+    <c:if test="${qc.PROGRESS eq 0 }">
     <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">버튼 추가</button>
+    </c:if>
     <table>
         <tr>
             <th align="center" style="width: 20%;">제품코드</th>
@@ -131,10 +135,13 @@
 	       <input type="hidden" name="enabled" id="qcenabled" value="${qc.ENABLED }">
 	       <input type="hidden" name="pr_delete" value="o">
         	<td><input type="text" id="" class="pr_nos" name="pr_no" value="${qc.PR_NO }"  style="width: 100%;" readonly></td>
-        	<td><input type="text" id="${qc.ROWNUM }" class="pr_names2" name="pr_name" style="width: 100%;" value="${qc.PR_NAME }"></td>
-            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${qc.QUANTITY }">
-            <td><input type="text" id="contents" class="content" name="content" style="width: 100%;" value="${qc.CONTENT }"  ></td>
-            <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>
+        	<td><input type="text" id="${qc.ROWNUM }" class="pr_names2" name="pr_name" style="width: 100%;" value="${qc.PR_NAME }"${qcList.get(0).PROGRESS ne '0' ? 'readonly' : '' } ></td>
+            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${qc.QUANTITY }" ${qc.PROGRESS ne '0' ? 'readonly' : '' }></td>
+            <td><input type="text" id="contents" class="content" name="content" style="width: 100%;" value="${qc.CONTENT }" ${qcList.get(0).PROGRESS ne '0' ? 'readonly' : '' }></td>
+            <td style="text-align : center;">
+            <c:if test="${qc.PROGRESS eq 0 }">
+            <button type="button" id="cancelBtn" class="btn btn-danger">삭제</button>
+            </c:if></td>
         </tr>
         </c:forEach>
         </tbody>
@@ -146,7 +153,6 @@
     </table>
 </form>
 </body>
-</script>
 
 <script>
 
@@ -181,6 +187,9 @@ window.onload = function(){
 			return;
 		}
 		
+		if($('#file2').val() != '0'){
+			$('#file2').removeAttr('disabled');
+		}
 		
 		
 		
@@ -207,9 +216,19 @@ window.onload = function(){
 	});
 	
 	
+	 let totalQuantity = 0;
+	 
+		$('.quantity').each(function(){
+			totalQuantity += parseInt($(this).val());
+		});
+		$('#totalQuantity').val(totalQuantity);
+
 	
 }
+</script>
 
+<c:if test="${qc.PROGRESS eq 0 }">
+<script>
 let rownumList = $('.rownum');
 let cnt = rownumList.length; 
 console.log(cnt);
@@ -233,13 +252,7 @@ $('#addPutBtn').on('click', function(){
 });
 
 
-	 let totalQuantity = 0;
-	 
-	$('.quantity').each(function(){
-		totalQuantity += parseInt($(this).val());
-	});
-	$('#totalQuantity').val(totalQuantity);
-
+	
 
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
 		winleft = (screen.width - WinWidth) / 2;
@@ -307,14 +320,10 @@ $('#addPutBtn').on('click', function(){
 // 		$('#totalAmount').val(sum);
 // 	})
 	
-	
-// 	let fc_no = "${si.FC_NO}";
-// 	$('#fc-select').val(fc_no);
-// 	$('select#fc-select').find('option[value="' + fc_no + '"]').attr('selected', 'selected'); 
 
 </script>
 
-
+</c:if>
 
 </html>
     
