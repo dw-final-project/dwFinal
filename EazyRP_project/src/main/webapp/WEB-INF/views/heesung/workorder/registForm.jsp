@@ -173,7 +173,7 @@
 	$(document).on('click', '.pr_names', function() {
 		let idVal = $(this).attr('id');
 		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 800, 600);
+		let openWin = OpenWindow("/erp4/findMakeProduct.do", "제품 찾기", 800, 600);
 	});
 	
 	// 제품 삭제 버튼
@@ -211,9 +211,10 @@
 		return win;
 	};
 	
-	$(document).on('change, keyup', '#prInput', function(){
+	$(document).on('change keyup click', '#prInput, button#cancelBtn', function(){
 		let sum = Number(0);
 		let inputAmount = $('input[name="quantity"]').get();
+		
 		for(let i = 0; i < inputAmount.length; i++){
 			sum += Number($('input[name="quantity"]').eq(i).val());
 		}

@@ -135,7 +135,7 @@
 						<input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="">
 					</td>
 					<td style="text-align: center;">
-						<button type="button" id="cancelBtn" class="btn btn-danger">삭제</button>
+<!-- 						<button type="button" id="cancelBtn" class="btn btn-danger">삭제</button> -->
 					</td>
 				</tr>
 			</tbody>
@@ -250,7 +250,7 @@
 	}
 	
 	// 수량 입력 시 총량 계산
-	$(document).on('change keyup', '.quantity', function() {
+	$(document).on('change keyup click', '.quantity, button#cancelBtn', function() {
 	    calculateTotalQuantity();
 	});
 	

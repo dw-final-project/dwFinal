@@ -74,7 +74,7 @@
 			#{emp_no},
 			#{c_no},
 			#{deliverydate},
-			1,
+			0,
 			'y'
 		)
 	</insert>

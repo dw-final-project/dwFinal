@@ -124,15 +124,15 @@
 				<input type="hidden" id="sort" value="registForm">
 				<tr>
 					<td>
-						<input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value="">
+						<input type="text" id="0" class="pr_names" name="pr_name" style="width: 100%;" value="" readonly>
 						<input type="hidden" name="pr_no">
 					</td>
 					<td>
-						<input type="text" id="fac_no0" class="fac_names" name="fac_name" style="width: 100%;" value="">
+						<input type="text" id="fac_no0" class="fac_names" name="fac_name" style="width: 100%;" value="" readonly>
 						<input type="hidden" name="fac_no" id="fac_no0">
 					</td>
 					<td>
-						<input type="text" id="wh_no0" class="wh_names" name="wh_name" style="width: 100%;" value="">
+						<input type="text" id="wh_no0" class="wh_names" name="wh_name" style="width: 100%;" value="" readonly>
 						<input type="hidden" name="wh_no">
 					</td>
 					<td>
@@ -145,7 +145,6 @@
 						<input type="text" id="total_outprice" name="total_outprice" style="width: 100%;" value="" readonly>
 					</td>
 					<td style="text-align: center;">
-						<button type="button" id="cancelBtn" class="btn btn-danger">삭제</button>
 					</td>
 				</tr>
 			</tbody>
@@ -174,9 +173,9 @@
 
 		$('#prInput').append(
 			'<tr>'
- 				+ '<td><input type="text" id="' + cnt + '" class="pr_names" name="pr_name" style="width: 100%;" value=""><input type="hidden" name="pr_no"></td>'
-				+ '<td><input type="text" id="fac_no' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value=""><input type="hidden" name="fac_no" id="fac_no' + cnt + '"></td>'
-				+ '<td><input type="text" id="wh_no' + cnt + '" class="wh_names" name="wh_name" style="width: 100%;" value=""><input type="hidden" name="wh_no"></td>'
+ 				+ '<td><input type="text" id="' + cnt + '" class="pr_names" name="pr_name" style="width: 100%;" value="" readonly><input type="hidden" name="pr_no"></td>'
+				+ '<td><input type="text" id="fac_no' + cnt + '" class="fac_names" name="fac_name" style="width: 100%;" value="" readonly><input type="hidden" name="fac_no" id="fac_no' + cnt + '"></td>'
+				+ '<td><input type="text" id="wh_no' + cnt + '" class="wh_names" name="wh_name" style="width: 100%;" value="" readonly><input type="hidden" name="wh_no"></td>'
 				+ '<td><input type="text" id="outprice' + cnt + '" class="outprice" name="outprice" style="width: 100%;" value=""></td>'
 				+ '<td><input type="text" id="quantity' + cnt + '" class="quantity" name="quantity" style="width: 100%;" value=""></td>'
 				+ '<td><input type="text" id="amount" name="total_outprice" style="width: 100%;" value="" readonly></td>'
@@ -190,7 +189,7 @@
 	$(document).on('click', '.pr_names', function() {
 		let idVal = $(this).attr('id');
 		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 800, 600);
+		let openWin = OpenWindow("/erp4/findMakeProduct.do", "제품 찾기", 800, 600);
 	});
 
 	// 제품 삭제 버튼
@@ -224,7 +223,7 @@
 	})
 	
 	// 총합계
-	$(document).on('change keyup', '.quantity', function(){
+	$(document).on('change keyup click', '.quantity, button#cancelBtn', function(){
 		
 		let sum = Number(0);
 		let inputAmount = $('input[name="total_outprice"]').get();
