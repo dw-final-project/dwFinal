@@ -212,7 +212,6 @@ public class MemberController {
 		MemberVO status = memberService.idFind(member);
 		
 		res.setContentType("text/html; charset=utf-8");
-		System.out.println(status.getId());
 	    PrintWriter out = res.getWriter();
 		if(status == null || status.equals("")) {	
 		  out.println("<script>");
@@ -307,6 +306,7 @@ public class MemberController {
 	@RequestMapping("/repwdForm")
 	public ModelAndView repwdForm(String mymenu, String mcode, ModelAndView mnv) throws Exception {
 		String url = "";
+	    
     	if(mymenu == null) {
 			url="/common/repwdForm.page";
 		} else {
@@ -321,7 +321,7 @@ public class MemberController {
 
 	
 	@RequestMapping("/repwd")
-	public ModelAndView repwd (String mymenu, ModelAndView mnv, String mcode, String pwd, HttpSession session) throws Exception{
+	public ModelAndView repwd (String mymenu, ModelAndView mnv, String mcode, String pwd, HttpSession session,  HttpServletResponse res) throws Exception{
 		String url = "";
     	if(mymenu == null) {
 			url="/common/userProfile.page";
