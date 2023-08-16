@@ -45,7 +45,7 @@
 									<c:forEach items="${orderList}" var="order" varStatus="loop">
 									<tr>
 										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('orderDetail.do?so_no=${order.SO_NO}','상품 상세보기', 1000 , 800);">${order.SO_NO }</a></td>
-										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('merchandiseDetail.do?sp_no=${order.SP_NO}','상품 상세보기', 800 , 600);">${order.SP_NO }</a></td>
+										<td style="text-align: center;" id="sp_no"><a id="aTag" href="javascript:OpenWindow('merchandiseDetail.do?sp_no=${order.SP_NO}','상품 상세보기', 800 , 600);">${order.SP_NO }</a></td>
 										<td style="text-align: center;">${order.PR_NAME }</td>
 										<td style="text-align: center;">${order.QUANTITY}</td>
 										<td style="text-align: center;">
@@ -62,7 +62,7 @@
 											<fmt:formatDate value="${order.DELENDDATE }"
 												pattern="yyyy-MM-dd"></fmt:formatDate>
 										</td>
-										<td style="text-align: center;">${order.PROGRESS }</td>
+										<td style="text-align: center;" class="test">${order.PROGRESS }</td>
 									</tr>
 									</c:forEach>
 							</table>

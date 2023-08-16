@@ -32,19 +32,13 @@
 								<tr>
 									<th width="200px" style="text-align: center;">수당코드</th>
 									<th width="200px" style="text-align: center;">수당명</th>
-									<th width="150px" style="text-align: center;">표시순서</th>
-									<th width="150px" style="text-align: center;">배율</th>
-									<th width="200px" style="text-align: center;">비과세유형</th>
-									<th width="150px" style="text-align: center;">지급유형</th>
+									<th width="200px" style="text-align: center;">계산식</th>
 								</tr>
 									<c:forEach items="${extrapayList}" var="extrapay" varStatus="loop">
 									<tr>
 										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('extrapayDetail.do?ep_no=${extrapay.EP_NO}','수당 상세보기', 800 , 400);">${extrapay.EP_NO}</a></td>
 										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('extrapayDetail.do?ep_no=${extrapay.EP_NO}','수당 상세보기', 800 , 400);">${extrapay.EP_NAME}</a></td>
-										<td style="text-align: center;">${extrapay.EP_ORDER}</td>
-										<td style="text-align: center;">${extrapay.MAG}</td>
-										<td style="text-align: center;">${extrapay.FREE_GB}</td>
-										<td style="text-align: center;">${extrapay.PAYMENT}</td>
+										<td style="text-align: center;">x&nbsp;${extrapay.CALC}</td>
 									</tr>
 									</c:forEach>
 							</table>

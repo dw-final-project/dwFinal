@@ -22,10 +22,6 @@
 					</div>
 					<div class="card-body pad">
 						<form role="form" method="post" action="modifyMerchandise.do" name="registForm">
-<!-- 							<div class="form-group col-sm-12 row"> -->
-<!-- 								<label for="sp_no" class="col-sm-3">상품 코드</label> -->
-<%-- 								<input type="text" id="sp_no" class="form-control col-sm-9" placeholder="상품코드는 자동등록 됩니다." name="sp_no" readonly value="${merchandise.SP_NO}"> --%>
-<!-- 							</div> -->
 							<input type="hidden" value="${merchandise.SP_NO }" name="sp_no" >
 							<div class="form-group col-sm-12 row">
 								<label for="s_name" class="col-sm-3">쇼핑몰 이름</label>
@@ -88,6 +84,14 @@
 		
 		let status = "${merchandise.STATUS}";
 		$('#status').val(status);
+		
+		
+		let sp_no = $('input[name="sp_no"]').val();
+		let test = opener.$('td').attr('id', sp_no).text();
+		if( $('td[id="progress"]', opener.document).text() == '배송완료'){
+			$('input').prop('disabled', true);
+			$('select').prop('disabled', true);
+		}
 		
 		// 수정버튼 클릭
 		$('#modifyBtn').on('click', function() {

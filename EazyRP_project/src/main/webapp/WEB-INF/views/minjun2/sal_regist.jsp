@@ -249,7 +249,10 @@
 		// 사원 전체 추가
 		$('#addAllPutBtn').on('click', function(){
 			if(confirm("전체 직원을 추가하시겠습니까?")){
-				
+				if($('#salmonth').val() == ""){
+					alert('달을 먼저 선택하세요.');
+					return;
+				}
 				$('tbody').find('tr').remove();
 				
 				let data = {

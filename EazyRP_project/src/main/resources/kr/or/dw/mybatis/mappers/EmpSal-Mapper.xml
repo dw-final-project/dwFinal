@@ -341,10 +341,10 @@
 		VALUES(
 				#{ep_no},
 				#{ep_name},
-				#{ep_order},
-				#{mag},
-				#{free_gb},
-				#{payment},
+				'1',
+				'NULL',
+				'X',
+				'월급추가',
 				#{calc}
 			)
 	</insert>
@@ -359,10 +359,6 @@
 	UPDATE extrapay SET 		
 					ep_no	=	#{ep_no},
 					ep_name =   #{ep_name},
-					ep_order =  #{ep_order},
-					mag		=	#{mag},
-					free_gb	= 	#{free_gb},
-					payment	=	#{payment},
 					calc	=	#{calc}
 			WHERE ep_no = #{ep_no}
 	</update>
