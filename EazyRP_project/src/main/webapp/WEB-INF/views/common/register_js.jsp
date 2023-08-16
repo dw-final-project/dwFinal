@@ -149,8 +149,8 @@
 			alert("이메일 인증이 필요합니다.");
 			return false;
 		};  
-		
 	$('#registForm').submit();
+		alert('회원가입이 정상적으로 되었습니다.');
 	
 	}; 
 </script>

@@ -72,6 +72,12 @@
 		<button type="submit" id="modifyBtn" class="btn btn-warning">수정</button>
 		<button type="button" id="removeBtn" class="btn btn-danger">삭제</button>
 		<button type="button" id="closeBtn" class="btn btn-primary">닫기</button>
+		<c:if test="${as.PROGRESS ne '2'}">
+			<button type="button" id="progressBtn" class="btn btn-primary" ${as.PROGRESS eq '2' ? 'disabled' : '' } style="float:right;">
+				<c:if test="${as.PROGRESS eq '0'}">진행</c:if>
+				<c:if test="${as.PROGRESS eq '1'}">완료</c:if>
+			</button>
+		</c:if>
 	</div>
 	<!-- card footer End -->
 <form role="form" method="post" enctype="multipart/form-data">
@@ -107,19 +113,27 @@
 					<input type="date" id="compldate" name="compldate" class="form-control col-sm-9 mch7" value="<fmt:formatDate value="${as.COMPLDATE}" pattern="yyyy-MM-dd"></fmt:formatDate>" placeholder="완료일을 입력하세요." disabled>
 				</td>
 			</tr>
-	        <tr>
+			<tr>
 	            <td width="40%" align="center">
 	            	<b>상태</b>
 	            </td>
 	            <td>
-	            	<select name="progress" id="progress_select"  ${as.PROGRESS ne '0' ? 'disabled' : ''}>
-					    <option>선택</option>
-					    <option value="0" ${as.PROGRESS eq '0' ? 'selected' : '' }>대기중</option>
-					    <option value="1" ${as.PROGRESS eq '1' ? 'selected' : '' }>진행중</option>
-					    <option value="2" ${as.PROGRESS eq '2' ? 'selected' : '' }>완료</option>
-					</select>
+	            	<c:if test="${as.PROGRESS eq '0'}">
+		            	<input type="text" name="" value="대기중" readonly>
+		            	<input type="hidden" name="progress" value="0" readonly>
+	            	</c:if>
+	            	<c:if test="${as.PROGRESS eq '1'}">
+		            	<input type="text" name="" value="진행중" readonly>
+		            	<input type="hidden" name="progress" value="1" readonly>
+	            	</c:if>
+	            	<c:if test="${as.PROGRESS eq '2'}">
+		            	<input type="text" name="" value="완료" readonly>
+		            	<input type="hidden" name="progress" value="2" readonly>
+	            	</c:if>
 				</td>
 	        </tr>
+			
+	    
 	        <tr>
 				<td width="40%" align="center"><b>AS비용</b></td>
 				<td width="100%">	
@@ -167,6 +181,17 @@ window.onload = function(){
 	});
 	
 }
+
+$('#progressBtn').on('click', function(){
+	
+	let formObj = $('form[role="form"]');
+	
+		if(confirm('상태를 변경 하시겠습니까?')) {
+			formObj.attr('action', '/asmanage/insertError.do?compl=${as.PROGRESS}');
+			formObj.submit();
+		}
+})
+
 
 </script>
 
