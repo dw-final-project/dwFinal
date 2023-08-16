@@ -5,21 +5,21 @@
 	<!-- 셀렉트바 검색 -->
 	<sql id="search">
 		<if test="cri.searchType == 'w'.toString()">
-			AND wh_name LIKE '%' || #{keyword} || '%'
+			AND wh_name LIKE '%' || #{cri.keyword} || '%'
 		</if>
 		<if test="cri.searchType == 'a'.toString()">
-			AND w.addr LIKE '%' || #{keyword} || '%'
+			AND w.addr LIKE '%' || #{cri.keyword} || '%'
 		</if>
 		<if test="cri.searchType == 'g'.toString()">
-			AND wh_gb LIKE '%' || #{keyword} || '%'
+			AND wh_gb LIKE '%' || #{cri.keyword} || '%'
 		</if>
 		<if test="cri.searchType == 'all'.toString()">
 			AND (
-			wh_name LIKE '%' || #{keyword} || '%'
+			wh_name LIKE '%' || #{cri.keyword} || '%'
 			OR
-			w.addr LIKE '%' || #{keyword} || '%'
+			w.addr LIKE '%' || #{cri.keyword} || '%'
 			OR
-			wh_gb LIKE '%' || #{keyword} || '%'
+			wh_gb LIKE '%' || #{cri.keyword} || '%'
 			)
 		</if>
 	</sql>
