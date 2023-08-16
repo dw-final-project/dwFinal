@@ -134,4 +134,8 @@ public interface EmpSalDAO {
 
 	List<Map<String, Object>> allEmpList(String c_no) throws SQLException;
 
+	void tr(Map<String, Object> map) throws SQLException;
+
+	String getSal_no() throws SQLException;
+
 }

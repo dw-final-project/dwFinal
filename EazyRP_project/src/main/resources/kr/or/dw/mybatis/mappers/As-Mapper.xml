@@ -3,18 +3,24 @@
 <mapper namespace="kr.or.dw.dao.AsDAO">
 
 	<!-- 셀렉트바 검색 -->
-	<!--  --><sql id="search">
-		<if test="searchType == 'a'.toString()">
-			AND as_no LIKE '%' || #{keyword} || '%'
-		</if>
+	<sql id="search">
 		<if test="searchType == 'p'.toString()">
 			AND progress LIKE '%' || #{keyword} || '%'
 		</if>
+		<if test="searchType == 'c'.toString()">
+			AND content LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'n'.toString()">
+			AND e_name LIKE '%' || #{keyword} || '%'
+		</if>
 		<if test="searchType == 'all'.toString()">
 			AND (
-			as_no LIKE '%' || #{keyword} || '%'
-			OR
 			progress LIKE '%' || #{keyword} || '%'
+			OR
+			content LIKE '%' || #{keyword} || '%'
+			)
+			OR
+			e_name LIKE '%' || #{keyword} || '%'
 			)
 		</if>
 	</sql> 
@@ -24,6 +30,7 @@
 		SELECT a.*, e.e_name e_name
 		  FROM asmanage a, emp e
 		 WHERE a.emp_no = e.emp_no	
+		  AND a.c_no = #{c_no}
 	  ORDER BY a.as_no
 	</select>
 	
@@ -32,6 +39,7 @@
 		SELECT COUNT(*)
 		  FROM asmanage a, emp e
 		 WHERE a.emp_no = e.emp_no	
+		  AND a.c_no = #{c_no}
 <!-- 		 <include refid="search"/> -->
 	</select>
 
@@ -42,12 +50,13 @@
 		#{emp_no},
 		'0',
 		sysdate,
-		sysdate,
+		null,
 		#{emp_no},
 		sysdate,
 		#{emp_no},
 		#{asprice},
-		#{content}
+		#{content},
+		#{c_no}
 		)
 	</insert>
 
@@ -103,4 +112,10 @@
 		SELECT a.as_no, rownum FROM (SELECT * FROM ASMANAGE ORDER BY sys_regdate desc) a WHERE rownum = 1
 	</select>
 	
+	<update id="insertError">
+		UPDATE 	asmanage 
+		SET		progress = #{progress},
+				compldate = #{compldate, jdbcType = DATE}						
+		WHERE 	as_no = #{as_no} 
+	</update>
 </mapper>

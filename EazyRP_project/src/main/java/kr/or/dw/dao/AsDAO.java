@@ -14,9 +14,9 @@ import kr.or.dw.vo.AsVO;
 @Mapper
 public interface AsDAO {
 
-	List<Map<String, Object>> selectAsList(SearchCriteria cri, RowBounds rowBounds) throws SQLException;
+	List<Map<String, Object>> selectAsList(Map<String, Object> map ,RowBounds rowBounds) throws SQLException;
 
-	int selectAsListCount(SearchCriteria cri) throws SQLException;
+	int selectAsListCount(Map<String, Object> map ) throws SQLException;
 
 	void asRegist(AsVO asVO) throws SQLException;
 
@@ -29,6 +29,8 @@ public interface AsDAO {
 	void tr(AsVO asVO) throws SQLException;
 
 	String getAs_no() throws SQLException;
+
+	void insertError(AsVO asVO) throws SQLException;
 
 	
 }

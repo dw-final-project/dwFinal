@@ -134,7 +134,9 @@
 				</td>
 	        </tr>
 	    </table>
-    <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">추가</button>
+	<c:if test="${wo.PROGRESS eq '0'}">
+    	<button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">추가</button>
+    </c:if>
     <table>
     	
         <tr>
@@ -162,7 +164,7 @@
 					<input type="hidden" name="fac_no" id="fac_no${woDetail.ROWNUM }" value="${woDetail.FAC_NO }">
 				</td>
 	            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${woDetail.QUANTITY }"><input type="hidden" id="cost" value="${est.PR_EXPRICE }"></td>
-	            <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>
+	            <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger" ${wo.PROGRESS ne '0' || loop.index == 0 ? 'disabled' : ''} >삭제</button></td>
 	        </tr>
         </c:forEach>
         </tbody>
@@ -301,7 +303,7 @@ $('tr').on('click', function(){
 		let idVal = $(this).parents("tr").find(".rownum").val();
 		console.log(idVal);
 		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
+		let openWin = OpenWindow("/erp4/findMakeProduct.do", "제품 찾기", 500, 500);
 		
 	});
 	
@@ -330,7 +332,7 @@ $('tr').on('click', function(){
 	})
 	
 	// 수량 이벤트
-	$(document).on('keyup change', '.quantity', function(){
+	$(document).on('keyup change click', '.quantity, button#cancelBtn', function(){
 	
 		let sum = Number(0);
 		let inputquantity = $('input[name="quantity"]').get();
@@ -342,7 +344,7 @@ $('tr').on('click', function(){
 		$('#woTotal').val(sum);
 
 	})
-		
+	
 </script>
 </c:if>
 </html>

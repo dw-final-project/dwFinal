@@ -10,7 +10,7 @@ import kr.or.dw.vo.AsVO;
 
 public interface AsService {
 
-	Map<String, Object> selectAsList(SearchCriteria cri) throws SQLException;
+	Map<String, Object> selectAsList(Map<String, Object> map ) throws SQLException;
 
 	void registAs(AsVO asVO) throws SQLException;
 
@@ -19,6 +19,8 @@ public interface AsService {
 	void modifyAs(AsVO asVO) throws SQLException;
 
 	void removeAs(AsVO asVO)throws SQLException;
+
+	void insertError(AsVO asVO)throws SQLException;
 
 
 }

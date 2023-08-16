@@ -114,6 +114,8 @@ public interface EmpSalService {
 
 	List<Map<String, Object>> allEmpList(String c_no, String salmonth) throws SQLException;
 
+	void tr(Map<String, Object> map) throws SQLException;
+
 
 
 }

@@ -193,12 +193,12 @@
 						<input type="text" id="total_outprice" name="total_outprice" style="width: 100%;" value="${whDetail.TOTAL_OUTPRICE }" readonly>
 					</td>
 					<td style="text-align: center;">
-						<button type="button" id="cancelBtn" class="btn btn-danger" ${wh.PROGRESS ne '0' ? 'disabled' : ''} >삭제</button>
+						<button type="button" id="cancelBtn" class="btn btn-danger" ${wh.PROGRESS ne '0' || loop.index == 0 ? 'disabled' : ''} >삭제</button>
 					</td>
 		        </tr>
 	        </c:forEach>
         </tbody>
-        <tr class="total">
+     	<tr class="total">
             <td colspan="5" align="center">총액</td>
             <td colspan="2" align="center"><input type="text" id="wh_total" name="wh_total" style="width: 100%;" value="${wh.WH_TOTAL }" readonly></td>
         </tr>
@@ -336,7 +336,7 @@ $('#addPutBtn').on('click', function(){
 		let idVal = $(this).parents("tr").find(".rownum").val();
 		console.log(idVal);
 		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
+		let openWin = OpenWindow("/erp4/findMakeProduct.do", "제품 찾기", 500, 500);
 		
 	});
 	
@@ -370,7 +370,7 @@ $('#addPutBtn').on('click', function(){
 	})
 	
 	// 총합계
-	$(document).on('change keyup', '.quantity', function(){
+	$(document).on('change keyup click', '.quantity, button#cancelBtn', function(){
 		
 		let sum = Number(0);
 		let inputAmount = $('input[name="total_outprice"]').get();

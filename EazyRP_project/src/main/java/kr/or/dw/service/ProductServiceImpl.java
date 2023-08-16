@@ -281,7 +281,27 @@ public class ProductServiceImpl implements ProductService {
 		map.put("quantity", quantity);
 		System.out.println("quantity = " + quantity);
 		productDAO.tr_History(map);
+	}
+
+	@Override
+	public List<Order2VO> getOrderList(String c_no) throws SQLException {
+		return productDAO.getOrderList(c_no);
+	}
+
+	// 생산을 목적으로 선택하는 제품들의 목록(희성이꼬)
+	@Override
+	public List<ProductVO> getMakeProduct(Map<String, String> map) throws SQLException{
+		List<ProductVO> product = null;
+		product = productDAO.getMakeProduct(map);
+		return product;
+	}
+
+	// 생산을 목적으로 선택하는 제품들의 목록(희성이꼬)
+	@Override
+	public List<ProductVO> getMakeProductList() throws SQLException{
+		List<ProductVO> product = null;
+		product = productDAO.getMakeProductList();
+		return product;
 	} 
-	
 	
 }

@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Bootstrap Flat Modal Login Modal Form</title>
+<title>Eazy ERP 로그인</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -137,7 +137,10 @@ body {
 
 	<div class="modal-dialog modal-login ">
 		<div class="modal-content ">
-			<div class="modal-header">				
+			<div class="modal-header">	
+				<div>
+				<img src="<%=request.getContextPath() %>/resources/img/EazyRP2.png" style="width: 100px;">
+				</div>	
 				<h4 class="modal-title">로그인</h4>
 			</div>
 			<div class="modal-body">

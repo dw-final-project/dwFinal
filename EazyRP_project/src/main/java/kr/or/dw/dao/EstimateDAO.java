@@ -56,12 +56,5 @@ public interface EstimateDAO {
 	EstimateVO selectEst(String est_no) throws SQLException;
 
 	String deleteFile(String est_no) throws SQLException;
-
-	
-
-	
-
-
-
 	
 }

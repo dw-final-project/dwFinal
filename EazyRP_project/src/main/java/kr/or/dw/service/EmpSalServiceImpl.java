@@ -556,5 +556,12 @@ public class EmpSalServiceImpl implements EmpSalService {
 		
 		return empList;
 	}
+
+	@Override
+	public void tr(Map<String, Object> map) throws SQLException {
+		String sal_no = empsalDAO.getSal_no();
+		map.put("sal_no", sal_no);
+		empsalDAO.tr(map);
+	}
 	
 }

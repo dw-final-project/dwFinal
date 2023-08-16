@@ -61,5 +61,12 @@ public interface ProductService {
 
 	void Tr_History(int sheet_no, List<BuyDetailVO> detail) throws SQLException;
 
+	List<Order2VO> getOrderList(String c_no) throws SQLException;
+
+	// 생산을 목적으로 선택하는 제품들의 목록(희성이꼬)
+	List<ProductVO> getMakeProduct(Map<String, String> map) throws SQLException;
+	// 생산을 목적으로 선택하는 제품들의 목록(희성이꼬)
+	List<ProductVO> getMakeProductList() throws SQLException;
+
 	
 }
