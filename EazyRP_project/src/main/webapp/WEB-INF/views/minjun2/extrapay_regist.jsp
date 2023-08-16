@@ -23,20 +23,20 @@
 								<label for="ep_name" class="col-sm-2">수당명</label>
 								<input type="text" id="ep_name" name="ep_name" class="form-control col-sm-4 exp1" value="" placeholder="수당명을 입력하세요">
 							</div>
-							<div class="form-group col-sm-12 row " >
-								<label for="ep_order" class="col-sm-2">표시순서</label>
-								<input type="text" id="ep_order" name="ep_order" class="form-control col-sm-3 exp2" value="" placeholder="표시순서를 입력하세요 ">
-								<div class="col-sm-1"></div>
-								<label for="mag" class="col-sm-2">배율</label>
-								<input type="text" id="mag" name="mag" class="form-control col-sm-4 exp3" value="" placeholder="배율을 입력하세요 ">
-							</div>
-							<div class="form-group col-sm-12 row">
-								<label for="free_gb" class="col-sm-2">비과세유형</label>
-								<input type="text" id="free_gb" name="free_gb" class="form-control col-sm-3 exp4" value="" placeholder="비과세유형을 입력하세요">
-								<div class="col-sm-1"></div>
-								<label for="payment" class="col-sm-2">지급유형</label>
-								<input type="text" id="payment" name="payment" class="form-control col-sm-4 exp5" value="" placeholder="지급유형을 입력하세요">
-							</div>
+<!-- 							<div class="form-group col-sm-12 row " > -->
+<!-- 								<label for="ep_order" class="col-sm-2">표시순서</label> -->
+<!-- 								<input type="text" id="ep_order" name="ep_order" class="form-control col-sm-3 exp2" value="" placeholder="표시순서를 입력하세요 "> -->
+<!-- 								<div class="col-sm-1"></div> -->
+<!-- 								<label for="mag" class="col-sm-2">배율</label> -->
+<!-- 								<input type="text" id="mag" name="mag" class="form-control col-sm-4 exp3" value="" placeholder="배율을 입력하세요 "> -->
+<!-- 							</div> -->
+<!-- 							<div class="form-group col-sm-12 row"> -->
+<!-- 								<label for="free_gb" class="col-sm-2">비과세유형</label> -->
+<!-- 								<input type="text" id="free_gb" name="free_gb" class="form-control col-sm-3 exp4" value="" placeholder="비과세유형을 입력하세요"> -->
+<!-- 								<div class="col-sm-1"></div> -->
+<!-- 								<label for="payment" class="col-sm-2">지급유형</label> -->
+<!-- 								<input type="text" id="payment" name="payment" class="form-control col-sm-4 exp5" value="" placeholder="지급유형을 입력하세요"> -->
+<!-- 							</div> -->
 							<div class="form-group col-sm-12 row">
 								<label for="calc" class="col-sm-2">계산식</label>
 								<input type="text" id="calc" name="calc" class="form-control col-sm-3 exp6" value="" placeholder="계산식을 입력하세요">
@@ -67,22 +67,22 @@
 				alert("빈 항목이 있습니다.");
 				return;
 			}
-			if($('.exp2').val() == ""){
-				alert("빈 항목이 있습니다.");
-				return;
-			}
-			if($('.exp3').val() == ""){
-				alert("빈 항목이 있습니다.");
-				return;
-			}
-			if($('.exp4').val() == ""){
-				alert("빈 항목이 있습니다.");
-				return;
-			}
-			if($('.exp5').val() == ""){
-				alert("빈 항목이 있습니다.");
-				return;
-			}
+// 			if($('.exp2').val() == ""){
+// 				alert("빈 항목이 있습니다.");
+// 				return;
+// 			}
+// 			if($('.exp3').val() == ""){
+// 				alert("빈 항목이 있습니다.");
+// 				return;
+// 			}
+// 			if($('.exp4').val() == ""){
+// 				alert("빈 항목이 있습니다.");
+// 				return;
+// 			}
+// 			if($('.exp5').val() == ""){
+// 				alert("빈 항목이 있습니다.");
+// 				return;
+// 			}
 			if($('.exp6').val() == ""){
 				alert("빈 항목이 있습니다.");
 				return;
