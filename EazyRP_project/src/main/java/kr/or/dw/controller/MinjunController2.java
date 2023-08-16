@@ -561,7 +561,7 @@ public class MinjunController2 {
 	// DEPT(부서) CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/dept")
-	public ModelAndView deptMain(String mymenu, ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
+	public ModelAndView deptMain(String mymenu, ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session, String murl) throws SQLException {
 		String url = "";
     	if(mymenu == null) {
 			url="/minjun2/dept.page";
@@ -574,6 +574,7 @@ public class MinjunController2 {
 		System.out.println("dept dataMap : " + dataMap);
 		
 		mnv.addObject("mcode", mcode);
+		mnv.addObject("murl", murl);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
 		

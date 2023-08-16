@@ -4,23 +4,22 @@
 
 	<!-- 셀렉트바 검색 -->
 	<sql id="search">
-		<if test="searchType == 'p'.toString()">
-			AND progress LIKE '%' || #{keyword} || '%'
+		<if test="cri.searchType == 'p'.toString()">
+			AND progress LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="searchType == 'c'.toString()">
-			AND content LIKE '%' || #{keyword} || '%'
+		<if test="cri.searchType == 'c'.toString()">
+			AND content LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="searchType == 'n'.toString()">
-			AND e_name LIKE '%' || #{keyword} || '%'
+		<if test="cri.searchType == 'n'.toString()">
+			AND e_name LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="searchType == 'all'.toString()">
+		<if test="cri.searchType == 'all'.toString()">
 			AND (
-			progress LIKE '%' || #{keyword} || '%'
+			progress LIKE '%' || #{cri.keyword} || '%'
 			OR
-			content LIKE '%' || #{keyword} || '%'
-			)
+			content LIKE '%' || #{cri.keyword} || '%'
 			OR
-			e_name LIKE '%' || #{keyword} || '%'
+			e_name LIKE '%' || #{cri.keyword} || '%'
 			)
 		</if>
 	</sql> 
@@ -31,6 +30,7 @@
 		  FROM asmanage a, emp e
 		 WHERE a.emp_no = e.emp_no	
 		  AND a.c_no = #{c_no}
+		  <include refid="search"/>
 	  ORDER BY a.as_no
 	</select>
 	
@@ -40,7 +40,7 @@
 		  FROM asmanage a, emp e
 		 WHERE a.emp_no = e.emp_no	
 		  AND a.c_no = #{c_no}
-<!-- 		 <include refid="search"/> -->
+		 <include refid="search"/>
 	</select>
 
 	<insert id="asRegist">
