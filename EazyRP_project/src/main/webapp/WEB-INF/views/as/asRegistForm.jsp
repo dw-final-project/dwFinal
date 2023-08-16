@@ -105,7 +105,7 @@
 	        	</td>
 	        </tr>
  	</table>
-		<input type="submit" id="submitBtn" class="btn btn-primary" style="text-align: center;" value="등록">
+		<button type="button" id="submitBtn" class="btn btn-primary" style="text-align: center;" value="">등록</button>
 		<input type="button" class="btn btn-warning" id="closeBtn" value="취 소">
 	</form>
 </body>
@@ -146,27 +146,19 @@
 		if ($('input[name=emp_no]').val() == "") {
 			
 			alert("담당자를 선택하세요.");
-			return;
-			
 			
 		} else if ($('input[name="asprice"]').val() == "") {
 			
 			alert("A/S 비용을 입력하세요.");
-			return;
-	
 	
 		} else if ($('input[name="sys_regdate"]').val() == "") {
 			
 			alert("수리 예정일을 선택하세요.");
-			return;
-	
 	
 		}  
 		else if ($('input[name="content"]').val() == "") {
 			
 			alert("A/S 내용을 입력하세요.");
-			return;
-		
 		} else {
 				
 			form.submit();

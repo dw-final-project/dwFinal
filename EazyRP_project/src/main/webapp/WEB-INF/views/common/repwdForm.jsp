@@ -170,6 +170,7 @@ body {
 					<div class="form-group d-flex">
 						<div class="input-group inputText">
 							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+							<input type="hidden" id="email2" value="${email }">
 							<input type="text" class="form-control" name="email" id="email" placeholder="이메일" required="required">
 						</div>
 						<div>

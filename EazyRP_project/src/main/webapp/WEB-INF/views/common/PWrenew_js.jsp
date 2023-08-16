@@ -43,7 +43,7 @@
  			alert("패스워드는 필수입니다.");
  			return false;
  		};
-
+ 		alert("비밀변호 변경이 되었습니다.");
  	$('#PWrenewForm').submit();
 	
  	};  
