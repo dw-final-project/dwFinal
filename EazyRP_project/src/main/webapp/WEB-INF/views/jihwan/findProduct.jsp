@@ -47,7 +47,6 @@
 					<input type="hidden" class="cost" value="${pro.pr_exprice }">
 					<input type="hidden" id="pr_no" value="${pro.pr_no}">
 				</tr>
-				
 			</c:forEach>
 		</table>
 		<input type="hidden" value="" id="cnt">

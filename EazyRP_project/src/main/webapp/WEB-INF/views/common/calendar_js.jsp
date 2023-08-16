@@ -259,13 +259,15 @@
 					var startTime = $('#startTime').val();
 					var endTime = $('#endTime').val();
 					var calendar_no = $('#calendar_no').val();
+					var ed = $('#EndDate').val();
+					var sd = $('#StartDate').val();
 					
 					//내용 입력 여부 확인
 					if(title == null || title == ""){
 					    alert("내용을 입력하세요.");
 					}else if(startTime == "" || endTime ==""){
 					    alert("시간을 입력하세요.");
-					}else if(String(endDate) == String(startDate) && parseInt(endTime) - parseInt(startTime) < 0){ // date 타입으로 변경 후 확인
+					}else if(ed == sd && endTime < startTime){ // date 타입으로 변경 후 확인
 						alert("종료 시간이 시작 시간보다 빠릅니다.\n시간을 올바르게 설정해주세요.");
 						return false;
 					}else{ // 정상적인 입력 시

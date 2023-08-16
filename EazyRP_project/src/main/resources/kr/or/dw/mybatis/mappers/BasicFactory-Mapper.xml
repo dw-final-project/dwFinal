@@ -4,27 +4,22 @@
 	
 	<!-- 셀렉트바 검색 -->
 	<sql id="search">
-		<if test="searchType == 'n'.toString()">
-			AND fac_name LIKE '%' || #{keyword} || '%'
+		<if test="cri.searchType == 'n'.toString()">
+			AND fac_name LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="searchType == 'a'.toString()">
-			AND f.addr LIKE '%' || #{keyword} || '%'
+		<if test="cri.searchType == 'a'.toString()">
+			AND f.addr LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="searchType == 'c'.toString()">
-			AND c_name LIKE '%' || #{keyword} || '%'
+		<if test="cri.searchType == 'p'.toString()">
+			AND pc_name LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="searchType == 'p'.toString()">
-			AND pc_name LIKE '%' || #{keyword} || '%'
-		</if>
-		<if test="searchType == 'all'.toString()">
+		<if test="cri.searchType == 'all'.toString()">
 			AND (
-			fac_name LIKE '%' || #{keyword} || '%'
+			fac_name LIKE '%' || #{cri.keyword} || '%'
 			OR
-			f.addr LIKE '%' || #{keyword} || '%'
+			f.addr LIKE '%' || #{cri.keyword} || '%'
 			OR
-			c_name LIKE '%' || #{keyword} || '%'
-			OR
-			pc_name LIKE '%' || #{keyword} || '%'
+			pc_name LIKE '%' || #{cri.keyword} || '%'
 			)
 		</if>
 	</sql>

@@ -81,7 +81,7 @@
 		if(url){
 			searchForm.attr("action", url);
 		}else{
-			searchForm.attr("action", murl + "?mcode=" + modMcode);
+			searchForm.attr("action", murl + "?mcode=" + modMcode + "&murl=" + murl);
 		}
 		debugger;
 		console.log(searchForm)

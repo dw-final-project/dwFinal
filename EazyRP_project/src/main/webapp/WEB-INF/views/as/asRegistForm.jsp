@@ -138,6 +138,42 @@
 		window.close();							// 윈도우 창을 닫는다.
 	});
 	
+	let submitBtn = $('input[type=submit]#submitBtn');
+	let form = $('form[role="form"]');
+
+	$(document).on('click', '#submitBtn', function() {
+		
+		if ($('input[name=emp_no]').val() == "") {
+			
+			alert("담당자를 선택하세요.");
+			return;
+			
+			
+		} else if ($('input[name="asprice"]').val() == "") {
+			
+			alert("A/S 비용을 입력하세요.");
+			return;
+	
+	
+		} else if ($('input[name="sys_regdate"]').val() == "") {
+			
+			alert("수리 예정일을 선택하세요.");
+			return;
+	
+	
+		}  
+		else if ($('input[name="content"]').val() == "") {
+			
+			alert("A/S 내용을 입력하세요.");
+			return;
+		
+		} else {
+				
+			form.submit();
+				
+		};
+
+	})
 	
 </script>
 

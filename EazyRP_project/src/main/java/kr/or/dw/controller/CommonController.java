@@ -210,7 +210,7 @@ public class CommonController {
 			String getUrlResult = getUrl.substring(0, getUrl.indexOf("."));
 			String modMcode = mcode.substring(0, 3) + "0000";
 			System.out.println(modMcode);
-			url = getUrl + "?mcode=" + modMcode;
+			url = getUrl + "?mcode=" + modMcode + "&murl=" + getUrl;
 		}
 		if(selectedC_no.equals("") || selectedC_no == null) {
 			session.setAttribute("c_no", "");
@@ -268,7 +268,7 @@ public class CommonController {
 			String getUrlResult = getUrl.substring(0, getUrl.indexOf("."));
 			String modMcode = mcode.substring(0, 3) + "0000";
 			System.out.println(modMcode);
-			url = getUrl + "?mcode=" + modMcode;
+			url = getUrl + "?mcode=" + modMcode + "&murl=" + getUrl;
 		}
 		String e_name = menuService.selectEname(selectedEmp);
 		session.setAttribute("e_name", e_name);
