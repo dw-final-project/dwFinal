@@ -11,13 +11,13 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">제품 구매 내역</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/product/productBuy.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/product/productBuy.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="tcw" ${searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
-								<option value="t" ${searchType eq 't' ? 'selected' : '' }>작성자</option>
-								<option value="p" ${searchType eq 'p' ? 'selected' : '' }>구매제품명</option>
+								<option value="tcw" ${cri.searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
+								<option value="t" ${cri.searchType eq 't' ? 'selected' : '' }>작성자</option>
+								<option value="p" ${cri.searchType eq 'p' ? 'selected' : '' }>구매제품명</option>
 							</select>
-							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
+							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${cri.keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
 								<button class="btn btn-primary" type="button" id="searchBtn">
 									<i class="fa fa-fw fa-search" style="font-size: 0.8em; padding: 0px;"></i>
