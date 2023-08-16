@@ -796,7 +796,7 @@ public class MinjunController2 {
 	
 	@RequestMapping("/registSal.do")
 	public void registSal (HttpSession session, HttpServletResponse res, SalVO salVO, int[] emp_no, String[] sal_no, int[] realsumsal, String[] DED_001,
-						   String[] DED_006, String[] DED_009, String[] DED_010, String[] DED_011, String[] DED_012) throws Exception {
+						   String[] DED_006, String[] DED_009, String[] DED_010, String[] DED_011, String[] DED_012, int[] sumExtrapay) throws Exception {
 		int sys_reg = Integer.parseInt(session.getAttribute("emp_no").toString());
 		String c_no = (String) session.getAttribute("c_no");
 		salVO.setSys_reg(sys_reg + "");
@@ -816,7 +816,7 @@ public class MinjunController2 {
 			salDetail.setEmp_no(emp_no[i]);
 			salDetail.setRealsumsal(realsumsal[i]);
 			salDetail.setSal_no(sal_no2);
-			amount += realsumsal[i];
+			amount += sumExtrapay[i];
 			empsalService.insertSalDetail(salDetail);
 		}
 		map.put("amount", amount);

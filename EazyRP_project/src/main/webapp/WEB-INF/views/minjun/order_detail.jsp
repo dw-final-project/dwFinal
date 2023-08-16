@@ -95,8 +95,8 @@
 								<input type="date" id="delenddate" name="delenddate" class="form-control col-sm-4 " value="${delenddate }" placeholder="배송종료일을 입력하세요.">
 							</div>
 							<div class="form-group col-sm-12 row">
-								<label for="failure" class="col-sm-2">실패사유</label>
-								<textarea rows="2" id="failure" name="failure" class="form-control col-sm-6" placeholder="실패사유를 입력하세요.">${order.FAILURE }</textarea>
+								<label for="failure" class="col-sm-2">반품사유</label>
+								<textarea rows="2" id="failure" name="failure" class="form-control col-sm-6" placeholder="반품사유를 입력하세요.">${order.FAILURE }</textarea>
 <!-- 								<label for="gb" class="col-sm-2">상태구분</label> -->
 <!-- 								<select name="gb" class="form-select col-sm-2"> -->
 <!-- 									<option value="없음">없음</option> -->

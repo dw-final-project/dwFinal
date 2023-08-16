@@ -1,5 +1,7 @@
 package kr.or.dw.service;
 
+import java.sql.SQLException;
+import java.util.Map;
 import java.util.Random;
 
 import javax.mail.MessagingException;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import kr.or.dw.dao.MemberDAO;
 
 @Service
 public class MailSendServiceImpl implements MailSendService{
@@ -56,6 +60,23 @@ public class MailSendServiceImpl implements MailSendService{
 			} catch (MessagingException e) {
 				e.printStackTrace();
 			}
+		}
+		@Autowired
+		private MemberDAO memberDAO;
+
+		@Override
+		public int getMail(Map<String, String> map) throws SQLException {
+			System.out.println(map);
+			int a = memberDAO.getMail(map);
+			return a;
+		}
+
+
+		@Override
+		public int getMail2(Map<String, String> map) throws SQLException {
+			System.out.println(map);
+			int a = memberDAO.getMail2(map);
+			return a;
 		}
 	
 }

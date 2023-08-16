@@ -9,22 +9,37 @@ $('#email').on('change', function(){
 	
 $('#emailauth').click(function () {
 	const email = $('#email').val(); // 이메일 주소값 얻어오기!
+	const name = $('#name').val(); // 이메일 주소값 얻어오기!
 	console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
 	const checkInput = $('.mail-check-input') // 인증번호 입력하는곳 
-	
-	alert('인증번호가 전송되었습니다.')
+	const a = 0;
 	$.ajax({
 		type : 'get',
-		url :  '<%=request.getContextPath()%>/member/mailCheck.do?email=' + email,
+		url :  '<%=request.getContextPath()%>/member/mailChecked.do?email=' + email + '&name=' + name,
 		success : function (data) {
-			console.log("data : " +  data);
-			checkInput.attr('disabled',false);
-			code = data;
+			if(data == 1){
+				alert('인증번호가 전송되었습니다.')
+				$.ajax({
+					type : 'get',
+					url :  '<%=request.getContextPath()%>/member/mailCheck.do?email=' + email,
+					success : function (data) {
+						console.log("data : " +  data);
+						checkInput.attr('disabled',false);
+						code = data;
+					},
+					error : function(err){
+						alert(err.status)
+					}
+				}); // end ajax
+				} else{
+					alert('이름이나 이메일주소를 다시 확인해주세요.')
+				}
 		},
 		error : function(err){
 			alert(err.status)
 		}
 	}); // end ajax
+	
 }); // end send eamil
 
 // 인증번호 비교 

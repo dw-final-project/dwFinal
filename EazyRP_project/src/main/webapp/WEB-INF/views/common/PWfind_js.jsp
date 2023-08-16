@@ -2,31 +2,43 @@
     pageEncoding="UTF-8"%>
 
 <script>
+const checkInput = $('.mail-check-input');
 	var emailChk = 0;
 	$('#email').on('change', function(){
 		emailChk = 0;
 	})
-		
-	$('#emailauth').on('click', function () {
-		const email = $('#email').val(); // 이메일 주소값 얻어오기!
-		console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
-		const checkInput = $('.mail-check-input') // 인증번호 입력하는곳 
-		
-		alert('인증번호가 전송되었습니다.')
-		$.ajax({
-			type : 'get',
-			url :  '<%=request.getContextPath()%>/member/mailCheck.do?email=' + email,
-			success : function (data) {
-				console.log("data : " +  data);
-				checkInput.attr('disabled',false);
-				code = data;
-			},
-			error : function(err){
-				alert(err.status)
-			}
-		}); // end ajax
-	}); // end send eamil
+
 	
+	$('#emailauth').on('click', function(){
+		let id = $('input[name="id"]').val();
+		let email = $('#email').val();
+	$.ajax({
+		type : 'get',
+		url :  '<%=request.getContextPath()%>/member/mailChecked2.do?id=' + id + '&email=' + email,
+		success : function (data) {
+			if(data == 1){
+				alert('인증번호가 전송되었습니다.')
+				$.ajax({
+					type : 'get',
+					url :  '<%=request.getContextPath()%>/member/mailCheck.do?email=' + email,
+					success : function (data) {
+						console.log("data : " +  data);
+						checkInput.attr('disabled',false);
+						code = data;
+					},
+					error : function(err){
+						alert(err.status)
+					}
+				}); // end ajax
+				} else{
+					alert('ID나 이메일주소를 다시 확인해주세요.')
+				}
+		},
+		error : function(err){
+			alert(err.status)
+		}
+	}); // end send eamil
+	})
 	// 인증번호 비교 
 	// blur -> focus가 벗어나는 경우 발생
 	$('#emailchk').click(function () {

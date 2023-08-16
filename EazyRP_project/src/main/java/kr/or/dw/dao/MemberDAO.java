@@ -1,6 +1,7 @@
 package kr.or.dw.dao;
 
 import java.sql.SQLException;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -25,6 +26,10 @@ public interface MemberDAO {
 	void modProfile(MemberVO member) throws SQLException;
 
 	void deleteUser(int u_no)throws SQLException;
+
+	int getMail(Map<String, String> map) throws SQLException;
+
+	int getMail2(Map<String, String> map) throws SQLException;
 
 
 

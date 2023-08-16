@@ -136,7 +136,6 @@
 		#{con},
 		#{pl_no},
 		'',
-		'',
 		#{c_no},
 		#{realFileName},
 		'',
