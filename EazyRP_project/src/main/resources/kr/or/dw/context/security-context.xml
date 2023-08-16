@@ -38,10 +38,10 @@
 <!-- 		<intercept-url pattern="/**/remove*" access="hasAnyRole('ROLE_ADMIN')"/>		 -->
 <!-- 		<intercept-url pattern="/**/stop*" access="hasAnyRole('ROLE_ADMIN')"/>		 -->
 		
-<!-- 		<intercept-url pattern="/index.do**" access="isAuthenticated()"/> -->
+		<intercept-url pattern="/**/main.do**" access="isAuthenticated()"/>
 <!-- 		<intercept-url pattern="/member/**" access="isAuthenticated()"/> -->
 
-		<intercept-url pattern="/**" access="permitAll"/>
+<!-- 		<intercept-url pattern="/**" access="permitAll"/> -->
 		
 		<!-- 
 			<form-login> 요소는 로그인을 위해서 폼을 사용한다. 로그인 처리의 기본 URL은 "/login" 이다.
