@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.command.SearchCriteria2;
 import kr.or.dw.service.ManagementService;
+import kr.or.dw.vo.DeptVO;
 import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.PaVO;
 
@@ -66,7 +67,7 @@ public class PaController {
 	@RequestMapping("/paInsert")
 	private ModelAndView paInsert(ModelAndView mnv,HttpSession session) throws SQLException {
 		String c_no = (String) session.getAttribute("c_no");
-		List<String> dept = managementService.getDept();
+		List<DeptVO> dept = managementService.getDept();
 		
 		mnv.addObject("dept", dept);
 		mnv.addObject("c_no", c_no);
@@ -90,6 +91,8 @@ public class PaController {
 	@RequestMapping("/paRegist")
 	private void paRegist(int[] emp_no, String[] prerank,String[] c_no,String[] predept,String[] predept_no, String padate,
 			String[] nextrank, String[] nextdept, String[] pg_no, HttpServletResponse res) throws SQLException, IOException {
+		System.out.println(predept);
+		System.out.println(nextdept);
 		List<PaVO> paList = new ArrayList<>();
 		for(int i = 0; i < emp_no.length; i++) {
 			PaVO pa = new PaVO();

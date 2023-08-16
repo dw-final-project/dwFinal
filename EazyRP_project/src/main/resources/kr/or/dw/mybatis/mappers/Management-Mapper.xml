@@ -347,8 +347,8 @@
 		ORDER BY p.PA_NO DESC
 	</select>
 	
-	<select id="getDept" resultType="str">
-		SELECT dname FROM dept WHERE enabled = 'YES'
+	<select id="getDept" resultType="dept">
+		SELECT * FROM dept WHERE enabled = 'YES'
 	</select>
 	
 	<select id="getDname" resultType="str">

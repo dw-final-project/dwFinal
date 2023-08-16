@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.dw.vo.DeptVO;
 import kr.or.dw.vo.DraftGbVO;
 import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.EmpVO;
@@ -54,7 +55,7 @@ public interface ManagementService {
 
 	Map<String, Object> getPaList(Map<String, Object> map) throws SQLException;
 
-	List<String> getDept() throws SQLException;
+	List<DeptVO> getDept() throws SQLException;
 
 	List<String> getDeptList(List<EmpVO> emp) throws SQLException;
 

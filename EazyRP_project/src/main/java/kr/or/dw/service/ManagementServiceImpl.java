@@ -14,6 +14,7 @@ import kr.or.dw.command.PageMaker;
 import kr.or.dw.command.SearchCriteria;
 import kr.or.dw.command.SearchCriteria2;
 import kr.or.dw.dao.ManagementDAO;
+import kr.or.dw.vo.DeptVO;
 import kr.or.dw.vo.DraftGbVO;
 import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.EmpVO;
@@ -230,7 +231,7 @@ public class ManagementServiceImpl implements ManagementService{
 	}
 
 	@Override
-	public List<String> getDept() throws SQLException {
+	public List<DeptVO> getDept() throws SQLException {
 		return managementDAO.getDept();
 	}
 

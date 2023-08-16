@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
+import kr.or.dw.vo.DeptVO;
 import kr.or.dw.vo.DraftGbVO;
 import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.EmpVO;
@@ -69,7 +70,7 @@ public interface ManagementDAO {
 
 	List<String> getNames(Map<String, Object> dataMap, RowBounds rowBounds) throws SQLException;
 
-	List<String> getDept() throws SQLException;
+	List<DeptVO> getDept() throws SQLException;
 
 	String getDname(int emp_no) throws SQLException;
 

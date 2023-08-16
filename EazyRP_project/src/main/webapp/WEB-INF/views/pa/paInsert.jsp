@@ -125,7 +125,7 @@
             <td style="text-align : center;">
             	<select class="form-control" name="nextdept" id="nextdept" style="font-size: 0.8em; width: 100%;" >
 					<c:forEach items="${dept }" var="dept" varStatus="loop">
-						<option value="${dept}">${dept}</option>
+						<option value="${dept.dept_no}">${dept.dname}</option>
 					</c:forEach>
 				</select>
             </td>
@@ -133,7 +133,7 @@
         </tr>
         </tbody>
     </table>
-            <input type="submit" class="btn btn-primary" style="text-align : center;" value="등록">
+            <button type="button" id="submitBtn" class="btn btn-primary" style="text-align : center;">등록</button>
             <input type="button" id="calcelBtn" class="btn btn-warning" style="text-align : center;" value="닫기">
 </form>
 </body>
@@ -176,6 +176,16 @@
         '<td><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>'+
     '</tr>');
 	});
+	$('#submitBtn').on('click', function(){
+		var selectedDate = new Date($('#padate').val());
+	    var today = new Date();
+		if(today > selectedDate){
+			alert('오늘날짜 이후의 날짜를 선택해주세요.');
+		} else{
+			$('form[role="form"]').submit();
+		}
+		
+	})
 	
 	$('#calcelBtn').on('click', function(){
 		window.close();

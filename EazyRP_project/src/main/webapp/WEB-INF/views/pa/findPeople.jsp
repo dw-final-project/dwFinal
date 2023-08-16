@@ -55,7 +55,7 @@
 		$('#'+cnt, opener.document).parent('td').next().find('#prerank').val($(this).find('#e_rank').text());
 		$('#'+cnt, opener.document).parent('td').next().next().next().next().find('#nextrank').val($(this).find('#e_rank').text());
 		$('#'+cnt, opener.document).parent('td').next().next().find('#predept').val($(this).find('#dept').text());
-		$('#'+cnt, opener.document).parent('td').next().next().next().next().next().find('#nextdept').val($(this).find('#dept').text());
+		$('#'+cnt, opener.document).parent('td').next().next().next().next().next().find('#nextdept').val($(this).find('#dept_no').val());
 		$('#'+cnt, opener.document).parent('td').next().next().find('.predept_no').val($(this).find('#dept_no').val());
 		window.close();
 	})
