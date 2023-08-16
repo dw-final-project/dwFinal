@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>쇼핑몰 찾기</title>
+<title>부서 찾기</title>
 <style>
 	.trHover:hover{
 		background-color: #dfdfdf;

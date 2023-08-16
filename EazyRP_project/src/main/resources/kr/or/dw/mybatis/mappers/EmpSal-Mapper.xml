@@ -28,11 +28,11 @@
 	<select id="getDeptList" resultType="dept">
 		SELECT *
 		FROM dept
-		WHERE 1=1 
+		WHERE enabled = 'YES'
 	</select>
 
 	<select id="getDept" resultType="dept">
-		SELECT * FROM dept WHERE 1=1
+		SELECT * FROM dept WHERE enabled = 'YES'
 		<if test="searchType == 'w'.toString()">
 			AND dept_no LIKE '%' || #{keyword} || '%'
 		</if>
@@ -52,18 +52,20 @@
 		WHERE 1=1
 		AND c_no = #{c_no}
 		AND e.dept_no = d.dept_no 
+		ORDER BY emp_no
 	</select>
 	
 	<select id="allEmpList" resultType="Map">
 		SELECT e.*, d.dname dname
 		FROM emp e, dept d
-		WHERE 1=1
+		WHERE enabled = 'YES'
 		AND c_no = #{c_no}
 		AND e.dept_no = d.dept_no 
+		ORDER BY emp_no
 	</select>
 
 	<select id="getEmp" resultType="emp">
-		SELECT * FROM emp WHERE 1=1 AND c_no = #{c_no}
+		SELECT * FROM emp WHERE enabled = 'YES' AND c_no = #{c_no}
 		<if test="searchType == 'w'.toString()">
 			AND emp_no LIKE '%' || #{keyword} || '%'
 		</if>
@@ -294,12 +296,9 @@
 				WHERE emp_no = #{emp_no}
 	</update>
 	
-	<update id="deleteEmp" parameterType="emp">
-		UPDATE emp SET 		enabled 		= 	'NO',
-							sys_up			=	#{sys_up},
-							sys_updatedate	=	sysdate
-				WHERE emp_no = #{emp_no}
-	</update>
+	<delete id="deleteEmp">
+		DELETE emp WHERE emp_no = #{emp_no}
+	</delete>
 	
 	<!--  Extrapay  -->
 	

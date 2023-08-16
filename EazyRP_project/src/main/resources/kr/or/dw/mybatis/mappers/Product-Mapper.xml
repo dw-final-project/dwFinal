@@ -364,7 +364,8 @@
 		SELECT o.*, c.c_name con_c_name
 		 FROM ordermanage o, company c
 		WHERE o.con_c_no = c.c_no
-		  AND o.buy_c_no = #{c_no}) a
+		  AND o.buy_c_no = #{c_no}
+		  ORDER BY sys_regdate desc) a
 		 WHERE rownum <![CDATA[<]]> 4
 	</select>
 	
