@@ -187,7 +187,12 @@
 <script>
 	window.onload = function() {
 		
-		
+		$('#salmonth').on('change', function(){
+			$('tbody').find('tr').remove();
+			$('#addPutBtn').click();
+			$('.total').children().text('');
+			$('.total').children().val('');
+		});
 		
 		let form = $('form[role="form"]');
 

@@ -28,7 +28,6 @@
 			<button class="btn btn-primary" type="button" id="searchBtn">
 				<i class="fa fa-fw fa-search" style="font-size: 0.8em; padding: 0px;"></i>
 			</button>
-			<button class="btn btn-primary" type="button" id="addBtn" style="font-size: 0.8em; margin-left: 70px">사원추가</button>
 		</form>
 	</div>
 	<div>	
@@ -39,7 +38,7 @@
 				<th width="50px" style="text-align: center;">직급</th>
 				<th width="50px" style="text-align: center;">부서명</th>
 			</tr>
-			<tr>
+			<tr id="zero">
 				<td style="text-align: center;" class="emp_no">0</td>
 				<td style="text-align: center;" class="e_name">없음</td>
 				<td style="text-align: center;" class="e_rank">없음</td>
@@ -71,9 +70,14 @@
 <script>
 	$(document).ready(function() {
 		
+		
+		
 		let gbVal = opener.$("#A").val();
+		if(gbVal =='A'){
+			$('#zero').remove();
+		}
 		let parentInputId = opener.$("#cnt").val();
-// 		button[id="addBtn"]
+
 		$('td').on('click', function(){
 			
 			let emp_noChk = $(this).parents('tr').find('.emp_no').text();
@@ -170,7 +174,7 @@
 							}			
 							$('#total_지급총액', opener.document).text(sum_지급총액);
 							
-// 							window.close();
+							window.close();
 						},
 						error : function(error){
 							alert("실패" + error.status);
