@@ -154,12 +154,12 @@ public class MinjunController2 {
 				e.printStackTrace();
 			}
 		}
-		
+		String c_no = session.getAttribute("c_no").toString();
 		int emp_no = Integer.parseInt(session.getAttribute("emp_no").toString());
 		empVO.setSys_reg(emp_no + "");
 		empVO.setSys_up(emp_no + "");
 		empVO.setStampimg(fileName);
-		
+		empVO.setC_no(c_no);
 		empsalService.insertEmp(empVO);
 		
 		res.setContentType("text/html; charset=utf-8");
