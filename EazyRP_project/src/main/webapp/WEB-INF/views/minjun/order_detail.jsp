@@ -134,6 +134,9 @@
 		}else if($('#progress').val() == '배송완료'){
 			$('input').prop('readonly', true);
 			$('textarea').prop('readonly', true);
+		}else if($('#progress').val() == '배송중'){
+			$('input').prop('readonly', true);
+			$('textarea').prop('readonly', true);
 		}
 		
 		// 수정버튼 클릭
@@ -176,11 +179,6 @@
 				return;
 			}
 			
-// 			if($('#progress').val() == '배송취소' || $('#progress').val() == '반품'){
-// 				$('#orginqtt').val('${order.QUANTITY }');
-// 				$('#quantity').val() * 2;
-// 			}
-
 			form.submit();
 		});
 		
