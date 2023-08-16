@@ -38,7 +38,7 @@
 									<tr>
 										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('deductionDetail.do?ded_no=${deduction.DED_NO}','공제 상세보기', 700, 400);">${deduction.DED_NO}</a></td>
 										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('deductionDetail.do?ded_no=${deduction.DED_NO}','공제 상세보기', 700, 400);">${deduction.DED_NAME}</a></td>
-										<td style="text-align: center;">${deduction.CALC}</td>
+										<td style="text-align: center;">x&nbsp;${deduction.CALC}</td>
 									</tr>
 									</c:forEach>
 							</table>
