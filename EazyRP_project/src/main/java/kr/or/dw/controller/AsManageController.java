@@ -58,15 +58,16 @@ public class AsManageController {
 	}
 	
 	@RequestMapping("/insertError")
-	public void insertError(AsVO asVO, HttpServletResponse res, String compl) throws Exception{
-
-		
+	public void insertError(AsVO asVO, HttpServletResponse res, String compl, HttpSession session) throws Exception{
+		String c_no = (String) session.getAttribute("c_no");
+		asVO.setC_no(c_no);
 		String todayfm = new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis()));
 	      SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd");
 	      Date formattoday = dtFormat.parse(todayfm);
 	            if(compl.equals("1")) {
 	          asVO.setCompldate(formattoday);
-	         asVO.setProgress(2);
+	          asVO.setProgress(2);
+	          asService.tr(asVO);
 	      }else if (compl.equals("0")) {
 		         asVO.setProgress(1);
 		      }

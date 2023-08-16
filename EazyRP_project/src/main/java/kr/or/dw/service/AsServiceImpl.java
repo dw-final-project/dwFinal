@@ -88,6 +88,11 @@ public class AsServiceImpl implements AsService {
 		
 	}
 
+	@Override
+	public void tr(AsVO asVO) throws SQLException {
+		asDAO.tr(asVO);
+	}
+
 	
 	
 }

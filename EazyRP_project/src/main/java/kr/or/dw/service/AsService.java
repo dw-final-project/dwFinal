@@ -22,5 +22,7 @@ public interface AsService {
 
 	void insertError(AsVO asVO)throws SQLException;
 
+	void tr(AsVO asVO) throws SQLException;
+
 
 }
