@@ -33,9 +33,10 @@
 	<div>	
 		<table id="tab" style="font-size: 0.8em;" class="table table-borderd text-center">
 			<tr>
-				<th width="100px" style="text-align: center;">제품 이름</th>
-				<th width="100px" style="text-align: center;">제품 코드</th>
-				<th width="100px" style="text-align: center;">업체명</th>
+				<th width="50px" style="text-align: center;">제품 이름</th>
+				<th width="50px" style="text-align: center;">제품 코드</th>
+				<th width="50px" style="text-align: center;">업체명</th>
+				<th width="50px" style="text-align: center;">보관 창고</th>
 			</tr>
 			<c:forEach items="${product}" var="pro">
 				<tr>
@@ -44,6 +45,7 @@
 					<td style="text-align: center;" class="c_name">${pro.c_name}
 						<input type="hidden" class="pr_inprice" value="${pro.pr_inprice }">
 					</td>
+					<td style="text-align: center;" class="pr_no">${pro.wh_name }</td>
 				</tr>
 			</c:forEach>
 		</table>
