@@ -140,14 +140,15 @@
 <!-- 	WHERE est_no = #{est_no} -->
 <!-- </select> -->
 <select id="getProductList" resultType="product">
-	SELECT 	p.*, c.*
-	FROM 	product p, company c
+	SELECT 	p.*, c.* ,w.*
+	FROM 	product p, company c, warehouse w
 	WHERE 	p.c_no = c.c_no
+	AND p.WH_NO = w.WH_NO 		
 </select>
 
 
 <select id="getProduct" resultType="product">
-		SELECT p.*, c.c_name FROM product p, company c WHERE p.c_no = c.c_no
+		SELECT p.*, c.c_name ,w.wh_name FROM product p, company c, warehouse w WHERE p.c_no = c.c_no AND p.WH_NO = w.WH_NO 
 		<if test="searchType == 'w'.toString()">
 			AND p.pr_name LIKE '%' || #{keyword} || '%'
 		</if>
