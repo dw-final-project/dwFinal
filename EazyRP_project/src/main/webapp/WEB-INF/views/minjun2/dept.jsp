@@ -13,11 +13,11 @@
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm2" method="post" action="/management/dept.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
-								<option value="d" ${searchType eq 'a' ? 'selected' : '' }>부서코드</option>
-								<option value="t" ${searchType eq 'b' ? 'selected' : '' }>부서명</option>
+								<option value="all" ${cri.searchType eq 'all' ? 'selected' : '' }>전  체</option>
+								<option value="d" ${cri.searchType eq 'a' ? 'selected' : '' }>부서코드</option>
+								<option value="t" ${cri.searchType eq 'b' ? 'selected' : '' }>부서명</option>
 							</select>
-							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
+							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${cri.keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
 								<button class="btn btn-primary" type="button" id="searchBtn">
 									<i class="fa fa-fw fa-search" style="font-size: 0.8em; padding: 0px;"></i>

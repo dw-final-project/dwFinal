@@ -564,7 +564,9 @@ public class MinjunController2 {
 	// DEPT(부서) CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/dept")
+
 	public ModelAndView deptMain(String mymenu, String murl, ModelAndView mnv, String mcode,SearchCriteria cri, HttpSession session) throws SQLException {
+
 		String url = "";
     	if(mymenu == null) {
 			url="/minjun2/dept.page";
