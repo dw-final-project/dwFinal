@@ -3,6 +3,8 @@ package kr.or.dw.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +33,7 @@ public class AsManageController {
 	private AsService asService;
 	
 	@RequestMapping("/as")
-	public ModelAndView as(String mymenu, ModelAndView mnv, String mcode, SearchCriteria cri ) throws Exception {
+	public ModelAndView as(String mymenu, ModelAndView mnv, String mcode, SearchCriteria cri ,HttpSession session) throws Exception {
 		String url="";
     	if(mymenu == null) {
 			url="/as/asMain.page";
@@ -39,7 +41,12 @@ public class AsManageController {
 			url="/as/asMain.mymenu";
 		}
 		
-		Map<String, Object> dataMap = asService.selectAsList(cri);
+    	String c_no = session.getAttribute("c_no").toString();
+		Map<String, Object> map = new HashMap<>();
+		map.put("cri", cri);
+		map.put("c_no", c_no);
+    	
+		Map<String, Object> dataMap = asService.selectAsList(map);
 		
 		mnv.addObject("mcode", mcode);
 		mnv.addAllObjects(dataMap);
@@ -48,6 +55,33 @@ public class AsManageController {
 		
 		return mnv;
 
+	}
+	
+	@RequestMapping("/insertError")
+	public void insertError(AsVO asVO, HttpServletResponse res, String compl) throws Exception{
+
+		
+		String todayfm = new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis()));
+	      SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd");
+	      Date formattoday = dtFormat.parse(todayfm);
+	            if(compl.equals("1")) {
+	          asVO.setCompldate(formattoday);
+	         asVO.setProgress(2);
+	      }else if (compl.equals("0")) {
+		         asVO.setProgress(1);
+		      }
+	     asService.insertError(asVO);
+		
+		
+		
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.println("<script>");
+		out.println("alert('처리 완료되었습니다.')");
+		out.println("window.opener.location.reload(true); window.close();");
+		out.println("</script>");
+
+		
 	}
 	
 	@RequestMapping("/registForm")
@@ -59,8 +93,11 @@ public class AsManageController {
 	}
 
 	@RequestMapping("/regist")
-	public void asRegist( AsVO asVO, HttpServletRequest req, HttpServletResponse res) throws SQLException, IOException {
+	public void asRegist( AsVO asVO, HttpServletRequest req, HttpServletResponse res ,HttpSession session) throws SQLException, IOException {
 
+		String c_no = (String) session.getAttribute("c_no");
+		asVO.setC_no(c_no);
+		
 		System.out.println(asVO.getEmp_no());
 		asService.registAs(asVO);
 		
@@ -76,6 +113,11 @@ public class AsManageController {
 	public ModelAndView detail (String as_no ,ModelAndView mnv, HttpSession session) throws Exception{
 		String url = "/as/asDetail.open";
 		
+		
+		String c_no = session.getAttribute("c_no").toString();
+		Map<String, Object> map = new HashMap<>();
+		map.put("c_no", c_no);
+
 		Map<String, Object> dataMap = asService.selectAsDetail(as_no);
 		
 		mnv.addAllObjects(dataMap);

@@ -14,7 +14,7 @@ public class AsVO {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date sys_regdate; // 등록일자
 	private int emp_no;	// 사원번호
-	private String progress;	// 진행상태
+	private int progress;	// 진행상태
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date repairdate;	// 수리예정일
 	@DateTimeFormat(pattern="yyyy-MM-dd")

@@ -25,14 +25,18 @@ public class AsServiceImpl implements AsService {
 	private AsDAO asDAO;
 
 	@Override
-	public Map<String, Object> selectAsList(SearchCriteria cri) throws SQLException {
-		
+	public Map<String, Object> selectAsList(Map<String, Object> map ) throws SQLException {
+	
+		List<Map<String,Object>> asList = null;
+		SearchCriteria cri = (SearchCriteria) map.get("cri");
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		List<Map<String, Object>> asList = asDAO.selectAsList(cri, rowBounds);
-		int totalCount = asDAO.selectAsListCount(cri);
+		//Page Maker생성
+		asList = asDAO.selectAsList(map, rowBounds);
+		int totalCount = asDAO.selectAsListCount(map);
+		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
@@ -40,6 +44,7 @@ public class AsServiceImpl implements AsService {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put("asList", asList);
 		dataMap.put("pageMaker", pageMaker);
+	
 		
 		return dataMap;
 	}
@@ -68,14 +73,18 @@ public class AsServiceImpl implements AsService {
 		asDAO.modifyAs(asVO);
 		String as_no = asDAO.getAs_no();
 		asVO.setAs_no(as_no);
-		if(asVO.getProgress().equals("2")) {
-			asDAO.tr(asVO);
-		}
+
 	}
 
 	@Override
 	public void removeAs(AsVO asVO) throws SQLException {
 		asDAO.removeAs(asVO);
+		
+	}
+
+	@Override
+	public void insertError(AsVO asVO) throws SQLException {
+		asDAO.insertError(asVO);
 		
 	}
 
