@@ -37,8 +37,7 @@ public class ItemServiceImpl implements ItemService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("cri", cri);
 		map.put("c_no", c_no);
-		map.put("rowBounds", rowBounds);
-		List<Map<String, Object>> itemList = itemDAO.selectItemList(map);
+		List<Map<String, Object>> itemList = itemDAO.selectItemList(map, rowBounds);
 		int totalCount = itemDAO.selectItemListCount(map);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);

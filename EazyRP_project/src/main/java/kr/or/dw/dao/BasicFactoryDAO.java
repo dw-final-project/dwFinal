@@ -20,9 +20,9 @@ import kr.or.dw.vo.WareHouseVO;
 @Mapper
 public interface BasicFactoryDAO {
 
-	List<Map<String, Object>> selectFactoryList(SearchCriteria cri, RowBounds rowBounds) throws SQLException;
+	List<Map<String, Object>> selectFactoryList(Map<String, Object> map, RowBounds rowBounds) throws SQLException;
 
-	int selectFactoryListCount(SearchCriteria cri) throws SQLException;
+	int selectFactoryListCount(Map<String, Object> map) throws SQLException;
 
 	List<ProcessVO> selectFindSearchProcess(Map<String, String> dataMap) throws SQLException;
 

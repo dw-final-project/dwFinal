@@ -30,14 +30,16 @@ public class BasicFactoryServiceImpl implements BasicFactoryService {
 	private BasicFactoryDAO basicFactoryDAO;
 
 	@Override
-	public Map<String, Object> selectFactoryList(SearchCriteria cri) throws SQLException {
+	public Map<String, Object> selectFactoryList(SearchCriteria cri, String c_no) throws SQLException {
 		
 		int offset = cri.getPageStartRowNum();
 		int limit = cri.getPerPageNum();
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		List<Map<String, Object>> factoryList = basicFactoryDAO.selectFactoryList(cri, rowBounds);
-		int totalCount = basicFactoryDAO.selectFactoryListCount(cri);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("cri", cri);
+		map.put("c_no", c_no);		
+		List<Map<String, Object>> factoryList = basicFactoryDAO.selectFactoryList(map, rowBounds);
+		int totalCount = basicFactoryDAO.selectFactoryListCount(map);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
