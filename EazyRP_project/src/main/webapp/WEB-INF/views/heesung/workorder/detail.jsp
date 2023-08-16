@@ -313,7 +313,8 @@ $('tr').on('click', function(){
 	        $(this).parent('td').parent('tr').remove();
 	    }else{
 		$(this).parents('tr').css('display', 'none');
-		$(this).parents('tr').find("input[name='pr_delete']").val("d")
+		$(this).parents('tr').find("input[name='pr_delete']").val("d");
+		$(this).parents('tr').find('input#quantity').val(0);
 	    }
 	   });
 	
