@@ -253,60 +253,107 @@
 				$('#StartDate').attr('value', arg.startStr);
 				$('#EndDate').attr('value', endDate.value);
                 
-                $("#registCalendar").on("click", function () {
+//                 $("#registCalendar").on("click", function () {
                 	
-					var title = $('#title').val();
-					var startTime = $('#startTime').val();
-					var endTime = $('#endTime').val();
-					var calendar_no = $('#calendar_no').val();
-					var ed = $('#EndDate').val();
-					var sd = $('#StartDate').val();
+// 					var title = $('#title').val();
+// 					var startTime = $('#startTime').val();
+// 					var endTime = $('#endTime').val();
+// 					var calendar_no = $('#calendar_no').val();
+// 					var ed = $('#EndDate').val();
+// 					var sd = $('#StartDate').val();
 					
-					//내용 입력 여부 확인
-					if(title == null || title == ""){
-					    alert("내용을 입력하세요.");
-					}else if(startTime == "" || endTime ==""){
-					    alert("시간을 입력하세요.");
-					}else if(ed == sd && endTime < startTime){ // date 타입으로 변경 후 확인
-						alert("종료 시간이 시작 시간보다 빠릅니다.\n시간을 올바르게 설정해주세요.");
-						return false;
-					}else{ // 정상적인 입력 시
+// 					//내용 입력 여부 확인
+// 					if(title == null || title == ""){
+// 					    alert("내용을 입력하세요.");
+// 					}else if(startTime == "" || endTime ==""){
+// 					    alert("시간을 입력하세요.");
+// 					}else if(ed == sd && endTime < startTime){ // date 타입으로 변경 후 확인
+// 						alert("종료 시간이 시작 시간보다 빠릅니다.\n시간을 올바르게 설정해주세요.");
+// 						return false;
+// 					}else{ // 정상적인 입력 시
 				
-	                 	$.ajax({
-							 url: "/calendar/regist",
-							 type: "POST",
-							 data : { 
-							 	calendar_title: title,	// 키값 : 벨류값
-							  	calendar_start: arg.startStr + ' ' + startTime ,	// 키값 : 벨류값
-							  	calendar_end: endDateFormatted + " " + endTime,	// 키값 : 벨류값
-							 },
-							 success : function(data){
-							  alert("일정이 등록되었습니다.");
-							  $("#calendarModal").modal("hide");
-							  location.reload();
-							 },
-							 error : function(request,status,error){
-								alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-								console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-							 }
-						});
-					};
-				});
+// 	                 	$.ajax({
+// 							 url: "/calendar/regist",
+// 							 type: "POST",
+// 							 data : { 
+// 							 	calendar_title: title,	// 키값 : 벨류값
+// 							  	calendar_start: arg.startStr + ' ' + startTime ,	// 키값 : 벨류값
+// 							  	calendar_end: endDateFormatted + " " + endTime,	// 키값 : 벨류값
+// 							 },
+// 							 success : function(data){
+// 							  alert("일정이 등록되었습니다.");
+// 							  $("#calendarModal").modal("hide");
+// 							  location.reload();
+// 							 },
+// 							 error : function(request,status,error){
+// 								alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+// 								console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+// 							 }
+// 						});
+// 					};
+// 				});
 				
-			},
+			}
 			
 		});
+		
+		$("#registCalendar").on("click", function(arg) {
+        	
+			var title = $('#title').val();
+			var startTime = $('#startTime').val();
+			var endTime = $('#endTime').val();
+			var calendar_no = $('#calendar_no').val();
+			var ed = $('#EndDate').val();
+			var sd = $('#StartDate').val();
+			
+			var StartDate = $('#StartDate').val();
+			var EndDate = $('#EndDate').val();
+			
+			//내용 입력 여부 확인
+			if(title == null || title == ""){
+			    alert("내용을 입력하세요.");
+			}else if(startTime == "" || endTime ==""){
+			    alert("시간을 입력하세요.");
+			}else if(ed == sd && endTime < startTime){ // date 타입으로 변경 후 확인
+				alert("종료 시간이 시작 시간보다 빠릅니다.\n시간을 올바르게 설정해주세요.");
+				return false;
+			}else{ // 정상적인 입력 시
+		
+             	$.ajax({
+					 url: "/calendar/regist",
+					 type: "POST",
+					 data : { 
+					 	calendar_title: title,	// 키값 : 벨류값
+					  	calendar_start: StartDate + ' ' + startTime ,	// 키값 : 벨류값
+					  	calendar_end: EndDate + " " + endTime,	// 키값 : 벨류값
+					 },
+					 success : function(data){
+					  alert("일정이 등록되었습니다.");
+					  $("#calendarModal").modal("hide");
+					  location.reload();
+					 },
+					 error : function(request,status,error){
+						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+						console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+					 }
+				});
+			};
+		});
+		
 		calendar.render();
 		
-		$("#closeCalendar").on("click", function() {
+		$("#closeCalendar").on("click", function(arg) {
 			
 			console.log("closeCalendar 실행");
 			
 			 $("#endTime").val('');
 			 $("#startTime").val('');
 			 $("#title").val('');
-			 $("#StartDate").val('');
-			 $("#EndDate").val('');
+// 			 $("#StartDate").val('');
+// 			 $("#EndDate").val('');
+
+			$('#StartDate').attr('value', arg.startStr);
+			$('#EndDate').attr('value', arg.endStr);
 			 
 			 $("#calendarModal").modal("hide");
 		});
@@ -323,7 +370,6 @@
     	$("#modifyCalendarBtn").on("click", function() {
     		
     		console.log("modifyCalendarBtn 실행");
-//     		debugger;
     		var title = $('#modifyTitle').val();
 			var startDate = $('#modifyStartDate').val();
 			var sd = $('#modifyStartDate').val();
