@@ -21,7 +21,7 @@
 					<div class="card-body pad">
 						<form role="form" method="post" action="registItem.do" name="detailForm" enctype="multipart/form-data">
 							<input type="hidden" id="wh_no" value="" name="wh_no" >
-							<input type="hidden" id="c_no" value="" name="c_no" >
+							<input type="hidden" id="c_no" value="${c_no }" name="c_no" >
 							<input type="hidden" id="sp_no" value="" name="sp_no" >
 							<input type="hidden" id="emp_no" value="${emp_no }" name="emp_no" >
 							<div class="form-group col-sm-12 row">
@@ -67,10 +67,10 @@
 								<label for="wh_name" class="col-sm-3">창 고</label>
 								<input type="text" id="wh_name" name="wh_name" class="form-control col-sm-9 mch4 wh_name" value="">
 							</div>
-							<div class="form-group col-sm-12 row">
-								<label for="c_name" class="col-sm-3">회 사</label>
-								<input type="text" id="c_name" name="c_name" class="form-control col-sm-9 mch4 c_name" value="">
-							</div>
+<!-- 							<div class="form-group col-sm-12 row"> -->
+<!-- 								<label for="c_name" class="col-sm-3">회 사</label> -->
+<!-- 								<input type="text" id="c_name" name="c_name" class="form-control col-sm-9 mch4 c_name" value=""> -->
+<!-- 							</div> -->
 							<div class="form-group col-sm-12 row">
 								<label for="files" class="col-sm-3">사진 첨부</label>
 								<input type="file" id="files" name="files" class="form-control col-sm-9 mch4 files" value="" accept=".jpg, .jpeg, .png, .PPM, .PGM, .PBM, .PNM">
@@ -119,11 +119,11 @@
 		};
 
 
-		$(document).on('click', '.c_name', function(){
+// 		$(document).on('click', '.c_name', function(){
 			
-			let openWin = OpenWindow("/erp4/findCompany.do", "회사 찾기", 800, 500);
+// 			let openWin = OpenWindow("/erp4/findCompany.do", "회사 찾기", 800, 500);
 			
-		});
+// 		});
 		
 		$(document).on('click', '.wh_name', function(){
 			

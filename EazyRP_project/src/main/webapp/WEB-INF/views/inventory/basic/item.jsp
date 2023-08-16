@@ -40,10 +40,14 @@
 									<th width="100px" style="text-align: center;">수 량</th>
 									<th width="200px" style="text-align: center;">유통기한</th>
 									<th width="150px" style="text-align: center;">품목구분</th>
-									<th width="200px" style="text-align: center;">회 사</th>
+<!-- 									<th width="200px" style="text-align: center;">회 사</th> -->
 									<th width="200px" style="text-align: center;">창 고</th>
 								</tr>
 									<c:forEach items="${itemList}" var="product">
+									<c:set var="exdate"><fmt:formatDate value="${product.exdate }" pattern="yyyy-MM-dd"></fmt:formatDate></c:set>
+									<c:if test="${product.exdate eq '' || product.exdate == null}">
+										<c:set var="exdate">기한없음</c:set>
+									</c:if>
 									<tr>
 										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('itemDetail.do?pr_no=${product.pr_no }','품목 수정/삭제', 800 , 600);">${product.pr_name }</a></td>
 										<td style="text-align: center;">${product.pr_gr }</td>
@@ -51,9 +55,9 @@
 										<td style="text-align: center;">${product.pr_inprice } 원</td>
 										<td style="text-align: center;">${product.pr_exprice } 원</td>
 										<td style="text-align: center;">${product.quantity }</td>
-										<td style="text-align: center;"><fmt:formatDate value="${product.exdate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
+										<td style="text-align: center;">${exdate }</td>
 										<td style="text-align: center;">${product.pr_class}</td>
-										<td style="text-align: center;">${product.c_no }</td>
+<%-- 										<td style="text-align: center;">${product.c_no }</td> --%>
 										<td style="text-align: center;">${product.wh_no }</td>
 									</tr>
 									</c:forEach>

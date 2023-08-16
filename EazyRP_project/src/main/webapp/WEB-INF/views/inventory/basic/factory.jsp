@@ -16,7 +16,6 @@
 								<option value="all" ${cri.searchType eq 'all' ? 'selected' : '' }>전  체</option>
 								<option value="n" ${cri.searchType eq 'n' ? 'selected' : '' }>공장명</option>
 								<option value="a" ${cri.searchType eq 'a' ? 'selected' : '' }>주소</option>
-								<option value="c" ${cri.searchType eq 'c' ? 'selected' : '' }>소유회사</option>
 								<option value="p" ${cri.searchType eq 'p' ? 'selected' : '' }>공정명</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${cri.keyword}">
@@ -34,14 +33,14 @@
 								<tr>
 									<th width="150px" style="text-align: center;">공장명</th>
 									<th width="200px" style="text-align: center;">주 소</th>
-									<th width="150px" style="text-align: center;">소유회사</th>
+<!-- 									<th width="150px" style="text-align: center;">소유회사</th> -->
 									<th width="200px" style="text-align: center;">공정명</th>
 								</tr>
 									<c:forEach items="${factoryList}" var="factory">
 									<tr>
 										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('factoryDetail.do?fac_no=${factory.FAC_NO }','공장 수정/삭제', 800 , 600);">${factory.FAC_NAME }</a></td>
 										<td style="text-align: center;">${factory.ADDR }</td>
-										<td style="text-align: center;">${factory.C_NAME }</td>
+<%-- 										<td style="text-align: center;">${factory.C_NAME }</td> --%>
 										<td style="text-align: center;">${factory.PC_NAME }</td>
 									</tr>
 									</c:forEach>

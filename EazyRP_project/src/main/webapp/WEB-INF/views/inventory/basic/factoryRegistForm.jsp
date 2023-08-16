@@ -31,10 +31,10 @@
 								<label for="addr" class="col-sm-3">주 소</label>
 								<input type="text" id="addr" name="addr" class="form-control col-sm-9 mch2" value="" style="background-color: white;">
 							</div>
-							<div class="form-group col-sm-12 row">
-								<label for="c_name" class="col-sm-3">소유회사</label>
-								<input type="text" id="c_name" name="c_name" class="form-control col-sm-9 mch4 c_name" value="" readonly>
-							</div>
+<!-- 							<div class="form-group col-sm-12 row"> -->
+<!-- 								<label for="c_name" class="col-sm-3">소유회사</label> -->
+<!-- 								<input type="text" id="c_name" name="c_name" class="form-control col-sm-9 mch4 c_name" value="" readonly> -->
+<!-- 							</div> -->
 							<div class="form-group col-sm-12 row">
 								<label for="c_name" class="col-sm-3">공정명</label>
 								<input type="text" id="pc_name" name="pc_name" class="form-control col-sm-9 mch4 pc_name" value="" readonly>
@@ -83,11 +83,11 @@
 		};
 
 
-		$(document).on('click', '.c_name', function(){
+// 		$(document).on('click', '.c_name', function(){
 			
-			let openWin = OpenWindow("/erp4/findCompany.do", "회사 찾기", 800, 500);
+// 			let openWin = OpenWindow("/erp4/findCompany.do", "회사 찾기", 800, 500);
 			
-		});
+// 		});
 		
 		$(document).on('click', '.pc_name', function(){
 			

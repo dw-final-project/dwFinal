@@ -70,10 +70,10 @@
 								<label for="wh_name" class="col-sm-3">창 고</label>
 								<input type="text" id="wh_name" name="wh_name" class="form-control col-sm-9 mch4 wh_name" value="${product.WH_NAME }">
 							</div>
-							<div class="form-group col-sm-12 row">
-								<label for="c_name" class="col-sm-3">회 사</label>
-								<input type="text" id="c_name" name="c_name" class="form-control col-sm-9 mch4 c_name" value="${product.C_NAME }">
-							</div>
+<!-- 							<div class="form-group col-sm-12 row"> -->
+<!-- 								<label for="c_name" class="col-sm-3">회 사</label> -->
+<%-- 								<input type="text" id="c_name" name="c_name" class="form-control col-sm-9 mch4 c_name" value="${product.C_NAME }"> --%>
+<!-- 							</div> -->
 							<div class="form-group col-sm-12 row">
 								<input type="hidden" name="oldPicture" value="${product.IMG }">
 								<input type="hidden" name="uploadPicture" value="${product.IMG }">
@@ -146,11 +146,11 @@ let form = $('form[role="form"]');
 		};
 
 
-		$(document).on('click', '.c_name', function(){
+// 		$(document).on('click', '.c_name', function(){
 			
-			let openWin = OpenWindow("/erp4/findCompany.do", "회사 찾기", 800, 500);
+// 			let openWin = OpenWindow("/erp4/findCompany.do", "회사 찾기", 800, 500);
 			
-		});
+// 		});
 		
 		$(document).on('click', '.wh_name', function(){
 			

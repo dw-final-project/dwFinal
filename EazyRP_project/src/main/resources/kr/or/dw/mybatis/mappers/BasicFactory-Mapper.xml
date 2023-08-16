@@ -37,6 +37,7 @@
 		 WHERE f.c_no = c.c_no
 		   AND f.pc_code = p.pc_code
 		   AND f.enabled = 'Y'
+		   AND f.c_no = #{c_no}
 		   <include refid="search"/>
 		   ORDER BY fac_no
 	</select>
@@ -48,6 +49,7 @@
 		 WHERE f.c_no = c.c_no
 		   AND f.pc_code = p.pc_code
 		   AND f.enabled = 'Y'
+		   AND f.c_no = #{c_no}
 		   <include refid="search"/>
 	</select>
 	

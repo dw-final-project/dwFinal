@@ -12,7 +12,7 @@ import kr.or.dw.vo.WareHouseVO;
 
 public interface BasicFactoryService {
 
-	Map<String, Object> selectFactoryList(SearchCriteria cri) throws SQLException;
+	Map<String, Object> selectFactoryList(SearchCriteria cri, String c_no) throws SQLException;
 
 	List<ProcessVO> getProcess(Map<String, String> dataMap) throws SQLException;
 

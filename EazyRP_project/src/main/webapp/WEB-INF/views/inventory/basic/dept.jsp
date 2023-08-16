@@ -36,7 +36,7 @@
 								</tr>
 									<c:forEach items="${deptList}" var="dept">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('deptDetail.do?dept_no=${dept.dept_no }','부서 수정/삭제', 800 , 600);">${dept.dept_no }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('deptDetail.do?dept_no=${dept.dept_no }','부서 수정/삭제', 600 , 300);">${dept.dept_no }</a></td>
 										<td style="text-align: center;">${dept.dname }</td>
 										<td style="text-align: center;">${dept.dnoment }</td>
 									</tr>
