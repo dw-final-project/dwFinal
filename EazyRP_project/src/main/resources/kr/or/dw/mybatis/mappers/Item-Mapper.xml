@@ -4,27 +4,27 @@
 	
 	<!-- 셀렉트바 검색 -->
 	<sql id="search">
-		<if test="searchType == 'p'.toString()">
-			AND pr_name LIKE '%' || #{keyword} || '%'
+		<if test="cri.searchType == 'p'.toString()">
+			AND pr_name LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="searchType == 'g'.toString()">
-			AND pr_gr LIKE '%' || #{keyword} || '%'
+		<if test="cri.searchType == 'g'.toString()">
+			AND pr_gr LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="searchType == 's'.toString()">
-			AND pr_st LIKE '%' || #{keyword} || '%'
+		<if test="cri.searchType == 's'.toString()">
+			AND pr_st LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="searchType == 'c'.toString()">
-			AND pr_class LIKE '%' || #{keyword} || '%'
+		<if test="cri.searchType == 'c'.toString()">
+			AND pr_class LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="searchType == 'all'.toString()">
+		<if test="cri.searchType == 'all'.toString()">
 			AND (
-			pr_name LIKE '%' || #{keyword} || '%'
+			pr_name LIKE '%' || #{cri.keyword} || '%'
 			OR
-			pr_gr LIKE '%' || #{keyword} || '%'
+			pr_gr LIKE '%' || #{cri.keyword} || '%'
 			OR
-			pr_st LIKE '%' || #{keyword} || '%'
+			pr_st LIKE '%' || #{cri.keyword} || '%'
 			OR
-			pr_class LIKE '%' || #{keyword} || '%'
+			pr_class LIKE '%' || #{cri.keyword} || '%'
 			)
 		</if>
 	</sql>

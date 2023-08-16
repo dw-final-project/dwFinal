@@ -15,7 +15,7 @@
 		
 		if(murl.indexOf('?') != -1) {
 			let modMurl = murl.substring(0, murl.indexOf('?'));	
-			sessionStorage.setItem("murl", modMurl);		
+			sessionStorage.setItem("murl", murl);		
 		}else {
 			sessionStorage.setItem("murl", murl);		
 		}

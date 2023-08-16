@@ -215,7 +215,7 @@ body {
 											<option value="@gmail.com">gmail.com</option>
 											<option value="@hanmail.net">hanmail.net</option>
 											<option value="@daum.net">daum.net</option>
-											<option value="직접입력">직접입력</option>
+											<option value="">직접입력</option>
 										</select>
 										<div class="select-dropdown"></div>
 									</div>
