@@ -98,11 +98,11 @@
 		};
 
 
-		$(document).on('click', '.c_name', function(){
+// 		$(document).on('click', '.c_name', function(){
 			
-			let openWin = OpenWindow("/erp4/findCompany.do", "회사 찾기", 800, 500);
+// 			let openWin = OpenWindow("/erp4/findCompany.do", "회사 찾기", 800, 500);
 			
-		});
+// 		});
 		
 		$(document).on('click', '.pc_name', function(){
 			

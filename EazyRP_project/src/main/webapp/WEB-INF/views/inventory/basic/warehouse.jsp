@@ -32,16 +32,14 @@
 							<table style="font-size: 0.8em;" class="table table-borderd text-center">
 								<tr>
 									<th width="150px" style="text-align: center;">창고명</th>
-									<th width="200px" style="text-align: center;">주소</th>
-									<th width="100px" style="text-align: center;">가동여부</th>
-									<th width="150px" style="text-align: center;">소유회사</th>
+									<th width="150px" style="text-align: center;">주소</th>
+									<th width="150px" style="text-align: center;">가동여부</th>  
 								</tr>
 									<c:forEach items="${warehouseList}" var="warehouse">
 									<tr>
 										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('warehouseDetail.do?wh_no=${warehouse.wh_no }','창고 수정/삭제', 800 , 600);">${warehouse.wh_name }</a></td>
 										<td style="text-align: center;">${warehouse.addr }</td>
 										<td style="text-align: center;">${warehouse.wh_gb eq 'Y' ? '가동 중' : '사용중지' }</td>
-										<td style="text-align: center;">${warehouse.c_no }</td>
 									</tr>
 									</c:forEach>
 							</table>

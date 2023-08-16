@@ -32,13 +32,13 @@
 								<tr>
 									<th width="200px" style="text-align: center;">공제코드</th>
 									<th width="200px" style="text-align: center;">공제명</th>
-									<th width="150px" style="text-align: center;">표시순서</th>
+									<th width="150px" style="text-align: center;">계산식</th>
 								</tr>
 									<c:forEach items="${deductionList}" var="deduction" varStatus="loop">
 									<tr>
 										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('deductionDetail.do?ded_no=${deduction.DED_NO}','공제 상세보기', 700, 400);">${deduction.DED_NO}</a></td>
 										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('deductionDetail.do?ded_no=${deduction.DED_NO}','공제 상세보기', 700, 400);">${deduction.DED_NAME}</a></td>
-										<td style="text-align: center;">${deduction.DED_ORDER}</td>
+										<td style="text-align: center;">x&nbsp;${deduction.CALC}</td>
 									</tr>
 									</c:forEach>
 							</table>

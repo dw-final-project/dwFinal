@@ -128,16 +128,16 @@
     	<tbody id="prInput">
     	<input type="hidden" value="" id="cnt">
     	<input type="hidden" value="B" id="A">
-       <c:forEach items="${qcList }" var="qc">
+       <c:forEach items="${qcList }" var="qc1">
         <tr id="trChk" >    	
-	       <input type="hidden" class="rownum" value="${qc.ROWNUM }">
-	       <input type="hidden" name="qcdetail_no" id="qcdtail_no" value="${qc.QCDETAIL_NO }">
-	       <input type="hidden" name="enabled" id="qcenabled" value="${qc.ENABLED }">
+	       <input type="hidden" class="rownum" value="${qc1.ROWNUM }">
+	       <input type="hidden" name="qcdetail_no" id="qcdtail_no" value="${qc1.QCDETAIL_NO }">
+	       <input type="hidden" name="enabled" id="qcenabled" value="${qc1.ENABLED }">
 	       <input type="hidden" name="pr_delete" value="o">
-        	<td><input type="text" id="" class="pr_nos" name="pr_no" value="${qc.PR_NO }"  style="width: 100%;" readonly></td>
-        	<td><input type="text" id="${qc.ROWNUM }" class="pr_names2" name="pr_name" style="width: 100%;" value="${qc.PR_NAME }"${qcList.get(0).PROGRESS ne '0' ? 'readonly' : '' } ></td>
-            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${qc.QUANTITY }" ${qc.PROGRESS ne '0' ? 'readonly' : '' }></td>
-            <td><input type="text" id="contents" class="content" name="content" style="width: 100%;" value="${qc.CONTENT }" ${qcList.get(0).PROGRESS ne '0' ? 'readonly' : '' }></td>
+        	<td><input type="text" id="" class="pr_nos" name="pr_no" value="${qc1.PR_NO }"  style="width: 100%;" readonly></td>
+        	<td><input type="text" id="${qc1.ROWNUM }" class="pr_names2" name="pr_name" style="width: 100%;" value="${qc1.PR_NAME }"${qc.PROGRESS eq 0 ? 'readonly' : '' } ></td>
+            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${qc1.QUANTITY }" ${qc.PROGRESS eq '0' ? '' : 'readonly' }></td>
+            <td><input type="text" id="contents" class="content" name="content" style="width: 100%;" value="${qc1.CONTENT }" ${qc.PROGRESS ne '0' ? 'readonly' : '' }></td>
             <td style="text-align : center;">
             <c:if test="${qc.PROGRESS eq 0 }">
             <button type="button" id="cancelBtn" class="btn btn-danger">삭제</button>
@@ -160,7 +160,7 @@
 window.onload = function(){
 	
 	let formObj = $('form[role="form"]');
-
+	
 	$('button#modifyBtn').on('click', function(){
 		formObj.attr({
 			'action' : 'qcmodifyForm.do',

@@ -24,9 +24,9 @@
 								<input type="text" id="ded_name" name="ded_name" class="form-control col-sm-4 ded1" value="" placeholder="공제명을 입력하세요">
 							</div>
 							<div class="form-group col-sm-12 row " >
-								<label for="ded_order" class="col-sm-2">표시순서</label>
-								<input type="text" id="ded_order" name="ded_order" class="form-control col-sm-3 ded2" value="" placeholder="표시순서를 입력하세요 ">
-								<div class="col-sm-1"></div>
+<!-- 								<label for="ded_order" class="col-sm-2">표시순서</label> -->
+<!-- 								<input type="text" id="ded_order" name="ded_order" class="form-control col-sm-3 ded2" value="" placeholder="표시순서를 입력하세요 "> -->
+<!-- 								<div class="col-sm-1"></div> -->
 								<label for="calc" class="col-sm-2">계산식</label>
 								<input type="text" id="calc" name="calc" class="form-control col-sm-3 ded3" value="" placeholder="계산식을 입력하세요">
 								<div class="col-sm-1"></div>
@@ -56,10 +56,10 @@
 				alert("빈 항목이 있습니다.");
 				return;
 			}
-			if($('.ded2').val() == ""){
-				alert("빈 항목이 있습니다.");
-				return;
-			}
+// 			if($('.ded2').val() == ""){
+// 				alert("빈 항목이 있습니다.");
+// 				return;
+// 			}
 			if($('.ded3').val() == ""){
 				alert("빈 항목이 있습니다.");
 				return;

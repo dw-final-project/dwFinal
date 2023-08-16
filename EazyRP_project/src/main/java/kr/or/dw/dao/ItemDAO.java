@@ -18,7 +18,7 @@ import kr.or.dw.vo.WareHouseVO;
 @Mapper
 public interface ItemDAO {
 
-	List<Map<String, Object>> selectItemList(Map<String, Object> map) throws SQLException;
+	List<Map<String, Object>> selectItemList(Map<String, Object> map, RowBounds rowBounds) throws SQLException;
 
 	int selectItemListCount(Map<String, Object> map) throws SQLException;
 

@@ -42,8 +42,9 @@
 				<th width="100px" style="text-align: center;">주 소</th>
 			</tr>
 				<c:if test="${empty contactList}">
-									<td style="text-align: center;" colspan="4">거래처로 등록할 회사가 없습니다.</td>
+					<tr><td style="text-align: center;" colspan="4">거래처로 등록할 회사가 없습니다.</td></tr>
 				</c:if>
+				<tbody id="tbody">
 				<c:forEach items="${contactList }" var="contact">
 				<tr class="trHover">
 					<td style="text-align: center;" id="name">${contact.c_rname }</td>
@@ -52,6 +53,7 @@
 					<td style="text-align: center;" id="addr">${contact.addr }</td>
 				</tr>
 				</c:forEach>
+				</tbody>
 		</table>
 	</div>
 </div>
@@ -68,7 +70,8 @@
 
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <script>
-	$('tr').on('click', function(){
+
+	$('#tbody').on('click', 'tr', function(){
 		let c_no = $(this).find("#c_no").val();
 		$('input[name="c_no"]').val(c_no);
 		
