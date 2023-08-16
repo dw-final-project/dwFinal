@@ -36,12 +36,14 @@
 				<th width="100px" style="text-align: center;">제품이름</th>
 				<th width="100px" style="text-align: center;">업체명</th>
 				<th width="100px" style="text-align: center;">금액</th>
+				<th width="100px" style="text-align: center;">보관 창고</th>
 			</tr>
 			<c:forEach items="${product}" var="pro">
 				<tr>
 					<td style="text-align: center;" class="pr_name">${pro.pr_name}</td>
 					<td style="text-align: center;" class="c_name">${pro.c_name}</td>
 					<td style="text-align: center;" class="pr_exprice">${pro.pr_exprice }</td>
+					<td style="text-align: center;" class="pr_whname">${pro.wh_name }</td>
 					<input type="hidden" class="cost" value="${pro.pr_exprice }">
 					<input type="hidden" id="pr_no" value="${pro.pr_no}">
 				</tr>
