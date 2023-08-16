@@ -26,6 +26,7 @@ import kr.or.dw.service.MailSendService;
 import kr.or.dw.service.MemberService;
 import kr.or.dw.service.MenuService;
 import kr.or.dw.service.QnaService;
+import kr.or.dw.vo.EmpVO;
 import kr.or.dw.vo.InquiryVO;
 import kr.or.dw.vo.MemberVO;
 
@@ -330,9 +331,10 @@ public class MemberController {
 	
 	// 회원정보 수정에서 비밀번호 변경
 	@RequestMapping("/repwdForm")
-	public ModelAndView repwdForm(String mymenu, String mcode, ModelAndView mnv) throws Exception {
+	public ModelAndView repwdForm(String mymenu, String mcode, ModelAndView mnv, HttpSession session) throws Exception {
 		String url = "";
-	    
+	    MemberVO emp = (MemberVO) session.getAttribute("loginUser");
+	    String email = emp.getEmail();
     	if(mymenu == null) {
 			url="/common/repwdForm.page";
 		} else {
@@ -341,7 +343,7 @@ public class MemberController {
 		
 		mnv.addObject("mcode", mcode);		
 		mnv.setViewName(url);
-		
+		mnv.addObject("email", email);
 		return mnv;
 	}
 
