@@ -524,5 +524,44 @@ public class EmpSalServiceImpl implements EmpSalService {
 		empsalDAO.deleteSal(sal_no_a);
 	
 	}
+
+	@Override
+	public List<Map<String, Object>> allEmpList(String c_no, String salmonth) throws SQLException {
+		
+		List<Map<String, Object>> empList = empsalDAO.allEmpList(c_no);
+		
+		for(Map<String, Object> emp : empList) {
+			int emp_no = Integer.parseInt(emp.get("EMP_NO").toString());
+			int e_sal = Integer.parseInt(emp.get("E_SAL").toString());
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("emp_no", emp_no);
+			map.put("e_sal", e_sal);
+			map.put("salmonth", salmonth);
+			List<Map<String, Object>> calextrapayList = empsalDAO.selectExtraPay(map);
+			
+			Double hourSal = Double.parseDouble(e_sal + "") / 365 / 24;
+			
+			List<Map<String, Object>> extrapayList = new ArrayList<Map<String, Object>>();
+			for(Map<String, Object> calextrapay : calextrapayList) {
+				System.out.println("아워샐  " + Math.ceil(hourSal));
+				
+				Double EXTRAPAY = Double.parseDouble(calextrapay.get("WTIME").toString()) * Double.parseDouble(calextrapay.get("CALC").toString()) * Math.ceil(hourSal);
+				calextrapay.put("EXTRAPAY", EXTRAPAY);
+				extrapayList.add(calextrapay);
+			}
+			emp.put("extrapayList", extrapayList);
+			
+		}
+		System.out.println("sd jklajf lkasjfdsakljfsdalkdjasjd emp : " + empList.get(0).get("extrapayList"));
+		
+		return empList;
+	}
+
+	@Override
+	public void tr(Map<String, Object> map) throws SQLException {
+		String sal_no = empsalDAO.getSal_no();
+		map.put("sal_no", sal_no);
+		empsalDAO.tr(map);
+	}
 	
 }

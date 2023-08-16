@@ -112,6 +112,10 @@ public interface EmpSalService {
 
 	void deleteSal(String sal_no_a) throws SQLException;
 
+	List<Map<String, Object>> allEmpList(String c_no, String salmonth) throws SQLException;
+
+	void tr(Map<String, Object> map) throws SQLException;
+
 
 
 }

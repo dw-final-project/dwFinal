@@ -147,7 +147,7 @@
 			#{emp_no},
 			sysdate,
 			#{emp_no},
-			#{progress},
+			0,
 			'Y',
 			#{files},
 			#{realFileName}
@@ -166,7 +166,7 @@
 			qcdetail_seq.nextval,
 			#{qc_no},
 			#{pr_no},
-			#{quantity},
+			#{quantity,jdbcType = INTEGER},
 			#{content, jdbcType = VARCHAR}
 		)
 	</insert>
@@ -175,9 +175,13 @@
 		UPDATE qc SET emp_no = #{emp_no},
 					  sys_updatedate = sysdate,
 					  progress = #{progress},
-					  sys_up = #{emp_no},
-					  files = #{files},
-					  realFileName = #{realFileName}
+					  sys_up = #{emp_no}
+					  <if test="files != ''.toString()">
+							,files = #{files}
+					 </if>
+					 <if test="realFileName != ''.toString()">
+							,realFileName = #{realFileName}
+					</if>
 		WHERE qc_no = #{qc_no}
 	</update>
 	
@@ -191,7 +195,7 @@
 	  SET 
 	  pr_no = #{pr_no},
 	  quantity = #{quantity},
-	  content = #{content}
+	  content = #{content,jdbcType = VARCHAR }
 	WHERE qcdetail_no = #{qcdetail_no}
 	WHEN NOT MATCHED THEN
 	  INSERT (
@@ -206,7 +210,7 @@
 	  	#{qc_no},
 	  	#{pr_no},
 	  	#{quantity},
-	  	#{content}
+	  	#{content, jdbcType = VARCHAR}
 	  )
 	</update>
 	

@@ -31,11 +31,13 @@ import kr.or.dw.service.CalendarService;
 import kr.or.dw.service.ManagementService;
 import kr.or.dw.service.MemberService;
 import kr.or.dw.service.MenuService;
+import kr.or.dw.service.ProductService;
 import kr.or.dw.vo.CalendarVO;
 import kr.or.dw.vo.DraftVO;
 import kr.or.dw.vo.MemberVO;
 import kr.or.dw.vo.MenuVO;
 import kr.or.dw.vo.MyMenuVO;
+import kr.or.dw.vo.Order2VO;
 
 @Controller
 public class CommonController {
@@ -46,6 +48,9 @@ public class CommonController {
 	
 	@Autowired
 	private CalendarService calendarService;
+	
+	@Autowired
+	private ProductService productService;
 	
 	@Autowired
 	private MyMenuDAO myMenuDAO;
@@ -157,7 +162,9 @@ public class CommonController {
 	        String insert = lastMonthYear + "-" + (lastMonthMonth < 10 ? "0" : "") +lastMonthMonth;
 	        month2.add(insert);
 		}
-		
+		List<Order2VO> list = null;
+		String c_no = (String) session.getAttribute("c_no");
+		list = productService.getOrderList(c_no);
 		List<Integer> profit = new ArrayList<>();
 		profit = menuService.getProfit(month);
 		List<Integer> profit2 = new ArrayList<>();
@@ -170,7 +177,7 @@ public class CommonController {
 		session.setAttribute("menuList", menuList);
 		session.setAttribute("subMenuList", subMenuList);
 		session.setAttribute("smallMenuList", smallMenuList);
-		
+		mnv.addObject("list",list);
 		mnv.setViewName(url);	
 		
 		return mnv;

@@ -29,5 +29,6 @@ public class ProductVO {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date sys_updatedate;
 	private String c_name;
+	private String wh_name;
 
 }

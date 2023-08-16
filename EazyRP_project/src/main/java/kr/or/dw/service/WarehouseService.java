@@ -10,7 +10,7 @@ import kr.or.dw.vo.WareHouseVO;
 
 public interface WarehouseService {
 
-	Map<String, Object> selectWarehouseList(SearchCriteria cri) throws SQLException;
+	Map<String, Object> selectWarehouseList(SearchCriteria cri, String c_no) throws SQLException;
 
 	Map<String, Object> selectWarehouseDetail(String wh_no) throws SQLException;
 

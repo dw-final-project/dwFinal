@@ -58,5 +58,7 @@ public interface WorkOrderDAO {
 
 	List<ErrorVO> getErrorList(Map<String, Object> dataMap, RowBounds rowBounds) throws SQLException;
 
+	void updateWorkOrderProgress(Map<String, Object> map) throws SQLException;
+
 
 }

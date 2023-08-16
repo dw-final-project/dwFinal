@@ -104,7 +104,7 @@
             <th align="center" style="width: 20%;">제품 명</th>           
             <th align="center" style="width: 20%;">수량</th>
            	<th align="center" style="width: 20%;">내용</th>
-           	<th align="center" style="width: 20%;">비고</th>
+           	<th align="center" style="width: 20%;"></th>
         </tr>
     	<tbody id="prInput">
     	<input type="hidden" value="" id="cnt">

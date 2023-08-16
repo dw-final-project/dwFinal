@@ -140,7 +140,7 @@ public class MyMenuServiceImpl implements MyMenuService{
 		dataMap2.put("cri", cri);
 		dataMap2.put("c_no", c_no);
 		
-		int totalCount = mymenuDAO.selectSearchNoteListCount(dataMap2);
+		int totalCount = mymenuDAO.selectSendSearchNoteListCount(dataMap2);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);

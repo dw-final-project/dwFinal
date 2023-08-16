@@ -71,10 +71,16 @@
 
 <body>
     <h2>작업지시서 상세보기</h2>
-	<div class="card-footer">
-		<button type="submit" id="modifyBtn" class="btn btn-warning">수정</button>
-		<button type="button" id="removeBtn" class="btn btn-danger">삭제</button>
+    <div class="card-footer">
+		<button type="submit" id="modifyBtn" class="btn btn-warning" ${wo.PROGRESS ne '0' ? 'disabled' : '' }>수정</button>
+		<button type="button" id="removeBtn" class="btn btn-danger" ${wo.PROGRESS ne '0' ? 'disabled' : '' }>삭제</button>
 		<button type="button" id="listBtn" class="btn btn-primary">닫기</button>
+		<c:if test="${wo.PROGRESS ne '2'}">
+			<button type="button" id="progressBtn" class="btn btn-primary" ${wo.PROGRESS eq '2' ? 'disabled' : '' } style="float:right;">
+				<c:if test="${wo.PROGRESS eq '0'}">진행</c:if>
+				<c:if test="${wo.PROGRESS eq '1'}">완료</c:if>
+			</button>
+		</c:if>
 	</div>
 	<!-- card footer End -->
 <form role="form" method="post" enctype="multipart/form-data">
@@ -113,17 +119,24 @@
 	            	<b>상태</b>
 	            </td>
 	            <td>
-	            	<select name="progress" id="progress_select">
-					    <option>선택</option>
-					    <option value="" ${wo.PROGRESS eq '' ? 'selected' : '' }>선택</option>
-					    <option value="0" ${wo.PROGRESS eq '0' ? 'selected' : '' }>대기중</option>
-					    <option value="1" ${wo.PROGRESS eq '1' ? 'selected' : '' }>진행중</option>
-					    <option value="2" ${wo.PROGRESS eq '2' ? 'selected' : '' }>완료</option>
-					</select>
+	            	<c:if test="${wo.PROGRESS eq '0'}">
+		            	<input type="text" name="" value="대기중" readonly>
+		            	<input type="hidden" name="progress" value="0" readonly>
+	            	</c:if>
+	            	<c:if test="${wo.PROGRESS eq '1'}">
+		            	<input type="text" name="" value="진행중" readonly>
+		            	<input type="hidden" name="progress" value="1" readonly>
+	            	</c:if>
+	            	<c:if test="${wo.PROGRESS eq '2'}">
+		            	<input type="text" name="" value="완료" readonly>
+		            	<input type="hidden" name="progress" value="2" readonly>
+	            	</c:if>
 				</td>
 	        </tr>
 	    </table>
-    <button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">추가</button>
+	<c:if test="${wo.PROGRESS eq '0'}">
+    	<button type="button" id="addPutBtn" style="margin-bottom: 10px;" class="btn btn-primary">추가</button>
+    </c:if>
     <table>
     	
         <tr>
@@ -151,7 +164,7 @@
 					<input type="hidden" name="fac_no" id="fac_no${woDetail.ROWNUM }" value="${woDetail.FAC_NO }">
 				</td>
 	            <td><input type="text" id="quantity" class="quantity" name="quantity" style="width: 100%;" value="${woDetail.QUANTITY }"><input type="hidden" id="cost" value="${est.PR_EXPRICE }"></td>
-	            <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger">삭제</button></td>
+	            <td style="text-align : center;"><button type="button" id="cancelBtn" class="btn btn-danger" ${wo.PROGRESS ne '0' || loop.index == 0 ? 'disabled' : ''} >삭제</button></td>
 	        </tr>
         </c:forEach>
         </tbody>
@@ -178,7 +191,6 @@ window.onload = function(){
 	}
 	
 	$('#woTotal').val(selectSum);
-	//
 	
 	let formObj = $('form[role="form"]');
 
@@ -222,6 +234,12 @@ window.onload = function(){
 		
 	});
 	
+	$('#progressBtn').on('click', function(){
+		if(confirm('상태를 변경 하시겠습니까?')) {
+			formObj.attr('action', '/erp4/updateWorkOrderProgress.do');
+			formObj.submit();
+		}
+	})
 	
 	$('button#removeBtn').on('click', function(){
 		if(confirm("정말 삭제하시겠습니까?")){
@@ -234,14 +252,13 @@ window.onload = function(){
 	});
 	
 	$('button#listBtn').on('click', function(){
-		window.opener.location.reload(true);
 		window.close();
 	});
 	
 }
 
 </script>
-
+<c:if test="${wo.PROGRESS eq '0'}">
 <script>
 let rownumList = $('.rownum');
 let cnt = rownumList.length; 
@@ -286,7 +303,7 @@ $('tr').on('click', function(){
 		let idVal = $(this).parents("tr").find(".rownum").val();
 		console.log(idVal);
 		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
+		let openWin = OpenWindow("/erp4/findMakeProduct.do", "제품 찾기", 500, 500);
 		
 	});
 	
@@ -315,7 +332,7 @@ $('tr').on('click', function(){
 	})
 	
 	// 수량 이벤트
-	$(document).on('keyup change', '.quantity', function(){
+	$(document).on('keyup change click', '.quantity, button#cancelBtn', function(){
 	
 		let sum = Number(0);
 		let inputquantity = $('input[name="quantity"]').get();
@@ -327,8 +344,7 @@ $('tr').on('click', function(){
 		$('#woTotal').val(sum);
 
 	})
-		
+	
 </script>
-
-
+</c:if>
 </html>

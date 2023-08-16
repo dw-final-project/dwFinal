@@ -41,7 +41,7 @@
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="c_name" class="col-sm-3">소유회사</label>
-								<input type="text" id="c_name" name="c_name" class="form-control col-sm-9 mch4 c_name" value="${warehouse.C_NAME }">
+								<input type="text" id="c_name" name="c_name" class="form-control col-sm-9 mch4 c_name" value="${warehouse.C_NAME }" readonly>
 							</div>
 						</form>
 					</div>
@@ -99,11 +99,11 @@
 		};
 
 
-		$(document).on('click', '.c_name', function(){
+// 		$(document).on('click', '.c_name', function(){
 			
-			let openWin = OpenWindow("/erp4/findCompany.do", "회사 찾기", 800, 500);
+// 			let openWin = OpenWindow("/erp4/findCompany.do", "회사 찾기", 800, 500);
 			
-		});
+// 		});
 		
 		
 

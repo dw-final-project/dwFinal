@@ -48,14 +48,17 @@ public class WarehouseController {
 	private WarehouseService warehouseService;
 	
 	@RequestMapping("/warehouse")
-	public ModelAndView warehouseMain(String mymenu, ModelAndView mnv, String mcode, String murl, SearchCriteria cri) throws SQLException{
+	public ModelAndView warehouseMain(String mymenu, ModelAndView mnv, String mcode, String murl, SearchCriteria cri, HttpSession session) throws SQLException{
 		String url= "";
 		if(mymenu == null) {
 			url="inventory/basic/warehouse.page";
 		} else {
 			url="inventory/basic/warehouse.mymenu";
 		}
-		Map<String, Object> dataMap = warehouseService.selectWarehouseList(cri);
+		
+		String c_no = session.getAttribute("c_no").toString();
+		
+		Map<String, Object> dataMap = warehouseService.selectWarehouseList(cri, c_no);
 		mnv.addObject("mcode", mcode);
 		mnv.addObject("murl", murl);
 		mnv.addAllObjects(dataMap);
@@ -74,8 +77,9 @@ public class WarehouseController {
 	}
 	
 	@RequestMapping("/registWarehouse")
-	public void registWarehouse(WareHouseVO warehouse, HttpServletResponse res, int emp_no) throws Exception{
+	public void registWarehouse(WareHouseVO warehouse, HttpServletResponse res, int emp_no, HttpSession session) throws Exception{
 		
+		warehouse.setC_no(session.getAttribute("c_no").toString());
 		warehouse.setSys_reg(emp_no + "");
 		warehouse.setSys_up(emp_no + "");
 		

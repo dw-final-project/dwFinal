@@ -358,4 +358,51 @@
 		)
 	</insert>
 	
+	<select id="getOrderList" resultType="order2">
+		SELECT rownum, a.*
+		FROM (
+		SELECT o.*, c.c_name con_c_name
+		 FROM ordermanage o, company c
+		WHERE o.con_c_no = c.c_no
+		  AND o.buy_c_no = #{c_no}) a
+		 WHERE rownum <![CDATA[<]]> 4
+	</select>
+	
+<!-- 	생산을 목적으로 선택하는 제품들의 목록(희성이꼬) -->
+	<select id="getMakeProductList" resultType="product">
+		SELECT 	p.pr_name,
+				MAX(p.pr_no) pr_no,
+				MAX(p.pr_class) pr_class, 
+				MAX(c.c_name) c_name, 
+				MAX(c.c_no) c_no
+		FROM 	product p, company c
+		WHERE 	p.c_no = c.c_no
+		AND 	p.enabled = 'Y'
+		GROUP BY p.pr_name
+	</select>
+
+<!-- 	생산을 목적으로 선택하는 제품들의 목록(희성이꼬) -->
+	<select id="getMakeProduct" resultType="product">
+		SELECT 	p.pr_name,
+				MAX(p.pr_no) pr_no,
+				MAX(p.pr_class) pr_class, 
+				MAX(c.c_name) c_name, 
+				MAX(c.c_no) c_no
+		FROM 	product p, company c
+		WHERE 	p.c_no = c.c_no
+		AND 	p.enabled = 'Y'
+		<if test="searchType == 'w'.toString()">
+			AND p.pr_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND p.pr_class LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'cw'.toString()">
+			AND (p.pr_name LIKE '%' || #{keyword} || '%'
+			OR p.pr_class LIKE '%' || #{keyword} || '%')
+		</if>
+		GROUP BY p.pr_name
+		ORDER BY p.pr_name
+	</select>
+	
 </mapper>

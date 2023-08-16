@@ -14,7 +14,7 @@
 			<div class="col-md-10" style="max-width: 1100px;">
 				<div class="card card-outline card-info">
 					<div class="card-header" style="border-bottom: none; padding-bottom: 0px;">
-						<h2 class="card-title p-1">손익 발생 내역 조회</h2>
+						<h2 class="card-title p-1">불량 발생 내역 조회</h2>
 						<div class="input-group row">
 						<form id="searchForm2" method="post" action="/erp4/error.do?mcode=${mcode }" style="font-size:0.9em; margin-left: 48%;">
 							발생 날짜 <input type="date" value="${cri2.startDate }" id="startDate" name="startDate" style="margin: 10px; width:15%; display: inline; font-size: 0.9em;"class="form-control">
@@ -30,11 +30,6 @@
 					<div class="card-body pad" style="padding-top: 0px;">
 						<div>
 							<table style="font-size: 0.5em;" class="table table-borderd text-center">
-								<tr height="40px;" style="font-size: 12px; background-color: #dddddd; font-weight: bold;">
-										<td colspan="2" style="">선택한 날짜 범위 : ${cri2.startDate } ~ ${cri2.endDate }</td>
-										<td style="color: ${prevAmount > 0 ? 'blue' : 'red' };"></td>
-										<td colspan="2" style="color: red;">총 손실 금액 : ${total }원</td>
-									</tr>
 								<tr height="40px;">
 									<th width="16%" style="text-align: center;">발생 일자</th>
 									<th width="16%" style="text-align: center;">제품명</th>

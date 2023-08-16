@@ -60,14 +60,15 @@ public class ItemController {
 	private ItemService itemService;
 	
 	@RequestMapping("/item")
-	public ModelAndView itemMain(String mymenu, ModelAndView mnv, String mcode, String murl, SearchCriteria cri) throws SQLException{
+	public ModelAndView itemMain(String mymenu, ModelAndView mnv, String mcode, String murl, SearchCriteria cri, HttpSession session) throws SQLException{
 		String url="";
     	if(mymenu == null) {
 			url="inventory/basic/item.page";
 		} else {
 			url="inventory/basic/item.mymenu";
 		}
-		Map<String, Object> dataMap = itemService.selectItemList(cri);
+    	String c_no = session.getAttribute("c_no").toString();
+		Map<String, Object> dataMap = itemService.selectItemList(cri, c_no);
 		mnv.addObject("mcode", mcode);
 		mnv.addObject("murl", murl);
 		mnv.addAllObjects(dataMap);

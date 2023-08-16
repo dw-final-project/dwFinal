@@ -88,7 +88,7 @@
 								</c:set>
 								<input type="date" id="delstartdate" name="delstartdate" class="form-control col-sm-3 mch9" value="${delstdate }" placeholder="배송시작일을 입력하세요.">
 								<div class="col-sm-1"></div>
-								<label for="delenddate" class="col-sm-2">배송종료일</label>
+								<label for="delenddate" class="col-sm-2">배송완료일</label>
 								<c:set var="delenddate">
 									<fmt:formatDate value="${order.DELENDDATE }" pattern="yyyy-MM-dd"></fmt:formatDate>
 								</c:set>

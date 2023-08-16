@@ -48,6 +48,7 @@
 		   AND p.wh_no = w.wh_no
 		   AND p.sp_no = s.sp_no
 		   AND p.enabled = 'Y'
+		   AND p.c_no = #{c_no, jdbcType = VARCHAR}
 		   <include refid="search"/>
 		   ORDER BY pr_no
 	</select>
@@ -57,6 +58,7 @@
 		SELECT COUNT(*)
 		  FROM product
 		 WHERE enabled = 'Y'
+		   AND c_no = #{c_no, jdbcType = VARCHAR}
 		   <include refid="search"/>
 	</select>
 	

@@ -45,7 +45,7 @@
 										<td style="text-align: center;"><a id="aTag" href=""></a>${quality.PR_NAMES }</td>
 										<td style="text-align: center;">${quality.PR_ST }</td>
 										<td style="text-align: center;">${quality.QUANTITY }개</td>
-										<td style="color:${quality.PROGRESS ne '전수중' ? 'blue' : 'red'}">${quality.PROGRESS }</td>
+										<td style="color:${quality.PROGRESS ne '0' ? 'blue' : 'red'}">${quality.PROGRESS == '0' ? '전수중' : '완료'}</td>
 										<td style="color:${quality.FILES ne null ? 'blue' : 'red'}">${quality.FILES != null ? "있음" : "없음"}</td>
 									</tr>
 									</c:forEach>

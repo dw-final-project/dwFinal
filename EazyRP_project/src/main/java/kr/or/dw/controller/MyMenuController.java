@@ -194,8 +194,9 @@ public class MyMenuController {
 		
 		dataMap.put("c_no", c_no);
 		dataMap.put("cri", cri);
-		note = mymenuService.getNoteList(dataMap);
-		
+		note = mymenuService.getSendNoteList(dataMap);
+		System.out.println(note);
+		System.out.println("노트리스트");
 		mnv.addAllObjects(note);
 		mnv.setViewName(url);
 		mnv.addObject("mcode", mcode);
@@ -212,8 +213,9 @@ public class MyMenuController {
 		
 		dataMap.put("c_no", c_no);
 		dataMap.put("cri", cri);
-		note = mymenuService.getNoteList(dataMap);
-		
+		note = mymenuService.getSendNoteList(dataMap);
+		System.out.println(note);
+		System.out.println("노트리스트");
 		mnv.addAllObjects(note);
 		mnv.setViewName(url);
 		mnv.addObject("mcode", mcode);

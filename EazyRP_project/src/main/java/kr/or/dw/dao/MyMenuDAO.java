@@ -46,6 +46,8 @@ public interface MyMenuDAO {
 	public void registMyMenu(MyMenuVO mymenu) throws SQLException;
 
 	public void deleteMyMenu(MyMenuVO mymenu) throws SQLException;
+
+	public int selectSendSearchNoteListCount(Map<String, Object> dataMap2) throws SQLException;
 	
 
 }

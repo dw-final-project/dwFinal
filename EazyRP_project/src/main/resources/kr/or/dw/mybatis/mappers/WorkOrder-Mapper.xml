@@ -74,7 +74,7 @@
 			#{emp_no},
 			#{c_no},
 			#{deliverydate},
-			1,
+			0,
 			'y'
 		)
 	</insert>
@@ -289,5 +289,11 @@
 			AND e.sys_regdate <![CDATA[<]]> #{cri2.endDate}
 		</if>
 	</select>
+	
+	<update id="updateWorkOrderProgress">
+		UPDATE	workorder
+		SET		progress = #{progress}
+		WHERE	wo_no = #{wo_no}
+	</update>
 	
 </mapper>

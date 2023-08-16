@@ -74,6 +74,7 @@
 		}else{
 			searchForm.attr("action", murl + "?mcode=" + modMcode);
 		}
+		debugger;
 		console.log(searchForm)
 		searchForm.submit();
 	}

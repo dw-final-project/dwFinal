@@ -44,7 +44,7 @@
 									<c:forEach items="${merchandiseList}" var="md" varStatus="loop">
 									<tr>
 										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('merchandiseDetail.do?sp_no=${md.SP_NO}','견적서 조회', 800 , 600);">${md.SP_NO}</a></td>
-										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('shopDetail.do?s_no=${md.S_NO}','쇼핑몰 조회', 500 , 400);">${md.S_NAME}</a></td>
+										<td style="text-align: center;">${md.S_NAME}</td>
 										<td style="text-align: center;">${md.PR_NAME}</td>
 										<td style="text-align: center;">${md.SP_Q}</td>
 										<td style="text-align: center;">${md.PRICE}</td>

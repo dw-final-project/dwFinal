@@ -11,7 +11,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">창고이동 내역</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm" method="post" action="/erp4/whtransfer.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/erp4/whtransfer.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2 custom-select" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="scn" ${cri.searchType eq 'scn' ? 'selected' : '' }>등록일+번호+창고명</option>
 								<option value="s" ${cri.searchType eq 's' ? 'selected' : '' }>등록일</option>
@@ -82,7 +82,7 @@
 <script>
 		
 	$('#searchBtn').on('click', function(){
-		$('#searchForm').submit();
+		$('#searchForm2').submit();
 	})
 	
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight, index){

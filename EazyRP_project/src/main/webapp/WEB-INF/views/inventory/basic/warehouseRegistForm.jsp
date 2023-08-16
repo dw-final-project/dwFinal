@@ -20,7 +20,7 @@
 					</div>
 					<div class="card-body pad">
 						<form role="form" method="post" action="registWarehouse.do" name="detailForm">
-							<input type="hidden" id="c_no" value="" name="c_no" >
+							<input type="hidden" id="c_no" value="${c_no }" name="c_no" >
 							<input type="hidden" id="emp_no" value="${emp_no }" name="emp_no" >
 							<div class="form-group col-sm-12 row">
 								<label for="wh_name" class="col-sm-3">창고명</label>
@@ -37,10 +37,10 @@
 									<option value="N">사용중지</option>
 								</select>
 							</div>
-							<div class="form-group col-sm-12 row">
-								<label for="c_name" class="col-sm-3">소유회사</label>
-								<input type="text" id="c_name" name="c_name" class="form-control col-sm-9 mch4 c_name" value="">
-							</div>
+<!-- 							<div class="form-group col-sm-12 row"> -->
+<!-- 								<label for="c_name" class="col-sm-3">소유회사</label> -->
+<%-- 								<input type="text" id="c_name" name="c_name" class="form-control col-sm-9 mch4 c_name" value="${c_no }" readonly> --%>
+<!-- 							</div> -->
 						</form>
 					</div>
 				</div>
@@ -85,11 +85,11 @@
 		};
 
 
-		$(document).on('click', '.c_name', function(){
+// 		$(document).on('click', '.c_name', function(){
 			
-			let openWin = OpenWindow("/erp4/findCompany.do", "회사 찾기", 800, 500);
+// 			let openWin = OpenWindow("/erp4/findCompany.do", "회사 찾기", 800, 500);
 			
-		});
+// 		});
 		
 		
 

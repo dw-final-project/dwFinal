@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
 import org.apache.commons.io.IOUtils;
 import org.apache.tiles.autotag.core.runtime.annotation.Parameter;
 import org.slf4j.Logger;
@@ -342,22 +343,6 @@ public class MinjunController2 {
 		
 		return mnv;
 	}
-	
-//	@RequestMapping("/addAllEmp")
-//	public ModelAndView addAllEmp(ModelAndView mnv,String c_no, HttpSession session) throws SQLException {
-//		List<EmpVO> emp = null;
-//		Map<String, String> dataMap = new HashMap<>();
-//		c_no = (String) session.getAttribute("c_no");
-//		
-//		dataMap.put("c_no", c_no);
-//		
-//		
-//		
-//		mnv.addAllObjects(dataMap);
-//		mnv.addObject("emp", emp);
-//		
-//		return mnv;
-//	} 
 	
 	@RequestMapping("/findExtrapay")
 	public ModelAndView findExtrapay(ModelAndView mnv, String searchType, String keyword, HttpSession session) throws SQLException {
@@ -808,11 +793,12 @@ public class MinjunController2 {
 	public void registSal (HttpSession session, HttpServletResponse res, SalVO salVO, int[] emp_no, String[] sal_no, int[] realsumsal, String[] DED_001,
 						   String[] DED_006, String[] DED_009, String[] DED_010, String[] DED_011, String[] DED_012) throws Exception {
 		int sys_reg = Integer.parseInt(session.getAttribute("emp_no").toString());
+		String c_no = (String) session.getAttribute("c_no");
 		salVO.setSys_reg(sys_reg + "");
 		salVO.setSys_up(sys_reg + "");
-		
+		int amount = 0;
 		String sal_no2 = empsalService.insertSal(salVO);
-		
+		Map<String, Object> map = new HashMap<>();
 		for(int i= 0; i < emp_no.length; i++) {
 			SalDetailVO salDetail = new SalDetailVO();
 			
@@ -825,10 +811,13 @@ public class MinjunController2 {
 			salDetail.setEmp_no(emp_no[i]);
 			salDetail.setRealsumsal(realsumsal[i]);
 			salDetail.setSal_no(sal_no2);
-			
+			amount += realsumsal[i];
 			empsalService.insertSalDetail(salDetail);
 		}
-		
+		map.put("amount", amount);
+		map.put("c_no", c_no);
+		map.put("emp_no", sys_reg);
+		empsalService.tr(map);
 		res.setContentType("text/html; charset=utf-8");
 		PrintWriter out = res.getWriter();
 		out.println("<script>");
@@ -859,6 +848,27 @@ public class MinjunController2 {
 		
 		return entity;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/addAllEmp")
+	public ResponseEntity<List<Map<String, Object>>> addAllEmp(@RequestBody Map<String, Object> map, HttpSession session) throws SQLException {
+		ResponseEntity<List<Map<String, Object>>> entity = null;
+		
+		List<Map<String, Object>> empList = null;
+		String c_no = (String) session.getAttribute("c_no");
+		String salmonth = map.get("salmonth").toString();
+		empList = empsalService.allEmpList(c_no, salmonth);		
+		
+		try {
+			entity = new ResponseEntity<List<Map<String, Object>>>(empList, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<List<Map<String, Object>>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		
+		return entity;
+	} 
 	
 	@RequestMapping("/deleteSal.do")
 	public void deleteSal (HttpServletResponse res, HttpSession session, String sal_no_a) throws SQLException , Exception {

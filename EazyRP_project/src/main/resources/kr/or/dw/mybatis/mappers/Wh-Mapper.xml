@@ -32,7 +32,7 @@
 	
 	<!-- 셀렉트할때는 리절트타입 필요하고 insert delete 등할때는 파라미터 타입이 들어감 -->
 	<select id="selectSearchWhList" resultType="wh">
-		SELECT wd.wh_no
+		SELECT wh.wh_no
 		,MAX(wh.SYS_REGDATE) sys_regdate
 	    ,MAX((SELECT wh_name FROM WAREHOUSE WHERE wh_no = wd.WH_NO2)) wh_name
 	    ,MAX((SELECT E_NAME  FROM EMP WHERE EMP_NO = wh.EMP_NO)) e_name
@@ -42,21 +42,19 @@
 		FROM wh wh, WHDETAIL wd, emp emp
 		WHERE 1=1 
 		AND wh.enabled = 'y'
-		AND wh.WH_NO = wd.WH_NO
 		AND wh.emp_no = emp.emp_no
 		AND	wh.c_no = #{c_no}
 		<include refid="search"/>
-		GROUP BY wd.WH_NO
+		GROUP BY wh.WH_NO
 		ORDER BY sys_regdate DESC
 	</select>
 	
 	<select id="selectSearchWhListCount" resultType="int">
-		SELECT	COUNT(DISTINCT whd.wh_no)
-		FROM	wh wh, emp emp, company com, whdetail whd
+		SELECT	COUNT(DISTINCT wh.wh_no)
+		FROM	wh wh, emp emp, company com
 		WHERE	1=1
 		AND		wh.enabled = 'y'
 		AND		wh.emp_no = emp.emp_no
-		AND		wh.wh_no = whd.wh_no
 		AND 	wh.c_no = com.c_no 
 		AND		wh.c_no = #{c_no}
 		<include refid="search"/>

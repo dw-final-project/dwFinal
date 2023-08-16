@@ -47,7 +47,7 @@
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="unitprice" class="col-sm-3">단가</label>
-								<input type="text" id="unitprice" name="unitprice" class="form-control col-sm-9 mch8" value="${merchandise.UNITPRICE}" placeholder="단가를 입력하세요.">
+								<input type="text" id="unitprice" name="unitprice" readonly class="form-control col-sm-9 pr_inprice_receiver" value="${merchandise.UNITPRICE}" placeholder="단가를 입력하세요.">
 							</div>
 							<div class="form-group col-sm-12 row">
 								<label for="status" class="col-sm-3">판매상태</label>
@@ -71,7 +71,7 @@
 								<c:set var="endperiod">
 									<fmt:formatDate value="${merchandise.ENDPERIOD }" pattern="yyyy-MM-dd"></fmt:formatDate>
 								</c:set>
-								<input type="date" id="endperiod" name="endperiod" class="form-control col-sm-9 mch7" value="${endperiod }" placeholder="판매종료일을 입력하세요.">
+								<input type="date" id="endperiod" name="endperiod" readonly class="form-control col-sm-9 " value="${endperiod }" placeholder="판매종료일을 입력하세요.">
 							</div>
 						</form>
 					</div>
@@ -116,15 +116,6 @@
 				alert("빈 항목이 있습니다.");
 				return;
 			}
-			if($('.mch7').val() == "") {
-				alert("빈 항목이 있습니다.");
-				return;
-			}
-			if($('.mch8').val() == "") {
-				alert("빈 항목이 있습니다.");
-				return;
-			}
-			
 			form.submit();
 		});
 		
