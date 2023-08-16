@@ -18,7 +18,7 @@
 					<!-- 						onclick="javascript:OpenWindow('estimate_regist.do','견적서 등록', 600 ,800);">등록</button> -->
 					<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm2" method="post"
-							action="/erp4/siSelect.do?mcode=${mcode }"
+							action="/erp4/siSelect.do?mcode=${mcode }&murl=${murl }"
 							style="display: contents;">
 							<select class="form-control col-md-2" name="searchType"
 								id="searchType" style="font-size: 0.8em;">

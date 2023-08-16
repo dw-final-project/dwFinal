@@ -11,14 +11,14 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">공정 목록</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/erp4/process.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="/erp4/process.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
 							<select class="form-control col-md-2 custom-select" name="searchType" id="searchType" style="font-size: 0.8em;">
-								<option value="cto" ${searchType eq 'cto' ? 'selected' : '' }>코드 + 공정명 + 순번</option>
-								<option value="c" ${searchType eq 'c' ? 'selected' : '' }>공정코드</option>
-								<option value="t" ${searchType eq 't' ? 'selected' : '' }>공정명</option>
-								<option value="o" ${searchType eq 'o' ? 'selected' : '' }>순번</option>
+								<option value="cto" ${cri.searchType eq 'cto' ? 'selected' : '' }>코드 + 공정명 + 순번</option>
+								<option value="c" ${cri.searchType eq 'c' ? 'selected' : '' }>공정코드</option>
+								<option value="t" ${cri.searchType eq 't' ? 'selected' : '' }>공정명</option>
+								<option value="o" ${cri.searchType eq 'o' ? 'selected' : '' }>순번</option>
 							</select>
-							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${keyword}">
+							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${cri.keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">
 								<button class="btn btn-primary" type="button" id="searchBtn">
 									<i class="fa fa-fw fa-search" style="font-size: 0.8em; padding: 0px;"></i>

@@ -16,13 +16,13 @@
 					<div class="card-header" style="border-bottom: none; padding-bottom: 0px;">
 						<h2 class="card-title p-1">인사 발령</h2>
 						<div class="input-group row">
-						<form id="searchForm2" method="post" action="/pa/pa.do?mcode=${mcode }" style="font-size:0.9em; margin-left: 17%;">
+						<form id="searchForm2" method="post" action="/pa/pa.do?mcode=${mcode }&murl=${murl }" style="font-size:0.9em; margin-left: 17%;">
 							검색 구분 <select class="form-control col-md-2" name="searchType" id="searchType1" style="font-size: 0.8em; width: 10%; margin: 10px; display: inline;" >
 								<option value="all" ${cri.searchType eq 'all' ? 'selected' : '' }>전  체</option>
 								<option value="n" ${cri.searchType eq 'n' ? 'selected' : '' }>이름</option>
 								<option value="d" ${cri.searchType eq 'd' ? 'selected' : '' }>부서명</option>
 							</select>
-							<input class="form-control col-md-4" type="text" name="keyword" style="width: 15%; font-size: 0.8em; display: inline; margin-right: 10px;" placeholder="검색어를 입력하세요." value="${keyword}">
+							<input class="form-control col-md-4" type="text" name="keyword" style="width: 15%; font-size: 0.8em; display: inline; margin-right: 10px;" placeholder="검색어를 입력하세요." value="${cri.keyword}">
 							발령 날짜 <input type="date" value="${cri2.startDate }" id="startDate" name="startDate" style="margin: 10px; width:15%; display: inline; font-size: 0.9em;"class="form-control">
 							 ~ <input type="date" value="${cri2.endDate }" id="endDate" name="endDate" style="margin: 10px; width:15%; display: inline; font-size: 0.9em;"class="form-control">
 							<span class="input-group-append col-md-3" style=" padding: 0px; margin: 10px; display: inline;">
