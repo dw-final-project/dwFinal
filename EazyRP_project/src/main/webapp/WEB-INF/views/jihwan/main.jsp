@@ -23,7 +23,6 @@
 								<option value="d" ${cri.searchType eq 'd' ? 'selected' : '' }>거래처</option>
 								<option value="t" ${cri.searchType eq 't' ? 'selected' : '' }>담당자</option>
 								<option value="w" ${cri.searchType eq 'w' ? 'selected' : '' }>품목명</option>
-								<option value="p" ${cri.searchType eq 'p' ? 'selected' : '' }>진행상태</option>
 							</select>
 							<input class="form-control col-md-4" type="text" name="keyword" style="width: 60%; font-size: 0.8em" placeholder="검색어를 입력하세요." value="${cri.keyword}">
 							<span class="input-group-append col-md-3" style=" padding: 0px;">

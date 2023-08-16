@@ -66,7 +66,7 @@ public class BusinessController {
 	private MyMenuService mymenuService;
 	
 	@RequestMapping("/estimate")
-	public ModelAndView main(String mymenu, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException {
+	public ModelAndView main(String mymenu, ModelAndView mnv, String mcode, String murl, SearchCriteria cri) throws SQLException {
 		String url="";
 		System.out.println("1");
     	if(mymenu == null) {
@@ -77,6 +77,7 @@ public class BusinessController {
 		System.out.println("22");
 		Map<String, Object> dataMap = estimateService.selectEstimList(cri);
 		
+		mnv.addObject("murl", murl);
 		mnv.addObject("mcode", mcode);
 		mnv.setViewName(url);
 		mnv.addAllObjects(dataMap);
@@ -189,8 +190,6 @@ public class BusinessController {
 			warehouse = estimateService.getWareHouseList();
 		}
 		
-		System.out.println("findWareHoust : dataMap :" + dataMap);
-		System.out.println("findWareHoust : warehouse :" + warehouse);
 		mnv.setViewName(url);
 		mnv.addObject("warehouse",warehouse );
 		mnv.addObject("searchType", searchType);
@@ -248,7 +247,6 @@ public class BusinessController {
 		
 		vo.get(0).setFiles(filess);
 		vo.get(0).setRealFileName(fileRealName);
-		System.out.println(vo);
 		
 		estimateService.insertEstimate(vo);
 		
@@ -303,12 +301,10 @@ public class BusinessController {
 		List<EstimateVO> modify = new ArrayList<EstimateVO>();
 		EstimateVO est = estimateService.selectEst(est_no);
 		
-		System.out.println("q1");
 		String deleteFile = est.getFiles();
 		String empno = session.getAttribute("emp_no").toString();
 		String filess = "";
 		String fileRealName = "";
-		System.out.println("q2");
 		if(!multi.isEmpty()) {
 			UUID uuid = UUID.randomUUID();
 			String[] uuids = uuid.toString().split("-");
@@ -317,14 +313,12 @@ public class BusinessController {
 			
 			fileRealName = multi.getOriginalFilename();
 			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
-			System.out.println("q3");
 			
 			String uploadFolder = session.getServletContext().getRealPath("/resources/saveJihwan/");
 			
 			File delete = new File(uploadFolder + deleteFile);
 			delete.delete();
 			filess = uniqueName+fileExtension;
-			System.out.println("q4");
 			
 			
 			File saveFile = new File(uploadFolder+uniqueName+fileExtension);  // 적용 후
@@ -342,11 +336,9 @@ public class BusinessController {
 			}
 		}
 		
-		System.out.println(fc_no);
 		
 		for(int i= 0; i < pr_no.length; i++) {
 			EstimateVO est2 = new EstimateVO();
-			System.out.println(i + "번째 for - start");
 			
 			est2.setEmp_no(emp_no);
 			est2.setPr_no(pr_no[i]);
@@ -359,16 +351,13 @@ public class BusinessController {
 			est2.setEst_no(est_no);
 			est2.setPr_delete(pr_delete[i]);
 			modify.add(est2);	
-			System.out.println("est2 : " + est2);
 			
-			System.out.println(i + "번째 for - end");
 		}
 		
 		
 		modify.get(0).setFiles(filess);
 		modify.get(0).setRealFileName(fileRealName);
 		
-		System.out.println("모디파이입니다 : " + modify);
 		
 		estimateService.modifyEstimate(modify, empno);
 		
@@ -397,7 +386,7 @@ public class BusinessController {
 //	----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/siSelect")
-	public ModelAndView siSel(String mymenu, ModelAndView mnv ,String mcode, SearchCriteria cri) throws SQLException {
+	public ModelAndView siSel(String mymenu, ModelAndView mnv ,String mcode,String murl, SearchCriteria cri) throws SQLException {
 		String url="";
     	if(mymenu == null) {
 			url="jihwan/siSelect.page";
@@ -407,6 +396,7 @@ public class BusinessController {
     	
 		Map<String, Object> dataMap = siService.selectSiList(cri);
 		mnv.setViewName(url);
+		mnv.addObject("murl", murl);
 		mnv.addObject("cri",cri);
 		mnv.addObject("mcode",mcode);
 		mnv.addAllObjects(dataMap);
