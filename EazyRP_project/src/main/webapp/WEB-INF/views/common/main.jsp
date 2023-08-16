@@ -140,7 +140,7 @@
 								</font></td>
 								<td>
 									<font style="vertical-align: inherit;"> 
-										<font style="vertical-align: inherit;">
+										<font style="vertical-align: inherit; color: ${list.progress eq '입고 완료' ? 'blue' : ''}">
 											${list.progress }
 										</font>
 									</font>
