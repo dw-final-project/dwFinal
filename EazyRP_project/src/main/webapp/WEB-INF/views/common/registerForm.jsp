@@ -174,13 +174,13 @@ body {
 					<div class="form-group">
 						<div class="input-group inputText">
 							<span class="fa"><i class="fa fa-lock"></i></span><span style="width: 15px;"></span>
-							<input type="password" class="form-control" id="pwd" name="pwd" placeholder="PW" required="required">
+							<input type="password" class="form-control" id="pwd" name="pwd" style="font-size: 0.7em;" placeholder="영어 대소문자, 특수문자, 숫자 포함 9자~16자" required="required">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="input-group inputText">
 							<span class="fa"><i class="fa fa-lock"></i></span><span style="width: 15px;"></span>
-							<input type="password" class="form-control" id="pwdchk" name="pwchk" placeholder="PW check" required="required">
+							<input type="password" style="font-size: 0.7em;" class="form-control" id="pwdchk" name="pwchk" placeholder="PW check" required="required">
 						</div>
 					</div>
 					<div class="form-group">

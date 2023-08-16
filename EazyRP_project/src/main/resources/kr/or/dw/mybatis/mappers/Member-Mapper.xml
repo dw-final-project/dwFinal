@@ -57,5 +57,18 @@
 		WHERE id = #{id}
 	</update>
 
+	<select id="getMail" resultType="int">
+		SELECT COUNT(*)
+		  FROM member
+		 WHERE name= #{name, jdbcType=VARCHAR}
+		  AND email = #{email, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="getMail2" resultType="int">
+		SELECT COUNT(*)
+		  FROM member
+		 WHERE email= #{email, jdbcType=VARCHAR}
+		  AND id = #{id, jdbcType=VARCHAR}
+	</select>
 
 </mapper>

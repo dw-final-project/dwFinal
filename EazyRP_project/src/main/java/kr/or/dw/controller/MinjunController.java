@@ -58,7 +58,7 @@ public class MinjunController {
 	// Shop CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/shop")
-	public ModelAndView shopMain(String mymenu, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
+	public ModelAndView shopMain(String mymenu, String murl, ModelAndView mnv, String mcode, SearchCriteria cri) throws SQLException{
 		String url = "";
     	if(mymenu == null) {
 			url="/minjun/shop.page";
@@ -67,6 +67,7 @@ public class MinjunController {
 		}
 		Map<String, Object> dataMap = shopService.selectShopList(cri);
 		mnv.addObject("mcode", mcode);
+		mnv.addObject("murl", murl);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
 		
@@ -160,7 +161,7 @@ public class MinjunController {
 	// Merchandise CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/merchandise")
-	public ModelAndView merchandiseMain(String mymenu, String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
+	public ModelAndView merchandiseMain(String mymenu, String murl, String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
 		String url = "";
     	if(mymenu == null) {
 			url="/minjun/merchandise.page";
@@ -171,6 +172,7 @@ public class MinjunController {
 		//상품 조회
 		Map<String, Object> dataMap = merchandiseService.selectMerchandiseList(cri);
 		mnv.addObject("mcode", mcode);
+		mnv.addObject("murl", murl);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
 		
@@ -305,7 +307,7 @@ public class MinjunController {
 	// ORDER CRUD -----------------------------------------------------------------------------------------
 	
 	@RequestMapping("/order.do")
-	public ModelAndView orderMain(String mymenu, String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
+	public ModelAndView orderMain(String mymenu, String murl, String mcode, ModelAndView mnv, SearchCriteria cri) throws SQLException {
 		String url = "";
     	if(mymenu == null) {
 			url="/minjun/order.page";
@@ -316,6 +318,7 @@ public class MinjunController {
 		//주문 조회
 		Map<String, Object> dataMap = orderService.selectOrderList(cri);
 		mnv.addObject("mcode", mcode);
+		mnv.addObject("murl", murl);
 		mnv.addAllObjects(dataMap);
 		mnv.setViewName(url);
 		

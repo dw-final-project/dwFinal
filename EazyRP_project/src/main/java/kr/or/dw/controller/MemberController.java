@@ -3,6 +3,7 @@ package kr.or.dw.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -183,7 +184,32 @@ public class MemberController {
 			return mailService.joinEmail(email);
 					
 		};
-
+		
+	@RequestMapping("/mailChecked")
+	@ResponseBody
+	public String mail(String email, String name) throws SQLException {
+	    System.out.println(email);
+	    System.out.println(name);
+	    Map<String, String> map = new HashMap<>();
+	    map.put("email", email);
+	    map.put("name", name);
+	    int a = mailService.getMail(map);
+	    System.out.println(a);
+	    return Integer.toString(a); // int 값을 문자열로 변환하여 반환
+	}
+	
+	@RequestMapping("/mailChecked2")
+	@ResponseBody
+	public String mail2(String email, String id) throws SQLException {
+	    System.out.println(email);
+	    Map<String, String> map = new HashMap<>();
+	    map.put("email", email);
+	    map.put("id", id);
+	    int a = mailService.getMail2(map);
+	    System.out.println(a);
+	    return Integer.toString(a); // int 값을 문자열로 변환하여 반환
+	}
+	
 	// 회원가입 
 	@RequestMapping("/register")
 	public String register(MemberVO member, String domainselect, HttpServletRequest req, HttpServletResponse res) throws Exception{

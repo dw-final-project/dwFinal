@@ -154,7 +154,7 @@
 
 	$(document).on('click', '.pr_no', function(){
 		
-		let openWin = OpenWindow("/erp5/findProduct.do", "제품 찾기", 500, 500);
+		let openWin = OpenWindow("/erp5/findProduct.do", "제품 찾기", 700, 500);
 		
 	});
 	

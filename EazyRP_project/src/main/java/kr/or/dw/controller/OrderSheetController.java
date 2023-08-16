@@ -34,7 +34,7 @@ public class OrderSheetController {
 	private static final Logger logger = LoggerFactory.getLogger(OrderSheetController.class);
 	
 	@RequestMapping("/sale")
-	public ModelAndView sale(String mymenu, ModelAndView mnv, String mcode, HttpSession session, SearchCriteria cri) throws SQLException  {
+	public ModelAndView sale(String mymenu, ModelAndView mnv, String mcode, String murl,HttpSession session, SearchCriteria cri) throws SQLException  {
 		String url = "";
     	if(mymenu == null) {
 			url="jihwan/productSale.page";
@@ -51,6 +51,7 @@ public class OrderSheetController {
 		mnv.addObject("searchType", cri.getSearchType());
 		mnv.addObject("keyword", cri.getKeyword());
 		mnv.addObject("mcode", mcode);
+		mnv.addObject("murl", murl);
 		mnv.addAllObjects(map);
 		mnv.setViewName(url);
 		
