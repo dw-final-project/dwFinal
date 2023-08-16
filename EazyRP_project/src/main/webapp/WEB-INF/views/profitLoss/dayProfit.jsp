@@ -45,14 +45,14 @@
 					</div>
 					<div class="card-body pad" style="padding-top: 0px;">
 						<div>
-							<table style="font-size: 0.5em;" class="table table-borderd text-center">
-								<tr height="40px;" style="font-size: 12px; background-color: #dddddd; font-weight: bold;">
+						<table style="font-size: 0.5em; margin-bottom: 0px;" class="table table-borderd text-center">
+							<tr height="40px;" style="font-size: 11px; background-color: #dddddd; font-weight: bold;">
 										<td style="color: ${prevAmount > 0 ? 'blue' : 'red' };"></td>
 										<td colspan="2" style="">선택한 날짜 범위 : ${cri2.startDate } ~ ${cri2.endDate }</td>
 										<td style="color: ${total > 0 ? 'blue' : 'red' };">총 손익 금액 : ${total }원</td>
 										<td style="color: ${prevAmount > 0 ? 'blue' : 'red' };">전월 대비 : ${prevAmount }원</td>
 										<td style="color: ${total > 0 ? 'blue' : 'red' };"></td>
-									</tr>
+								</tr>
 								<tr height="40px;">
 									<th width="16%" style="text-align: center;">발생 일자</th>
 									<th width="16%" style="text-align: center;">발생 구분</th>
@@ -61,19 +61,22 @@
 									<th width="16%" style="text-align: center;">손익</th>
 									<th width="16%" style="text-align: center;">상세정보</th>
 								</tr>
+						</table>
+							<div style="height: 400px; overflow: auto;">
+							<table style="font-size: 0.5em;" class="table table-borderd text-center">
 									<c:forEach items="${list}" var="list" varStatus="var">
-									<tr height="40px;">
-										<td style="text-align: center;">${list.sys_regdate }</td>
-										<td style="text-align: center;">${gb.get(var.index) }</td>
-										<td style="text-align: center;">${list.unitprice }원</td>
-										<td style="text-align: center;">${list.saleprice }원</td>
-										<td style="text-align: center; color: ${list.amount > 0 ? 'blue' : 'red'}">${list.amount}원</td>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('${list.pr_url }', '상세 조회', 700, 1000)">${list.th_no}</a></td>
-									</tr>
+										<tr height="40px;">
+											<td width="16%" style="text-align: center;">${list.sys_regdate }</td>
+											<td width="16%" style="text-align: center;">${gb.get(var.index) }</td>
+											<td width="16%" style="text-align: center;">${list.unitprice }원</td>
+											<td width="16%" style="text-align: center;">${list.saleprice }원</td>
+											<td width="16%" style="text-align: center; color: ${list.amount > 0 ? 'blue' : 'red'}">${list.amount}원</td>
+											<td width="16%" style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('${list.pr_url }', '상세 조회', ${gb.get(var.index) eq '급여 제공' ? '1200' : '700' }, 1000)">${list.th_no}</a></td>
+										</tr>
 									</c:forEach>
-									
 							</table>
 							<div class="card-footer">
+							</div>
 							</div>
 						</div>
 					</div>

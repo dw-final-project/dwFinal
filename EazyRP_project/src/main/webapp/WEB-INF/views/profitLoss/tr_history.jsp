@@ -56,7 +56,7 @@
 										<td style="text-align: center;">${list.unitprice }원</td>
 										<td style="text-align: center;">${list.saleprice }원</td>
 										<td style="text-align: center; color: ${list.amount > 0 ? 'blue' : 'red'}">${list.amount}원</td>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('${list.pr_url }', '상세 조회', 700, 1000)">${list.th_no}</a></td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('${list.pr_url }', '상세 조회', ${gb.get(var.index) eq '급여 제공' ? '1200' : '700' }, 1000)">${list.th_no}</a></td>
 									</tr>
 									</c:forEach>
 							</table>
@@ -80,7 +80,9 @@
 	$('#searchBtn').on('click', function(){
 		var startDateInput = $("#startDate").val();
 	    var endDateInput = $("#endDate").val();
-
+		alert(startDateInput);
+		alert(endDateInput);
+	   
 	    var startDate = new Date(startDateInput);
 	    var endDate = new Date(endDateInput);
 

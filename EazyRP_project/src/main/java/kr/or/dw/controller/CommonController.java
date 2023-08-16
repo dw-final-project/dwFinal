@@ -147,7 +147,7 @@ public class CommonController {
 		LocalDate today = LocalDate.now();
 		List<String> month = new ArrayList<>();
 		List<String> month2 = new ArrayList<>();
-		for(int i = 13; i >= 1; i--) {
+		for(int i = 12; i >= 1; i--) {
 			LocalDate lastMonth = today.minusMonths(i);
 	        int lastMonthYear = lastMonth.getYear();
 	        int lastMonthMonth = lastMonth.getMonthValue();
@@ -155,7 +155,7 @@ public class CommonController {
 	        month.add(insert);
 		}
 		
-		for(int i = 13; i >= 1; i--) {
+		for(int i = 12; i >= 1; i--) {
 			LocalDate lastMonth = today.minusMonths(i);
 	        int lastMonthYear = lastMonth.getYear() - 1;
 	        int lastMonthMonth = lastMonth.getMonthValue();

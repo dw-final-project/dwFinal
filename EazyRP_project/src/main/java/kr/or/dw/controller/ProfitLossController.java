@@ -41,6 +41,9 @@ public class ProfitLossController {
 	public ModelAndView profit(String mymenu, ModelAndView mnv,String murl, String mcode, SearchCriteria2 cri2, SearchCriteria cri, HttpSession session) throws SQLException {
 		Map<String, Object> plVo = new HashMap<>();
 		String c_no = (String) session.getAttribute("c_no");
+		System.out.println("날짜````");
+		System.out.println(cri2.getStartDate());
+		System.out.println(cri2.getEndDate());
 		if(cri2.getStartDate().equals("")) {
 			LocalDate now = LocalDate.now();
 		    LocalDate yearAndMonth = LocalDate.of(now.getYear(), now.getMonthValue(), 1);
@@ -82,6 +85,9 @@ public class ProfitLossController {
 		Map<String, Object> plVo = new HashMap<>();
 		System.out.println("컨트롤러 엔드데이트임" + cri2.getEndDate());
 		String c_no = (String) session.getAttribute("c_no");
+		System.out.println("날짜````");
+		System.out.println(cri2.getStartDate());
+		System.out.println(cri2.getEndDate());
 		if(cri2.getStartDate().equals("")) {
 			LocalDate now = LocalDate.now();
 			
@@ -132,6 +138,9 @@ public class ProfitLossController {
 	public ModelAndView tr_history(String mymenu, ModelAndView mnv,String murl, String mcode, SearchCriteria2 cri2, SearchCriteria cri, HttpSession session) throws SQLException {
 		Map<String, Object> plVo = new HashMap<>();
 		String c_no = (String) session.getAttribute("c_no");
+		System.out.println("날짜````");
+		System.out.println(cri2.getStartDate());
+		System.out.println(cri2.getEndDate());
 		if(cri2.getStartDate().equals("")) {
 			LocalDate now = LocalDate.now();
 			

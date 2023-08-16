@@ -44,6 +44,10 @@
 	<input type="hidden" name="perPageNum">
 	<input type="hidden" name="searchType">
 	<input type="hidden" name="keyword">
+	<div style="display: none;">
+	<input type="date" name="startDate" id="sd">
+	<input type="date" name="endDate" id="ed">
+	</div>
 </form>
 <script>
 	function searchList_go(page, url){
@@ -61,6 +65,11 @@
 		if($('select[name="perPageNum"]').val()){
 			perPageNum = $('select[name="perPageNum"]').val();
 		}
+		var startDateInput = $("#startDate").val();
+		var endDateInput = $("#endDate").val();
+		
+		$('#sd').val($("#startDate").val());
+		$('#ed').val($("#endDate").val());
 		
 		let searchForm = $('#searchForm');
 		searchForm.find('[name="page"]').val(page);
