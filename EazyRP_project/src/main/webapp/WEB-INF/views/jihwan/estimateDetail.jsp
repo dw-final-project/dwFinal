@@ -183,7 +183,7 @@ window.onload = function(){
 	let fc_no = "${est.FC_NO}";
 	$('#fc-select').val(fc_no);
 	$('select#fc-select').find('option[value="' + fc_no + '"]').attr('selected', 'selected');
-	console.log(fc_no);
+	
 	
 	let formObj = $('form[role="form"]');
 
@@ -194,7 +194,6 @@ window.onload = function(){
 			'method' : 'post'
 // 			'enctype' : 'multipart/form-data'
 		});
-		console.log($('form[role="form"]').serializeArray());
 		
 		alert($('tr[id="trChk"]').get().length);
 		
@@ -252,7 +251,6 @@ window.onload = function(){
 <script>
 let rownumList = $('.rownum');
 let cnt = rownumList.length; 
-console.log(cnt);
 let dtail_no = $('#dtail_no').val();
 
 $('#file2').on('change', function(){
@@ -327,10 +325,6 @@ $('tr').on('click', function(){
 	// 수량 이벤트
 	$(document).on('keyup', '.quantity', function(){
 // 		let quantity = $(this).val();
-		console.log($(this).val());
-		console.log($(this).next().val().split(' 원')[0]);
-		console.log(typeof $(this).val());
-		console.log(typeof $(this).next().val().split(' 원')[0]);
 		$(this).parent().next().children().val($(this).val()*$(this).next().val().split(' 원')[0]);
 	})
 	
