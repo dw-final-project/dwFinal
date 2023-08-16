@@ -70,7 +70,6 @@
 	<update id="modifyAs">
 		UPDATE asmanage SET 
 							repairdate = #{repairdate},
-							compldate = #{compldate},
 							progress = #{progress},
 							asprice = #{asprice},
 							content = #{content},
