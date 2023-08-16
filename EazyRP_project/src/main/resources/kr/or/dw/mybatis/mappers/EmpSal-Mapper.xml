@@ -443,7 +443,8 @@
 		SELECT COUNT(*)
 		  FROM dept
 		  WHERE 1=1
-		  <include refid="dedsearch"/>
+		   AND enabled = 'YES'
+		  <include refid="deptsearch"/>
 	</select>
 	
 	<insert id="insertDept" parameterType="deduction">
