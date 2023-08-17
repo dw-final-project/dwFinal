@@ -167,14 +167,14 @@
 
 
 		$(document).on('click', '.pr_name', function(){
-			let openWin = OpenWindow("/erp5/findMerchandise.do", "제품 찾기", 800, 600);
+			let openWin = OpenWindow("<%= request.getContextPath() %>/erp5/findMerchandise.do", "제품 찾기", 800, 600);
 			console.log("sp_no 밸류 " + $('#sp_no_receiver').val());
 			
 		});
 		
 		$(document).on('click', '.s_name', function(){
 			
-			let openWin = OpenWindow("/erp5/findShop.do", "쇼핑몰 찾기", 800, 600);
+			let openWin = OpenWindow("<%= request.getContextPath() %>/erp5/findShop.do", "쇼핑몰 찾기", 800, 600);
 			
 		});
 	}

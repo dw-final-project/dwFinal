@@ -218,19 +218,19 @@
 
 		$(document).on('click', '.c_name', function(){
 			
-			let openWin = OpenWindow("/management/findCompany.do", "업체명 찾기", 500, 500);
+			let openWin = OpenWindow("<%= request.getContextPath() %>/management/findCompany.do", "업체명 찾기", 500, 500);
 			
 		});
 		
 		$(document).on('click', '.dname', function(){
 			
-			let openWin = OpenWindow("/management/findDept.do", "부서명 찾기", 500, 500);
+			let openWin = OpenWindow("<%= request.getContextPath() %>/management/findDept.do", "부서명 찾기", 500, 500);
 			
 		});
 		
 		$(document).on('click', '.e_name2', function(){
 			let c_no = $('#c_no').val();
-			let openWin = OpenWindow("/management/findEmp.do?c_no=" + c_no, "사원 찾기", 500, 500);
+			let openWin = OpenWindow("<%= request.getContextPath() %>/management/findEmp.do?c_no=" + c_no, "사원 찾기", 500, 500);
 			
 		});
 		

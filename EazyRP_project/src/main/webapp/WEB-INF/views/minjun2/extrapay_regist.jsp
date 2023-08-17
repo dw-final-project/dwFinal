@@ -15,7 +15,7 @@
 						<h3 class="card-title p-1">수당 등록</h3>
 					</div>
 					<div class="card-body pad">
-						<form role="form" method="post" action="/management/insertExtrapay.do" name="registForm" enctype="multipart/form-data">
+						<form role="form" method="post" action="<%= request.getContextPath() %>/management/insertExtrapay.do" name="registForm" enctype="multipart/form-data">
 							<div class="form-group col-sm-12 row">
 								<label for="ep_no" class="col-sm-2">수당코드</label>
 								<input type="text" id="ep_no" class="form-control col-sm-3" value="" placeholder="수당코드" readonly>

@@ -19,7 +19,7 @@
 <div class="card-body pad">
 	<div>
 	<div class="input-group row" style="width: 100%; margin: 0px 0px 20px 0px; justify-content: center;">
-		<form method="post" id="searchForm" action="/erp4/contactRegistForm.do" style="display: contents;">
+		<form method="post" id="searchForm" action="<%= request.getContextPath() %>/erp4/contactRegistForm.do" style="display: contents;">
 			<select class="form-control" name="searchType" id="searchType" style="font-size: 0.8em; width: 30%;">
 				<option value="cwap" ${searchType eq 'cwap' ? 'selected' : '' }>전  체</option>
 				<option value="w" ${searchType eq 'w' ? 'selected' : '' }>대표명</option>
@@ -58,7 +58,7 @@
 	</div>
 </div>
 </div>
-<form method="post" id="cnoForm" action="/erp4/contactRegist.do" style="display: none;">
+<form method="post" id="cnoForm" action="<%= request.getContextPath() %>/erp4/contactRegist.do" style="display: none;">
 	<input type="hidden" name="c_no" value="">
 </form>
 </body>

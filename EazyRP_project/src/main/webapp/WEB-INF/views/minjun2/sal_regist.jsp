@@ -445,7 +445,7 @@
 			let c_no = $('#c_no').val();
 			let idVal = $(this).attr("id");
 			$('#cnt').val(idVal);
-			let openWin = OpenWindow("/management/findEmp.do?c_no=" + c_no, "사원 찾기", 600, 700);
+			let openWin = OpenWindow("<%= request.getContextPath() %>/management/findEmp.do?c_no=" + c_no, "사원 찾기", 600, 700);
 		});
 		
 		//첫번째 tr 사원삭제버튼
