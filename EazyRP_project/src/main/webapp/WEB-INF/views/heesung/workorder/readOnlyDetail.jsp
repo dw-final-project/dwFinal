@@ -290,7 +290,7 @@ $('tr').on('click', function(){
 	$(document).on('click', '.wh_names', function(){
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
+		let openWin = OpenWindow("<%=request.getContextPath() %>/erp4/findWareHouse.do","창고 찾기", 500,500);
 	})
 	
 	// 수량 이벤트

@@ -11,7 +11,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">생산입고 목록</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/erp4/wh.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
+						<form id="searchForm2" method="post" action="<%=request.getContextPath() %>/erp4/wh.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
 							<select class="form-control col-md-2 custom-select" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="ne" ${cri.searchType eq 'ne' ? 'selected' : '' }>코드번호 + 담당자</option>
 								<option value="n" ${cri.searchType eq 'n' ? 'selected' : '' }>코드번호</option>
@@ -49,7 +49,7 @@
 									<tr>
 										<td style="text-align: center;"><fmt:formatDate value="${wh.sys_regdate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 										<td style="text-align: center;">
-											<a id="whDetailBtn" href="#" onclick="detailOpenWindow('/erp4/wh/detail.do?wh_no=${wh.wh_no}', '생산입고 상세정보', 700, 1000)">
+											<a id="whDetailBtn" href="#" onclick="detailOpenWindow('<%=request.getContextPath() %>/erp4/wh/detail.do?wh_no=${wh.wh_no}', '생산입고 상세정보', 700, 1000)">
 												${wh.wh_no}
 											</a>
 										</td>
@@ -68,7 +68,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="registOpenWindow('/erp4/wh/registForm.do', '생산입고 등록', 700, 1000)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="registOpenWindow('<%=request.getContextPath() %>/erp4/wh/registForm.do', '생산입고 등록', 700, 1000)"
 					style="width: 100px; margin: 20px; align-self: center;">등록</button>
 				</div>
 			</div>

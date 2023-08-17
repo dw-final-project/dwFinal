@@ -11,7 +11,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">받은 쪽지함</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/mymenu/noteList.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="<%=request.getContextPath() %>/mymenu/noteList.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="tcw" ${searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
 								<option value="t" ${searchType eq 't' ? 'selected' : '' }>제  목</option>
@@ -43,7 +43,7 @@
 										<td id="read_${loop.index}" style="text-align: center; height:80%; font-weight:bold; font-size: 0.6em; color: ${note.readable == 'N' ? 'red' : 'blue' };">
 										${note.readable == 'N' ? '안읽음' : '읽음' }
 										</td>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/mymenu/detail.do?n_no=${note.n_no }&send=N', '쪽지보기', 700, 1000, '${loop.index}')">${note.title }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('<%=request.getContextPath() %>/mymenu/detail.do?n_no=${note.n_no }&send=N', '쪽지보기', 700, 1000, '${loop.index}')">${note.title }</a></td>
 										<td style="text-align: center;">${note.callerName }</td>
 										<td style="text-align: center;">${note.c_cname }</td>
 										<td style="text-align: center;">${note.files == "" || note.files == null ? "N" : "Y" }</td>
@@ -58,7 +58,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/mymenu/communication.do', '쪽지쓰기', 700, 1000)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('<%=request.getContextPath() %>/mymenu/communication.do', '쪽지쓰기', 700, 1000)"
 					style="width: 100px; margin: 20px; align-self: center;">쪽지 쓰기</button>
 				</div>
 			</div>

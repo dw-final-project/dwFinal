@@ -98,7 +98,7 @@
 	            	<div style="display: flex;">
 	            		<c:if test="${wh.PROGRESS eq '0'}">
 			            	<input type="text" style="width: 78%;" value="${wh.WO_NAME }" id="wo_name"
-								readonly onclick="OpenWindow('/erp4/findWorkOrder.do', '작업지시서 찾기', 400, 600)">
+								readonly onclick="OpenWindow('<%=request.getContextPath() %>/erp4/findWorkOrder.do', '작업지시서 찾기', 400, 600)">
 	            		</c:if>
 	            		<c:if test="${wh.PROGRESS ne '0'}">
 			            	<input type="text" style="width: 78%;" value="${wh.WO_NAME }" id="wo_name"
@@ -113,7 +113,7 @@
 	            <td width="100%">
 		        	<input type="hidden" id="receiver" name="emp_no" value="${wh.EMP_NO }">
 		        	<c:if test="${wh.PROGRESS eq '0'}">
-	            		<input type="text" style="width: 100%;" value="${wh.C_NAME } / ${wh.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
+	            		<input type="text" style="width: 100%;" value="${wh.C_NAME } / ${wh.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('<%=request.getContextPath() %>/mymenu/findPeople.do', '사람찾기', 400, 600)">
 	            	</c:if>
 	            	<c:if test="${wh.PROGRESS ne '0'}">
 	            		<input type="text" style="width: 100%;" value="${wh.C_NAME } / ${wh.E_NAME }" id="name" name="name" readonly>
@@ -257,14 +257,14 @@ window.onload = function(){
 	$('#progressBtn').on('click', function(){
 		if($('input[name="progress"]').val() == '1') {
 			if(confirm('불량 등록을 하시겠습니까?')) {
-				formObj.attr('action', '/erp4/insertError.do');
+				formObj.attr('action', '<%=request.getContextPath() %>/erp4/insertError.do');
 				formObj.submit();
 			} else{
-				formObj.attr('action', '/erp4/updateBtn.do');
+				formObj.attr('action', '<%=request.getContextPath() %>/erp4/updateBtn.do');
 				formObj.submit();
 			}
 		} else{
-			formObj.attr('action', '/erp4/updateBtn.do');
+			formObj.attr('action', '<%=request.getContextPath() %>/erp4/updateBtn.do');
 			formObj.submit();
 		}
 	})
@@ -287,7 +287,7 @@ window.onload = function(){
 	// 작업지시서 상세보기 버튼 클릭 이벤트
 	$(document).on('click', '#woDetailOpenBtn', function() {
 		let wo_number = $('input[type="hidden"]#wo_no').val();
-		let openWin = OpenWindow("/erp4/selectWorkOrderDetail.do?wo_no=" + wo_number, "작업지시서 상세보기", 600, 800);
+		let openWin = OpenWindow("<%=request.getContextPath() %>/erp4/selectWorkOrderDetail.do?wo_no=" + wo_number, "작업지시서 상세보기", 600, 800);
 	})
 	
 }
@@ -336,7 +336,7 @@ $('#addPutBtn').on('click', function(){
 		let idVal = $(this).parents("tr").find(".rownum").val();
 		console.log(idVal);
 		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findMakeProduct.do", "제품 찾기", 500, 500);
+		let openWin = OpenWindow("<%=request.getContextPath() %>/erp4/findMakeProduct.do", "제품 찾기", 500, 500);
 		
 	});
 	
@@ -355,7 +355,7 @@ $('#addPutBtn').on('click', function(){
 	$(document).on('click', '.wh_names', function(){
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
+		let openWin = OpenWindow("<%=request.getContextPath() %>/erp4/findWareHouse.do","창고 찾기", 500,500);
 	})
 	
 	// 가격 * 수량 = 합계
@@ -387,7 +387,7 @@ $('#addPutBtn').on('click', function(){
 	$(document).on('click', '.fac_names', function() {
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findFactory.do", "공장 찾기", 800, 600);
+		let openWin = OpenWindow("<%=request.getContextPath() %>/erp4/findFactory.do", "공장 찾기", 800, 600);
 	})
 	
 

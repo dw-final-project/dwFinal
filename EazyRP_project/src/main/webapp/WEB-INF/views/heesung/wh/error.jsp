@@ -69,7 +69,7 @@
 
 <body>
     <h2>불량제품 등록</h2>
-<form role="form" method="post" enctype="multipart/form-data" action="/erp4/insertError2.do">
+<form role="form" method="post" enctype="multipart/form-data" action="<%=request.getContextPath() %>/erp4/insertError2.do">
 	<div class="card-footer">
 		<button type="submit" id="errorBtn" class="btn btn-primary">등록</button>
 		<button type="button" id="closeBtn" class="btn btn-warning">닫기</button>
