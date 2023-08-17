@@ -99,7 +99,7 @@
 	            <td width="40%" align="center"><b>담당자</b></td>
 	            <td width="100%">
 	            	<input type="hidden" id="receiver" name="emp_no" value="${wo.EMP_NO }">
-	            	<input type="text" style="width: 100%;" value="${wo.C_NAME } / ${wo.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
+	            	<input type="text" style="width: 100%;" value="${wo.C_NAME } / ${wo.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('<%=request.getContextPath() %>/mymenu/findPeople.do', '사람찾기', 400, 600)">
 	            </td>
 	        </tr>
 	        <tr>
@@ -236,7 +236,7 @@ window.onload = function(){
 	
 	$('#progressBtn').on('click', function(){
 		if(confirm('상태를 변경 하시겠습니까?')) {
-			formObj.attr('action', '/erp4/updateWorkOrderProgress.do');
+			formObj.attr('action', '<%=request.getContextPath() %>/erp4/updateWorkOrderProgress.do');
 			formObj.submit();
 		}
 	})
@@ -303,7 +303,7 @@ $('tr').on('click', function(){
 		let idVal = $(this).parents("tr").find(".rownum").val();
 		console.log(idVal);
 		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findMakeProduct.do", "제품 찾기", 500, 500);
+		let openWin = OpenWindow("<%=request.getContextPath() %>/erp4/findMakeProduct.do", "제품 찾기", 500, 500);
 		
 	});
 	
@@ -322,14 +322,14 @@ $('tr').on('click', function(){
 	$(document).on('click', '.fac_names', function() {
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findFactory.do", "공장 찾기", 800, 600);
+		let openWin = OpenWindow("<%=request.getContextPath() %>/erp4/findFactory.do", "공장 찾기", 800, 600);
 	})
 	
 	//창고코드 이벤트
 	$(document).on('click', '.wh_names', function(){
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
+		let openWin = OpenWindow("<%=request.getContextPath() %>/erp4/findWareHouse.do","창고 찾기", 500,500);
 	})
 	
 	// 수량 이벤트

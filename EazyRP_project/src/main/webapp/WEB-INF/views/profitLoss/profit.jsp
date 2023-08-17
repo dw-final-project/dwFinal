@@ -16,7 +16,7 @@
 					<div class="card-header" style="border-bottom: none; padding-bottom: 0px;">
 						<h2 class="card-title p-1">손익 발생 내역 조회</h2>
 						<div class="input-group row">
-						<form id="searchForm2" method="post" action="/profitLoss/profit.do?mcode=${mcode }&murl=${murl }" style="font-size:0.9em; margin-left: 33%;">
+						<form id="searchForm2" method="post" action="<%=request.getContextPath()%>/profitLoss/profit.do?mcode=${mcode }&murl=${murl }" style="font-size:0.9em; margin-left: 33%;">
 							손익 구분 <select class="form-control col-md-2" name="searchType1" id="searchType1" style="font-size: 0.8em; width: 10%; margin: 10px; display: inline;" >
 								<option value="all" ${cri2.searchType1 eq 'all' ? 'selected' : '' }>전  체</option>
 								<option value="l" ${cri2.searchType1 eq 'l' ? 'selected' : '' }>손해 내역</option>
@@ -53,7 +53,7 @@
 										<td style="text-align: center; color: ${amount > 0 ? 'blue' : 'red'}">${amount} 원</td>
 										<td style="text-align: center;">${amount3.get(var.index) }원</td>
 										<td style="text-align: center; color: ${b.get(var.index) > 0 ? 'blue' : 'red'}">${b.get(var.index) }원</td>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/profitLoss/openMonth.do?month=${month.get(var.index)}', '상세 조회', 900, 500)">상세조회</a></td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('<%=request.getContextPath()%>/profitLoss/openMonth.do?month=${month.get(var.index)}', '상세 조회', 900, 500)">상세조회</a></td>
 									</tr>
 								</c:forEach>
 									

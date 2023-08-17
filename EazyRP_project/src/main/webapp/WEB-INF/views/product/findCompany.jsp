@@ -19,7 +19,7 @@
 <div class="card-body pad">
 	<div>
 	<div class="input-group row" style="width: 100%; margin: 0px 0px 20px 0px; justify-content: center;">
-		<form method="post" id="searchForm" action="/product/findCompany.do" style="display: contents;">
+		<form method="post" id="searchForm" action="<%= request.getContextPath()%>/product/findCompany.do" style="display: contents;">
 			<input class="form-control" type="text" name="keyword" style="width: 50%; font-size: 0.8em" placeholder="업체명 검색" value="${keyword}">
 				<button class="btn btn-primary" type="button" id="searchBtn">
 					<i class="fa fa-fw fa-search" style="font-size: 0.8em; padding: 0px;"></i>

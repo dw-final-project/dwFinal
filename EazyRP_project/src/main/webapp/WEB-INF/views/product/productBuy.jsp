@@ -11,7 +11,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">제품 구매 내역</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/product/productBuy.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
+						<form id="searchForm2" method="post" action="<%=request.getContextPath()%>/product/productBuy.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="tcw" ${cri.searchType eq 'tcw' ? 'selected' : '' }>전  체</option>
 								<option value="t" ${cri.searchType eq 't' ? 'selected' : '' }>작성자</option>
@@ -37,7 +37,7 @@
 								</tr>
 									<c:forEach items="${note}" var="note">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/product/buyDetail.do?sheet_no=${note.sheet_no}', '구매내역 상세조회', 600, 600)">${note.pr_name }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('<%=request.getContextPath()%>/product/buyDetail.do?sheet_no=${note.sheet_no}', '구매내역 상세조회', 600, 600)">${note.pr_name }</a></td>
 										<td style="text-align: center;">${note.sys_regdate }</td>
 										<td style="text-align: center;">${note.e_name }</td>
 										<td style="text-align: center;">${note.price } 원</td>
@@ -51,7 +51,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/product/productBuyRegist.do', '구매 내역 추가', 600, 700)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('<%=request.getContextPath()%>/product/productBuyRegist.do', '구매 내역 추가', 600, 700)"
 					style="width: 100px; margin: 20px; align-self: center; font-size: 0.7em;">구매 내역 추가</button>
 				</div>
 			</div>
@@ -59,7 +59,7 @@
 		</div>
 	</section>
 	
-<script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
+<script src="<%= request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 	
 <script>
 		

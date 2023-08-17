@@ -18,7 +18,7 @@
 					<!-- 						onclick="javascript:OpenWindow('estimate_regist.do','견적서 등록', 600 ,800);">등록</button> -->
 					<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm2" method="post"
-							action="/erp4/siSelect.do?mcode=${mcode }&murl=${murl }"
+							action="<%=request.getContextPath()%>/erp4/siSelect.do?mcode=${mcode }&murl=${murl }"
 							style="display: contents;">
 							<select class="form-control col-md-2" name="searchType"
 								id="searchType" style="font-size: 0.8em;">
@@ -56,7 +56,7 @@
 							<c:forEach items="${siList }" var="si">
 								<tr style="font-size: 1em; text-align: center;">
 									<td><a
-										href="javascript:OpenWindow('siDetail.do?si_no=${si.SI_NO }','출하지시서 조회', 600 ,700);">${si.SI_NO }</a></td>
+										href="javascript:OpenWindow('<%=request.getContextPath()%>siDetail.do?si_no=${si.SI_NO }','출하지시서 조회', 600 ,700);">${si.SI_NO }</a></td>
 									<td>${si.WH_NAME }</td>
 									<td><fmt:formatDate value="${si.SYS_REGDATE }"
 											pattern="yyyy-MM-dd"></fmt:formatDate></td>
@@ -78,7 +78,7 @@
 			</div>
 			<div style="display: flex; align-items: end; justify-content: end;">
 				<button type="button" class="btn btn-primary" id=""
-				onclick="javascript:OpenWindow('si_regist.do','출하지시서 등록', 600 ,800);"
+				onclick="javascript:OpenWindow('<%=request.getContextPath()%>/si_regist.do','출하지시서 등록', 600 ,800);"
 					style="width: 110px; heigth: 20px; margin: 10px; font-size: 0.8em; align-self: center;">출하 등록</button>
 			</div>
 		</div>

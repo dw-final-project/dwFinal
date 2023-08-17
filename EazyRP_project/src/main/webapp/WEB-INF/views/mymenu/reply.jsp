@@ -18,7 +18,7 @@
 						</div>
 					</div>
 					<div class="card-body pad">
-						<form role="form" method="post" action="/mymenu/noteRegist.do" name="registForm">
+						<form role="form" method="post" action="<%=request.getContextPath()%>/mymenu/noteRegist.do" name="registForm">
 							<div class="form-group">
 								<label for="title">제 목</label>
 								<input type="text" id="title" name="title" class="form-control" placeholder="제목을 입력하세요.">

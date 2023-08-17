@@ -158,7 +158,7 @@ body {
 				<h4 class="modal-title">PW 재설정</h4>
 			</div>
 			<div class="modal-body">
-				<form role="PWrenewForm" id="PWrenewForm" action="/member/PWrenew.do" method="post">
+				<form role="PWrenewForm" id="PWrenewForm" action="<%=request.getContextPath()%>/member/PWrenew.do" method="post">
 					<input type="hidden" name="id" value="${id }">
 					<div class="form-group">
 						<div class="input-group">

@@ -11,7 +11,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">기안문 조회</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/management/payment.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
+						<form id="searchForm2" method="post" action="<%= request.getContextPath()%>/management/payment.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${cri.searchType eq 'all' ? 'selected' : '' }>전  체</option>
 								<option value="d" ${cri.searchType eq 'd' ? 'selected' : '' }>서류구분</option>
@@ -47,7 +47,7 @@
 											</c:if>
 										</td>
 										<td style="text-align: center;">${dr.sys_regdate }</td>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/management/detail.do?dr_no=${dr.dr_no }&send=N', '기안문 조회', 700, 1000, '${loop.index}')">${dr.title }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('<%= request.getContextPath()%>/management/detail.do?dr_no=${dr.dr_no }&send=N', '기안문 조회', 700, 1000, '${loop.index}')">${dr.title }</a></td>
 										<td style="text-align: center;">${dr.gb }</td>
 										<td style="text-align: center;">${dr.e_name}</td>
 										<td id="read_${loop.index}" style="text-align: center; height:80%; font-weight:bold; font-size: 0.6em; color: 
@@ -87,7 +87,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/management/documentRegist.do', '기안문작성', 700, 1000)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('<%= request.getContextPath()%>/management/documentRegist.do', '기안문작성', 700, 1000)"
 					style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">기안문 작성</button>
 				</div>
 			</div>
@@ -95,7 +95,7 @@
 		</div>
 	</section>
 	
-<script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
+<script src="<%= request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 	
 <script>
 		

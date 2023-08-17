@@ -154,7 +154,7 @@ body {
 				<h4 class="modal-title">비밀번호 찾기</h4>
 			</div>
 			<div class="modal-body">
-				<form id="pwFindForm" action="/member/PWfind.do" method="post">
+				<form id="pwFindForm" action="<%=request.getContextPath()%>/member/PWfind.do" method="post">
 					<div class="form-group">
 						<div class="input-group inputText">
 							<span class="input-group-addon"><i class="fa fa-user"></i></span>

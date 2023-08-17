@@ -103,7 +103,7 @@
 	            <td width="40%" align="center"><b>담당자</b></td>
 	            <td width="100%">
 	            	<input type="hidden" id="receiver" name="emp_no" value="${wht.EMP_NO }">
-	            	<input type="text" style="width: 100%;" value="${wht.C_NAME } / ${wht.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
+	            	<input type="text" style="width: 100%;" value="${wht.C_NAME } / ${wht.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('<%=request.getContextPath() %>/mymenu/findPeople.do', '사람찾기', 400, 600)">
 	            </td>
 	        </tr>
 	        <tr>

@@ -11,7 +11,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">품질관리</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/erp5/quality.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
+						<form id="searchForm2" method="post" action="<%=request.getContextPath()%>/erp5/quality.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${cri.searchType eq 'all' ? 'selected' : '' }>전  체</option>
 								<option value="a" ${cri.searchType eq 'a' ? 'selected' : '' }>담당자</option>
@@ -40,7 +40,7 @@
 								</tr>
 									<c:forEach items="${qualityList }" var="quality" varStatus="loop">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('qualityDetail.do?qc_no=${quality.QC_NO}','품질 상세보기', 600, 600);">${quality.QC_NO }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('<%=request.getContextPath()%>/qualityDetail.do?qc_no=${quality.QC_NO}','품질 상세보기', 600, 600);">${quality.QC_NO }</a></td>
 										<td style="text-align: center;">${quality.E_NAME }</td>
 										<td style="text-align: center;"><a id="aTag" href=""></a>${quality.PR_NAMES }</td>
 										<td style="text-align: center;">${quality.PR_ST }</td>
@@ -57,7 +57,7 @@
 					</div>
 					</div>
 						<div style="display: flex; align-items: end; justify-content: end;">
-								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('qc_regist.do', '품질', 600, 600)"
+								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('<%=request.getContextPath()%>/qc_regist.do', '품질', 600, 600)"
 								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">품질 등록</button>
 						</div>
 			</div>

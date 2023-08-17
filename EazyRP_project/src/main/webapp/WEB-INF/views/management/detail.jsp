@@ -125,22 +125,22 @@
 	})
 	$('#payBtn').on('click', function(){
 		if(confirm("결재를 진행하시겠습니까?")){
-			location.href="/management/payForm.do?dr_no=${draft.dr_no}&pl_progress=${draft.pl_progress}";
+			location.href="<%= request.getContextPath()%>/management/payForm.do?dr_no=${draft.dr_no}&pl_progress=${draft.pl_progress}";
 		}
 	})
 	$('#deleteBtn').on('click', function(){
 		if(confirm("기안문을 삭제하시겠습니까?")){
-			location.href="/management/delete.do?dr_no=${draft.dr_no}";
+			location.href="<%= request.getContextPath()%>/management/delete.do?dr_no=${draft.dr_no}";
 		}
 	})
 	$('#failBtn').on('click', function(){
 		if(confirm("반려를 진행하시겠습니까?")){
-			OpenWindow("/management/failComment.do?dr_no=${draft.dr_no}&pl_progress=${draft.pl_progress}",
+			OpenWindow("<%= request.getContextPath()%>/management/failComment.do?dr_no=${draft.dr_no}&pl_progress=${draft.pl_progress}",
 					"반려사유", 500, 500);
 		}
 	})
 	$('#modifyBtn').on('click', function(){
-		location.href="/management/modify.do?dr_no=${draft.dr_no}"
+		location.href="<%= request.getContextPath()%>/management/modify.do?dr_no=${draft.dr_no}"
 	})
 	
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){

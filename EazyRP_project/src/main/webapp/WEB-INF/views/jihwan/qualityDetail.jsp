@@ -93,7 +93,7 @@
         <tr>
             <td align="center">담당자</td>
             <td><input type="hidden" name="emp_no" id="receiver" value="${qc.EMP_NO }" ${qc.PROGRESS ne '0' ? 'readonly' : '' }>
-            <input type="text" style="width: 100%;" value="${qc.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 500, 500)"></td>
+            <input type="text" style="width: 100%;" value="${qc.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('<%=request.getContextPath()%>/mymenu/findPeople.do', '사람찾기', 500, 500)"></td>
         </tr>
  		<tr>
             <td align="center">진행상태</td>
@@ -163,7 +163,7 @@ window.onload = function(){
 	
 	$('button#modifyBtn').on('click', function(){
 		formObj.attr({
-			'action' : 'qcmodifyForm.do',
+			'action' : '<%=request.getContextPath()%>/qcmodifyForm.do',
 			'method' : 'post'
 		});
 		
@@ -203,7 +203,7 @@ window.onload = function(){
 	$('button#removeBtn').on('click', function(){
 		if(confirm("정말 삭제하시겠습니까?")){
 			formObj.attr({
-				'action' : 'qcremove',
+				'action' : '<%=request.getContextPath()%>/qcremove.do',
 				'method' : 'post' 
 			});
 			formObj.submit();
@@ -305,7 +305,7 @@ $('#addPutBtn').on('click', function(){
 	    let idVal = $(this).parents("tr").find(".rownum").val();
 	    $('#cnt').val(idVal);
 	    console.log($('#cnt').val())
-	    let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
+	    let openWin = OpenWindow("<%=request.getContextPath()%>/erp4/findProduct.do", "제품 찾기", 500, 500);
 	});
 
 

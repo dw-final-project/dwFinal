@@ -114,7 +114,7 @@
         <tr>
             <td align="center">담당자</td>
             <td><input type="hidden" name="emp_no" id="receiver" value="${est.EMP_NO }" ${est.PROGRESS ne '0' ? 'readonly' : '' }>
-            <input type="text" style="width: 100%;" value="${est.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 500, 500)"></td>
+            <input type="text" style="width: 100%;" value="${est.E_NAME }" id="name" name="name" readonly onclick="OpenWindow('<%=request.getContextPath()%>/mymenu/findPeople.do', '사람찾기', 500, 500)"></td>
         </tr>
         <tr>
             <td align="center">첨부파일</td>
@@ -190,7 +190,7 @@ window.onload = function(){
 	$('button#modifyBtn').on('click', function(){
 		alert($('#fc-select').val())
 		formObj.attr({
-			'action' : 'modifyForm.do',
+			'action' : '<%=request.getContextPath()%>/modifyForm.do',
 			'method' : 'post'
 // 			'enctype' : 'multipart/form-data'
 		});
@@ -228,7 +228,7 @@ window.onload = function(){
 	$('button#removeBtn').on('click', function(){
 		if(confirm("정말 삭제하시겠습니까?")){
 			formObj.attr({
-				'action' : 'remove',
+				'action' : '<%=request.getContextPath()%>/remove.do',
 				'method' : 'post' 
 			});
 			formObj.submit();
@@ -300,7 +300,7 @@ $('tr').on('click', function(){
 		let idVal = $(this).parents("tr").find(".rownum").val();
 		console.log(idVal);
 		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
+		let openWin = OpenWindow("<%=request.getContextPath()%>/erp4/findProduct.do", "제품 찾기", 500, 500);
 		
 	});
 	
@@ -319,7 +319,7 @@ $('tr').on('click', function(){
 	$(document).on('click', '.wh_names', function(){
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
+		let openWin = OpenWindow("<%=request.getContextPath()%>/erp4/findWareHouse.do","창고 찾기", 500,500);
 	})
 	
 	// 수량 이벤트

@@ -11,7 +11,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">작업지시서 목록</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/erp4/workorder.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="<%=request.getContextPath() %>/erp4/workorder.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2 custom-select" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="tw" ${searchType eq 'tw' ? 'selected' : '' }>제목 + 담당자</option>
 								<option value="t" ${searchType eq 't' ? 'selected' : '' }>제목</option>
@@ -50,7 +50,7 @@
 											<fmt:formatDate value="${wo.sys_regdate}" pattern="yyyy-MM-dd"></fmt:formatDate>
 										</td>
 										<td width="30%" style="text-align: center;">
-											<a id="aTag" href="#" onclick="OpenWindow('/erp4/workorder/detail.do?wo_no=${wo.wo_no }&send=N', '작업지시서 보기', 700, 1000)">
+											<a id="aTag" href="#" onclick="OpenWindow('<%=request.getContextPath() %>/erp4/workorder/detail.do?wo_no=${wo.wo_no }&send=N', '작업지시서 보기', 700, 1000)">
 												${wo.wo_name }
 											</a>
 										</td>
@@ -69,7 +69,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/erp4/workorder/registForm.do', '작업지시서 등록', 700, 1000)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('<%=request.getContextPath() %>/erp4/workorder/registForm.do', '작업지시서 등록', 700, 1000)"
 					style="width: 100px; margin: 20px; align-self: center;">등록</button>
 				</div>
 			</div>

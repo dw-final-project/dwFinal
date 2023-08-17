@@ -155,11 +155,11 @@ body {
 			<div class="modal-header">				
 				<h4 class="modal-title">개인정보 수정</h4>
 					<form id="searchForm2" method="post"
-							action="/member/mypage.do?mcode=${mcode }"
+							action="<%=request.getContextPath()%>/member/mypage.do?mcode=${mcode }"
 							style="display: contents;"></form>
 			</div>
 			<div class="modal-body">
-				<form id="modProfileForm" action="/member/modProfile.do" method="post">
+				<form id="modProfileForm" action="<%=request.getContextPath()%>/member/modProfile.do" method="post">
 					<input type="hidden" name="mcode" value="${mcode }">
 					<div class="form-group d-flex">
 						<div class="input-group inputText">

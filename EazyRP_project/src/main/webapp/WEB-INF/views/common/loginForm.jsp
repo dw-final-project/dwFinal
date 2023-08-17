@@ -171,14 +171,14 @@ body {
 $(function(){
 
 	$('#regiser').on('click', function(){
-		location.href = "<%= request.getContextPath() %>/common/registerForm.do"; 
+		location.href = "<%=request.getContextPath()%>/common/registerForm.do"; 
 	});
 	
 	$('#pwfind').on('click', function(){
-		location.href = "<%= request.getContextPath() %>/member/PWfindForm.do"; 
+		location.href = "<%=request.getContextPath()%>/member/PWfindForm.do"; 
 	});
 	$('#idfind').on('click', function(){
-		location.href = "<%= request.getContextPath() %>/member/IDfindForm.do"; 
+		location.href = "<%=request.getContextPath()%>/member/IDfindForm.do"; 
 	});
 	
 })
