@@ -251,7 +251,7 @@ public class CommonController {
 			session.setAttribute("emp_no", 0);
 		}
 		
-		mnv.setViewName("redirect:" + url);
+		mnv.setViewName("redirect:" + req.getContextPath() + url);
 		mnv.addObject("murl", murl);
 		
 		return mnv;
@@ -276,7 +276,7 @@ public class CommonController {
 		mnv.addObject("murl", murl);
 		System.out.println("emp번호다 : " + selectedEmp);
 		
-		mnv.setViewName("redirect:" + url);
+		mnv.setViewName("redirect:" + req.getContextPath() + url);
 		return mnv;
 	}
 	
