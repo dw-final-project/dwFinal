@@ -116,12 +116,12 @@
 
 	$(document).on('click', '.pr_no', function(){
 		
-		let openWin = OpenWindow("/erp5/findProduct.do", "제품 찾기", 800, 600);
+		let openWin = OpenWindow("<%= request.getContextPath() %>/erp5/findProduct.do", "제품 찾기", 800, 600);
 	});
 	
 	$(document).on('click', '.s_name', function(){
 		
-		let openWin = OpenWindow("/erp5/findShop.do", "쇼핑몰 찾기", 800, 600);
+		let openWin = OpenWindow("<%= request.getContextPath() %>/erp5/findShop.do", "쇼핑몰 찾기", 800, 600);
 		
 	});
 }

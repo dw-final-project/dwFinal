@@ -15,7 +15,7 @@
 						<h3 class="card-title p-1">부서 등록</h3>
 					</div>
 					<div class="card-body pad">
-						<form role="form" method="post" action="/management/insertDept.do" name="registForm" enctype="multipart/form-data">
+						<form role="form" method="post" action="<%= request.getContextPath() %>/management/insertDept.do" name="registForm" enctype="multipart/form-data">
 							<div class="form-group col-sm-12 row">
 								<label for="dept_no" class="col-sm-2">부서코드</label>
 								<input type="text" id="dept_no" name="dept_no" class="form-control col-sm-3" value="" placeholder="부서코드" readonly>

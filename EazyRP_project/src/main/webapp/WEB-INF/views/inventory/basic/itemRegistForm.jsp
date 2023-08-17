@@ -127,13 +127,13 @@
 		
 		$(document).on('click', '.wh_name', function(){
 			
-			let openWin = OpenWindow("/erp4/findWarehouseToitem.do", "회사 찾기", 800, 500);
+			let openWin = OpenWindow("<%= request.getContextPath() %>/erp4/findWarehouseToitem.do", "회사 찾기", 800, 500);
 			
 		});
 		
 		$(document).on('click', '.sp_name', function(){
 			
-			let openWin = OpenWindow("/erp4/findSprice.do", "특별단가 찾기", 800, 500);
+			let openWin = OpenWindow("<%= request.getContextPath() %>/erp4/findSprice.do", "특별단가 찾기", 800, 500);
 			
 		});
 		

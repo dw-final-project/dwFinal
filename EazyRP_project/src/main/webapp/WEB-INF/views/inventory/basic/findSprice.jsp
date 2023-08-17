@@ -19,7 +19,7 @@
 <div class="card-body pad">
 	<div>
 	<div class="input-group row" style="width: 100%; margin: 0px 0px 20px 0px; justify-content: center;">
-		<form method="post" id="searchForm" action="/erp4/findSprice.do" style="display: contents;">
+		<form method="post" id="searchForm" action="<%= request.getContextPath() %>/erp4/findSprice.do" style="display: contents;">
 			<select class="form-control" name="searchType" id="searchType" style="font-size: 0.8em; width: 30%;">
 				<option value="all" ${searchType eq 'all' ? 'selected' : '' }>전  체</option>
 				<option value="n" ${searchType eq 'n' ? 'selected' : '' }>특별단가명</option>

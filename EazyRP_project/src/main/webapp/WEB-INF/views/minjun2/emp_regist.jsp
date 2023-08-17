@@ -15,7 +15,7 @@
 						<h3 class="card-title p-1">직원 등록</h3>
 					</div>
 					<div class="card-body pad">
-						<form role="form" method="post" action="/management/insertEmp.do" name="registForm" enctype="multipart/form-data">
+						<form role="form" method="post" action="<%= request.getContextPath() %>/management/insertEmp.do" name="registForm" enctype="multipart/form-data">
 							<div class="form-group col-sm-12 row">
 								<label for="emp_no" class="col-sm-2">사원번호</label>
 								<input type="text" class="form-control col-sm-3" value="" placeholder="사원번호" readonly>
@@ -173,13 +173,13 @@
 		
 		$(document).on('click', '.dname', function(){
 			
-			let openWin = OpenWindow("/management/findDept.do", "부서명 찾기", 500, 500);
+			let openWin = OpenWindow("<%= request.getContextPath() %>/management/findDept.do", "부서명 찾기", 500, 500);
 			
 		});
 		
 		$(document).on('click', '.e_name2', function(){
 			let c_no = $('#c_no').val();
-			let openWin = OpenWindow("/management/findEmp.do?c_no=" + c_no, "사원 찾기", 500, 500);
+			let openWin = OpenWindow("<%= request.getContextPath() %>/management/findEmp.do?c_no=" + c_no, "사원 찾기", 500, 500);
 			
 		});
 	}

@@ -154,13 +154,13 @@
 
 	$(document).on('click', '.pr_no', function(){
 		
-		let openWin = OpenWindow("/erp5/findProduct.do", "제품 찾기", 700, 500);
+		let openWin = OpenWindow("<%= request.getContextPath() %>/erp5/findProduct.do", "제품 찾기", 700, 500);
 		
 	});
 	
 	$(document).on('click', '.s_name', function(){
 		
-		let openWin = OpenWindow("/erp5/findShop.do", "쇼핑몰 찾기", 500, 500);
+		let openWin = OpenWindow("<%= request.getContextPath() %>/erp5/findShop.do", "쇼핑몰 찾기", 500, 500);
 		
 	});
 }
