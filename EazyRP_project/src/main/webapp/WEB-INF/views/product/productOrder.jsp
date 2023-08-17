@@ -11,7 +11,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">제품 발주</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/product/productOrder.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
+						<form id="searchForm2" method="post" action="<%=request.getContextPath()%>/product/productOrder.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="tcw" ${cri.searchType eq 'pcw' ? 'selected' : '' }>전  체</option>
 								<option value="t" ${cri.searchType eq 'p' ? 'selected' : '' }>요청제품</option>
@@ -39,11 +39,11 @@
 								</tr>
 									<c:forEach items="${list}" var="order" varStatus="loop">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/product/orderDetail.do?o_no=${order.o_no }&orders=Y', '발주 내역', 700, 700)">${order.o_name }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('<%=request.getContextPath()%>/product/orderDetail.do?o_no=${order.o_no }&orders=Y', '발주 내역', 700, 700)">${order.o_name }</a></td>
 										<td style="text-align: center;">${order.sys_regdate }</td>
 										<td style="text-align: center;">${order.sys_reg }</td>
 										<td style="text-align: center;" style=" ${order.progress eq '배송중' ? 'font-weight:bold; color: blue;' : ''}">${order.progress }</td>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/management/detail.do?dr_no=${order.dr_no}', '기안문', 700, 700)">${order.title }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('<%=request.getContextPath()%>/management/detail.do?dr_no=${order.dr_no}', '기안문', 700, 700)">${order.title }</a></td>
 									</tr>
 									</c:forEach>
 							</table>
@@ -54,7 +54,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/product/orderRegist.do', '발주 요청', 700, 700)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('<%=request.getContextPath()%>/product/orderRegist.do', '발주 요청', 700, 700)"
 					style="width: 100px; margin: 20px; align-self: center;">발주 요청</button>
 				</div>
 			</div>

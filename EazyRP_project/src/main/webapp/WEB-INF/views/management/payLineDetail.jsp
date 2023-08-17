@@ -59,11 +59,11 @@
 	})
 	$('#deleteBtn').on('click', function(){
 		if(confirm("결재라인을 삭제하시겠습니까?")){
-			location.href="/management/deletePayLine.do?pl_no=${pl.pl_no}";
+			location.href="<%= request.getContextPath()%>/management/deletePayLine.do?pl_no=${pl.pl_no}";
 		}
 	})
 	$('#modifyBtn').on('click', function(){
-		location.href="/management/modifyPayLine.do?pl_no=${pl.pl_no}"
+		location.href="<%= request.getContextPath()%>/management/modifyPayLine.do?pl_no=${pl.pl_no}"
 	})
 	
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){

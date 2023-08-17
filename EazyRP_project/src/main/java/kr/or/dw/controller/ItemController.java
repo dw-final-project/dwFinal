@@ -87,7 +87,7 @@ public class ItemController {
 	}
 	
 	@RequestMapping("/registItem")
-	public void registItem(@RequestParam("files")MultipartFile multi, ProductVO product, HttpServletResponse res, int emp_no) throws Exception{
+	public void registItem(@RequestParam("files")MultipartFile multi, ProductVO product, HttpServletResponse res, int emp_no, HttpSession session) throws Exception{
 		
 		String fileName = "";
 		
@@ -99,7 +99,7 @@ public class ItemController {
 			
 			String fileRealName = multi.getOriginalFilename();
 			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length());
-			String uploadFolder = "C:\\upload\\product\\";
+			String uploadFolder = session.getServletContext().getRealPath("/resources/items/");
 			
 			fileName = uniqueName+fileExtension;
 			
@@ -236,7 +236,7 @@ public class ItemController {
 				
 				String fileRealName = multi.getOriginalFilename();
 				String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length());
-				String uploadFolder = "C:\\upload\\product\\";
+				String uploadFolder = session.getServletContext().getRealPath("/resources/items/");
 				
 				fileName = uniqueName+fileExtension;
 				
@@ -292,7 +292,7 @@ public class ItemController {
 	@RequestMapping("/deleteItem")
 	public void deleteContact(String pr_no, HttpServletResponse res, HttpSession session, String oldPicture) throws Exception{
 		
-		String uploadFolder = "C:\\upload\\product\\";
+		String uploadFolder = session.getServletContext().getRealPath("/resources/items/");;
 		File oldFile = new File(uploadFolder, oldPicture);
 		if(oldFile.exists()) {
 			oldFile.delete();

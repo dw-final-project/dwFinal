@@ -77,7 +77,7 @@
 <body>
     <h2>발주 요청 추가</h2>
 	<!-- card footer End -->
-<form id="submitForm" method="post" action="/product/orderRegistForm.do">
+<form id="submitForm" method="post" action="<%=request.getContextPath()%>/product/orderRegistForm.do">
 	<table>
         <tr>
             <td width="40%" align="center"><b>작성자</b></td>
@@ -116,7 +116,7 @@
          	<c:forEach var="nameItem" items="${name}" varStatus="loop">
                 <tr>
                     <td><input class="readonly" name="pr_name" type="text" value="${name.get(loop.index) }" readonly><input type="hidden" name="pr_no" value="${product.get(loop.index).pr_no }"></td>
-                    <td><input type="text" name="wh_name" id="${loop.index }" placeholder="창고 선택" onclick="OpenWindow('/product/findWareHouse.do?pr_name=${product.get(loop.index).pr_name }&quantity=${quantity.get(loop.index) }','창고 찾기', 500,500);" readonly><input type="hidden" name="wh_no" id="no${loop.index }"><input type="hidden" name="lack" id="lack${loop.index }"></td>
+                    <td><input type="text" name="wh_name" id="${loop.index }" placeholder="창고 선택" onclick="OpenWindow('<%=request.getContextPath()%>/product/findWareHouse.do?pr_name=${product.get(loop.index).pr_name }&quantity=${quantity.get(loop.index) }','창고 찾기', 500,500);" readonly><input type="hidden" name="wh_no" id="no${loop.index }"><input type="hidden" name="lack" id="lack${loop.index }"></td>
                     <td><input class="readonly" type="text" name="quantity" value=${quantity.get(loop.index) } readonly></td>
                     <td><input class="readonly" type="text" name="buy_price2" value="${product.get(loop.index).pr_exprice }" readonly><input type="hidden" name="unit_price2" value="${product.get(loop.index).pr_inprice }"></td>
                 </tr>
@@ -133,7 +133,7 @@
 </form>
 </body>
 
-<form id="documentForm" action="/product/document.do" method="post">
+<form id="documentForm" action="<%=request.getContextPath()%>/product/document.do" method="post">
 	<input type="hidden" id="documentName" name="dr_no" value="">
 </form>
 

@@ -27,7 +27,7 @@
 							</div>
 							
 							<div class="form-group">
-							<form id="downloadForm" method="post" action="/management/documentDown.do">
+							<form id="downloadForm" method="post" action="<%= request.getContextPath()%>/management/documentDown.do">
 								<label for="writer">기안문 구분&nbsp;&nbsp;&nbsp;&nbsp;</label>
 								<select class="form-control col-md-2" name="document" id="document" style="font-size: 0.8em; width: 30%; display: inline;">
 									<c:forEach items="${draftgb}" var="dr" varStatus="loop">
@@ -43,7 +43,7 @@
 									</c:forEach>
 								</select>
 							</div>
-							<form id="registForm2" method="post" action="/management/regist.do" enctype="multipart/form-data">
+							<form id="registForm2" method="post" action="<%= request.getContextPath()%>/management/regist.do" enctype="multipart/form-data">
 								<input type="hidden" id="dg_no" name="dg_no" value="D001">
 								<input type="hidden" name="title" id="titleHidden">
 								<input type="hidden" id="gb" name="gb" value="휴가신청서">

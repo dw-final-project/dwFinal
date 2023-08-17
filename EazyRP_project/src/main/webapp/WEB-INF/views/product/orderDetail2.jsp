@@ -77,7 +77,7 @@
     <h2>발주 상세 내역</h2>
 	
 	<!-- card footer End -->
-<form role="form" method="post" action="/product/orderCancel.do">
+<form role="form" method="post" action="<%= request.getContextPath()%>/product/orderCancel.do">
 <input type="hidden" name="o_no" value="${order.o_no }">
 	<table>
 		<tr>
@@ -122,7 +122,7 @@
     </table>
     <div class="card-footer">
 		<button type="button" id="listBtn" class="btn btn-primary">닫기</button>
-        <button type="button" id="registBtn" class="btn btn-warning" style="float: right;" onclick="OpenWindow('/erp4/workorder/registForm.do', '작업지시서 작성', 700, 700)">작업지시서 작성</button>
+        <button type="button" id="registBtn" class="btn btn-warning" style="float: right;" onclick="OpenWindow('<%= request.getContextPath()%>/erp4/workorder/registForm.do', '작업지시서 작성', 700, 700)">작업지시서 작성</button>
         <c:if test="${order.progress eq '접수중'}">
 	    	<button type="button" id="receiptBtn" class="btn btn-primary">접수</button>
 	    </c:if>
@@ -161,13 +161,13 @@ window.onload = function(){
 	$('#deliveryBtn').on('click', function(){
 		if(confirm('배송 처리를 하시겠습니까?')){
 			alert('배송 처리가 완료되었습니다.');
-			location.href='/product/delivery.do?o_no=${order.o_no }';
+			location.href='<%= request.getContextPath()%>/product/delivery.do?o_no=${order.o_no }';
 		}
 	})
 	
 	$('#receiptBtn').on('click', function(){
 		alert('해당 발주 요청건이 접수되었습니다.');
-		location.href='/product/receipt.do?o_no=${order.o_no }';
+		location.href='<%= request.getContextPath()%>/product/receipt.do?o_no=${order.o_no }';
 	})
 }	
 	function OpenWindow(UrlStr, WinTitle, WinWidth, WinHeight){
