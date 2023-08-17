@@ -17,7 +17,7 @@
 <!-- 					<button type="button" class="btn btn-danger" id="" -->
 <!-- 						onclick="javascript:OpenWindow('estimate_regist.do','견적서 등록', 600 ,800);">등록</button> -->
 					<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/erp4/estimate.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
+						<form id="searchForm2" method="post" action="<%=request.getContextPath()%>/erp4/estimate.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${cri.searchType eq 'all' ? 'selected' : '' }>전  체</option>
 								<option value="d" ${cri.searchType eq 'd' ? 'selected' : '' }>거래처</option>
@@ -51,7 +51,7 @@
 								<%-- 						<c:set var="est_no">${estimate.EST_NO }</c:set> --%>
 								<tr style="font-size: 1em; text-align : center;">
 									<td><a
-										href="javascript:OpenWindow('estimateDetail.do?est_no=${estimate.EST_NO }','견적서 조회', 700 ,700);">${estimate.EST_NO }</a></td>
+										href="javascript:OpenWindow('<%=request.getContextPath()%>estimateDetail.do?est_no=${estimate.EST_NO }','견적서 조회', 700 ,700);">${estimate.EST_NO }</a></td>
 									<td><fmt:formatDate value="${estimate.REGDATE }"
 											pattern="yyyy-MM-dd"></fmt:formatDate></td>
 									<td>${estimate.C_NAME }</td>
@@ -74,7 +74,7 @@
 			</div>
 			<div style="display: flex; align-items: end; justify-content: end;">
 				<button type="button" class="btn btn-primary" id=""
-				onclick="javascript:OpenWindow('estimate_regist.do','견적서 등록', 600 ,800);"
+				onclick="javascript:OpenWindow('<%=request.getContextPath()%>/estimate_regist.do','견적서 등록', 600 ,800);"
 					style="width: 110px; heigth: 20px; margin: 10px; font-size: 0.8em; align-self: center;">견적서 등록</button>
 			</div>
 		</div>

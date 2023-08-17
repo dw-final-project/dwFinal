@@ -11,7 +11,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">제품 판매 내역</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/erp4/sale.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
+						<form id="searchForm2" method="post" action="<%=request.getContextPath()%>/erp4/sale.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${cri.searchType eq 'all' ? 'selected' : '' }>전  체</option>
 								<option value="a" ${cri.searchType eq 'a' ? 'selected' : '' }>작성자</option>
@@ -38,7 +38,7 @@
 									<input type="hidden" value="" name="sheet_no">
 									<c:forEach items="${sale}" var="sale">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/erp4/saleDetail.do?sheet_no=${sale.SHEET_NO}', '판매내역 상세조회', 600, 600)">${sale.PR_NAME }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('<%=request.getContextPath()%>/erp4/saleDetail.do?sheet_no=${sale.SHEET_NO}', '판매내역 상세조회', 600, 600)">${sale.PR_NAME }</a></td>
 										<td style="text-align: center;">${sale.SYS_REGDATE}</td>
 										<td style="text-align: center;">${sale.E_NAME }</td>
 										<td style="text-align: center;">${sale.PRICE }원</td>
@@ -52,7 +52,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/erp4/productSaleRegist.do', '구매 내역 추가', 600, 700)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('<%=request.getContextPath()%>/erp4/productSaleRegist.do', '구매 내역 추가', 600, 700)"
 					style="width: 100px; margin: 20px; align-self: center; font-size: 0.7em;">판매 내역 추가</button>
 				</div>
 			</div>
