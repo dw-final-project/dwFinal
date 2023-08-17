@@ -11,7 +11,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">공정 목록</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/erp4/process.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
+						<form id="searchForm2" method="post" action="<%=request.getContextPath() %>/erp4/process.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
 							<select class="form-control col-md-2 custom-select" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="cto" ${cri.searchType eq 'cto' ? 'selected' : '' }>코드 + 공정명 + 순번</option>
 								<option value="c" ${cri.searchType eq 'c' ? 'selected' : '' }>공정코드</option>
@@ -46,7 +46,7 @@
 							<tr>
 								<td>${process.pc_code}</td>								
 								<td>
-									<a href="javascript:OpenWindow('/erp4/process/detail.do?pc_code=${process.pc_code}', '공정상세보기', 500, 540);">
+									<a href="javascript:OpenWindow('<%=request.getContextPath() %>/erp4/process/detail.do?pc_code=${process.pc_code}', '공정상세보기', 500, 540);">
 										${process.pc_name}
 									</a>
 								</td>
@@ -61,7 +61,7 @@
 				</div>
 				<div style="display: flex; align-items: end; justify-content: end;">
 					<button type="button" class="btn btn-primary" id="registBtn" 
-							onclick="OpenWindow('/erp4/process/registForm.do', 
+							onclick="OpenWindow('<%=request.getContextPath() %>/erp4/process/registForm.do', 
 									'공정 등록', 500, 540)"
 							style="width: 100px; margin: 20px; align-self: center;">
 						등록
