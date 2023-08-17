@@ -72,13 +72,13 @@
 <body>
     <h2>DW 견적서 등록</h2>
 	<!-- card footer End -->
-<form role="form" method="post" action="/erp4/insertEstimate.do" enctype="multipart/form-data">
+<form role="form" method="post" action="<%=request.getContextPath()%>/erp4/insertEstimate.do" enctype="multipart/form-data">
 	<table>
         <tr>
             <td width="40%" align="center"><b>담당자</b></td>
             
             <td><input type="hidden" name="emp_no" id="receiver" value="${empno }">
-            <input type="text" style="width: 100%;" value="${ename }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)"></td>
+            <input type="text" style="width: 100%;" value="${ename }" id="name" name="name" readonly onclick="OpenWindow('<%=request.getContextPath()%>/mymenu/findPeople.do', '사람찾기', 400, 600)"></td>
         </tr>
         <tr>
             <td width="40%" align="center"><b>외화 명</b></td>
@@ -169,7 +169,7 @@
 	$(document).on('click', '.pr_names', function(){
 		let idVal = $(this).attr('id');
 		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
+		let openWin = OpenWindow("<%=request.getContextPath()%>/erp4/findProduct.do", "제품 찾기", 500, 500);
 		
 // 		openWin.document.getElementById('cnt').value = cnt;
 	});
@@ -183,7 +183,7 @@
 	$(document).on('click', '.wh_names', function(){
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
+		let openWin = OpenWindow("<%=request.getContextPath()%>/erp4/findWareHouse.do","창고 찾기", 500,500);
 	})
 	
 	// 수량 이벤트

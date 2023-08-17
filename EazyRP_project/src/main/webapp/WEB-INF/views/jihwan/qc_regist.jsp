@@ -72,7 +72,7 @@
 <body>
     <h2>품질등록</h2>
 	<!-- card footer End -->
-<form role="form" method="post" action="/erp5/insertQc.do" enctype="multipart/form-data">
+<form role="form" method="post" action="<%=request.getContextPath()%>/erp5/insertQc.do" enctype="multipart/form-data">
 <input type="hidden" name="qc_no" value="">
 	<table>
         <tr>
@@ -82,7 +82,7 @@
         <tr>
             <td align="center">담당자</td>
             <td><input type="hidden" name="emp_no" id="receiver" value="${empno }">
-            <input type="text" style="width: 100%;" value="${ename }" id="name" name="name" readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 500, 500)"></td>
+            <input type="text" style="width: 100%;" value="${ename }" id="name" name="name" readonly onclick="OpenWindow('<%=request.getContextPath()%>/mymenu/findPeople.do', '사람찾기', 500, 500)"></td>
         </tr>
         <tr>
             <td align="center"><b>첨부파일</b></td>
@@ -192,7 +192,7 @@ $('#addPutBtn').on('click', function(){
 	$(document).on('click', '.wh_names', function(){
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
+		let openWin = OpenWindow("<%=request.getContextPath()%>/erp4/findWareHouse.do","창고 찾기", 500,500);
 	})
 	
 	
@@ -218,7 +218,7 @@ $('#addPutBtn').on('click', function(){
 	$(document).on('click', '.pr_names4', function() {
 	    let idVal = $(this).attr('id');
 	    $('#cnt').val(idVal);
-	    let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
+	    let openWin = OpenWindow("<%=request.getContextPath()%>/erp4/findProduct.do", "제품 찾기", 500, 500);
 	});
 
 

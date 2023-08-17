@@ -18,7 +18,7 @@
 <div class="card-body pad">
 	<div>
 	<div class="input-group row" style="width: 100%; margin: 0px 0px 20px 0px; justify-content: center;">
-		<form id="searchForm" method="post" action="/erp4/findProduct.do" style="display: contents;">
+		<form id="searchForm" method="post" action="<%=request.getContextPath()%>/erp4/findProduct.do" style="display: contents;">
 			<select class="form-control" name="searchType" id="searchType" style="font-size: 0.8em; width: 30%;">
 				<option value="cw" ${searchType eq 'cw' ? 'selected' : '' }>전  체</option>
 				<option value="w" ${searchType eq 'w' ? 'selected' : '' }>이  름</option>
