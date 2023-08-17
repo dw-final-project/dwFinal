@@ -188,12 +188,12 @@ $('#addPutBtn').on('click', function(){
 		
 	});
 	
-	//창고코드 이벤트
-	$(document).on('click', '.wh_names', function(){
-		let whVal = $(this).attr('id');
-		$('#cnt').val(whVal);
-		let openWin = OpenWindow("<%=request.getContextPath()%>/erp4/findWareHouse.do","창고 찾기", 500,500);
-	})
+// 	//창고코드 이벤트
+// 	$(document).on('click', '.wh_names', function(){
+// 		let whVal = $(this).attr('id');
+// 		$('#cnt').val(whVal);
+<%-- 		let openWin = OpenWindow("<%=request.getContextPath()%>/erp4/findWareHouse.do","창고 찾기", 500,500); --%>
+// 	})
 	
 	
 	

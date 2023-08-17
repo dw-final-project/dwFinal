@@ -40,7 +40,7 @@
 								</tr>
 									<c:forEach items="${qualityList }" var="quality" varStatus="loop">
 									<tr>
-										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('<%=request.getContextPath()%>/qualityDetail.do?qc_no=${quality.QC_NO}','품질 상세보기', 600, 600);">${quality.QC_NO }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="javascript:OpenWindow('qualityDetail.do?qc_no=${quality.QC_NO}','품질 상세보기', 600, 600);">${quality.QC_NO }</a></td>
 										<td style="text-align: center;">${quality.E_NAME }</td>
 										<td style="text-align: center;"><a id="aTag" href=""></a>${quality.PR_NAMES }</td>
 										<td style="text-align: center;">${quality.PR_ST }</td>
@@ -57,7 +57,7 @@
 					</div>
 					</div>
 						<div style="display: flex; align-items: end; justify-content: end;">
-								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('<%=request.getContextPath()%>/qc_regist.do', '품질', 600, 600)"
+								<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('qc_regist.do', '품질', 600, 600)"
 								style="width: 100px; font-size: 0.8em; margin: 20px; align-self: center;">품질 등록</button>
 						</div>
 			</div>

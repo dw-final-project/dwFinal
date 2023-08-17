@@ -190,7 +190,7 @@ window.onload = function(){
 	$('button#modifyBtn').on('click', function(){
 		alert($('#fc-select').val())
 		formObj.attr({
-			'action' : '<%=request.getContextPath()%>/modifyForm.do',
+			'action' : 'modifyForm.do',
 			'method' : 'post'
 // 			'enctype' : 'multipart/form-data'
 		});
@@ -228,7 +228,7 @@ window.onload = function(){
 	$('button#removeBtn').on('click', function(){
 		if(confirm("정말 삭제하시겠습니까?")){
 			formObj.attr({
-				'action' : '<%=request.getContextPath()%>/remove.do',
+				'action' : 'remove.do',
 				'method' : 'post' 
 			});
 			formObj.submit();

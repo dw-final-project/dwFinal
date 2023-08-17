@@ -34,8 +34,6 @@ public class OrderSaleServiceImpl implements OrderSaleService {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		Map<String, Object> dataMap2 = new HashMap<String, Object>();
 		
-		dataMap2.put("keyword", cri.getKeyword());
-		dataMap2.put("searchType", cri.getSearchType());
 		dataMap2.put("cri", cri);
 		dataMap2.put("c_no", c_no);
 		List<Map<String, Object>> sale = ordersaleDAO.selectSaleList(dataMap2, rowBounds);
@@ -68,7 +66,7 @@ public class OrderSaleServiceImpl implements OrderSaleService {
 	@Override
 	public int insertProductSale(SsheetVO sheet) throws SQLException {
 		ordersaleDAO.insertProductSale(sheet);
-		
+		System.out.println("12341234");
 		int sheet_no = ordersaleDAO.insertSheetNo();
 		
 		return sheet_no;
