@@ -15,7 +15,7 @@
 						<h3 class="card-title p-1">공제 등록</h3>
 					</div>
 					<div class="card-body pad">
-						<form role="form" method="post" action="/management/insertDeduction.do" name="registForm" enctype="multipart/form-data">
+						<form role="form" method="post" action="<%= request.getContextPath() %>/management/insertDeduction.do" name="registForm" enctype="multipart/form-data">
 							<div class="form-group col-sm-12 row">
 								<label for="ded_no" class="col-sm-2">공제코드</label>
 								<input type="text" id="ded_no" name="ded_no" class="form-control col-sm-3" value="" placeholder="공제코드" readonly>

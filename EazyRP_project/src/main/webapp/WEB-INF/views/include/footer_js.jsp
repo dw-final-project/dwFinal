@@ -26,7 +26,7 @@
 		let modMcode = mcode.substring(0,3) + "0000";
 
 
-		location.href = murl + "?mcode=" + modMcode + "&murl=" + murl;
+		location.href = "<%= request.getContextPath() %>" + murl + "?mcode=" + modMcode + "&murl=" + murl;
 	};
 	
 </script>

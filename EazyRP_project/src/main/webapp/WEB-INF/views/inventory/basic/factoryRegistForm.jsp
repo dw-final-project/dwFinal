@@ -91,7 +91,7 @@
 		
 		$(document).on('click', '.pc_name', function(){
 			
-			let openWin = OpenWindow("/erp4/findProcess.do", "공정 찾기", 800, 500);
+			let openWin = OpenWindow("<%= request.getContextPath() %>/erp4/findProcess.do", "공정 찾기", 800, 500);
 			
 		});
 		

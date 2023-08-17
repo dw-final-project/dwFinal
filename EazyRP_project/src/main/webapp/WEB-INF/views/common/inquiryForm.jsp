@@ -11,9 +11,7 @@
 				<div class="card-header" style="border-bottom: none;">
 					<h2 class="card-title p-1">문의사항</h2>
 					<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post"
-							action="<%=request.getContextPath()%>/member/qna.do?mcode=${mcode }"
-							style="display: contents;"></form>
+						<form id="searchForm2" method="post" action="<%=request.getContextPath()%>/member/qna.do?mcode=${mcode }" style="display: contents;"></form>
 					</div>
 				</div>
 

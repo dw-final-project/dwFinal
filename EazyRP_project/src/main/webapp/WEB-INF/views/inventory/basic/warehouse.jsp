@@ -12,7 +12,7 @@
 						<h2 class="card-title p-1">창고관리</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<input id="cnoChk" type="hidden" value="${c_no }">
-						<form id="searchForm2" method="post" action="/erp4/warehouse.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
+						<form id="searchForm2" method="post" action="<%= request.getContextPath() %>/erp4/warehouse.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${cri.searchType eq 'all' ? 'selected' : '' }>전  체</option>
 								<option value="w" ${cri.searchType eq 'w' ? 'selected' : '' }>창고명</option>

@@ -133,7 +133,7 @@ html {
 		    </div>
 		</c:if>
       <div class="container-fluid" style="position: relative;">
-        <a class="navbar-brand" href="/common/main.do"><img src="<%=request.getContextPath() %>/resources/img/EazyRP2.png" style="width: 100px;"></a>
+        <a class="navbar-brand" href="<%= request.getContextPath() %>/common/main.do"><img src="<%=request.getContextPath() %>/resources/img/EazyRP2.png" style="width: 100px;"></a>
             <div style="display: flex;">
             	<form>
 	             <select id="selectOp2" class="form-control" name="selectedC_no" style="margin-right: 20px;">
@@ -187,12 +187,12 @@ html {
 	console.log('${c_no}')
   	$('#selectOp2').on('change', function(){
   		if($(this).val() != 'X'){
-	  		location.href="/common/change.do?mcode=${mcode }&selectedC_no=" + $(this).val()
+	  		location.href="<%= request.getContextPath() %>/common/change.do?mcode=${mcode }&selectedC_no=" + $(this).val()
   		}
   	})
   	$('#selectOp').on('change', function(){
   		if($(this).val() != 'X'){
-	  		location.href="/common/empChange.do?mcode=${mcode }&selectedEmp=" + $(this).val()
+	  		location.href="<%= request.getContextPath() %>/common/empChange.do?mcode=${mcode }&selectedEmp=" + $(this).val()
 	  		alert('설정이 모두 완료되었습니다.');
   		}
   	})
@@ -201,7 +201,7 @@ html {
   	
   	$('#logout').on('click', function(){
   		if(confirm("정말 로그아웃하시겠습니까")){
-  		location.href="/common/logout.do";
+  		location.href="<%= request.getContextPath() %>/common/logout.do";
   		}
   	})
   	
