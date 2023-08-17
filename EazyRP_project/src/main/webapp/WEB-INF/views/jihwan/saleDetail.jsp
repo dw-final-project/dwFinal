@@ -137,7 +137,7 @@ window.onload = function(){
 
 	$('button#modifyBtn').on('click', function(){
 		formObj.attr({
-			'action' : '<%=request.getContextPath()%>/modifyForm.do',
+			'action' : '/erp4/modifyForm.do',
 			'method' : 'post'
 // 			'enctype' : 'multipart/form-data'
 		});
@@ -148,7 +148,7 @@ window.onload = function(){
 	$('button#removeBtn').on('click', function(){
 		if(confirm("정말 삭제하시겠습니까?")){
 			formObj.attr({
-				'action' : '<%=request.getContextPath()%>/erp4/saleremove.do',
+				'action' : '/erp4/saleremove.do',
 				'method' : 'post' 
 			});
 			formObj.submit();

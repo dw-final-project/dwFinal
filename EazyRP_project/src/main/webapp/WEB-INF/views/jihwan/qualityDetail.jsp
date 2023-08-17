@@ -163,7 +163,7 @@ window.onload = function(){
 	
 	$('button#modifyBtn').on('click', function(){
 		formObj.attr({
-			'action' : '<%=request.getContextPath()%>/qcmodifyForm.do',
+			'action' : '/erp5/qcmodifyForm.do',
 			'method' : 'post'
 		});
 		
@@ -203,7 +203,7 @@ window.onload = function(){
 	$('button#removeBtn').on('click', function(){
 		if(confirm("정말 삭제하시겠습니까?")){
 			formObj.attr({
-				'action' : '<%=request.getContextPath()%>/qcremove.do',
+				'action' : '/erp5/qcremove.do',
 				'method' : 'post' 
 			});
 			formObj.submit();

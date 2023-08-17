@@ -3,22 +3,22 @@
 <mapper namespace="kr.or.dw.dao.OrderSaleDAO">
 	
 	<sql id="search">
-		<if test="searchType == 'c'.toString()">
-			AND c_name LIKE '%' || #{keyword} || '%'
+		<if test="cri.searchType == 'c'.toString()">
+			AND c_name LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="searchType == 'w'.toString()">
-			AND pr_exprice LIKE '%' || #{keyword} || '%'
+		<if test="cri.searchType == 'w'.toString()">
+			AND pr_exprice LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="searchType == 'p'.toString()">
-			AND pr_name LIKE '%' || #{keyword} || '%'
+		<if test="cri.searchType == 'p'.toString()">
+			AND pr_name LIKE '%' || #{cri.keyword} || '%'
 		</if>
-		<if test="searchType == 'all'.toString()">
+		<if test="cri.searchType == 'all'.toString()">
 			AND (
-			c_name LIKE '%' || #{keyword} || '%'
+			c_name LIKE '%' || #{cri.keyword} || '%'
 			OR
-			pr_exprice LIKE '%' || #{keyword} || '%'
+			pr_exprice LIKE '%' || #{cri.keyword} || '%'
 			OR
-			pr_name LIKE '%' || #{keyword} || '%'
+			pr_name LIKE '%' || #{cri.keyword} || '%'
 			)
 		</if>
 	</sql>
@@ -47,15 +47,14 @@
 			OR s.pr_name LIKE '%' || #{keyword} || '%'
 			OR s.buy_c_no LIKE '%' || #{keyword} || '%')
 		</if>
-		ORDER BY s.sheet_no desc
+		ORDER BY s.SYS_REGDATE desc
 	</select>
 	
 	<select id="selectSearchSaleListCount" resultType="int">
 		SELECT COUNT(*)
-		 FROM S_SHEET s, emp e , company c
+		 FROM S_SHEET s, emp e 
 		WHERE s.emp_no = e.emp_no
 		  AND s.con_c_no = #{c_no}
-		  AND s.buy_c_no = c.c_no
 		<if test="searchType == 'a'.toString()">
 			AND e.e_name LIKE '%' || #{keyword} || '%'
 		</if>
@@ -74,7 +73,7 @@
 			OR s.pr_name LIKE '%' || #{keyword} || '%'
 			OR s.buy_c_no LIKE '%' || #{keyword} || '%')
 		</if>
-		ORDER BY s.sheet_no desc	
+		ORDER BY s.SYS_REGDATE desc	
 	</select>
 	
 	<select id="getSaleDetail" resultType="saleDetail">

@@ -163,7 +163,7 @@ window.onload = function(){
 
 	$('button#modifyBtn').on('click', function(){
 		formObj.attr({
-			'action' : '<%=request.getContextPath()%>/simodifyForm.do',
+			'action' : 'simodifyForm.do',
 			'method' : 'post'
 		});
 		
@@ -206,7 +206,7 @@ window.onload = function(){
 	$('button#removeBtn').on('click', function(){
 		if(confirm("정말 삭제하시겠습니까?")){
 			formObj.attr({
-				'action' : '<%=request.getContextPath()%>/siremove.do',
+				'action' : 'siremove.do',
 				'method' : 'post' 
 			});
 			formObj.submit();
@@ -292,7 +292,7 @@ $('#addPutBtn').on('click', function(){
 	$(document).on('click', '.wh_names', function(){
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
-		let openWin = OpenWindow("<%=request.getContextPath()%>/erp4/findWareHouse.do","창고 찾기", 500,500);
+		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
 	})
 	
 	// 수량 체인지
@@ -317,7 +317,7 @@ $('#addPutBtn').on('click', function(){
 	    let idVal = $(this).parents("tr").find(".rownum").val();
 	    $('#cnt').val(idVal);
 	    console.log($('#cnt').val())
-	    let openWin = OpenWindow("<%=request.getContextPath()%>/erp4/findProduct.do", "제품 찾기", 500, 500);
+	    let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
 	});
 
 
