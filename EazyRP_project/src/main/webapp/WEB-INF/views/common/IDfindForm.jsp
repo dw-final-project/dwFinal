@@ -155,7 +155,7 @@ body {
 				<h4 class="modal-title">ID 찾기</h4>
 			</div>
 			<div class="modal-body">
-				<form id="idFindForm"action="/member/IDfind.do" method="post">
+				<form id="idFindForm"action="<%=request.getContextPath()%>/member/IDfind.do" method="post">
 					<div class="form-group">
 						<div class="input-group inputText">
 							<span class="input-group-addon"><i class="fa fa-user"></i></span>

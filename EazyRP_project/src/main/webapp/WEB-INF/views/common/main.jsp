@@ -63,7 +63,7 @@
 						<c:forEach items="${draft }" var="draft">
 							<tr>
 								<td><font style="vertical-align: inherit;"> 
-								<font style="vertical-align: inherit;"><a href="#" onclick="OpenWindow('/management/detail.do?dr_no=${draft.dr_no }&send=N', '기안문 조회', 700, 1000)">${draft.title }</a>
+								<font style="vertical-align: inherit;"><a href="#" onclick="OpenWindow('<%=request.getContextPath()%>/management/detail.do?dr_no=${draft.dr_no }&send=N', '기안문 조회', 700, 1000)">${draft.title }</a>
 								</font>
 								</font>
 								</td>

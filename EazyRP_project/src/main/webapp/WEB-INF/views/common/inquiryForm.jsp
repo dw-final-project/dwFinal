@@ -12,7 +12,7 @@
 					<h2 class="card-title p-1">문의사항</h2>
 					<div class="input-group row" style="width: 90%; margin-left: 50%;">
 						<form id="searchForm2" method="post"
-							action="/member/qna.do?mcode=${mcode }"
+							action="<%=request.getContextPath()%>/member/qna.do?mcode=${mcode }"
 							style="display: contents;"></form>
 					</div>
 				</div>
@@ -106,7 +106,7 @@ $('.r1').hide();
 	$('#registBtn').on('click',function(){
   		$('.re_form').toggle();
     	$('#registBtn').toggle();
-    	$('form[name="form"]').attr('action', '/member/qnaRegist.do');
+    	$('form[name="form"]').attr('action', '<%=request.getContextPath()%>/member/qnaRegist.do');
     })
 
 	 $('#cancelBtn').on('click', function(){
@@ -122,7 +122,7 @@ $('.r1').hide();
 
 	$('svg#removeBtn').on('click', function(){
 			if(confirm("정말 삭제하시겠습니까")){
-				location.href="/member/remove.do?inq_no="+ $(this).parent('td').attr('id') + "&mcode=${mcode}";
+				location.href="<%=request.getContextPath()%>/member/remove.do?inq_no="+ $(this).parent('td').attr('id') + "&mcode=${mcode}";
 			}
 		});	 
 
@@ -131,7 +131,7 @@ $('.r1').hide();
 			$('#registBtn').toggle();
 			let inq_no = $(this).parent().attr('id');
 			$('input[name="inq_no"]').val(inq_no);
-			$('form[name="form"]').attr('action', '/member/modify.do');	
+			$('form[name="form"]').attr('action', '<%=request.getContextPath()%>/member/modify.do');	
 	    });	
 
 	
