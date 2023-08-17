@@ -66,7 +66,7 @@
 		</div>
 	</section>
 	
-<script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
+<script src="<%= request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 	
 <script>
 		

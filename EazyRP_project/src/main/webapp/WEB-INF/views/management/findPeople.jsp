@@ -54,7 +54,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/bootstrap/dist/css/adminlte.min.css">
 
-<script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
+<script src="<%= request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <c:if test="${no eq 1 }">
 	<script>
 		$('tr').on('click', function(){

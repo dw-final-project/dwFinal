@@ -43,7 +43,7 @@
 									<option value="P0004" ${draft.pl_no eq 'P0004' ? 'selected' : ''}>지출결의결재라인</option>
 								</select>
 							</div>
-							<form id="registForm2" method="post" action="<%= request.getContextPath()%>/management/modifyDocument.do" enctype="multipart/form-data">
+							<form id="registForm2" method="post" action="<%=request.getContextPath()%>/management/modifyDocument.do" enctype="multipart/form-data">
 								<input type="hidden" id="dg_no" name="dg_no" value="${draft.dg_no}">
 								<input type="hidden" name="title" id="titleHidden" value="${draft.title }">
 								<input type="hidden" id="gb" name="gb" value="${draft.gb}">

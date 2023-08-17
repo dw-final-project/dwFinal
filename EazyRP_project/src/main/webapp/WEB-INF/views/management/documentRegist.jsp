@@ -43,7 +43,7 @@
 									</c:forEach>
 								</select>
 							</div>
-							<form id="registForm2" method="post" action="<%= request.getContextPath()%>/management/regist.do" enctype="multipart/form-data">
+							<form id="registForm2" method="post" action="<%=request.getContextPath()%>/management/regist.do" enctype="multipart/form-data">
 								<input type="hidden" id="dg_no" name="dg_no" value="D001">
 								<input type="hidden" name="title" id="titleHidden">
 								<input type="hidden" id="gb" name="gb" value="휴가신청서">
