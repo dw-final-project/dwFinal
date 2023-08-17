@@ -22,7 +22,7 @@
 						
 						<div class="form-group col-sm-12">
 							<label for="content">반려 사유</label>
-							<form id="submitForm" action="/management/failForm.do" method="post">
+							<form id="submitForm" action="<%= request.getContextPath()%>/management/failForm.do" method="post">
 							<input type="hidden" name="dr_no" value="${dr_no }">
 							<input type="hidden" name="pl_progress" value="${pl_progress }">
 							<textarea class="textarea" name="failComment" id="con" rows="10" 

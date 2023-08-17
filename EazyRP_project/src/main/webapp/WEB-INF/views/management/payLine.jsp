@@ -11,7 +11,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">결재라인</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/management/paymentLine.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
+						<form id="searchForm2" method="post" action="<%= request.getContextPath()%>/management/paymentLine.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${cri.searchType eq 'all' ? 'selected' : '' }>전  체</option>
 								<option value="d" ${cri.searchType eq 'd' ? 'selected' : '' }>결재라인명</option>
@@ -41,7 +41,7 @@
 									<tr>
 										<td style="color: red; font-size: 0.6em; font-weight: bold;">
 										</td>
-										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('/management/payLineDetail.do?pl_no=${pl.pl_no }', '결재라인 조회', 700, 600, '${loop.index}')">${pl.pl_name }</a></td>
+										<td style="text-align: center;"><a id="aTag" href="#" onclick="OpenWindow('<%= request.getContextPath()%>/management/payLineDetail.do?pl_no=${pl.pl_no }', '결재라인 조회', 700, 600, '${loop.index}')">${pl.pl_name }</a></td>
 										<td style="text-align: center;">${pl.e_name1}</td>
 										<td style="text-align: center;">${pl.e_name2 }</td>
 										<td style="text-align: center;">${pl.e_name3}</td>
@@ -56,7 +56,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/management/registPayLine.do', '결재라인추가', 700, 600)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('<%= request.getContextPath()%>/management/registPayLine.do', '결재라인추가', 700, 600)"
 					style="width: 120px; font-size: 0.8em; margin: 20px; align-self: center;">결재라인 추가</button>
 				</div>
 			</div>

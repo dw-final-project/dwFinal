@@ -100,17 +100,17 @@
 	})
 	$('#deleteBtn').on('click', function(){
 		if(confirm("정말로 삭제하시겠습니까?")){
-			$('#submitForm').attr('action', '/mymenu/deleteNote.do');
+			$('#submitForm').attr('action', '<%= request.getContextPath()%>/mymenu/deleteNote.do');
 			$('#submitForm').submit();
 		}
 	});
 	$('#replyBtn').on('click', function(){
-		$('#submitForm').attr('action', '/mymenu/replyNote.do');
+		$('#submitForm').attr('action', '<%= request.getContextPath()%>/mymenu/replyNote.do');
 		$('#submitForm').submit();
 	});
 	$('#downloadBtn').on('click', function(){
 		if(confirm("다운로드하시겠습니까?")){
-			$('#submitForm').attr('action', '/mymenu/download.do');
+			$('#submitForm').attr('action', '<%= request.getContextPath()%>/mymenu/download.do');
 			$('#submitForm').submit();
 		}
 	});

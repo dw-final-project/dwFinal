@@ -64,7 +64,7 @@
 		  		THEN MAX((SELECT pr_st FROM product WHERE pr_no = qd.pr_no)) || ' 외 ' || (count(qd.PR_NO)-1)  || '건'
 		  		ELSE MAX((SELECT pr_st FROM product WHERE pr_no = qd.pr_no))
 			END pr_st
-	 FROM qc qc, QCDETAIL qd , EMP e , PRODUCT p 
+	 FROM qc qc, QCDETAIL qd , EMP e , PRODUCT p   
 	 WHERE 1=1
 	 AND qc.QC_NO = qd.QC_NO 
 	 AND qc.EMP_NO = e.EMP_NO 

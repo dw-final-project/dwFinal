@@ -76,7 +76,7 @@
 <body>
     <h2>구매 내역 추가</h2>
 	<!-- card footer End -->
-<form role="form" method="post" action="/product/productBuyRegistFrom.do" enctype="multipart/form-data">
+<form role="form" method="post" action="<%=request.getContextPath()%>/product/productBuyRegistFrom.do" enctype="multipart/form-data">
 	<table>
         <tr>
             <td width="40%" align="center"><b>작성자</b></td>
@@ -158,7 +158,7 @@
 	$(document).on('click', '.wh_names', function(){
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
+		let openWin = OpenWindow("<%=request.getContextPath()%>/erp4/findWareHouse.do","창고 찾기", 500,500);
 	})
 	
 	// 수량 이벤트

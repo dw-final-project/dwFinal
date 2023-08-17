@@ -16,7 +16,7 @@
 					<div class="card-header" style="border-bottom: none; padding-bottom: 0px;">
 						<h2 class="card-title p-1">인사 발령</h2>
 						<div class="input-group row">
-						<form id="searchForm2" method="post" action="/pa/pa.do?mcode=${mcode }&murl=${murl }" style="font-size:0.9em; margin-left: 17%;">
+						<form id="searchForm2" method="post" action="<%= request.getContextPath()%>/pa/pa.do?mcode=${mcode }&murl=${murl }" style="font-size:0.9em; margin-left: 17%;">
 							검색 구분 <select class="form-control col-md-2" name="searchType" id="searchType1" style="font-size: 0.8em; width: 10%; margin: 10px; display: inline;" >
 								<option value="all" ${cri.searchType eq 'all' ? 'selected' : '' }>전  체</option>
 								<option value="n" ${cri.searchType eq 'n' ? 'selected' : '' }>이름</option>
@@ -74,7 +74,7 @@
 					<div style="display: flex; align-items: end; justify-content: end;">
 				</div>
 				<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/pa/paInsert.do', '인사발령 등록', 900, 600)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('<%= request.getContextPath()%>/pa/paInsert.do', '인사발령 등록', 900, 600)"
 					style="width: 120px; font-size: 0.8em; margin: 20px; align-self: center;">인사발령 등록</button>
 				</div>
 			</div>
@@ -82,7 +82,7 @@
 		</div>
 	</section>
 	
-<script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
+<script src="<%= request.getContextPath() %>/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <script>

@@ -16,7 +16,7 @@
 					<div class="card-header" style="border-bottom: none; padding-bottom: 0px;">
 						<h2 class="card-title p-1">불량 발생 내역 조회</h2>
 						<div class="input-group row">
-						<form id="searchForm2" method="post" action="/erp4/error.do?mcode=${mcode }" style="font-size:0.9em; margin-left: 48%;">
+						<form id="searchForm2" method="post" action="<%=request.getContextPath() %>/erp4/error.do?mcode=${mcode }" style="font-size:0.9em; margin-left: 48%;">
 							발생 날짜 <input type="date" value="${cri2.startDate }" id="startDate" name="startDate" style="margin: 10px; width:15%; display: inline; font-size: 0.9em;"class="form-control">
 							 ~ <input type="date" value="${cri2.endDate }" id="endDate" name="endDate" style="margin: 10px; width:15%; display: inline; font-size: 0.9em;"class="form-control">
 							<span class="input-group-append col-md-3" style=" padding: 0px; margin: 10px; display: inline;">

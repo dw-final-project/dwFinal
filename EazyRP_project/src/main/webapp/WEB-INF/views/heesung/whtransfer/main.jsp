@@ -11,7 +11,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">창고이동 내역</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/erp4/whtransfer.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
+						<form id="searchForm2" method="post" action="<%=request.getContextPath() %>/erp4/whtransfer.do?mcode=${mcode }&murl=${murl }" style="display: contents;">
 							<select class="form-control col-md-2 custom-select" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="scn" ${cri.searchType eq 'scn' ? 'selected' : '' }>등록일+번호+창고명</option>
 								<option value="s" ${cri.searchType eq 's' ? 'selected' : '' }>등록일</option>
@@ -50,7 +50,7 @@
 								<tr>
 									<td style="text-align: center;">${wht.SYS_REGDATE }</td>
 									<td style="text-align: center;">
-										<a id="aTag" href="#" onclick="OpenWindow('/erp4/whtransfer/detail.do?wt_no=${wht.WT_NO }', '창고이동 보기', 700, 1000)">
+										<a id="aTag" href="#" onclick="OpenWindow('<%=request.getContextPath() %>/erp4/whtransfer/detail.do?wt_no=${wht.WT_NO }', '창고이동 보기', 700, 1000)">
 											${wht.WT_NO }
 										</a>
 									</td>
@@ -69,7 +69,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('/erp4/whtransfer/registForm.do', '창고이동 등록', 700, 1000)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow2('<%=request.getContextPath() %>/erp4/whtransfer/registForm.do', '창고이동 등록', 700, 1000)"
 					style="width: 100px; margin: 20px; align-self: center;">등록</button>
 				</div>
 			</div>

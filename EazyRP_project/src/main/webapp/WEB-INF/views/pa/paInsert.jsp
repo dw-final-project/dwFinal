@@ -76,7 +76,7 @@
 <body>
     <h2>인사 발령 등록</h2>
 	<!-- card footer End -->
-<form role="form" method="post" action="/pa/paRegist.do" enctype="multipart/form-data">
+<form role="form" method="post" action="<%= request.getContextPath()%>/pa/paRegist.do" enctype="multipart/form-data">
 	<table>
         <tr>
             <td width="40%" align="center"><b>발령일</b></td>
@@ -200,7 +200,7 @@
 	$(document).on('click', 'input[name="e_name"]', function(){
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/pa/findPeople.do","사람 찾기", 500,500);
+		let openWin = OpenWindow("<%= request.getContextPath()%>/pa/findPeople.do","사람 찾기", 500,500);
 	})
 	
 	

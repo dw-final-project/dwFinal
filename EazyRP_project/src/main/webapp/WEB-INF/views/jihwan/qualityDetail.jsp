@@ -148,7 +148,7 @@
         <tr class="total">
             <td colspan="2" align="center">총 수량</td>
             <td colspan="1" align="center"><input type="text" id="totalQuantity" style="width: 100%;" value="${qc.QUANTITY }" readonly></td>
-            <td colspan="2" align="center"></td>
+            <td colspan="2" align="center"></td> 
         </tr>
     </table>
 </form>

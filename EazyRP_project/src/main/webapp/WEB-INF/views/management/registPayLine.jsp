@@ -31,15 +31,15 @@
 								</tr>
 								<tr>
 									<td style="text-align: center;">
-									<input type="text" class="form-control" id="e_name11" readonly style="background-color: white; width:130px; text-align:center; display: inline;" onclick="OpenWindow('/management/findPeople.do?no=1', '사람찾기', 400, 600)">
+									<input type="text" class="form-control" id="e_name11" readonly style="background-color: white; width:130px; text-align:center; display: inline;" onclick="OpenWindow('<%= request.getContextPath()%>/management/findPeople.do?no=1', '사람찾기', 400, 600)">
 									<input type="hidden" class="form-control" id="emp_no11" readonly style="background-color: white; width:130px; text-align:center; display: inline;">
 									</td>
 									<td style="text-align: center;">
-									<input type="text" class="form-control" id="e_name22" readonly style="background-color: white; width:130px; text-align:center; display: inline;" onclick="OpenWindow('/management/findPeople.do?no=2', '사람찾기', 400, 600)">
+									<input type="text" class="form-control" id="e_name22" readonly style="background-color: white; width:130px; text-align:center; display: inline;" onclick="OpenWindow('<%= request.getContextPath()%>/management/findPeople.do?no=2', '사람찾기', 400, 600)">
 									<input type="hidden" class="form-control" id="emp_no22" readonly style="background-color: white; width:130px; text-align:center; display: inline;">
 									</td>
 									<td style="text-align: center;">
-									<input type="text" class="form-control" id="e_name33" readonly style="background-color: white; width:130px; text-align:center; display: inline;" onclick="OpenWindow('/management/findPeople.do?no=3', '사람찾기', 400, 600)">
+									<input type="text" class="form-control" id="e_name33" readonly style="background-color: white; width:130px; text-align:center; display: inline;" onclick="OpenWindow('<%= request.getContextPath()%>/management/findPeople.do?no=3', '사람찾기', 400, 600)">
 									<input type="hidden" class="form-control" id="emp_no33" readonly style="background-color: white; width:130px; text-align:center; display: inline;">
 									</td>
 								</tr>
@@ -54,12 +54,12 @@
 			</div>
 		</div>
 	</section>
-<form id="submitForm2" method="post" action="/management/registPayLineForm.do">
-	<input type="hidden" class="form-control" name="e_name1" id="e_name1" readonly style="background-color: white; width:130px; hidden-align:center; display: inline;" onclick="OpenWindow('/management/findPeople.do?no=1', '사람찾기', 400, 600)">
+<form id="submitForm2" method="post" action="<%= request.getContextPath()%>/management/registPayLineForm.do">
+	<input type="hidden" class="form-control" name="e_name1" id="e_name1" readonly style="background-color: white; width:130px; hidden-align:center; display: inline;" onclick="OpenWindow('<%= request.getContextPath()%>/management/findPeople.do?no=1', '사람찾기', 400, 600)">
 	<input type="hidden" class="form-control" name="emp_no1" id="emp_no1" readonly style="background-color: white; width:130px; hidden-align:center; display: inline;">
-	<input type="hidden" class="form-control" name="e_name2" id="e_name2" readonly style="background-color: white; width:130px; hidden-align:center; display: inline;" onclick="OpenWindow('/management/findPeople.do?no=2', '사람찾기', 400, 600)">
+	<input type="hidden" class="form-control" name="e_name2" id="e_name2" readonly style="background-color: white; width:130px; hidden-align:center; display: inline;" onclick="OpenWindow('<%= request.getContextPath()%>/management/findPeople.do?no=2', '사람찾기', 400, 600)">
 	<input type="hidden" class="form-control" name="emp_no2" id="emp_no2" readonly style="background-color: white; width:130px; hidden-align:center; display: inline;">
-	<input type="hidden" class="form-control" name="e_name3" id="e_name3" readonly style="background-color: white; width:130px; hidden-align:center; display: inline;" onclick="OpenWindow('/management/findPeople.do?no=3', '사람찾기', 400, 600)">
+	<input type="hidden" class="form-control" name="e_name3" id="e_name3" readonly style="background-color: white; width:130px; hidden-align:center; display: inline;" onclick="OpenWindow('<%= request.getContextPath()%>/management/findPeople.do?no=3', '사람찾기', 400, 600)">
 	<input type="hidden" class="form-control" name="emp_no3" id="emp_no3" readonly style="background-color: white; width:130px; hidden-align:center; display: inline;">
 	<input type="hidden" id="pl_name" name="pl_name" class="form-control" placeholder="결재라인명을 입력하세요.">
 	<input type="hidden" class="form-control" id="comments" name="comments" style="background-color: white;">

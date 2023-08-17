@@ -77,7 +77,7 @@
     <h2>발주 상세 내역</h2>
 	
 	<!-- card footer End -->
-<form role="form" method="post" action="/product/orderCancel.do">
+<form role="form" method="post" action="<%= request.getContextPath()%>/product/orderCancel.do">
 <input type="hidden" name="o_no" value="${order.o_no }">
 	<table>
 		<tr>
@@ -94,7 +94,7 @@
         </tr>
         <tr>
             <td align="center">발주 보고서</td>
-            <td><a id="aTag" href="#" onclick="OpenWindow('/management/detail.do?dr_no=${order.dr_no}', '기안문', 700, 700)">${order.title }</a></td>
+            <td><a id="aTag" href="#" onclick="OpenWindow('<%= request.getContextPath()%>/management/detail.do?dr_no=${order.dr_no}', '기안문', 700, 700)">${order.title }</a></td>
         	<input type="hidden" name="dr_no" value="${order.dr_no}">
         </tr>
     </table>
@@ -153,7 +153,7 @@ window.onload = function(){
 	$('#receiveBtn').on('click', function(){
 		if(confirm('입고 확정 처리하시겠습니까?')){
 			alert("입고가 확정되었습니다.");
-			location.href="/product/receive.do?o_no=${order.o_no }";
+			location.href="<%= request.getContextPath()%>/product/receive.do?o_no=${order.o_no }";
 		}
 	})
 	
@@ -213,7 +213,7 @@ $('tr').on('click', function(){
 		let idVal = $(this).parents("tr").find(".rownum").val();
 		console.log(idVal);
 		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 500, 500);
+		let openWin = OpenWindow("<%= request.getContextPath()%>/erp4/findProduct.do", "제품 찾기", 500, 500);
 		
 	});
 	
@@ -226,7 +226,7 @@ $('tr').on('click', function(){
 	$(document).on('click', '.wh_names', function(){
 		let whVal = $(this).attr('id');
 		$('#cnt').val(whVal);
-		let openWin = OpenWindow("/erp4/findWareHouse.do","창고 찾기", 500,500);
+		let openWin = OpenWindow("<%= request.getContextPath()%>/erp4/findWareHouse.do","창고 찾기", 500,500);
 	})
 	
 	// 수량 이벤트
