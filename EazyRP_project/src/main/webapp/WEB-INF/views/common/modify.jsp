@@ -3,5 +3,5 @@
 
 <script>
 	alert('수정이 완료되었습니다.');
-	location.href = "/member/qna.do?mcode=${mcode }"
+	location.href = "<%=request.getContextPath()%>/member/qna.do?mcode=${mcode }"
 </script>

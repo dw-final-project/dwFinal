@@ -71,14 +71,14 @@
 <body style="width: 400px;">
 	<h2>A/S 등록</h2>
 	<!-- card footer End -->
-	<form role="form" method="post" action="/asmanage/regist.do" enctype="multipart/form-data">
+	<form role="form" method="post" action="<%=request.getContextPath()%>/asmanage/regist.do" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td width="40%" align="center"><b>담당자</b></td>
 				<td>
 					<input type="hidden" name="emp_no" id="receiver" value="${empno }"> 
 					<input type="text" style="width: 100%;" value="${c_name }  ${ename }" id="name" name="name" 
-							readonly onclick="OpenWindow('/mymenu/findPeople.do', '사람찾기', 400, 600)">
+							readonly onclick="OpenWindow('<%=request.getContextPath()%>/mymenu/findPeople.do', '사람찾기', 400, 600)">
 				</td>
 			</tr>
 			
@@ -118,7 +118,7 @@
 	$(document).on('click', '.pr_names', function() {
 		let idVal = $(this).attr('id');
 		$('#cnt').val(idVal);
-		let openWin = OpenWindow("/erp4/findProduct.do", "제품 찾기", 800, 600);
+		let openWin = OpenWindow("<%=request.getContextPath()%>/erp4/findProduct.do", "제품 찾기", 800, 600);
 	});
 
 

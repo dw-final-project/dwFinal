@@ -160,11 +160,11 @@ body {
 			<div class="modal-header">				
 				<h4 class="modal-title">비밀번호 변경</h4>
 						<form id="searchForm2" method="post"
-							action="/member/mypage.do?mcode=${mcode }"
+							action="<%=request.getContextPath()%>/member/mypage.do?mcode=${mcode }"
 							style="display: contents;"></form>
 			</div>
 			<div class="modal-body">
-				<form id="repwdForm" action="/member/repwd.do?mcode=${mcode }" method="post">
+				<form id="repwdForm" action="<%=request.getContextPath()%>/member/repwd.do?mcode=${mcode }" method="post">
 					<input type="hidden" name="id" value="${id }">
 					
 					<div class="form-group d-flex">

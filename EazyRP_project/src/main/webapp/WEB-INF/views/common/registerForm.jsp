@@ -161,7 +161,7 @@ body {
 			</div>
 			<div class="modal-body">
 				
-				<form id="registForm" action="/member/register.do" style="margin-left: 20px;" method="post">
+				<form id="registForm" action="<%=request.getContextPath()%>/member/register.do" style="margin-left: 20px;" method="post">
 					<div class="form-group d-flex">
 						<div class="input-group inputText">
 							<span class="fa"><i class="fa fa-user"></i></span><span style="width: 15px;"></span>

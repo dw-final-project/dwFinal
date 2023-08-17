@@ -12,7 +12,7 @@
 					<div class="card-header" style="border-bottom: none;">
 						<h2 class="card-title p-1">A/S 관리</h2>
 						<div class="input-group row" style="width: 90%; margin-left: 50%;">
-						<form id="searchForm2" method="post" action="/asmanage/as.do?mcode=${mcode }" style="display: contents;">
+						<form id="searchForm2" method="post" action="<%=request.getContextPath()%>/asmanage/as.do?mcode=${mcode }" style="display: contents;">
 							<select class="form-control col-md-2" name="searchType" id="searchType" style="font-size: 0.8em;">
 								<option value="all" ${cri.searchType eq 'all' ? 'selected' : '' }>전  체</option>
 								<option value="p" ${cri.searchType eq 'p' ? 'selected' : '' }>진행상황</option>
@@ -42,7 +42,7 @@
 								<c:forEach items="${asList}" var="as" >								
 									<tr>
 										<td style="text-align: center;">
-											<a id="asDetailBtn" href="#" onclick="detailOpenWindow('/asmanage/detail.do?as_no=${as.AS_NO }', 'A/S 상세정보', 500, 600)">
+											<a id="asDetailBtn" href="#" onclick="detailOpenWindow('<%=request.getContextPath()%>/asmanage/detail.do?as_no=${as.AS_NO }', 'A/S 상세정보', 500, 600)">
 												${as.AS_NO }
 											</a>
 										</td>
@@ -62,7 +62,7 @@
 					</div>
 					</div>
 					<div style="display: flex; align-items: end; justify-content: end;">
-					<button type="button" class="btn btn-primary" id="registBtn" onclick="registOpenWindow('/asmanage/registForm.do', 'A/S 접수',  500, 600)"
+					<button type="button" class="btn btn-primary" id="registBtn" onclick="registOpenWindow('<%=request.getContextPath()%>/asmanage/registForm.do', 'A/S 접수',  500, 600)"
 					style="width: 100px; margin: 20px; align-self: center;">A/S 접수</button>
 
 				</div>

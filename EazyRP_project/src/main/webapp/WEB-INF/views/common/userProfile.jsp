@@ -77,11 +77,11 @@
           <div class="d-flex align-items-center pb-3 mb-3 text-center link-dark text-decoration-none border-bottom">
             <span class="fs-5 fw-semibold "> 개인정보 조회 </span>
             <form id="searchForm2" method="post"
-							action="/member/mypage.do?mcode=${mcode }"
+							action="<%=request.getContextPath()%>/member/mypage.do?mcode=${mcode }"
 							style="display: contents;"></form>
           </div>
           <!-- .form-group -->
-          <form action="/member/userProfile.do" method="post" style="text-align: -webkit-center; width: 100%;align-items: center; display: inline-block;">
+          <form action="<%=request.getContextPath()%>/member/userProfile.do" method="post" style="text-align: -webkit-center; width: 100%;align-items: center; display: inline-block;">
             <div class="mb-8 row"  style="align-items: center; justify-content: center;">
               <label for="staticid" class="col-sm-2 col-form-label">아이디</label>
               <div class="col-sm-8">
@@ -133,16 +133,16 @@
 $(function(){
 
 	$('#repwdBtn').on('click', function(){
-		location.href = "/member/repwdForm.do?mcode=${mcode }"; 
+		location.href = "<%=request.getContextPath()%>/member/repwdForm.do?mcode=${mcode }"; 
 	});
 	
 	$('#modifyBtn').on('click', function(){
-		location.href = "/member/modProfileForm.do?mcode=${mcode }"; 
+		location.href = "<%=request.getContextPath()%>/member/modProfileForm.do?mcode=${mcode }"; 
 	});
 	
 	$('#deleteBtn').on('click', function(){
 		if(confirm("정말 탈퇴하시겠습니까")){
-		location.href="/member/delete.do"	
+		location.href="<%=request.getContextPath()%>/member/delete.do"	
 		
 		}
 	});	
