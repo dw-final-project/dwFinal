@@ -307,7 +307,7 @@ WHEN NOT MATCHED THEN
 		quantity,
 		pr_no,
 		regdate,
-		c_no
+		c_no 
 		 )
 	VALUES (
 		estdetail_seq.nextval,
