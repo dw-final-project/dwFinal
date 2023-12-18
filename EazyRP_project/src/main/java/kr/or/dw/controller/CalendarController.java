@@ -47,7 +47,6 @@ public class CalendarController {
 				request.setAttribute("calendarList", calendarList);
 				mnv.addObject("calendarList", calendarList);
 				mnv.setViewName(url);
-				System.out.println("1" + calendarList);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

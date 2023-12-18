@@ -48,12 +48,12 @@
 
 <body style="padding:30px;">
 
-	<!-- calendar 태그 -->
+	<!-- calendar -->
 	<div class="calendarBox" id='calendar-container'>
 		<div id='calendar'></div>
 	</div>
 	
-	<!-- 비어 있는 modal 추가 -->
+	<!-- 비어 있는 modal -->
     <div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">

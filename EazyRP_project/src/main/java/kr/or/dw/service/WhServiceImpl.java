@@ -92,6 +92,7 @@ public class WhServiceImpl implements WhService{
 		System.out.println("whDAO.insertWh(whDetailVoList.get(0)); - 전");
 		whDAO.insertWh(whList.get(0));
 		System.out.println("whDAO.insertWh(whDetailVoList.get(0)); - 후");
+		
 		System.out.println("String wh_no = whDetailVoList.get(0).getWh_no(); - 전");
 		String wh_no = whList.get(0).getWh_no();
 		System.out.println("String wh_no = whDetailVoList.get(0).getWh_no(); - 후");

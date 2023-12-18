@@ -65,8 +65,7 @@ public class WorkOrderServiceImpl implements WorkOrderService{
 	@Override
 	public void registWorkOrder(List<WorkOrderVO> woList) throws SQLException {
 		
-		workOrderDAO.insertWorkOrder(woList.get(0));	// woList의 get 0번째는 wo_no 이다. (wo_no_seq로 시퀀서 등록되어있음)
-		
+		workOrderDAO.insertWorkOrder(woList.get(0));
 		System.out.println("insertWorkOrder 완료");
 
 		String wo_no = woList.get(0).getWo_no();
@@ -84,6 +83,7 @@ public class WorkOrderServiceImpl implements WorkOrderService{
 	public Map<String, Object> selectWorkOrder(String wo_no) throws SQLException {
 
 		System.out.println("workOrderServiceImpl.selectWorkOrderDetail - 진입");
+		
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		Map<String, Object> wo = (Map<String, Object>) workOrderDAO.selectWorkOrder(wo_no);
 		

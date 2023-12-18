@@ -20,7 +20,6 @@
 	
 	// 시간 포맷 변환 함수
 	function formatTime(time) {
-		// var date = new Date(time);
 		var hours = time.getHours().toString().padStart(2, '0');
 		var minutes = time.getMinutes().toString().padStart(2, '0');
 		var formattedTime = hours + ':' + minutes;
@@ -46,16 +45,16 @@
 	}
 	
 	$(function(){
-// 	document.addEventListener('DOMContentLoaded', function() {
 		var calendarEl = document.getElementById('calendar');
 		var calendar = new FullCalendar.Calendar(calendarEl, {
-			initialView : 'dayGridMonth',
-			locale : 'ko', // 한국어 설정
-// 			height: '700px', // calendar 높이 설정
-	        expandRows: true, // 화면에 맞게 높이 재설정
-	        slotMinTime: '08:00', // Day 캘린더에서 시작 시간
-	        slotMaxTime: '20:00', // Day 캘린더에서 종료 시간
-	        dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
+			
+			initialView : 'dayGridMonth',	// 보기 설정 (월별로 초기 설정)
+			locale : 'ko', 					// 사용 언어 설정
+// 			height: '700px', 				// calendar 높이 설정
+	        expandRows: true, 				// 화면에 맞게 높이 재설정
+	        slotMinTime: '08:00', 			// Day 캘린더에서 시작 시간
+	        slotMaxTime: '20:00', 			// Day 캘린더에서 종료 시간
+	        dayMaxEvents: true, 			// 이벤트가 오버되면 높이 제한 (+ ~개로 표현)
 			
 			// 헤더
 			headerToolbar : {
@@ -72,7 +71,8 @@
 					  start: '${vo.getCalendar_start()}',
 					  end: '${vo.getCalendar_end()}',
 					  cal_no: '${vo.getCalendar_no()}',
-					  color: '#7bc4b2' // '#' + Math.round(Math.random() * 0xffffff).toString(16)
+					  color: '#7bc4b2' 
+					  // 랜덤색상 설정 '#' + Math.round(Math.random() * 0xffffff).toString(16)
 					},
 				</c:forEach>
 			],
@@ -94,7 +94,7 @@
 				var endTimeFormatted = formatTime(endTimeValue);
 				endTimeInput.value = endTimeFormatted;
 
-	            // 이전에 등록한 일정의 정보를 이벤트를 클릭했을때 나타나는 해당 모달로 불러온다
+	            // 이전에 등록한 일정의 정보를 그대로 넣어준다.
 				$('#modifyTitle').attr('value', info.event.title);
 				$('#modifyStartDate').attr('value', info.event.start);
 				$('#modifyEndDate').attr('value', info.event.end);
@@ -126,7 +126,7 @@
 						  url: "/calendar/modify",
 						  type: "POST",
 						  data : { 
-							 	calendar_title: title,	// 키값 : 벨류값
+							 	calendar_title: title,		// 키값 : 벨류값
 							  	calendar_start: stdFormat,	// 키값 : 벨류값
 							  	calendar_end: endFormat,	// 키값 : 벨류값
 							  	calendar_no: info.event._def.extendedProps.cal_no
@@ -253,46 +253,6 @@
 				$('#StartDate').attr('value', arg.startStr);
 				$('#EndDate').attr('value', endDate.value);
                 
-//                 $("#registCalendar").on("click", function () {
-                	
-// 					var title = $('#title').val();
-// 					var startTime = $('#startTime').val();
-// 					var endTime = $('#endTime').val();
-// 					var calendar_no = $('#calendar_no').val();
-// 					var ed = $('#EndDate').val();
-// 					var sd = $('#StartDate').val();
-					
-// 					//내용 입력 여부 확인
-// 					if(title == null || title == ""){
-// 					    alert("내용을 입력하세요.");
-// 					}else if(startTime == "" || endTime ==""){
-// 					    alert("시간을 입력하세요.");
-// 					}else if(ed == sd && endTime < startTime){ // date 타입으로 변경 후 확인
-// 						alert("종료 시간이 시작 시간보다 빠릅니다.\n시간을 올바르게 설정해주세요.");
-// 						return false;
-// 					}else{ // 정상적인 입력 시
-				
-// 	                 	$.ajax({
-// 							 url: "/calendar/regist",
-// 							 type: "POST",
-// 							 data : { 
-// 							 	calendar_title: title,	// 키값 : 벨류값
-// 							  	calendar_start: arg.startStr + ' ' + startTime ,	// 키값 : 벨류값
-// 							  	calendar_end: endDateFormatted + " " + endTime,	// 키값 : 벨류값
-// 							 },
-// 							 success : function(data){
-// 							  alert("일정이 등록되었습니다.");
-// 							  $("#calendarModal").modal("hide");
-// 							  location.reload();
-// 							 },
-// 							 error : function(request,status,error){
-// 								alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-// 								console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-// 							 }
-// 						});
-// 					};
-// 				});
-				
 			}
 			
 		});
@@ -346,23 +306,19 @@
 			
 			console.log("closeCalendar 실행");
 			
-			 $("#endTime").val('');
-			 $("#startTime").val('');
-			 $("#title").val('');
-// 			 $("#StartDate").val('');
-// 			 $("#EndDate").val('');
+			$("#endTime").val('');
+			$("#startTime").val('');
+			$("#title").val('');
 
 			$('#StartDate').attr('value', arg.startStr);
 			$('#EndDate').attr('value', arg.endStr);
 			 
-			 $("#calendarModal").modal("hide");
+			$("#calendarModal").modal("hide");
+			
 		});
 		
 		// 디테일 캘린더 닫기 버튼
     	$("#closeModifyCalendar").on("click", function() {
-    		console.log("closeModifyCalendar 실행");
-				 console.log("모달 입력값 초기화");
-				 
 			$("#calendarDetailModal").modal("hide");
 		});
 		
@@ -380,18 +336,8 @@
 			console.log(startTime);
 			var endTime = $('#modifyEndTime').val();
 
-			console.log("sd : " + sd);
-			console.log("ed : " + ed);
-			console.log(startTime);
-	        
     		let stdFormat = sd + " " + startTime;
             let endFormat = ed + " " + endTime;
-            console.log("ㅡ 변경 후 정보 ㅡ");
-            console.log("내용 : " + title);
-            console.log("시작 시간 : " + stdFormat);
-			console.log("종료 시간 : " + endFormat);
-			console.log(endTime);
-			console.log(startTime);
 			
 			//내용 입력 여부 확인
 			if(title == null || title == ""){
@@ -406,7 +352,7 @@
 					url: "/calendar/modify",
 					type: "POST",
 					data : { 
-						calendar_title: title,	// 키값 : 벨류값
+						calendar_title: title,		// 키값 : 벨류값
 					  	calendar_start: stdFormat,	// 키값 : 벨류값
 					  	calendar_end: endFormat,	// 키값 : 벨류값
 					  	calendar_no: $('#calendar_no').val()

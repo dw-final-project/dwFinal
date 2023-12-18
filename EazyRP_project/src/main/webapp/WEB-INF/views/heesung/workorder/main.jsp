@@ -43,7 +43,7 @@
 										</td>
 									</tr>
 								</c:if>
-								<c:forEach items="${woList}" var="wo" varStatus="">
+								<c:forEach items="${woList}" var="wo">
 									<tr>
 										<input type="hidden" name="${wo.wo_no }">
 										<td width="15%" style="text-align: center;">

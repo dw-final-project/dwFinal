@@ -52,7 +52,6 @@
 		WHERE	wo.emp_no = e.emp_no
 	</select>
 	
-	<!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 --><!-- 이해 안됨 -->
 	<insert id="insertWorkOrder" parameterType="workOrder">
 		<selectKey keyProperty="wo_no" order="BEFORE" resultType="java.lang.String">
 			<include refid="makeWorkOrderNoSeq"/>
@@ -243,7 +242,10 @@
 	</insert>
 	
 	<select id="getProduct" resultType="int">
-		SELECT COUNT(*) FROM product WHERE pr_name = #{pr_name} AND wh_no = #{wh_no2}
+		SELECT 	COUNT(*) 
+		FROM 	product 
+		WHERE 	pr_name = #{pr_name} 
+		AND 	wh_no = #{wh_no2}
 	</select>
 	
 	<insert id="insertProduct">
@@ -270,7 +272,10 @@
 	</insert>
 	
 	<update id="updateProduct">
-		UPDATE product SET quantity = quantity + #{quantity} WHERE pr_name = #{pr_name} AND wh_no = #{wh_no2}
+		UPDATE 	product 
+		SET 	quantity = quantity + #{quantity} 
+		WHERE 	pr_name = #{pr_name} 
+		AND 	wh_no = #{wh_no2}
 	</update>
 	
 	<select id="getErrorList" resultType="error">

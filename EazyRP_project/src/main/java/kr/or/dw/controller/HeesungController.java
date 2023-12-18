@@ -279,9 +279,6 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		
 		String c_no = session.getAttribute("c_no").toString();
 		
-//		// 공정관리 목록 조회
-//		Map<String, Object> dataMap = whService.selectWhList(cri);
-		
 		Map<String, Object> map = new HashMap<>();
 		map.put("cri", cri);
 		map.put("c_no", c_no);
@@ -487,6 +484,7 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		
 		// 페이지 정보와 작업지시서의 정보를 가지고 url에 반환할것이다 url에서는 게시판 형태로 사용자에게 보여준다.
 		String url="";
+		
     	if(mymenu == null) {
 			url="heesung/workorder/main.page";
 		} else {
@@ -538,8 +536,6 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 		String c_no = session.getAttribute("c_no").toString();
 		
 		List<WorkOrderVO> woList = new ArrayList<WorkOrderVO>();
-		
-		System.out.println("pr_no.length : " + pr_no);
 		
 		for(int i = 0; i < pr_no.length; i++) {
 			
@@ -722,13 +718,17 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 	@RequestMapping("/insertError2")
 	public void insertError2(HttpServletResponse res, String[] fac_no, String[] pr_no, int[] quantity, 
 			HttpSession session, String wo_no, String wh_no, String[] pr_name) throws SQLException, IOException {
+		
 		List<WorkOrderVO> woList = new ArrayList<WorkOrderVO>();
-		String c_no = (String) session.getAttribute("c_no");
 		List<WhVO> whList = new ArrayList<WhVO>();
+		
+		String c_no = (String) session.getAttribute("c_no");
 		whList = (List<WhVO>) session.getAttribute("whList");
 		
 		for(int i = 0; i < pr_no.length; i++) {
+			
 			System.out.println(c_no);
+			
 			WorkOrderVO wo = new WorkOrderVO();
 			wo.setWh_no(wh_no);
 			wo.setWo_no(wo_no);
@@ -740,8 +740,8 @@ private static final Logger logger = LoggerFactory.getLogger(HeesungController.c
 			woList.add(wo);
 			int a = whList.get(i).getQuantity() - quantity[i];
 			whList.get(i).setQuantity(a);
+			
 		}
-		
 		
 		workOrderService.insertError(woList);
 		workOrderService.insertProduct(whList);
